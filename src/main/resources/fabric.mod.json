@@ -1,29 +1,32 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "alaskanativecraft",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Alaska Native Craft",
+  "description": "This mod aims to add various parts of Alaska Native cultures to Minecraft!",
   "authors": [
-    "Me!"
+    "Platymemo"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Platymemo/alaskanativecraft",
+    "sources": "https://github.com/Platymemo/alaskanativecraft"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/alaskanativecraft/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "com.github.platymemo.alaskanativecraft.AlaskaNativeCraft"
+    ],
+    "client": [
+      "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "alaskanativecraft.mixins.json"
   ],
 
   "depends": {

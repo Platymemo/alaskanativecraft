@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "alaskanativecraft:block/whale_meat_block",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "alaskanativecraft:block/whale_meat_block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "alaskanativecraft:block/whale_meat_block"
+    },
+    "facing=south": {
+      "model": "alaskanativecraft:block/whale_meat_block",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "alaskanativecraft:block/whale_meat_block",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "alaskanativecraft:block/whale_meat_block",
+      "y": 270
+    }
+  }
+}
