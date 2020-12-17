@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    " / ",
+    "/  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:oak_planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:wooden_harpoon",
+    "count": 1
+  }
+}
