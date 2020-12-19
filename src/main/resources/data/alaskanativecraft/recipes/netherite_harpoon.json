@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "alaskanativecraft:diamond_harpoon"
+    }
+  ],
+  "result": {
+    "item": "alaskanativecraft:netherite_harpoon",
+    "count": 1
+  }
+}
