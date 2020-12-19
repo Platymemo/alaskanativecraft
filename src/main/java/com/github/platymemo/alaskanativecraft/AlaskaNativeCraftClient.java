@@ -1,11 +1,10 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -55,5 +54,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.GOLDEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+
+        //EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARBOR_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
     }
 }

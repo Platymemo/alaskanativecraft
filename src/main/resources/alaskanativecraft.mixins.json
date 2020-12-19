@@ -4,6 +4,7 @@
   "package": "com.github.platymemo.alaskanativecraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "PolarBearMixin"
   ],
   "client": [
     "client.MixinItemRenderer"

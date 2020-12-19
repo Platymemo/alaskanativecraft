@@ -23,6 +23,8 @@ public class AlaskaNativeEntities {
 	public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaNativeItems.DIAMOND_HARPOON));
 	public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaNativeItems.NETHERITE_HARPOON));
 
+	//public static final EntityType<SealEntity> HARBOR_SEAL = add("harbor_seal", FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SealEntity::new).dimensions(EntityDimensions.fixed(1f, 1f)).build());
+
 	public static void register() {
 		for (Identifier id : ENTITY_TYPES.keySet()) {
 			Registry.register(Registry.ENTITY_TYPE, id, ENTITY_TYPES.get(id));

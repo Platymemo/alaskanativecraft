@@ -15,6 +15,7 @@ import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
@@ -194,10 +195,10 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
-        float f = 8.0F;
+        float f = 0.0F;
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity)entity;
-            f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
+            f = EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
         }
 
         Entity entity2 = this.getOwner();
@@ -217,6 +218,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
                 }
 
                 this.onHit(livingEntity2);
+
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && ((MobEntity) entity).canBeLeashedBy((PlayerEntity) this.getOwner()) && !((MobEntity) entity).isLeashed()) {
+                    ((MobEntity) entity).attachLeash(this.getOwner(), true);
+                    this.dropStack(this.harpoonStack);
+                    this.remove();
+                }
             }
         }
 
