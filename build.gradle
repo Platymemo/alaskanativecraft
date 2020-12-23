@@ -30,7 +30,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// ARRP for dynamic resourcepack generation
-	modImplementation group: 'net.devtech', name: 'arrp', version: '0.3.1'
+	modImplementation group: 'net.devtech', name: 'arrp', version: '0.3.2'
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.

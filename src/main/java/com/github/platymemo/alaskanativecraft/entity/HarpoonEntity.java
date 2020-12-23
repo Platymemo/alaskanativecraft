@@ -195,10 +195,10 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
-        float f = 0.0F;
+        float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
         if (entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity)entity;
-            f = EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
+            f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
         }
 
         Entity entity2 = this.getOwner();
@@ -219,18 +219,18 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 this.onHit(livingEntity2);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && ((MobEntity) entity).canBeLeashedBy((PlayerEntity) this.getOwner()) && !((MobEntity) entity).isLeashed()) {
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && ((MobEntity) entity).canBeLeashedBy((PlayerEntity) this.getOwner()) && !((MobEntity) entity).isLeashed() && this.harpoonStack.getTag().contains("leashed") && this.harpoonStack.getTag().getBoolean("leashed")) {
                     ((MobEntity) entity).attachLeash(this.getOwner(), true);
-                    this.dropStack(this.harpoonStack);
-                    this.remove();
+                    this.harpoonStack.removeSubTag("leashed");
+                    this.setVelocity(Vec3d.ZERO);
+                    this.playSound(soundEvent, 1.0F, 1.0F);
+                    return;
                 }
             }
         }
 
         this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
-        float g = 1.0F;
-
-        this.playSound(soundEvent, g, 1.0F);
+        this.playSound(soundEvent, 1.0F, 1.0F);
     }
 
     protected SoundEvent getHitSound() {

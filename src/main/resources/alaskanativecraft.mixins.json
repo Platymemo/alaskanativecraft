@@ -4,10 +4,12 @@
   "package": "com.github.platymemo.alaskanativecraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "PolarBearMixin"
+    "PolarBearMixin",
+    "AnvilScreenHandlerMixin",
+    "LeadLengthMixin"
   ],
   "client": [
-    "client.MixinItemRenderer"
+    "client.ItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

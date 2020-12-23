@@ -192,8 +192,7 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return null;
-                //(PassiveEntity)AlaskaNativeEntities.HARBOR_SEAL.create(world);
+        return (PassiveEntity)AlaskaNativeEntities.HARBOR_SEAL.create(world);
     }
 
     public boolean isBreedingItem(ItemStack stack) {
@@ -233,11 +232,9 @@ public class SealEntity extends AnimalEntity {
 
     }
 
-    /*
     public boolean canBeLeashedBy(PlayerEntity player) {
         return true;
     }
-    */
 
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
         this.damage(DamageSource.LIGHTNING_BOLT, Float.MAX_VALUE);
