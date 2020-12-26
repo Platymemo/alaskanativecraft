@@ -25,6 +25,7 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
     public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         if (sealEntity.isBaby()) {
             this.shadowRadius *= 0.5F;
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
         }
 
         super.render(sealEntity, f, g, matrixStack, vertexConsumerProvider, i);

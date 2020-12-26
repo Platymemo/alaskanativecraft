@@ -6,10 +6,14 @@
   "mixins": [
     "PolarBearMixin",
     "AnvilScreenHandlerMixin",
-    "LeadLengthMixin"
+    "LeadLengthMixin",
+    "DefaultBiomeFeaturesMixin",
+    "DefaultBiomeCreatorMixin",
+    "SnowballEntityMixin"
   ],
   "client": [
-    "client.ItemRendererMixin"
+    "client.ItemRendererMixin",
+    "client.PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

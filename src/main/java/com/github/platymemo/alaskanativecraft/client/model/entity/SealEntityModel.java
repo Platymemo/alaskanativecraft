@@ -16,7 +16,7 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
     protected final ModelPart tail;
 
     public SealEntityModel(float scale) {
-        super(12, scale, true, 120.0F, 0.0F, 9.0F, 6.0F, 120);
+        super(12, scale, false, 0.0F, 0.0F, 1.0F, 1.0F, 0);
         this.textureWidth = 64;
         this.textureHeight = 64;
 
@@ -49,10 +49,12 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
         this.frontLeftLeg = new ModelPart(this);
         this.frontLeftLeg.setPivot(5.0F, 24.0F, -6.0F);
         this.frontLeftLeg.setTextureOffset(32, 27).addCuboid(0.0F, -1.0F, -1.0F, 5.0F, 1.0F, 3.0F, scale);
+        this.setRotations(frontLeftLeg, 0.0F, 1.0F, 0.0F);
 
         this.frontRightLeg = new ModelPart(this);
         this.frontRightLeg.setPivot(-6.0F, 24.0F, -6.0F);
         this.frontRightLeg.setTextureOffset(38, 6).addCuboid(-5.0F, -1.0F, -1.0F, 5.0F, 1.0F, 3.0F, scale);
+        this.setRotations(frontRightLeg, 0.0F, -1.0F, 0.0F);
     }
 
     protected Iterable<ModelPart> getBodyParts() {
@@ -68,25 +70,19 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
         this.head.pitch = headPitch * 0.017453292F;
         this.head.yaw = headYaw * 0.017453292F;
         this.torso.pitch = 0.0F;
-        this.backRightLeg.pitch = MathHelper.cos(limbAngle * 0.6662F * 0.6F) * 0.5F * limbDistance;
-        this.backLeftLeg.pitch = MathHelper.cos(limbAngle * 0.6662F * 0.6F + 3.1415927F) * 0.5F * limbDistance;
-        this.frontRightLeg.roll = MathHelper.cos(limbAngle * 0.6662F * 0.6F + 3.1415927F) * 0.5F * limbDistance;
-        this.frontLeftLeg.roll = MathHelper.cos(limbAngle * 0.6662F * 0.6F) * 0.5F * limbDistance;
-        this.frontRightLeg.pitch = 0.0F;
-        this.frontLeftLeg.pitch = 0.0F;
-        this.frontRightLeg.yaw = 0.0F;
-        this.frontLeftLeg.yaw = 0.0F;
-        this.backRightLeg.yaw = 0.0F;
-        this.backLeftLeg.yaw = 0.0F;
+        float rightCalc = MathHelper.cos(limbAngle * 0.4F + 3.1415927F) * 0.5F * limbDistance;
+        float leftCalc = MathHelper.cos(limbAngle * 0.4F) * 0.5F * limbDistance;
         if (!sealEntity.isTouchingWater() && sealEntity.isOnGround()) {
-            this.frontRightLeg.yaw = MathHelper.cos(limbAngle * 5.0F + 3.1415927F) * 8.0F * limbDistance;
-            this.frontRightLeg.roll = 0.0F;
-            this.frontLeftLeg.yaw = MathHelper.cos(limbAngle * 5.0F) * 8.0F * limbDistance;
-            this.frontLeftLeg.roll = 0.0F;
-            this.backRightLeg.yaw = MathHelper.cos(limbAngle * 5.0F + 3.1415927F) * 3.0F * limbDistance;
-            this.backRightLeg.pitch = 0.0F;
-            this.backLeftLeg.yaw = MathHelper.cos(limbAngle * 5.0F) * 3.0F * limbDistance;
-            this.backLeftLeg.pitch = 0.0F;
+            this.setRotations(backRightLeg, 0.0F, rightCalc, 0.0F);
+            this.setRotations(backLeftLeg, 0.0F, leftCalc, 0.0F);
+            this.setRotations(frontRightLeg, 0.0F, rightCalc * 2.0F, 0.0F);
+            this.setRotations(frontLeftLeg, 0.0F, leftCalc * 2.0F, 0.0F);
+        }
+        else {
+            this.setRotations(backRightLeg, leftCalc, 0.0F, 0.0F);
+            this.setRotations(backLeftLeg, rightCalc, 0.0F, 0.0F);
+            this.setRotations(frontRightLeg, -1.0F + rightCalc, rightCalc * 2.0F, -1.0F + rightCalc);
+            this.setRotations(frontLeftLeg, 1.0F + leftCalc, leftCalc * 2.0F, 1.0F + leftCalc);
         }
     }
 

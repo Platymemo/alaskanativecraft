@@ -59,14 +59,14 @@ public class AlaskaNativeData {
     * Only works with AlaskaNativeCraft items to drop
     */
     public static JLootTable blockDrops(String itemToDrop) {
-        return loot("minecraft:block").pool(pool().rolls(1).entry(entry().type(id("minecraft", "item")).name(id(AlaskaNativeCraft.MOD_ID, itemToDrop))));
+        return loot("minecraft:block").pool(pool().rolls(1).entry(entry().type("minecraft:item").name(alaskaNativeModID(itemToDrop))));
     }
 
     public static JRecipe harpoonCraftingRecipe(String resource, Item result) {
-        JPattern pattern = pattern("  #",
-                                   " / ",
+        JPattern pattern = pattern(" S#",
+                                   " /S",
                                    "/  ");
-        JKeys keys = keys().key("/", ingredient().item(Items.STICK));
+        JKeys keys = keys().key("/", ingredient().item(Items.STICK)).key("S", ingredient().item(Items.STRING));
 
         JIngredient material;
         if (resource.equals("wood")) {
@@ -81,5 +81,9 @@ public class AlaskaNativeData {
 
     public static JRecipe harpoonSmithingRecipe(Item base, Item addition, Item result) {
         return JRecipe.smithing(ingredient().item(base), ingredient().item(addition), JResult.item(result));
+    }
+
+    public static String alaskaNativeModID(String path) {
+        return AlaskaNativeCraft.MOD_ID + ":" + path;
     }
 }

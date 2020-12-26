@@ -6,6 +6,9 @@
   "item.alaskanativecraft.golden_harpoon": "Gold Harpoon",
   "item.alaskanativecraft.diamond_harpoon": "Diamond Harpoon",
   "item.alaskanativecraft.netherite_harpoon": "Netherite Harpoon",
+
   "block.alaskanativecraft.whale_meat_block": "Whale Meat",
-  "entity.alaskanativecraft.harbor_seal": "Harbor Seal"
+
+  "entity.alaskanativecraft.harbor_seal": "Harbor Seal",
+  "entity.alaskanativecraft.ptarmigan": "Ptarmigan"
 }

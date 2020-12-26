@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
@@ -27,7 +28,10 @@ public class AlaskaNativeEntities {
 	public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaNativeItems.DIAMOND_HARPOON));
 	public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaNativeItems.NETHERITE_HARPOON));
 
-	public static final EntityType<SealEntity> HARBOR_SEAL = add("harbor_seal", FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SealEntity::new).dimensions(EntityDimensions.fixed(1f, 1f)).build());
+	public static final EntityType<SealEntity> HARBOR_SEAL = add("harbor_seal", FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SealEntity::new)
+			.dimensions(EntityDimensions.fixed(1.0F, 0.6F)).build());
+	public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT, PtarmiganEntity::new)
+			.dimensions(EntityDimensions.fixed(0.5F, 0.5F)).build());
 
 	public static void register() {
 		for (Identifier id : ENTITY_TYPES.keySet()) {
@@ -35,11 +39,14 @@ public class AlaskaNativeEntities {
 		}
 
 		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.HARBOR_SEAL, SealEntity.createMobAttributes().
+				add(EntityAttributes.GENERIC_MAX_HEALTH, 15.0D).
 				add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
-				add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D).
-				add(EntityAttributes.GENERIC_MAX_HEALTH, 15.0D));
+				add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D));
 
-		EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARBOR_SEAL, (dispatcher, context) -> new SealEntityRenderer(dispatcher));
+		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.PTARMIGAN, PtarmiganEntity.createMobAttributes().
+				add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D).
+				add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4000000059604645D).
+				add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D));
 	}
 
 	private static <T extends EntityType<?>> T add(String name, T type) {

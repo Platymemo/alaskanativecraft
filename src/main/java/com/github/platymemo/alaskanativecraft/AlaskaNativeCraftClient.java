@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
@@ -55,6 +56,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
 
-        //EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARBOR_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARBOR_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.PTARMIGAN, (entityRenderDispatcher, context) -> new PtarmiganEntityRenderer(entityRenderDispatcher));
     }
 }

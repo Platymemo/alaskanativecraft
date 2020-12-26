@@ -39,7 +39,6 @@ import java.util.Random;
 import java.util.Set;
 
 public class SealEntity extends AnimalEntity {
-    private static final TrackedData<BlockPos> HOME_POS;
     private static final TrackedData<BlockPos> TRAVEL_POS;
     private static final TrackedData<Boolean> ACTIVELY_TRAVELLING;
 
@@ -48,14 +47,6 @@ public class SealEntity extends AnimalEntity {
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
         this.moveControl = new SealEntity.SealMoveControl(this);
         this.stepHeight = 1.0F;
-    }
-
-    public void setHomePos(BlockPos pos) {
-        this.dataTracker.set(HOME_POS, pos);
-    }
-
-    private BlockPos getHomePos() {
-        return (BlockPos)this.dataTracker.get(HOME_POS);
     }
 
     private void setTravelPos(BlockPos pos) {
@@ -76,26 +67,18 @@ public class SealEntity extends AnimalEntity {
 
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(HOME_POS, BlockPos.ORIGIN);
         this.dataTracker.startTracking(TRAVEL_POS, BlockPos.ORIGIN);
         this.dataTracker.startTracking(ACTIVELY_TRAVELLING, false);
     }
 
     public void writeCustomDataToTag(CompoundTag tag) {
         super.writeCustomDataToTag(tag);
-        tag.putInt("HomePosX", this.getHomePos().getX());
-        tag.putInt("HomePosY", this.getHomePos().getY());
-        tag.putInt("HomePosZ", this.getHomePos().getZ());
         tag.putInt("TravelPosX", this.getTravelPos().getX());
         tag.putInt("TravelPosY", this.getTravelPos().getY());
         tag.putInt("TravelPosZ", this.getTravelPos().getZ());
     }
 
     public void readCustomDataFromTag(CompoundTag tag) {
-        int i = tag.getInt("HomePosX");
-        int j = tag.getInt("HomePosY");
-        int k = tag.getInt("HomePosZ");
-        this.setHomePos(new BlockPos(i, j, k));
         super.readCustomDataFromTag(tag);
         int l = tag.getInt("TravelPosX");
         int m = tag.getInt("TravelPosY");
@@ -105,7 +88,6 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
-        this.setHomePos(this.getBlockPos());
         this.setTravelPos(BlockPos.ORIGIN);
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
     }
@@ -115,11 +97,11 @@ public class SealEntity extends AnimalEntity {
     }
 
     protected void initGoals() {
-        this.goalSelector.add(0, new FleeEntityGoal(this, PolarBearEntity.class, 8.0F, 2.0D, 2.0D));
+        this.goalSelector.add(0, new FleeEntityGoal(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 2.0D));
         this.goalSelector.add(1, new SealEntity.MateGoal(this, 1.0D));
         this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Items.SALMON.asItem()));
-        this.goalSelector.add(3, new FleeEntityGoal(this, PlayerEntity.class, 16.0F, 2.0D, 2.0D));
+        this.goalSelector.add(3, new FleeEntityGoal(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
         this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
@@ -223,7 +205,7 @@ public class SealEntity extends AnimalEntity {
             this.updateVelocity(0.1F, movementInput);
             this.move(MovementType.SELF, this.getVelocity());
             this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null || !this.getHomePos().isWithinDistance(this.getPos(), 20.0D)) {
+            if (this.getTarget() == null) {
                 this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
             }
         } else {
@@ -250,7 +232,6 @@ public class SealEntity extends AnimalEntity {
     }
 
     static {
-        HOME_POS = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
         TRAVEL_POS = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
         ACTIVELY_TRAVELLING = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
@@ -292,13 +273,12 @@ public class SealEntity extends AnimalEntity {
         private void updateVelocity() {
             if (this.seal.isTouchingWater()) {
                 this.seal.setVelocity(this.seal.getVelocity().add(0.0D, 0.005D, 0.0D));
-                if (!this.seal.getHomePos().isWithinDistance(this.seal.getPos(), 16.0D)) {
-                    this.seal.setMovementSpeed(Math.max(this.seal.getMovementSpeed() / 1.5F, 0.1F));
-                }
+                this.seal.setMovementSpeed(Math.max(this.seal.getMovementSpeed() / 1.5F, 0.1F));
 
                 if (this.seal.isBaby()) {
                     this.seal.setMovementSpeed(Math.max(this.seal.getMovementSpeed() / 2.0F, 0.08F));
                 }
+
             } else if (this.seal.onGround) {
                 this.seal.setMovementSpeed(Math.max(this.seal.getMovementSpeed() / 1.5F, 0.08F));
             }
@@ -311,7 +291,7 @@ public class SealEntity extends AnimalEntity {
                 double d = this.targetX - this.seal.getX();
                 double e = this.targetY - this.seal.getY();
                 double f = this.targetZ - this.seal.getZ();
-                double g = (double)MathHelper.sqrt(d * d + e * e + f * f);
+                double g = MathHelper.sqrt(d * d + e * e + f * f);
                 e /= g;
                 float h = (float)(MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
                 this.seal.yaw = this.changeAngle(this.seal.yaw, h, 90.0F);
