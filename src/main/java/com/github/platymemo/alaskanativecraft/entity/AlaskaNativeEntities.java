@@ -1,19 +1,19 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
-import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -28,28 +28,32 @@ public class AlaskaNativeEntities {
 	public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaNativeItems.DIAMOND_HARPOON));
 	public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaNativeItems.NETHERITE_HARPOON));
 
-	public static final EntityType<SealEntity> HARBOR_SEAL = add("harbor_seal", FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SealEntity::new)
-			.dimensions(EntityDimensions.fixed(1.0F, 0.6F)).build());
-	public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT, PtarmiganEntity::new)
-			.dimensions(EntityDimensions.fixed(0.5F, 0.5F)).build());
+	public static final EntityType<SealEntity> HARBOR_SEAL = add("harbor_seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, false, 1.0F, 0.6F));
+	public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
+	public static final EntityType<MooseEntity> MOOSE = add("moose", createEntity(SpawnGroup.CREATURE, MooseEntity::new, true, 1.5F, 1.3F));
+	public static final EntityType<DogsledEntity> DOGSLED = add("dogsled", createEntity(SpawnGroup.MISC, DogsledEntity::new, false, 1.5F, 1.0F));
 
 	public static void register() {
 		for (Identifier id : ENTITY_TYPES.keySet()) {
 			Registry.register(Registry.ENTITY_TYPE, id, ENTITY_TYPES.get(id));
 		}
 
-		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.HARBOR_SEAL, SealEntity.createMobAttributes().
-				add(EntityAttributes.GENERIC_MAX_HEALTH, 15.0D).
-				add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
-				add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D));
+		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.HARBOR_SEAL, SealEntity.createSealAttributes());
+		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
+		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.MOOSE, MooseEntity.createMooseAttributes());
 
-		FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.PTARMIGAN, PtarmiganEntity.createMobAttributes().
-				add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D).
-				add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4000000059604645D).
-				add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D));
+		//initSpawns();
 	}
 
-	private static <T extends EntityType<?>> T add(String name, T type) {
+	private static void initSpawns() {
+		// TODO
+		// Fill this out and remove the biome mixins
+		BiomeModifications.addSpawn(
+				ctx -> ctx.getBiome().getCategory() == Biome.Category.OCEAN, SpawnGroup.CREATURE, AlaskaNativeEntities.HARBOR_SEAL, 1, 2, 3
+		);
+	}
+
+	private static <E extends EntityType<?>> E add(String name, E type) {
 		Identifier id = new Identifier(AlaskaNativeCraft.MOD_ID, name);
 		ENTITY_TYPES.put(id, type);
 		return type;
@@ -57,5 +61,12 @@ public class AlaskaNativeEntities {
 
 	private static EntityType<HarpoonEntity> createHarpoon(HarpoonItem item) {
 		return FabricEntityTypeBuilder.<HarpoonEntity>create(SpawnGroup.MISC, (entity, world) -> new HarpoonEntity(entity, world, item)).dimensions(EntityDimensions.fixed(0.5F, 0.5F)).build();
+	}
+
+	private static <T extends Entity> EntityType<T> createEntity(SpawnGroup group, net.minecraft.entity.EntityType.EntityFactory<T> factory, boolean changingDimensions, float width, float height) {
+		if (changingDimensions) {
+			return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.changing(width, height)).build();
+		}
+		return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.fixed(width, height)).build();
 	}
 }

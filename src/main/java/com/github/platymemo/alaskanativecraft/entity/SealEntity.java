@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -39,6 +40,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class SealEntity extends AnimalEntity {
+    public static final EntityDimensions ADULT = EntityDimensions.changing(1.0F, 0.6F);
+    public static final EntityDimensions PUP = EntityDimensions.changing(0.5F, 0.3F);
     private static final TrackedData<BlockPos> TRAVEL_POS;
     private static final TrackedData<Boolean> ACTIVELY_TRAVELLING;
 
@@ -54,11 +57,11 @@ public class SealEntity extends AnimalEntity {
     }
 
     private BlockPos getTravelPos() {
-        return (BlockPos)this.dataTracker.get(TRAVEL_POS);
+        return this.dataTracker.get(TRAVEL_POS);
     }
 
     private boolean isActivelyTravelling() {
-        return (Boolean)this.dataTracker.get(ACTIVELY_TRAVELLING);
+        return this.dataTracker.get(ACTIVELY_TRAVELLING);
     }
 
     private void setActivelyTravelling(boolean travelling) {
@@ -86,14 +89,17 @@ public class SealEntity extends AnimalEntity {
         this.setTravelPos(new BlockPos(l, m, n));
     }
 
+    public static DefaultAttributeContainer.Builder createSealAttributes() {
+        return SealEntity.createMobAttributes().
+                add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D).
+                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
+                add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
+    }
+
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
         this.setTravelPos(BlockPos.ORIGIN);
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
-    }
-
-    public static boolean canSpawn(EntityType<SealEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return pos.getY() < world.getSeaLevel() + 4 && world.getBaseLightLevel(pos, 0) > 8;
     }
 
     protected void initGoals() {
@@ -110,6 +116,10 @@ public class SealEntity extends AnimalEntity {
         this.targetSelector.add(0, new FollowTargetGoal(this, SalmonEntity.class, true));
         this.targetSelector.add(0, new FollowTargetGoal(this, CodEntity.class, true));
         this.targetSelector.add(0, new FollowTargetGoal(this, SquidEntity.class, true));
+    }
+
+    public EntityDimensions getDimensions(EntityPose pose) {
+        return this.isBaby() ? PUP : ADULT;
     }
 
     public boolean canFly() {
@@ -174,7 +184,7 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return (PassiveEntity)AlaskaNativeEntities.HARBOR_SEAL.create(world);
+        return AlaskaNativeEntities.HARBOR_SEAL.create(world);
     }
 
     public boolean isBreedingItem(ItemStack stack) {
@@ -191,13 +201,6 @@ public class SealEntity extends AnimalEntity {
 
     public void tickMovement() {
         super.tickMovement();
-    }
-
-    protected void onGrowUp() {
-        super.onGrowUp();
-        if (!this.isBaby() && this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-            this.dropItem(AlaskaNativeItems.MUKTUK, 1);
-        }
     }
 
     public void travel(Vec3d movementInput) {
@@ -365,7 +368,7 @@ public class SealEntity extends AnimalEntity {
 
             if (serverPlayerEntity != null) {
                 serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-                Criteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, (PassiveEntity)null);
+                Criteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, null);
             }
 
             this.animal.resetLoveTicks();
@@ -389,7 +392,7 @@ public class SealEntity extends AnimalEntity {
         ApproachFoodHoldingPlayerGoal(SealEntity seal, double speed, Item attractiveItem) {
             this.seal = seal;
             this.speed = speed;
-            this.attractiveItems = Sets.newHashSet(new Item[]{attractiveItem});
+            this.attractiveItems = Sets.newHashSet(attractiveItem);
             this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
         }
 
@@ -511,9 +514,9 @@ public class SealEntity extends AnimalEntity {
             } else {
                 BlockPos blockPos = this.locateClosestWater(this.mob.world, this.mob, 16, 4);
                 if (blockPos != null) {
-                    this.targetX = (double)blockPos.getX();
-                    this.targetY = (double)blockPos.getY();
-                    this.targetZ = (double)blockPos.getZ();
+                    this.targetX = blockPos.getX();
+                    this.targetY = blockPos.getY();
+                    this.targetZ = blockPos.getZ();
                     return true;
                 } else {
                     return this.findTarget();

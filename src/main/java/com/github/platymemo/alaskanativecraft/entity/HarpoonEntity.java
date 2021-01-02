@@ -51,7 +51,6 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
     public HarpoonEntity(World world, LivingEntity owner, HarpoonItem item, ItemStack stack) {
         super(item.getType(), owner, world);
-        this.harpoonStack = new ItemStack(item);
         this.harpoonStack = stack.copy();
         this.state = HarpoonEntity.State.FLYING;
         this.dataTracker.set(ENCHANTED, stack.hasGlint());
@@ -92,7 +91,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
     @Environment(EnvType.CLIENT)
     public boolean isEnchanted() {
-        return (Boolean)this.dataTracker.get(ENCHANTED);
+        return this.dataTracker.get(ENCHANTED);
     }
 
     @Nullable
@@ -139,7 +138,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             this.state = State.LANDED;
             return;
         }
-        if (!inWater || this.state == State.LANDED) { return; }
+        if (!inWater || this.state != State.FLYING) { return; }
 
         // Revert previous calculations
         Vec3d velocity = this.getVelocity();
@@ -162,19 +161,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         velocity = this.getVelocity();
         double distanceFromLiquidHeight = this.getY() + velocity.y - (double)blockPos.getY() - (double)f;
 
-        if (this.state != State.FLYING) {
-            if (this.state == State.HOOKED_IN_ENTITY) {
-                // TODO
-            }
-        }
         // The harpoon is still flying through water, so make it buoyant
-        else {
-            if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
-                this.state = State.BOBBING;
-            }
-            else
-                this.setVelocity(velocity.x, velocity.y + 0.02500000037252903D, velocity.z);
+        if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
+            this.state = State.BOBBING;
         }
+        else
+            this.setVelocity(velocity.x, velocity.y + 0.02500000037252903D, velocity.z);
 
         velocity = this.getVelocity().multiply(this.getDragInWater());
         h += velocity.x;
@@ -202,7 +194,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         }
 
         Entity entity2 = this.getOwner();
-        DamageSource damageSource = createHarpoonDamageSource(this, (Entity)(entity2 == null ? this : entity2));
+        DamageSource damageSource = createHarpoonDamageSource(this, (entity2 == null ? this : entity2));
         this.dealtDamage = true;
         SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
         if (entity.damage(damageSource, f)) {

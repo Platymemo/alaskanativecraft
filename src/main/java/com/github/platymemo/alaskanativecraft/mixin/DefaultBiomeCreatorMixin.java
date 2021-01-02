@@ -19,7 +19,7 @@ public class DefaultBiomeCreatorMixin {
                 target = "Lnet/minecraft/world/gen/feature/DefaultBiomeFeatures;addBatsAndMonsters(Lnet/minecraft/world/biome/SpawnSettings$Builder;)V"),
             method = "createFrozenOcean",
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private static void addSealsOnIcebergs(boolean monument, CallbackInfoReturnable<Biome> ci, SpawnSettings.Builder builder) {
+    private static void addSealsAndPtarmigansOnIcebergs(boolean monument, CallbackInfoReturnable<Biome> ci, SpawnSettings.Builder builder) {
         builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(AlaskaNativeEntities.HARBOR_SEAL, 2, 1, 5));
         builder.spawn(SpawnGroup.AMBIENT, new SpawnSettings.SpawnEntry(AlaskaNativeEntities.PTARMIGAN, 5, 1, 3));
     }

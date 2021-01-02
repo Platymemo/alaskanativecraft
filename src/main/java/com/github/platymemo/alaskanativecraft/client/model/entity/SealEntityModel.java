@@ -61,10 +61,6 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
         return Iterables.concat(super.getBodyParts(), ImmutableList.of(this.stomach), ImmutableList.of(this.tail));
     }
 
-    /*
-    * TODO
-    * Make the animations more seal-like (currently copies Turtles)
-    */
     @Override
     public void setAngles(T sealEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         this.head.pitch = headPitch * 0.017453292F;

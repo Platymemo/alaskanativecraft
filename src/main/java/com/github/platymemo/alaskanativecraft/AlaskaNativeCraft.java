@@ -7,17 +7,11 @@ import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaNativeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
+import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 
 public class AlaskaNativeCraft implements ModInitializer {
 
@@ -35,6 +29,8 @@ public class AlaskaNativeCraft implements ModInitializer {
 		AlaskaNativeTags.register();
 
 		AlaskaNativeData.init();
+
+
 
 		FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
 			if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {

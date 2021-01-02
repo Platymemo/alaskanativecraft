@@ -8,10 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.model.TurtleEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -25,7 +22,6 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
     public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         if (sealEntity.isBaby()) {
             this.shadowRadius *= 0.5F;
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
         }
 
         super.render(sealEntity, f, g, matrixStack, vertexConsumerProvider, i);
@@ -33,5 +29,12 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
 
     public Identifier getTexture(SealEntity sealEntity) {
         return TEXTURE;
+    }
+
+    protected void setupTransforms(SealEntity sealEntity, MatrixStack matrixStack, float f, float g, float h) {
+        super.setupTransforms(sealEntity, matrixStack, f, g, h);
+        if (sealEntity.isBaby()) {
+            matrixStack.scale(0.5F, 0.5F, 0.5F);
+        }
     }
 }

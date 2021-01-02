@@ -1,14 +1,28 @@
 {
   "item.alaskanativecraft.muktuk": "Muktuk",
+  "item.alaskanativecraft.seal": "Raw Seal",
+  "item.alaskanativecraft.cooked_seal": "Seal Steak",
+  "item.alaskanativecraft.ptarmigan": "Raw Ptarmigan",
+  "item.alaskanativecraft.cooked_ptarmigan": "Cooked Ptarmigan",
+  "item.alaskanativecraft.venison": "Raw Venison",
+  "item.alaskanativecraft.cooked_venison": "Venison Steak",
   "item.alaskanativecraft.wooden_harpoon": "Wooden Harpoon",
   "item.alaskanativecraft.stone_harpoon": "Stone Harpoon",
   "item.alaskanativecraft.iron_harpoon": "Iron Harpoon",
   "item.alaskanativecraft.golden_harpoon": "Gold Harpoon",
   "item.alaskanativecraft.diamond_harpoon": "Diamond Harpoon",
   "item.alaskanativecraft.netherite_harpoon": "Netherite Harpoon",
+  "item.alaskanativecraft.oak_dogsled": "Oak Dogsled",
+  "item.alaskanativecraft.spruce_dogsled": "Spruce Dogsled",
+  "item.alaskanativecraft.birch_dogsled": "Birch Dogsled",
+  "item.alaskanativecraft.jungle_dogsled": "Jungle Dogsled",
+  "item.alaskanativecraft.acacia_dogsled": "Acacia Dogsled",
+  "item.alaskanativecraft.dark_oak_dogsled": "Dark Oak Dogsled",
 
   "block.alaskanativecraft.whale_meat_block": "Whale Meat",
 
   "entity.alaskanativecraft.harbor_seal": "Harbor Seal",
-  "entity.alaskanativecraft.ptarmigan": "Ptarmigan"
+  "entity.alaskanativecraft.ptarmigan": "Ptarmigan",
+  "entity.alaskanativecraft.moose": "Moose",
+  "entity.alaskanativecraft.dogsled": "Dogsled"
 }
