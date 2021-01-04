@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.block;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaNativeTags;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
@@ -21,7 +22,7 @@ public class AlaskaNativeBlocks {
     private static final Map<Identifier, BlockItem> ITEMS = new LinkedHashMap<>();
     private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
 
-    public static final Block WHALE_MEAT_BLOCK = add("whale_meat_block", new WhaleMeatBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroup.BREWING);
+    public static final Block WHALE_MEAT_BLOCK = add("whale_meat_block", new WhaleMeatBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).breakByTool(AlaskaNativeTags.ULUS).sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroup.BREWING);
 
     private static <B extends Block> B add(String name, B block, ItemGroup tab) {
         Item.Settings settings = new Item.Settings();

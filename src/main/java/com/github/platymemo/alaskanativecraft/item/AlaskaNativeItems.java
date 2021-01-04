@@ -27,6 +27,8 @@ public class AlaskaNativeItems {
     public static final Item VENISON;
     public static final Item COOKED_VENISON;
 
+    public static final UluItem ULU;
+
     public static final HarpoonItem WOODEN_HARPOON;
     public static final HarpoonItem STONE_HARPOON;
     public static final HarpoonItem IRON_HARPOON;
@@ -70,6 +72,8 @@ public class AlaskaNativeItems {
         COOKED_PTARMIGAN = add("cooked_ptarmigan", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
         VENISON = add("venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = add("cooked_venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
+
+        ULU = add("ulu", new UluItem(new Item.Settings().group(ItemGroup.TOOLS).maxDamage(472)));
 
         WOODEN_HARPOON = add("wooden_harpoon", new HarpoonItem(ToolMaterials.WOOD, 4.0F, -2.2F, () -> AlaskaNativeEntities.WOODEN_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
         STONE_HARPOON = add("stone_harpoon", new HarpoonItem(ToolMaterials.STONE, 4.0F, -2.3F, () -> AlaskaNativeEntities.STONE_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
