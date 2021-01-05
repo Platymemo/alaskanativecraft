@@ -1,0 +1,22 @@
+{
+  "pattern": [
+    "/C ",
+    "/##",
+    "///"
+  ],
+  "key": {
+    "C": {
+      "tag": "c:chests"
+    },
+    "#": {
+      "item": "minecraft:dark_oak_planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:dark_oak_dogsled"
+  },
+  "type": "minecraft:crafting_shaped"
+}

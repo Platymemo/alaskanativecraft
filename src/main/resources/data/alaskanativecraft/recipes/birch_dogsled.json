@@ -1,0 +1,22 @@
+{
+  "pattern": [
+    "/C ",
+    "/##",
+    "///"
+  ],
+  "key": {
+    "C": {
+      "tag": "c:chests"
+    },
+    "#": {
+      "item": "minecraft:birch_planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:birch_dogsled"
+  },
+  "type": "minecraft:crafting_shaped"
+}

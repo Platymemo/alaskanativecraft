@@ -1,0 +1,9 @@
+{
+  "ingredient": {
+    "tag": "c:venison"
+  },
+  "result": "alaskanativecraft:cooked_venison",
+  "experience": 0.35,
+  "cookingtime": 600,
+  "type": "campfire_cooking"
+}

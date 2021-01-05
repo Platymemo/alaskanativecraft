@@ -1,0 +1,22 @@
+{
+  "pattern": [
+    "###",
+    " / ",
+    "III"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:ulu"
+  },
+  "type": "minecraft:crafting_shaped"
+}

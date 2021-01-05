@@ -1,13 +1,12 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaNativeBlocks;
-import com.github.platymemo.alaskanativecraft.config.AlaskaNativeData;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaNativeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.fabricmc.fabric.impl.registry.sync.FabricRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -27,10 +26,6 @@ public class AlaskaNativeCraft implements ModInitializer {
 		AlaskaNativeBlocks.register();
 		AlaskaNativeEntities.register();
 		AlaskaNativeTags.register();
-
-		AlaskaNativeData.init();
-
-
 
 		FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
 			if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {

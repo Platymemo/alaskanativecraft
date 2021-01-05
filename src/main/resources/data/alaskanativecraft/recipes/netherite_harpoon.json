@@ -1,0 +1,12 @@
+{
+  "base": {
+    "item": "alaskanativecraft:diamond_harpoon"
+  },
+  "addition": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "result": {
+    "item": "alaskanativecraft:netherite_harpoon"
+  },
+  "type": "smithing"
+}

@@ -1,0 +1,9 @@
+{
+  "ingredient": {
+    "item": "alaskanativecraft:ptarmigan"
+  },
+  "result": "alaskanativecraft:cooked_ptarmigan",
+  "experience": 0.35,
+  "cookingtime": 100,
+  "type": "smoking"
+}

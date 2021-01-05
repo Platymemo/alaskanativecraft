@@ -7,16 +7,18 @@
     "AnvilScreenHandlerMixin",
     "DefaultBiomeCreatorMixin",
     "DefaultBiomeFeaturesMixin",
+    "EfficiencyEnchantmentMixin",
     "IglooGeneratorMixin",
     "LeadLengthMixin",
+    "LuckEnchantmentMixin",
     "PolarBearMixin",
     "SnowballEntityMixin"
   ],
   "client": [
-    "client.MinecraftClientMixin",
     "client.ClientPlayerEntityMixin",
     "client.ClientPlayNetworkHandlerMixin",
     "client.ItemRendererMixin",
+    "client.MinecraftClientMixin",
     "client.PlayerEntityRendererMixin"
   ],
   "injectors": {

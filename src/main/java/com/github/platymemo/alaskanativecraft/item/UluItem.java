@@ -23,6 +23,6 @@ public class UluItem extends ShearsItem {
     }
 
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
-        return state.isOf(AlaskaNativeBlocks.WHALE_MEAT_BLOCK) ? 0.5F : super.getMiningSpeedMultiplier(stack, state);
+        return state.isOf(AlaskaNativeBlocks.WHALE_MEAT_BLOCK) ? 1.5F : super.getMiningSpeedMultiplier(stack, state);
     }
 }

@@ -1,0 +1,22 @@
+{
+  "pattern": [
+    " S#",
+    " /S",
+    "/  "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:wooden_harpoon"
+  },
+  "type": "minecraft:crafting_shaped"
+}

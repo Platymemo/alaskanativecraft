@@ -1,0 +1,9 @@
+{
+  "ingredient": {
+    "item": "alaskanativecraft:seal"
+  },
+  "result": "alaskanativecraft:cooked_seal",
+  "experience": 0.35,
+  "cookingtime": 600,
+  "type": "campfire_cooking"
+}

@@ -1,0 +1,22 @@
+{
+  "pattern": [
+    "/C ",
+    "/##",
+    "///"
+  ],
+  "key": {
+    "C": {
+      "tag": "c:chests"
+    },
+    "#": {
+      "item": "minecraft:jungle_planks"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:jungle_dogsled"
+  },
+  "type": "minecraft:crafting_shaped"
+}
