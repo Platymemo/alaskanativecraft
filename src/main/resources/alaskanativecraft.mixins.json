@@ -17,6 +17,7 @@
   "client": [
     "client.ClientPlayerEntityMixin",
     "client.ClientPlayNetworkHandlerMixin",
+    "client.ItemColorsMixin",
     "client.ItemRendererMixin",
     "client.MinecraftClientMixin",
     "client.PlayerEntityRendererMixin"

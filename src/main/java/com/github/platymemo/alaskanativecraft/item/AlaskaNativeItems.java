@@ -2,7 +2,9 @@ package com.github.platymemo.alaskanativecraft.item;
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
+import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
@@ -35,6 +37,11 @@ public class AlaskaNativeItems {
     public static final HarpoonItem GOLDEN_HARPOON;
     public static final HarpoonItem DIAMOND_HARPOON;
     public static final HarpoonItem NETHERITE_HARPOON;
+
+    public static final KuspukItem KUSPUK_HOOD;
+    public static final KuspukItem KUSPUK_BODY;
+    public static final KuspukItem KUSPUK_SKIRT;
+    public static final KuspukItem KUSPUK_PANTS;
 
     public static final DogsledItem OAK_DOGSLED;
     public static final DogsledItem SPRUCE_DOGSLED;
@@ -81,6 +88,11 @@ public class AlaskaNativeItems {
         GOLDEN_HARPOON = add("golden_harpoon", new HarpoonItem(ToolMaterials.GOLD, 4.0F, -2.7F, () -> AlaskaNativeEntities.GOLDEN_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
         DIAMOND_HARPOON = add("diamond_harpoon", new HarpoonItem(ToolMaterials.DIAMOND, 4.0F, -2.7F, () -> AlaskaNativeEntities.DIAMOND_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
         NETHERITE_HARPOON = add("netherite_harpoon", new HarpoonItem(ToolMaterials.NETHERITE, 4.0F, -2.8F, () -> AlaskaNativeEntities.NETHERITE_HARPOON, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
+
+        KUSPUK_HOOD = add("kuspuk_hood", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_BODY = add("kuspuk_body", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_SKIRT = add("kuspuk_skirt", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_PANTS = add("kuspuk_pants", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
 
         OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
         SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
