@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(ItemColors.class)
 public class ItemColorsMixin {
 
-    @Inject(at = @At(value = "HEAD", shift = At.Shift.BY, by = 5), method = "create", locals = LocalCapture.PRINT)
+    @Inject(at = @At("RETURN"), method = "create", locals = LocalCapture.CAPTURE_FAILHARD)
     private static void addKuspuks(BlockColors blockColors, CallbackInfoReturnable<ItemColors> cir, ItemColors itemColors) {
-        itemColors.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem)stack.getItem()).getColor(stack), AlaskaNativeItems.KUSPUK_HOOD, AlaskaNativeItems.KUSPUK_BODY, AlaskaNativeItems.KUSPUK_SKIRT, AlaskaNativeItems.KUSPUK_PANTS);
+        itemColors.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem)stack.getItem()).getColor(stack), AlaskaNativeItems.KUSPUK_HOOD, AlaskaNativeItems.KUSPUK_BODY, AlaskaNativeItems.KUSPUK_SKIRT);
     }
 }

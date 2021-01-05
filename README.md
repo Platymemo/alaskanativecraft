@@ -37,6 +37,7 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 1. Add Moose Entity Texture
 2. Add Dogsled Item Textures
 3. Add Seal Meat Item Textures
+4. Fix Kuspuk Textures (currently leather armor)
 4. Refine Harbor Seal's Texture
 5. Refine Dogsled Entity Textures
 6. Refine Muktuk texture
