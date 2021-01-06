@@ -1,0 +1,16 @@
+{
+  "pattern": [
+    "###",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "group": "kuspuk_hoods",
+  "result": {
+    "item": "alaskanativecraft:kuspuk_hood"
+  },
+  "type": "minecraft:crafting_shaped"
+}

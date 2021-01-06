@@ -1,0 +1,22 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alaskanativecraft:kuspuk_hood",
+      "alaskanativecraft:kuspuk_body"
+    ]
+  },
+  "criteria": {
+    "enter_snow": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:snow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_snow"
+    ]
+  ]
+}

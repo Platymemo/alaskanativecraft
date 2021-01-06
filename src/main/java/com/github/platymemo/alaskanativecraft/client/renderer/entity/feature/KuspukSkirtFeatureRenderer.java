@@ -5,12 +5,10 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.feature.Kuspuk
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.PlayerModelPart;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -20,7 +18,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -34,7 +31,6 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         ItemStack armorItemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-
         if (armorItemStack.getItem() == AlaskaNativeItems.KUSPUK_BODY) {
             int color = ((DyeableArmorItem)armorItemStack.getItem()).getColor(armorItemStack);
             float f = (float)(color >> 16 & 255) / 255.0F;
@@ -42,7 +38,6 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
             float h = (float)(color & 255) / 255.0F;
             matrixStack.push();
             matrixStack.translate(0.0D, 0.0625D, 0.0D);
-            this.getContextModel().copyStateTo(this.model);
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());
             this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, f, g, h, 1.0F);
             matrixStack.pop();

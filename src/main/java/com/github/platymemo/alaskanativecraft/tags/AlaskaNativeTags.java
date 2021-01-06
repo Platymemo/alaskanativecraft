@@ -12,6 +12,7 @@ public class AlaskaNativeTags {
     public static final Tag<Item> ULUS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "ulus"));
     public static final Tag<Item> HARPOONS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "harpoons"));
     public static final Tag<Item> DOGSLEDS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "dogsleds"));
+    public static final Tag<Item> KUSPUKS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "kuspuks"));
 
     public static void register() {
         CommonBlockTags.register();

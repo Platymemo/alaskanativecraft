@@ -40,7 +40,6 @@ public class AlaskaNativeItems {
 
     public static final KuspukItem KUSPUK_HOOD;
     public static final KuspukItem KUSPUK_BODY;
-    public static final KuspukItem KUSPUK_SKIRT;
 
     public static final DogsledItem OAK_DOGSLED;
     public static final DogsledItem SPRUCE_DOGSLED;
@@ -90,7 +89,6 @@ public class AlaskaNativeItems {
 
         KUSPUK_HOOD = add("kuspuk_hood", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
         KUSPUK_BODY = add("kuspuk_body", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
-        KUSPUK_SKIRT = add("kuspuk_skirt", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
 
         OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
         SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
