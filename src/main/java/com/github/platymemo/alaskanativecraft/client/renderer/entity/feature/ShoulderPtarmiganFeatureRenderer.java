@@ -31,9 +31,7 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
 
     private void renderShoulderPtarmigan(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T player, float limbAngle, float limbDistance, float headYaw, float headPitch, boolean leftShoulder) {
         CompoundTag compoundTag = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
-        EntityType.get(compoundTag.getString("id")).filter((entityType) -> {
-            return entityType == AlaskaNativeEntities.PTARMIGAN;
-        }).ifPresent((entityType) -> {
+        EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaNativeEntities.PTARMIGAN).ifPresent((entityType) -> {
             matrices.push();
             matrices.translate(leftShoulder ? 0.4000000059604645D : -0.4000000059604645D, player.isInSneakingPose() ? -1.2999999523162842D : -1.5D, 0.0D);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(PtarmiganEntityRenderer.TEXTURE));

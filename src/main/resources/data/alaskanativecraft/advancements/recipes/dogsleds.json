@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alaskanativecraft:oak_dogsled",
+      "alaskanativecraft:spruce_dogsled",
+      "alaskanativecraft:birch_dogsled",
+      "alaskanativecraft:jungle_dogsled",
+      "alaskanativecraft:acacia_dogsled",
+      "alaskanativecraft:dark_oak_dogsled"
+    ]
+  },
+  "criteria": {
+    "enter_snow": {
+      "trigger": "minecraft:enter_block",
+      "conditions": {
+        "block": "minecraft:snow"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "enter_snow"
+    ]
+  ]
+}

@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.client;
 
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.KuspukSkirtFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -18,7 +19,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer {
     }
 
     @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;Z)V")
-    private void addPtarmiganShoulderFeature(EntityRenderDispatcher dispatcher, boolean bl, CallbackInfo ci) {
+    private void addFeatures(EntityRenderDispatcher dispatcher, boolean bl, CallbackInfo ci) {
+        this.addFeature(new KuspukSkirtFeatureRenderer(this));
         this.addFeature(new ShoulderPtarmiganFeatureRenderer(this));
     }
 }

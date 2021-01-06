@@ -15,6 +15,7 @@
       "item": "minecraft:stick"
     }
   },
+  "group": "dogsleds",
   "result": {
     "item": "alaskanativecraft:dark_oak_dogsled"
   },
