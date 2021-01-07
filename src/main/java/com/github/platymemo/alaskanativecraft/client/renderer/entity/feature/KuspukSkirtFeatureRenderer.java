@@ -22,7 +22,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
-    private final KuspukSkirtModel model = new KuspukSkirtModel();
+    private final KuspukSkirtModel<T> model = new KuspukSkirtModel<>();
     private final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/skirt_layer.png");
 
     public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context) {
@@ -37,8 +37,14 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
             float g = (float)(color >> 8 & 255) / 255.0F;
             float h = (float)(color & 255) / 255.0F;
             matrixStack.push();
-            matrixStack.translate(0.0D, 0.0625D, 0.0D);
+            if (livingEntity.isInSneakingPose()) {
+                matrixStack.translate(0.0D, -2.55D, 0.3D);
+            } else {
+                matrixStack.translate(0.0D, -2.7D, 0.0D);
+            }
+            matrixStack.scale(2.5F, 2.5F, 2.5F);
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());
+            this.model.setAngles(livingEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
             this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, f, g, h, 1.0F);
             matrixStack.pop();
         }

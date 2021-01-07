@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "alaskanativecraft:item/stone_harpoon"
+    "layer0": "alaskanativecraft:item/harpoon/stone_harpoon"
   }
 }
