@@ -1,0 +1,38 @@
+
+{
+  "entity.seal.ambient": {
+    "category": "neutral",
+    "sounds": [
+      "alaskanativecraft:seal_ambient"
+    ],
+    "subtitle": "alaskanativecraft:subtitles.seal.ambient"
+  },
+  "entity.seal.ambient.baby": {
+    "category": "neutral",
+    "sounds": [
+      "alaskanativecraft:seal_ambient_baby"
+    ],
+    "subtitle": "alaskanativecraft:subtitles.seal.ambient.baby"
+  },
+  "entity.seal.hurt": {
+    "category": "neutral",
+    "sounds": [
+      "alaskanativecraft:seal_hurt"
+    ],
+    "subtitle": "alaskanativecraft:subtitles.seal.hurt"
+  },
+  "entity.moose.ambient": {
+    "category": "neutral",
+    "sounds": [
+      "alaskanativecraft:moose_huff"
+    ],
+    "subtitle": "alaskanativecraft:subtitles.moose.ambient"
+  },
+  "entity.moose.hurt": {
+    "category": "neutral",
+    "sounds": [
+      "alaskanativecraft:moose_grunt"
+    ],
+    "subtitle": "alaskanativecraft:subtitles.moose.hurt"
+  }
+}

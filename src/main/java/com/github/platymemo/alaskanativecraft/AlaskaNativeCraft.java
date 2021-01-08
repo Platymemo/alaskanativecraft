@@ -3,6 +3,7 @@ package com.github.platymemo.alaskanativecraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaNativeBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaNativeTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -25,6 +26,7 @@ public class AlaskaNativeCraft implements ModInitializer {
 		AlaskaNativeBlocks.register();
 		AlaskaNativeEntities.register();
 		AlaskaNativeTags.register();
+		AlaskaNativeSoundEvents.register();
 
 		FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
 			if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {

@@ -9,7 +9,7 @@ For setup instructions please see the [fabric wiki page](https://fabricmc.net/wi
 Creative Commons Zero v1.0 Universal
 The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typical software licenses, CC0 disclaims warranties.
 
-## Currently Implemented
+## Current Features
 
 ### Mobs
 
@@ -31,22 +31,17 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 
 1. Whale Meat Block
 
-## TODO
+### Other
 
-### 1. Textures
+1. Snowball Chickens or Parrots to make them Ptarmigans!
 
-1. Add Moose Entity Texture
-2. Add Kuspuk Textures
-3. Refine Harbor Seal's Texture
-4. Refine Dogsled Entity Textures
-5. Refine Muktuk texture
-6. Change Harpoon Models (and add different colors for different materials)
+## Upcoming Features
 
-### 2. Content
+### 1. Content
 
 1. Whales
    - Whale hunting
-      - On Death: Corpse floats to surface to become multiblock whale corpse
+      - On Death: Corpse floats to surface to be harvested
    - Whale oil (fuel source)
 2. Walruses
    - Walrus tusk
@@ -54,3 +49,7 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 3. Switch to using Biome Modifications API
 4. Make Whale Meat Blocks act like Mushroom Blocks
 5. Change dogsled control scheme?
+
+## Thanks
+
+A special thanks to Daimons for the Moose Texture and to everybody in The Fabric Project Discord Server

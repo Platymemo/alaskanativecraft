@@ -27,10 +27,12 @@ public enum HarpoonItemRenderer {
 
         model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
+
         if(entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
             matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
             matrices.translate(0, 2, 0);
         } else {
+            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
             matrices.translate(0, 0.85, 0);
         }
 

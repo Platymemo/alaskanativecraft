@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.google.common.collect.Sets;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
@@ -140,7 +141,10 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return !this.isTouchingWater() && this.onGround && !this.isBaby() ? SoundEvents.ENTITY_TURTLE_AMBIENT_LAND : super.getAmbientSound();
+        if (!this.isTouchingWater() && this.onGround) {
+            return this.isBaby() ? AlaskaNativeSoundEvents.ENTITY_SEAL_AMBIENT_BABY : AlaskaNativeSoundEvents.ENTITY_SEAL_AMBIENT;
+        }
+        return super.getAmbientSound();
     }
 
     protected void playSwimSound(float volume) {
@@ -153,12 +157,12 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     protected SoundEvent getHurtSound(DamageSource source) {
-        return this.isBaby() ? SoundEvents.ENTITY_TURTLE_HURT_BABY : SoundEvents.ENTITY_TURTLE_HURT;
+        return AlaskaNativeSoundEvents.ENTITY_SEAL_HURT;
     }
 
     @Nullable
     protected SoundEvent getDeathSound() {
-        return this.isBaby() ? SoundEvents.ENTITY_TURTLE_DEATH_BABY : SoundEvents.ENTITY_TURTLE_DEATH;
+        return AlaskaNativeSoundEvents.ENTITY_SEAL_HURT;
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {

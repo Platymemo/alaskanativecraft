@@ -36,5 +36,12 @@
   "entity.alaskanativecraft.ptarmigan": "Ptarmigan",
   "entity.alaskanativecraft.moose": "Moose",
 
-  "entity.alaskanativecraft.dogsled": "Dogsled"
+  "entity.alaskanativecraft.dogsled": "Dogsled",
+
+  "alaskanativecraft:subtitles.seal.ambient": "Harp Seal Barks",
+  "alaskanativecraft:subtitles.seal.ambient.baby": "Baby Harp Seal Barks",
+  "alaskanativecraft:subtitles.seal.hurt": "Harp Seal Hurts",
+
+  "alaskanativecraft:subtitles.moose.ambient": "Moose Huffs",
+  "alaskanativecraft:subtitles.moose.hurt": "Moose Hurts"
 }

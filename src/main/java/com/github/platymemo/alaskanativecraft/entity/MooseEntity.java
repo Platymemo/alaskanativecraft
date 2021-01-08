@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
+import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.*;
@@ -46,7 +47,7 @@ public class MooseEntity extends AnimalEntity {
 
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0D));
+        this.goalSelector.add(1, new EscapeDangerGoal(this, 2.5D));
         this.goalSelector.add(2, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(3, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.WHEAT), false));
         this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
@@ -57,15 +58,13 @@ public class MooseEntity extends AnimalEntity {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_COW_AMBIENT;
+        return this.random.nextInt(100) > 75 ? AlaskaNativeSoundEvents.ENTITY_MOOSE_AMBIENT : super.getAmbientSound();
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COW_HURT;
-    }
+    protected SoundEvent getHurtSound(DamageSource source) { return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT; }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COW_DEATH;
+        return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT;
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {
@@ -73,19 +72,11 @@ public class MooseEntity extends AnimalEntity {
     }
 
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.2F;
     }
 
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.getItem() == Items.BUCKET && !this.isBaby()) {
-            player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
-            ItemStack itemStack2 = ItemUsage.method_30012(itemStack, player, Items.MILK_BUCKET.getDefaultStack());
-            player.setStackInHand(hand, itemStack2);
-            return ActionResult.success(this.world.isClient);
-        } else {
-            return super.interactMob(player, hand);
-        }
+        return super.interactMob(player, hand);
     }
 
     public MooseEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {

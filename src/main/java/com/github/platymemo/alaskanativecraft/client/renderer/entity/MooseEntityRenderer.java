@@ -16,7 +16,7 @@ public class MooseEntityRenderer extends MobEntityRenderer<MooseEntity, MooseEnt
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/moose.png");
 
     public MooseEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new MooseEntityModel(), 0.7F);
+        super(entityRenderDispatcher, new MooseEntityModel(), 1.5F);
     }
 
     public void render(MooseEntity mooseEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
