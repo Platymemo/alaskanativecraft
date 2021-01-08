@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
+import com.github.platymemo.alaskanativecraft.config.AlaskaNativeConfig;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 import com.google.common.collect.ImmutableMap;
@@ -36,6 +37,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class MooseEntity extends AnimalEntity {
+    private static AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
     public static final EntityDimensions ADULT = EntityDimensions.fixed(3.0F, 2.6F);
     public static final EntityDimensions CALF = EntityDimensions.fixed(1.5F, 1.3F);
 
@@ -184,6 +186,9 @@ public class MooseEntity extends AnimalEntity {
         }
 
         public boolean canStart() {
+            if (!config.mooseEatBark) {
+                return false;
+            }
             if (!this.moose.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return false;
             } else if (!class_5493.method_30955(this.moose)) {

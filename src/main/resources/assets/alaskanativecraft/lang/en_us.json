@@ -43,5 +43,8 @@
   "alaskanativecraft:subtitles.seal.hurt": "Harp Seal Hurts",
 
   "alaskanativecraft:subtitles.moose.ambient": "Moose Huffs",
-  "alaskanativecraft:subtitles.moose.hurt": "Moose Hurts"
+  "alaskanativecraft:subtitles.moose.hurt": "Moose Hurts",
+
+  "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
+  "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs"
 }
