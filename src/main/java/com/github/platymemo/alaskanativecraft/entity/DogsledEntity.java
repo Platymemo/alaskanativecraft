@@ -3,6 +3,7 @@ package com.github.platymemo.alaskanativecraft.entity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

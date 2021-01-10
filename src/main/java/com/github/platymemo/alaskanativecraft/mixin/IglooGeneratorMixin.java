@@ -35,7 +35,7 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void addDogsleds(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci, StructurePlacementData structurePlacementData) {
         BlockPos chestLocation = this.pos.add(Structure.transform(structurePlacementData, new BlockPos(0, 1, 0)));
-        if (!lastPos.equals(chestLocation)) {
+        if (lastPos == null || !lastPos.equals(chestLocation)) {
             DogsledEntity dogsled = new DogsledEntity(structureWorldAccess.toServerWorld(), (double) chestLocation.getX() + 0.5D, (double) chestLocation.getY() + 0.5D, (double) chestLocation.getZ() + 0.5D);
             dogsled.setDogsledType(DogsledEntity.Type.SPRUCE);
             dogsled.setCustomName(new LiteralText("Abandoned Dogsled"));

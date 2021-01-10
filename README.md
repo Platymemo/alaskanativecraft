@@ -13,7 +13,7 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 
 ### Mobs
 
-1. Harbor Seal
+1. Harp Seal
 2. Ptarmigan
 3. Moose
 4. Dogsleds
@@ -37,7 +37,7 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 
 ## Upcoming Features
 
-### 1. Content
+### Content
 
 1. Whales
    - Whale hunting
@@ -46,9 +46,8 @@ The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and typ
 2. Walruses
    - Walrus tusk
       - Walrus tools?
-3. Switch to using Biome Modifications API
-4. Make Whale Meat Blocks act like Mushroom Blocks
-5. Change dogsled control scheme?
+3. Make Whale Meat Blocks act like Mushroom Blocks
+4. Change dogsled control scheme?
 
 ## Thanks
 

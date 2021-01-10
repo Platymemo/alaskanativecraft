@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntityModel<SealEntity>> {
-    private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/harbor_seal.png");
+    private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/harp_seal.png");
 
     public SealEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new SealEntityModel(0.0F), 0.7F);

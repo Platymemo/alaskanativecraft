@@ -1,6 +1,5 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.google.common.collect.Sets;
 import net.minecraft.advancement.criterion.Criteria;
@@ -112,11 +111,11 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
         this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.2000000476837158D, true));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(7, new MeleeAttackGoal(this, 1.2000000476837158D, true));
         this.targetSelector.add(0, new FollowTargetGoal(this, SalmonEntity.class, true));
         this.targetSelector.add(0, new FollowTargetGoal(this, CodEntity.class, true));
-        this.targetSelector.add(0, new FollowTargetGoal(this, SquidEntity.class, true));
+        this.targetSelector.add(1, new FollowTargetGoal(this, SquidEntity.class, true));
     }
 
     public EntityDimensions getDimensions(EntityPose pose) {
@@ -188,7 +187,7 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return AlaskaNativeEntities.HARBOR_SEAL.create(world);
+        return AlaskaNativeEntities.HARP_SEAL.create(world);
     }
 
     public boolean isBreedingItem(ItemStack stack) {

@@ -57,7 +57,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
 
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARBOR_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARP_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.PTARMIGAN, (entityRenderDispatcher, context) -> new PtarmiganEntityRenderer(entityRenderDispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.MOOSE, (entityRenderDispatcher, context) -> new MooseEntityRenderer(entityRenderDispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DOGSLED, (entityRenderDispatcher, context) -> new DogsledEntityRenderer(entityRenderDispatcher));

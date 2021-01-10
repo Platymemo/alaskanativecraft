@@ -5,9 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AnvilScreenHandlerMixin",
-    "DefaultBiomeCreatorMixin",
-    "DefaultBiomeFeaturesMixin",
     "EfficiencyEnchantmentMixin",
+    "FoxMixin",
     "IglooGeneratorMixin",
     "LeadLengthMixin",
     "LuckEnchantmentMixin",
