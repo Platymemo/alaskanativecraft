@@ -46,5 +46,7 @@
   "alaskanativecraft:subtitles.moose.hurt": "Moose Hurts",
 
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
-  "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs"
+  "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs",
+
+  "itemGroup.alaskanativecraft.items": "Alaska Native Craft:
 }
