@@ -19,6 +19,9 @@
   "item.alaskanativecraft.diamond_harpoon": "Diamond Harpoon",
   "item.alaskanativecraft.netherite_harpoon": "Netherite Harpoon",
 
+  "death.attack.harpoon": "%1$s was harpooned by %2$s",
+  "death.attack.harpoon.item": "%1$s was harpooned by %2$s with %3$s",
+
   "item.alaskanativecraft.kuspuk_hood": "Kuspuk Hood",
   "item.alaskanativecraft.kuspuk_body": "Kuspuk",
   "item.alaskanativecraft.kuspuk_skirt": "Kuspuk Skirt",
@@ -35,7 +38,6 @@
   "entity.alaskanativecraft.harp_seal": "Harp Seal",
   "entity.alaskanativecraft.ptarmigan": "Ptarmigan",
   "entity.alaskanativecraft.moose": "Moose",
-
   "entity.alaskanativecraft.dogsled": "Dogsled",
 
   "alaskanativecraft:subtitles.seal.ambient": "Harp Seal Barks",
@@ -48,5 +50,5 @@
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
   "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs",
 
-  "itemGroup.alaskanativecraft.items": "Alaska Native Craft:
+  "itemGroup.alaskanativecraft.items": "Alaska Native Craft"
 }

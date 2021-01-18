@@ -20,6 +20,7 @@
     "client.ClientPlayNetworkHandlerMixin",
     "client.ItemColorsMixin",
     "client.ItemRendererMixin",
+    "client.LivingEntityRendererMixin",
     "client.MinecraftClientMixin",
     "client.PlayerEntityRendererMixin"
   ],

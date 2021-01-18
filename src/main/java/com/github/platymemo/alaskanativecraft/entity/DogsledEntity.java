@@ -214,6 +214,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
             this.setVelocity(Vec3d.ZERO);
         }
 
+        for (Entity passenger : this.getPassengerList()) {
+            if (passenger instanceof WolfEntity) {
+                ((WolfEntity)passenger).method_29242(((WolfEntity)passenger), false);
+            }
+        }
+
         this.checkBlockCollision();
         List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox().expand(0.20000000298023224D, -0.009999999776482582D, 0.20000000298023224D), EntityPredicates.canBePushedBy(this));
         if (!list.isEmpty()) {
