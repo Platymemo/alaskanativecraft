@@ -161,7 +161,7 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
 		ModelPart dewlap = new ModelPart(this);
 		dewlap.setPivot(-0.5F, 5.3817F, -4.3128F);
 		neck.addChild(dewlap);
-		dewlap.setTextureOffset(0, 21).addCuboid(0.0F, -3.0F, -2.0F, 0.0F, 6.0F, 4.0F, 0.0F, false);
+		dewlap.setTextureOffset(0, 21).addCuboid(1.0F, -3.0F, -2.0F, 0.0F, 6.0F, 4.0F, 0.0F, false);
 	}
 
 	public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {

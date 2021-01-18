@@ -13,4 +13,4 @@ Saltyseadoggo:
 Platymemo:
 1. Dogs pulling dogsleds now move their legs
 1. Added proper translation for harpoon based death messages
-1. 
+1. Fixed Moose dewlap to be properly centered
