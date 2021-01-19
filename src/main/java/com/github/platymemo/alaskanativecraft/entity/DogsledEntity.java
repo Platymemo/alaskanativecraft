@@ -16,6 +16,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.PiglinBrain;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -216,7 +217,10 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
         for (Entity passenger : this.getPassengerList()) {
             if (passenger instanceof WolfEntity) {
-                ((WolfEntity)passenger).method_29242(((WolfEntity)passenger), false);
+                if (!MathHelper.approximatelyEquals(this.getVelocity().length(), 0.0D)) {
+                    ((TameableEntity) passenger).setInSittingPose(false);
+                }
+                ((LivingEntity) passenger).method_29242(((LivingEntity) passenger), false);
             }
         }
 
