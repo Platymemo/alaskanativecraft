@@ -105,7 +105,7 @@ public class SealEntity extends AnimalEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new FleeEntityGoal(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 2.0D));
-        this.goalSelector.add(1, new SealEntity.MateGoal(this, 1.0D));
+        this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Items.SALMON.asItem()));
         this.goalSelector.add(3, new FleeEntityGoal(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
@@ -352,35 +352,6 @@ public class SealEntity extends AnimalEntity {
 
         public boolean canStart() {
             return !this.mob.isTouchingWater() && super.canStart();
-        }
-    }
-
-    static class MateGoal extends AnimalMateGoal {
-        private final SealEntity seal;
-
-        MateGoal(SealEntity seal, double speed) {
-            super(seal, speed);
-            this.seal = seal;
-        }
-
-        protected void breed() {
-            ServerPlayerEntity serverPlayerEntity = this.animal.getLovingPlayer();
-            if (serverPlayerEntity == null && this.mate.getLovingPlayer() != null) {
-                serverPlayerEntity = this.mate.getLovingPlayer();
-            }
-
-            if (serverPlayerEntity != null) {
-                serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-                Criteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, null);
-            }
-
-            this.animal.resetLoveTicks();
-            this.mate.resetLoveTicks();
-            Random random = this.animal.getRandom();
-            if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                this.world.spawnEntity(new ExperienceOrbEntity(this.world, this.animal.getX(), this.animal.getY(), this.animal.getZ(), random.nextInt(7) + 1));
-            }
-
         }
     }
 
