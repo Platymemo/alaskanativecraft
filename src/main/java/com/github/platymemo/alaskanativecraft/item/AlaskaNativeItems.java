@@ -7,10 +7,7 @@ import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +44,10 @@ public class AlaskaNativeItems {
     public static final DogsledItem JUNGLE_DOGSLED;
     public static final DogsledItem ACACIA_DOGSLED;
     public static final DogsledItem DARK_OAK_DOGSLED;
+
+    public static final SpawnEggItem SEAL_SPAWN_EGG;
+    public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
+    public static final SpawnEggItem MOOSE_SPAWN_EGG;
 
     private static <I extends Item> I add(String name, I item) {
         ITEMS.put(new Identifier(AlaskaNativeCraft.MOD_ID, name), item);
@@ -96,6 +97,10 @@ public class AlaskaNativeItems {
         JUNGLE_DOGSLED = add("jungle_dogsled", new DogsledItem(DogsledEntity.Type.JUNGLE , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
         ACACIA_DOGSLED = add("acacia_dogsled", new DogsledItem(DogsledEntity.Type.ACACIA , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
         DARK_OAK_DOGSLED = add("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+
+        SEAL_SPAWN_EGG = add("seal_spawn_egg", new SpawnEggItem(AlaskaNativeEntities.HARP_SEAL, 8355711, 3355443, (new Item.Settings()).group(ItemGroup.MISC)));
+        PTARMIGAN_SPAWN_EGG = add("ptarmigan_spawn_egg", new SpawnEggItem(AlaskaNativeEntities.PTARMIGAN, 13750737, 12763849, (new Item.Settings()).group(ItemGroup.MISC)));
+        MOOSE_SPAWN_EGG = add("moose_spawn_egg", new SpawnEggItem(AlaskaNativeEntities.MOOSE, 3811094, 14075317, (new Item.Settings()).group(ItemGroup.MISC)));
     }
 
 }
