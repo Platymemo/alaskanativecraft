@@ -41,7 +41,7 @@ public class PtarmiganEntity extends ParrotEntity {
     public PtarmiganEntity createChild(ServerWorld world, PassiveEntity entity) {
         PtarmiganEntity ptarmiganEntity = AlaskaNativeEntities.PTARMIGAN.create(world);
         if (ptarmiganEntity != null)
-            ptarmiganEntity.setType(this.random.nextBoolean() ? this.getPtarmiganType() : ((PtarmiganEntity)entity).getPtarmiganType());
+            ptarmiganEntity.setType(this.random.nextBoolean() ? this.getPtarmiganType() : ((PtarmiganEntity) entity).getPtarmiganType());
         return ptarmiganEntity;
     }
 

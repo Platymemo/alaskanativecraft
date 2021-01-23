@@ -66,9 +66,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
     public void poseOnShoulder(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float limbAngle, float limbDistance, float headYaw, float headPitch, int danceAngle) {
         this.animateModel(PtarmiganEntityModel.Pose.ON_SHOULDER);
         this.setAngles(PtarmiganEntityModel.Pose.ON_SHOULDER, danceAngle, limbAngle, limbDistance, 0.0F, headYaw, headPitch);
-        this.getParts().forEach((modelPart) -> {
-            modelPart.render(matrices, vertexConsumer, light, overlay);
-        });
+        this.getParts().forEach((modelPart) -> modelPart.render(matrices, vertexConsumer, light, overlay));
     }
 
     private void setAngles(PtarmiganEntityModel.Pose pose, int danceAngle, float limbAngle, float limbDistance, float age, float headYaw, float headPitch) {
@@ -80,17 +78,17 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
         this.tail.pivotX = 0.0F;
         this.rightWing.pivotX = -1.5F;
         this.leftWing.pivotX = 1.5F;
-        switch(pose) {
+        switch (pose) {
             case SITTING:
                 break;
             case PARTY:
-                float cosDanceAngle = MathHelper.cos((float)danceAngle);
-                float sinDanceAngle = MathHelper.sin((float)danceAngle);
+                float cosDanceAngle = MathHelper.cos((float) danceAngle);
+                float sinDanceAngle = MathHelper.sin((float) danceAngle);
                 this.head.pivotX = cosDanceAngle;
                 this.head.pivotY = 15.69F + sinDanceAngle;
                 this.head.pitch = 0.0F;
                 this.head.yaw = 0.0F;
-                this.head.roll = MathHelper.sin((float)danceAngle) * 0.4F;
+                this.head.roll = MathHelper.sin((float) danceAngle) * 0.4F;
                 this.torso.pivotX = cosDanceAngle;
                 this.torso.pivotY = 16.5F + sinDanceAngle;
                 this.leftWing.roll = -0.0873F - age;
@@ -137,7 +135,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
         this.rightLeg.pivotY = 22.0F;
         this.leftLeg.roll = 0.0F;
         this.rightLeg.roll = 0.0F;
-        switch(pose) {
+        switch (pose) {
             case SITTING:
                 float f = 1.9F;
                 this.head.pivotY = 17.59F;
@@ -178,11 +176,11 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
     }
 
     @Environment(EnvType.CLIENT)
-    public static enum Pose {
+    public enum Pose {
         FLYING,
         STANDING,
         SITTING,
         PARTY,
-        ON_SHOULDER;
+        ON_SHOULDER
     }
 }

@@ -1,6 +1,5 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
-import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import net.minecraft.loot.LootTables;
 import net.minecraft.structure.*;

@@ -15,18 +15,17 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
     private static final Identifier[] TEXTURES = new Identifier[]{new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/oak.png"),
-                                                                  new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/spruce.png"),
-                                                                  new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/birch.png"),
-                                                                  new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/jungle.png"),
-                                                                  new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/acacia.png"),
-                                                                  new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/spruce.png"),
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/birch.png"),
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/jungle.png"),
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/acacia.png"),
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
     protected final DogsledEntityModel model = new DogsledEntityModel();
 
     public DogsledEntityRenderer(EntityRenderDispatcher dispatcher) {

@@ -24,8 +24,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     }
 
     @ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
-                    method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-                    name = "p")
+            method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+            name = "p")
     private float changeLimbDistance(float limbDistance, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
             limbDistance = MathHelper.lerp(g, livingEntity.lastLimbDistance, livingEntity.limbDistance);

@@ -13,7 +13,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SnowballEntity.class)
 public class SnowballEntityMixin {
 
-    private static AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
+    private static final AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
 
     @Inject(at = @At("TAIL"), method = "onEntityHit")
     private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {

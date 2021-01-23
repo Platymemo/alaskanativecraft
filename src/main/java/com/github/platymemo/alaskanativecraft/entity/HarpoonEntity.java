@@ -109,14 +109,13 @@ public class HarpoonEntity extends PersistentProjectileEntity {
                 fluidHeight = fluidState.getHeight(this.world, blockPos);
             }
             Vec3d vec3d = this.getVelocity();
-            double distanceFromLiquidHeight = this.getY() + vec3d.y - (double)blockPos.getY() - (double)fluidHeight;
+            double distanceFromLiquidHeight = this.getY() + vec3d.y - (double) blockPos.getY() - (double) fluidHeight;
 
             // Get pitch, zero it if its minimal.
             if (vec3d.y > 0.032D) {
-                this.pitch = (float)(MathHelper.atan2(vec3d.y, MathHelper.sqrt(squaredHorizontalLength(vec3d))) * 57.2957763671875D);
+                this.pitch = (float) (MathHelper.atan2(vec3d.y, MathHelper.sqrt(squaredHorizontalLength(vec3d))) * 57.2957763671875D);
                 this.pitch = updateRotation(this.prevPitch, this.pitch);
-            }
-            else {
+            } else {
                 this.pitch = updateRotation(this.prevPitch, 0.0F);
             }
 
@@ -124,7 +123,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             if (Math.abs(distanceFromLiquidHeight) < 0.01D) {
                 distanceFromLiquidHeight += Math.signum(distanceFromLiquidHeight) * 0.1D;
             }
-            this.setVelocity(vec3d.x * 0.9D, vec3d.y - distanceFromLiquidHeight * (double)this.random.nextFloat() * 0.2D, vec3d.z * 0.9D);
+            this.setVelocity(vec3d.x * 0.9D, vec3d.y - distanceFromLiquidHeight * (double) this.random.nextFloat() * 0.2D, vec3d.z * 0.9D);
             vec3d = this.getVelocity();
             this.updatePosition(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
             this.checkBlockCollision();
@@ -138,7 +137,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             this.state = State.LANDED;
             return;
         }
-        if (!inWater || this.state != State.FLYING) { return; }
+        if (!inWater || this.state != State.FLYING) {
+            return;
+        }
 
         // Revert previous calculations
         Vec3d velocity = this.getVelocity();
@@ -159,13 +160,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             f = fluidState.getHeight(this.world, blockPos);
         }
         velocity = this.getVelocity();
-        double distanceFromLiquidHeight = this.getY() + velocity.y - (double)blockPos.getY() - (double)f;
+        double distanceFromLiquidHeight = this.getY() + velocity.y - (double) blockPos.getY() - (double) f;
 
         // The harpoon is still flying through water, so make it buoyant
         if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
             this.state = State.BOBBING;
-        }
-        else
+        } else
             this.setVelocity(velocity.x, velocity.y + 0.02500000037252903D, velocity.z);
 
         velocity = this.getVelocity().multiply(this.getDragInWater());
@@ -189,7 +189,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         Entity entity = entityHitResult.getEntity();
         float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
         if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity)entity;
+            LivingEntity livingEntity = (LivingEntity) entity;
             f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
         }
 
@@ -203,10 +203,10 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             }
 
             if (entity instanceof LivingEntity) {
-                LivingEntity livingEntity2 = (LivingEntity)entity;
+                LivingEntity livingEntity2 = (LivingEntity) entity;
                 if (entity2 instanceof LivingEntity) {
                     EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
-                    EnchantmentHelper.onTargetDamaged((LivingEntity)entity2, livingEntity2);
+                    EnchantmentHelper.onTargetDamaged((LivingEntity) entity2, livingEntity2);
                 }
 
                 this.onHit(livingEntity2);
@@ -233,8 +233,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     public void onPlayerCollision(PlayerEntity player) {
         Entity entity = this.getOwner();
         if (entity == null || entity.getUuid() == player.getUuid()) {
-            if (this.state == State.FLYING) { return; }
-            else if (!this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
+            if (this.state == State.FLYING) {
+                return;
+            } else if (!this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
                 boolean bl = this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED || this.pickupType == PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY && player.abilities.creativeMode || this.isNoClip() && this.getOwner().getUuid() == player.getUuid();
                 if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED && !player.inventory.insertStack(this.asItemStack())) {
                     bl = false;
@@ -244,8 +245,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
                     player.sendPickup(this, 1);
                     this.remove();
                 }
-            }
-            else
+            } else
                 super.onPlayerCollision(player);
         }
     }

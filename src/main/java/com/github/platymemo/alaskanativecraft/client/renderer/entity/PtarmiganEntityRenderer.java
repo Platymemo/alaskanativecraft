@@ -13,8 +13,8 @@ import net.minecraft.util.math.MathHelper;
 @Environment(EnvType.CLIENT)
 public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, PtarmiganEntityModel> {
     public static final Identifier[] TEXTURES = {new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/ptarmigan.png"),
-                                                new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/brown_ptarmigan.png"),
-                                                new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/brown_ptarmigan.png"),
+            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
 
     public PtarmiganEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new PtarmiganEntityModel(), 0.3F);

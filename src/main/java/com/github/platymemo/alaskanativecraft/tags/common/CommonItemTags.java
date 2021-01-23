@@ -11,5 +11,6 @@ public class CommonItemTags {
     public static final Tag<Item> VENISON = TagRegistry.item(new Identifier("c", "venison"));
     public static final Tag<Item> COOKED_VENISON = TagRegistry.item(new Identifier("c", "cooked_venison"));
 
-    public static void register() { }
+    public static void register() {
+    }
 }

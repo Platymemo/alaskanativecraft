@@ -14,24 +14,24 @@ import net.minecraft.util.registry.Registry;
 
 public class AlaskaNativeCraft implements ModInitializer {
 
-	public static final String MOD_ID = "alaskanativecraft";
+    public static final String MOD_ID = "alaskanativecraft";
 
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+    @Override
+    public void onInitialize() {
+        // This code runs as soon as Minecraft is in a mod-load-ready state.
+        // However, some things (like resources) may still be uninitialized.
+        // Proceed with mild caution.
 
-		AlaskaNativeItems.register();
-		AlaskaNativeBlocks.register();
-		AlaskaNativeEntities.register();
-		AlaskaNativeTags.register();
-		AlaskaNativeSoundEvents.register();
+        AlaskaNativeItems.register();
+        AlaskaNativeBlocks.register();
+        AlaskaNativeEntities.register();
+        AlaskaNativeTags.register();
+        AlaskaNativeSoundEvents.register();
 
-		FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
-			if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {
-				item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
-			}
-		})).build();
-	}
+        FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
+            if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {
+                item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
+            }
+        })).build();
+    }
 }

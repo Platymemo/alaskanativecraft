@@ -2,7 +2,6 @@ package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.google.common.collect.Sets;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -23,16 +22,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.*;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -229,7 +229,7 @@ public class SealEntity extends AnimalEntity {
     }
 
     public boolean tryAttack(Entity target) {
-        boolean bl = target.damage(DamageSource.mob(this), (float)((int)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE)));
+        boolean bl = target.damage(DamageSource.mob(this), (float) ((int) this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE)));
         if (bl) {
             this.dealDamage(this, target);
         }
@@ -258,7 +258,7 @@ public class SealEntity extends AnimalEntity {
 
         public boolean isValidPosition(BlockPos pos) {
             if (this.entity instanceof SealEntity) {
-                SealEntity sealEntity = (SealEntity)this.entity;
+                SealEntity sealEntity = (SealEntity) this.entity;
                 if (sealEntity.isActivelyTravelling()) {
                     return this.world.getBlockState(pos).isOf(Blocks.WATER);
                 }
@@ -299,13 +299,13 @@ public class SealEntity extends AnimalEntity {
                 double f = this.targetZ - this.seal.getZ();
                 double g = MathHelper.sqrt(d * d + e * e + f * f);
                 e /= g;
-                float h = (float)(MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
+                float h = (float) (MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
                 this.seal.yaw = this.changeAngle(this.seal.yaw, h, 90.0F);
                 this.seal.bodyYaw = this.seal.yaw;
                 this.seal.headYaw = this.seal.yaw;
-                float i = (float)(this.speed * this.seal.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+                float i = (float) (this.speed * this.seal.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
                 this.seal.setMovementSpeed(MathHelper.lerp(0.125F, this.seal.getMovementSpeed(), i));
-                this.seal.setVelocity(this.seal.getVelocity().add(0.0D, (double)this.seal.getMovementSpeed() * e * 0.1D, 0.0D));
+                this.seal.setVelocity(this.seal.getVelocity().add(0.0D, (double) this.seal.getMovementSpeed() * e * 0.1D, 0.0D));
             } else {
                 this.seal.setMovementSpeed(0.0F);
             }
@@ -399,7 +399,7 @@ public class SealEntity extends AnimalEntity {
         }
 
         public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float)(this.seal.getBodyYawSpeed() + 20), (float)this.seal.getLookPitchSpeed());
+            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getBodyYawSpeed() + 20), (float) this.seal.getLookPitchSpeed());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
                 this.seal.getNavigation().stop();
             } else {
@@ -430,11 +430,11 @@ public class SealEntity extends AnimalEntity {
             int k = random.nextInt(1025) - 512;
             int l = random.nextInt(9) - 4;
             int m = random.nextInt(1025) - 512;
-            if ((double)l + this.seal.getY() > (double)(this.seal.world.getSeaLevel() - 1)) {
+            if ((double) l + this.seal.getY() > (double) (this.seal.world.getSeaLevel() - 1)) {
                 l = 0;
             }
 
-            BlockPos blockPos = new BlockPos((double)k + this.seal.getX(), (double)l + this.seal.getY(), (double)m + this.seal.getZ());
+            BlockPos blockPos = new BlockPos((double) k + this.seal.getX(), (double) l + this.seal.getY(), (double) m + this.seal.getZ());
             this.seal.setTravelPos(blockPos);
             this.seal.setActivelyTravelling(true);
             this.noPath = false;

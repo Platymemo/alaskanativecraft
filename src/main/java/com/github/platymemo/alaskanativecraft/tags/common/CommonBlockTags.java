@@ -9,5 +9,6 @@ public class CommonBlockTags {
     public static final Tag<Block> LOGS_WITH_BARK = TagRegistry.block(new Identifier("c", "logs_with_bark"));
     public static final Tag<Block> CHESTS = TagRegistry.block(new Identifier("c", "chests"));
 
-    public static void register() { }
+    public static void register() {
+    }
 }

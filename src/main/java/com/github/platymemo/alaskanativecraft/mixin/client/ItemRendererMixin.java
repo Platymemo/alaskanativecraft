@@ -24,7 +24,7 @@ public class ItemRendererMixin {
             cancellable = true)
     public void renderHarpoons(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, CallbackInfo info) {
         BakedModel model = MinecraftClient.getInstance().getItemRenderer().getHeldItemModel(stack, world, entity);
-        if(stack.getItem() instanceof HarpoonItem && HarpoonItemRenderer.INSTANCE.render(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
+        if (stack.getItem() instanceof HarpoonItem && HarpoonItemRenderer.INSTANCE.render(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
             info.cancel();
         }
     }

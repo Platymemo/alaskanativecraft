@@ -35,7 +35,7 @@ public class MinecraftClientMixin {
             method = "doItemPick",
             cancellable = true)
     private void pickDogsledItem(CallbackInfo ci) {
-        Entity entity = ((EntityHitResult)this.crosshairTarget).getEntity();
+        Entity entity = ((EntityHitResult) this.crosshairTarget).getEntity();
 
         if (entity instanceof DogsledEntity) {
             ItemStack pickedDogsled = new ItemStack(((DogsledEntity) entity).asItem());

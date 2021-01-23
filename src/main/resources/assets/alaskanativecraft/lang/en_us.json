@@ -1,64 +1,49 @@
 {
   "itemGroup.alaskanativecraft.items": "Alaska Native Craft",
-
   "item.alaskanativecraft.muktuk": "Muktuk",
-
   "item.alaskanativecraft.seal": "Raw Seal",
   "item.alaskanativecraft.cooked_seal": "Seal Steak",
-
   "item.alaskanativecraft.ptarmigan": "Raw Ptarmigan",
   "item.alaskanativecraft.cooked_ptarmigan": "Cooked Ptarmigan",
-
   "item.alaskanativecraft.venison": "Raw Venison",
   "item.alaskanativecraft.cooked_venison": "Venison Steak",
-
   "item.alaskanativecraft.ulu": "Ulu",
-
   "item.alaskanativecraft.wooden_harpoon": "Wooden Harpoon",
   "item.alaskanativecraft.stone_harpoon": "Stone Harpoon",
   "item.alaskanativecraft.iron_harpoon": "Iron Harpoon",
   "item.alaskanativecraft.golden_harpoon": "Gold Harpoon",
   "item.alaskanativecraft.diamond_harpoon": "Diamond Harpoon",
   "item.alaskanativecraft.netherite_harpoon": "Netherite Harpoon",
-
   "item.alaskanativecraft.kuspuk_hood": "Kuspuk Hood",
   "item.alaskanativecraft.kuspuk_body": "Kuspuk",
   "item.alaskanativecraft.kuspuk_skirt": "Kuspuk Skirt",
-
   "item.alaskanativecraft.oak_dogsled": "Oak Dogsled",
   "item.alaskanativecraft.spruce_dogsled": "Spruce Dogsled",
   "item.alaskanativecraft.birch_dogsled": "Birch Dogsled",
   "item.alaskanativecraft.jungle_dogsled": "Jungle Dogsled",
   "item.alaskanativecraft.acacia_dogsled": "Acacia Dogsled",
   "item.alaskanativecraft.dark_oak_dogsled": "Dark Oak Dogsled",
-
   "item.alaskanativecraft.seal_spawn_egg": "Harp Seal Spawn Egg",
   "item.alaskanativecraft.ptarmigan_spawn_egg": "Ptarmigan Spawn Egg",
   "item.alaskanativecraft.moose_spawn_egg": "Moose Spawn Egg",
-
   "block.alaskanativecraft.whale_meat_block": "Whale Meat",
-
   "entity.alaskanativecraft.harp_seal": "Harp Seal",
   "entity.alaskanativecraft.ptarmigan": "Ptarmigan",
   "entity.alaskanativecraft.moose": "Moose",
   "entity.alaskanativecraft.dogsled": "Dogsled",
-
   "death.attack.harpoon": "%1$s was harpooned by %2$s",
   "death.attack.harpoon.item": "%1$s was harpooned by %2$s with %3$s",
-
   "alaskanativecraft:subtitles.seal.ambient": "Harp Seal Barks",
   "alaskanativecraft:subtitles.seal.ambient.baby": "Baby Harp Seal Barks",
   "alaskanativecraft:subtitles.seal.hurt": "Harp Seal Hurts",
   "alaskanativecraft:subtitles.moose.ambient": "Moose Huffs",
   "alaskanativecraft:subtitles.moose.hurt": "Moose Hurts",
-
   "subtitles.item.harpoon.hit": "Harpoon stabs",
   "subtitles.item.harpoon.hit_ground": "Harpoon vibrates",
   "subtitles.item.harpoon.return": "Harpoon returns",
   "subtitles.item.harpoon.riptide": "Harpoon zooms",
   "subtitles.item.harpoon.throw": "Harpoon clangs",
   "subtitles.item.harpoon.thunder": "Harpoon thunder cracks",
-
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
   "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs"
 }

@@ -73,8 +73,7 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
             this.setRotations(backLeftLeg, 0.0F, leftCalc, 0.0F);
             this.setRotations(frontRightLeg, 0.0F, rightCalc * 2.0F, 0.0F);
             this.setRotations(frontLeftLeg, 0.0F, leftCalc * 2.0F, 0.0F);
-        }
-        else {
+        } else {
             this.setRotations(backRightLeg, leftCalc, 0.0F, 0.0F);
             this.setRotations(backLeftLeg, rightCalc, 0.0F, 0.0F);
             this.setRotations(frontRightLeg, -1.0F + rightCalc, rightCalc * 2.0F, -1.0F + rightCalc);

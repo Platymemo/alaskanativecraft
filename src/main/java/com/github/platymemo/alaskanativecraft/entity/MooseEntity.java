@@ -4,7 +4,10 @@ import com.github.platymemo.alaskanativecraft.config.AlaskaNativeConfig;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.PillarBlock;
 import net.minecraft.class_5493;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
@@ -16,8 +19,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsage;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
@@ -37,7 +38,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class MooseEntity extends AnimalEntity {
-    private static AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
+    private static final AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
     public static final EntityDimensions ADULT = EntityDimensions.fixed(3.0F, 2.6F);
     public static final EntityDimensions CALF = EntityDimensions.fixed(1.5F, 1.3F);
 
@@ -63,7 +64,9 @@ public class MooseEntity extends AnimalEntity {
         return this.random.nextInt(100) > 75 ? AlaskaNativeSoundEvents.ENTITY_MOOSE_AMBIENT : super.getAmbientSound();
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) { return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT; }
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT;
+    }
 
     protected SoundEvent getDeathSound() {
         return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT;
@@ -110,8 +113,8 @@ public class MooseEntity extends AnimalEntity {
         protected BlockState logState;
         protected boolean logValid;
         private static final Map<Block, Block> STRIPPED_BLOCKS;
-        private double distance;
-        private double speed;
+        private final double distance;
+        private final double speed;
         private Vec3d target;
 
         public EatBarkGoal(MooseEntity moose, double distance, double speed) {
@@ -160,11 +163,11 @@ public class MooseEntity extends AnimalEntity {
         protected Vec3d locateLogPos() {
             BlockPos blockPos = this.moose.getBlockPos();
             Iterable<BlockPos> iterable = BlockPos.iterate(MathHelper.floor(this.moose.getX() - 3.0D),
-                                                           MathHelper.floor(this.moose.getY() - 6.0D),
-                                                           MathHelper.floor(this.moose.getZ() - 3.0D),
-                                                           MathHelper.floor(this.moose.getX() + 3.0D),
-                                                           MathHelper.floor(this.moose.getY() + 6.0D),
-                                                           MathHelper.floor(this.moose.getZ() + 3.0D));
+                    MathHelper.floor(this.moose.getY() - 6.0D),
+                    MathHelper.floor(this.moose.getZ() - 3.0D),
+                    MathHelper.floor(this.moose.getX() + 3.0D),
+                    MathHelper.floor(this.moose.getY() + 6.0D),
+                    MathHelper.floor(this.moose.getZ() + 3.0D));
             Iterator<BlockPos> position = iterable.iterator();
 
             BlockPos blockPos2;
@@ -176,11 +179,11 @@ public class MooseEntity extends AnimalEntity {
                     }
 
                     blockPos2 = position.next();
-                } while(blockPos.equals(blockPos2));
+                } while (blockPos.equals(blockPos2));
 
                 Block block = this.moose.world.getBlockState(blockPos2).getBlock();
                 bl = block.isIn(CommonBlockTags.LOGS_WITH_BARK);
-            } while(!bl);
+            } while (!bl);
 
             return Vec3d.ofBottomCenter(blockPos2);
         }

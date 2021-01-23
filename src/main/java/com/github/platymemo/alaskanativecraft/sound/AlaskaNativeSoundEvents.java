@@ -16,7 +16,8 @@ public class AlaskaNativeSoundEvents {
         return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));
     }
 
-    public static void register() {}
+    public static void register() {
+    }
 
     static {
         ENTITY_SEAL_AMBIENT = register(new Identifier(AlaskaNativeCraft.MOD_ID, "entity.seal.ambient"));

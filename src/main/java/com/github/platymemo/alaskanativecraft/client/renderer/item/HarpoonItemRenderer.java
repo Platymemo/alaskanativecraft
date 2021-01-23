@@ -19,7 +19,7 @@ public enum HarpoonItemRenderer {
     private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel();
 
     public boolean render(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
-        if(renderMode == ModelTransformation.Mode.GUI || renderMode == ModelTransformation.Mode.GROUND || renderMode == ModelTransformation.Mode.FIXED) {
+        if (renderMode == ModelTransformation.Mode.GUI || renderMode == ModelTransformation.Mode.GROUND || renderMode == ModelTransformation.Mode.FIXED) {
             return false;
         }
 
@@ -28,7 +28,7 @@ public enum HarpoonItemRenderer {
         model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
 
-        if(entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
+        if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
             matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180));
             matrices.translate(0, 2, 0);
         } else {
@@ -39,7 +39,7 @@ public enum HarpoonItemRenderer {
         matrices.scale(2.0F, -2.0F, -2.0F);
         VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
                 vertexConsumers,
-                this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem)stack.getItem()).getType())),
+                this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
                 false,
                 stack.hasGlint()
         );

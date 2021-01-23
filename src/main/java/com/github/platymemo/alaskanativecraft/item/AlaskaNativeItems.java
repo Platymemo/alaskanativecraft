@@ -1,9 +1,9 @@
 package com.github.platymemo.alaskanativecraft.item;
+
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
-import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -91,12 +91,12 @@ public class AlaskaNativeItems {
         KUSPUK_HOOD = add("kuspuk_hood", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
         KUSPUK_BODY = add("kuspuk_body", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
 
-        OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        BIRCH_DOGSLED = add("birch_dogsled", new DogsledItem(DogsledEntity.Type.BIRCH , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        JUNGLE_DOGSLED = add("jungle_dogsled", new DogsledItem(DogsledEntity.Type.JUNGLE , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        ACACIA_DOGSLED = add("acacia_dogsled", new DogsledItem(DogsledEntity.Type.ACACIA , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        DARK_OAK_DOGSLED = add("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK , (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        BIRCH_DOGSLED = add("birch_dogsled", new DogsledItem(DogsledEntity.Type.BIRCH, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        JUNGLE_DOGSLED = add("jungle_dogsled", new DogsledItem(DogsledEntity.Type.JUNGLE, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        ACACIA_DOGSLED = add("acacia_dogsled", new DogsledItem(DogsledEntity.Type.ACACIA, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        DARK_OAK_DOGSLED = add("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
 
         SEAL_SPAWN_EGG = add("seal_spawn_egg", new SpawnEggItem(AlaskaNativeEntities.HARP_SEAL, 8355711, 3355443, (new Item.Settings()).group(ItemGroup.MISC)));
         PTARMIGAN_SPAWN_EGG = add("ptarmigan_spawn_egg", new SpawnEggItem(AlaskaNativeEntities.PTARMIGAN, 13750737, 12763849, (new Item.Settings()).group(ItemGroup.MISC)));
