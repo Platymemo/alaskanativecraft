@@ -12,14 +12,16 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, PtarmiganEntityModel> {
-    public static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/ptarmigan.png");
+    public static final Identifier[] TEXTURES = {new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/ptarmigan.png"),
+                                                new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/brown_ptarmigan.png"),
+                                                new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
 
     public PtarmiganEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
         super(entityRenderDispatcher, new PtarmiganEntityModel(), 0.3F);
     }
 
     public Identifier getTexture(PtarmiganEntity ptarmiganEntity) {
-        return TEXTURE;
+        return TEXTURES[ptarmiganEntity.getPtarmiganType()];
     }
 
     public float getAnimationProgress(PtarmiganEntity ptarmiganEntity, float f) {

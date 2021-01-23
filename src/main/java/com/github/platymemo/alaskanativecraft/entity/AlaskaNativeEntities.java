@@ -52,6 +52,8 @@ public class AlaskaNativeEntities {
 		BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaNativeEntities.PTARMIGAN, 2, 2, 5);
 		BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.CREATURE, AlaskaNativeEntities.MOOSE, 1, 1, 3);
 		BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.AMBIENT, AlaskaNativeEntities.PTARMIGAN, 25, 2, 5);
+		BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.CREATURE, AlaskaNativeEntities.MOOSE, 1, 1, 3);
+		BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.AMBIENT, AlaskaNativeEntities.PTARMIGAN, 5, 1, 3);
 	}
 
 	private static <E extends EntityType<?>> E add(String name, E type) {
