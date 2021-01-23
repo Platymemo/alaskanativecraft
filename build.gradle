@@ -12,6 +12,12 @@ group = project.maven_group
 
 repositories {
 	jcenter()
+	maven {
+		url = "https://maven.fabricmc.net"
+	}
+	maven {
+		url = "http://maven.terraformersmc.com/releases"
+	}
 }
 
 dependencies {
@@ -24,7 +30,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Mod Menu integration
-	modImplementation "io.github.prospector:modmenu:${project.modmenu_version}"
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	// REI integration
 	modImplementation "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
