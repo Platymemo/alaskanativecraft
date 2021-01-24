@@ -19,3 +19,8 @@ Platymemo:
 6. Added spawn eggs for seals, ptarmigans, and moose
 7. Added Harpoon subtitles
 8. Added variations to ptarmigans
+
+### v1.0.2: Crashfix
+1. Fixed dogsleds so only tamed dogs can be attached
+2. Fixed dogsleds so baby dogs cannot pull dogsleds
+3. Fixed crash on startup from dev only value in production build
