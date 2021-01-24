@@ -43,9 +43,6 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
     private float changeLimbAngle(float limbAngle, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
             limbAngle = livingEntity.limbAngle - livingEntity.limbDistance * (1.0F - g);
-            if (livingEntity.isBaby()) {
-                limbAngle *= 3.0F;
-            }
         }
         return limbAngle;
     }

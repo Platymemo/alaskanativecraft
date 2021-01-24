@@ -230,7 +230,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
             for (Entity entity : list) {
                 if (!entity.hasPassenger(this)) {
-                    if (bl && this.getPassengerList().size() < 2 && !entity.hasVehicle() && entity instanceof WolfEntity && ((WolfEntity) entity).getOwner() != null) {
+                    if (bl && this.getPassengerList().size() < 2 && !entity.hasVehicle() && entity instanceof WolfEntity && ((WolfEntity) entity).getOwner() != null && !((WolfEntity) entity).isBaby()) {
                         entity.startRiding(this);
                     } else {
                         this.pushAwayFrom(entity);
