@@ -224,10 +224,6 @@ public class SealEntity extends AnimalEntity {
         return true;
     }
 
-    public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
-        this.damage(DamageSource.LIGHTNING_BOLT, Float.MAX_VALUE);
-    }
-
     public boolean tryAttack(Entity target) {
         boolean bl = target.damage(DamageSource.mob(this), (float) ((int) this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE)));
         if (bl) {
