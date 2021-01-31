@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "minecraft:oak_log",
     "minecraft:spruce_log",
