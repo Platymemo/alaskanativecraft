@@ -24,3 +24,9 @@ Platymemo:
 1. Fixed dogsleds so only tamed dogs can be attached
 2. Fixed dogsleds so baby dogs cannot pull dogsleds
 3. Fixed crash on startup from dev only value in production build
+
+### v1.1.0: A Berry Good Update
+1. Added Salmonberries, Cloudberries, Raspberries, and Blueberries
+2. Added each berry's respective berry bush
+3. Added Akutaq
+4. 

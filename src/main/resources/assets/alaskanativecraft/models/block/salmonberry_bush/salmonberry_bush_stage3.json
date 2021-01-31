@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "alaskanativecraft:block/salmonberry_bush/salmonberry_bush_stage3"
+  }
+}

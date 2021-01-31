@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "alaskanativecraft:block/raspberry_bush/raspberry_bush_stage1"
+  }
+}
