@@ -4,15 +4,18 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.DyeableItem;
 import net.minecraft.util.registry.Registry;
 
 import java.util.UUID;
@@ -22,6 +25,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         registerEntityRenderers();
+        registerItemColors();
         registerBlockRenderLayers();
         registerHarpoonPacket();
     }
@@ -51,6 +55,10 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
                 }
             });
         });
+    }
+
+    private static void registerItemColors() {
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AlaskaItems.KUSPUK_HOOD, AlaskaItems.KUSPUK_BODY);
     }
 
     private static void registerBlockRenderLayers() {
