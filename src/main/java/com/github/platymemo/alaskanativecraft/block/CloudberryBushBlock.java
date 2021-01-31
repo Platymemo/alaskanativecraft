@@ -3,8 +3,13 @@ package com.github.platymemo.alaskanativecraft.block;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.SweetBerryBushBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -14,10 +19,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class CloudberryBushBlock extends SweetBerryBushBlock {
+    private static final VoxelShape MID_SHAPE;
+    private static final VoxelShape FULL_SHAPE;
 
     public CloudberryBushBlock(Settings settings) {
         super(settings);
@@ -42,5 +51,26 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
         } else {
             return super.onUse(state, world, pos, player, hand, hit);
         }
+    }
+
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
+            entity.slowMovement(state, new Vec3d(1.0D, 0.90D, 1.0D));
+        }
+    }
+
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        if (state.get(AGE) > 0 && state.get(AGE) < 3) {
+            return MID_SHAPE;
+        } else if (state.get(AGE) == 3) {
+            return FULL_SHAPE;
+        } else {
+            return super.getOutlineShape(state, world, pos, context);
+        }
+    }
+
+    static {
+        MID_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
+        FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     }
 }
