@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "alaskanativecraft:cloudberries",
+    "alaskanativecraft:salmonberries",
+    "minecraft:sweet_berries",
+    "#c:blueberries",
+    "#c:raspberries"
+  ]
+}

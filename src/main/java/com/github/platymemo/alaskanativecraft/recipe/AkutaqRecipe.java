@@ -29,7 +29,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         for (int i = 0; i < inv.size(); ++i) {
             ItemStack itemStack = inv.getStack(i);
             if (!itemStack.isEmpty()) {
-                if (itemStack.getItem().isIn(AlaskaTags.BERRIES)) {
+                if (itemStack.getItem().isIn(AlaskaTags.AKUTAQ_BERRIES)) {
                     hasBerries = true;
                 } else if (itemStack.getItem().isIn(AlaskaTags.AKUTAQ_MEATS) && !hasMeat) {
                     hasMeat = true;
@@ -54,7 +54,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         ItemStack currentItemstack;
         for(int i = 0; i < inv.size(); ++i) {
             currentItemstack = inv.getStack(i);
-            if (!currentItemstack.isEmpty() && currentItemstack.getItem().isIn(AlaskaTags.BERRIES)) {
+            if (!currentItemstack.isEmpty() && currentItemstack.getItem().isIn(AlaskaTags.AKUTAQ_BERRIES)) {
                 switch (random.nextInt(8)) {
                     case 0:
                         SuspiciousStewItem.addEffectToStew(akutaq, StatusEffects.ABSORPTION, 400);

@@ -28,10 +28,10 @@ public class AlaskaItems {
     public static final Item VENISON;
     public static final Item COOKED_VENISON;
 
-    public static final Item SALMONBERRIES;
-    public static final Item RASPBERRIES;
-    public static final Item CLOUDBERRIES;
     public static final Item BLUEBERRIES;
+    public static final Item CLOUDBERRIES;
+    public static final Item RASPBERRIES;
+    public static final Item SALMONBERRIES;
 
     public static final SuspiciousStewItem AKUTAQ;
 
@@ -85,10 +85,10 @@ public class AlaskaItems {
         VENISON = add("venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = add("cooked_venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
 
-        SALMONBERRIES = add("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
-        RASPBERRIES = add("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
-        CLOUDBERRIES = add("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         BLUEBERRIES = add("blueberries", new AliasedBlockItem(AlaskaBlocks.BLUEBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        CLOUDBERRIES = add("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        RASPBERRIES = add("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        SALMONBERRIES = add("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
 
         AKUTAQ = add("akutaq", new SuspiciousStewItem(new Item.Settings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 

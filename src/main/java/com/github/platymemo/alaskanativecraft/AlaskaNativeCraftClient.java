@@ -1,12 +1,15 @@
 package com.github.platymemo.alaskanativecraft;
 
+import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,6 +22,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         registerEntityRenderers();
+        registerBlockRenderLayers();
         registerHarpoonPacket();
     }
 
@@ -47,6 +51,13 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
                 }
             });
         });
+    }
+
+    private static void registerBlockRenderLayers() {
+        BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.BLUEBERRY_BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.CLOUDBERRY_BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.RASPBERRY_BUSH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.SALMONBERRY_BUSH, RenderLayer.getCutout());
     }
 
     private static void registerEntityRenderers() {
