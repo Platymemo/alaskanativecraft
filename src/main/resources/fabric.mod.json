@@ -3,10 +3,12 @@
   "id": "alaskanativecraft",
   "version": "${version}",
   "name": "Alaska Native Craft",
-  "description": "This mod aims to add various parts of Alaska Native cultures to Minecraft!",
+  "description": "This mod aims to add various parts of Alaska Native cultures to Minecraft!\n\nArt Credit:\nMoose texture by Daimons\nRaspberries, Cloudberries, and Salmonberries by Kazoo",
   "authors": [
     "Platymemo",
-    ""
+    "Seasaltydoggo",
+    "Daimons",
+    "Kazoo"
   ],
   "contact": {
     "homepage": "https://github.com/Platymemo/alaskanativecraft",

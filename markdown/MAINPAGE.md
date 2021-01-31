@@ -32,3 +32,9 @@ Currently included features are described below.
 ![Dogsled With Dog](./images/dogsled_with_dog.png)
 ![Kuspuk and Harpoon](./images/kuspuk_and_harpoon.png)
 ![Kuspuk and Ulu](./images/kuspuk_and_ulu.png)
+
+## Art Credit
+
+Huge thanks to these artists for the textures they've provided! \
+- Daimons for the moose
+- Kazoo for the cloudberries, raspberries, and salmonberries
