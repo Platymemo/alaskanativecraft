@@ -2,7 +2,7 @@ package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -31,7 +31,7 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         ItemStack armorItemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-        if (armorItemStack.getItem() == AlaskaNativeItems.KUSPUK_BODY) {
+        if (armorItemStack.getItem() == AlaskaItems.KUSPUK_BODY) {
             int color = ((DyeableArmorItem) armorItemStack.getItem()).getColor(armorItemStack);
             float f = (float) (color >> 16 & 255) / 255.0F;
             float g = (float) (color >> 8 & 255) / 255.0F;

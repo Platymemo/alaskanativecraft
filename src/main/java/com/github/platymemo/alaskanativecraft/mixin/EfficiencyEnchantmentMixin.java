@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.minecraft.enchantment.EfficiencyEnchantment;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ public class EfficiencyEnchantmentMixin {
 
     @Inject(at = @At("HEAD"), method = "isAcceptableItem", cancellable = true)
     private void isUlu(ItemStack itemStack, CallbackInfoReturnable<Boolean> ci) {
-        if (itemStack.getItem() == AlaskaNativeItems.ULU) {
+        if (itemStack.getItem() == AlaskaItems.ULU) {
             ci.setReturnValue(true);
         }
     }

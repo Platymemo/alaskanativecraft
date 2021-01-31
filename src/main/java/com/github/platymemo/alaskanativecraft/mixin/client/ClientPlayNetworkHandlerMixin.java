@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.client;
 
-import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
+import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
@@ -28,7 +28,7 @@ public class ClientPlayNetworkHandlerMixin {
     private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo info, double x, double y, double z, EntityType<?> type) {
         Entity entity = null;
 
-        if (type == AlaskaNativeEntities.DOGSLED) {
+        if (type == AlaskaEntities.DOGSLED) {
             entity = new DogsledEntity(world, x, y, z);
         }
 

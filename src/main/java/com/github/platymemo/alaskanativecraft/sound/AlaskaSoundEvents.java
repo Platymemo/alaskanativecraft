@@ -5,7 +5,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class AlaskaNativeSoundEvents {
+public class AlaskaSoundEvents {
     public static final SoundEvent ENTITY_SEAL_AMBIENT;
     public static final SoundEvent ENTITY_SEAL_AMBIENT_BABY;
     public static final SoundEvent ENTITY_SEAL_HURT;

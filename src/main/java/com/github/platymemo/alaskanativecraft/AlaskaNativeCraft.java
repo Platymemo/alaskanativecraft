@@ -1,10 +1,11 @@
 package com.github.platymemo.alaskanativecraft;
 
-import com.github.platymemo.alaskanativecraft.block.AlaskaNativeBlocks;
-import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
-import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
-import com.github.platymemo.alaskanativecraft.tags.AlaskaNativeTags;
+import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
+import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
+import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemStack;
@@ -22,13 +23,14 @@ public class AlaskaNativeCraft implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        AlaskaNativeItems.register();
-        AlaskaNativeBlocks.register();
-        AlaskaNativeEntities.register();
-        AlaskaNativeTags.register();
-        AlaskaNativeSoundEvents.register();
+        AlaskaBlocks.register();
+        AlaskaItems.register();
+        AlaskaEntities.register();
+        AlaskaTags.register();
+        AlaskaSoundEvents.register();
+        AlaskaRecipes.register();
 
-        FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaNativeItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
+        FabricItemGroupBuilder.create(new Identifier(MOD_ID, "items")).icon(() -> AlaskaItems.MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
             if (Registry.ITEM.getId(item).getNamespace().equals(MOD_ID)) {
                 item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
             }

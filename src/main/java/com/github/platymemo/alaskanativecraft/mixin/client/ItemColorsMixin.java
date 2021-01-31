@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.client;
 
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.color.block.BlockColors;
@@ -18,6 +18,6 @@ public class ItemColorsMixin {
 
     @Inject(at = @At("RETURN"), method = "create", locals = LocalCapture.CAPTURE_FAILHARD)
     private static void addKuspuks(BlockColors blockColors, CallbackInfoReturnable<ItemColors> cir, ItemColors itemColors) {
-        itemColors.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AlaskaNativeItems.KUSPUK_HOOD, AlaskaNativeItems.KUSPUK_BODY);
+        itemColors.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AlaskaItems.KUSPUK_HOOD, AlaskaItems.KUSPUK_BODY);
     }
 }

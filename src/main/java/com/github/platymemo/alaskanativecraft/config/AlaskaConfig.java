@@ -8,19 +8,19 @@ import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 
 @Config(name = AlaskaNativeCraft.MOD_ID)
-public class AlaskaNativeConfig implements ConfigData {
+public class AlaskaConfig implements ConfigData {
     public boolean snowballConversion = false;
     public boolean mooseEatBark = true;
 
     @ConfigEntry.Gui.Excluded
     private transient static boolean registered = false;
 
-    public static synchronized AlaskaNativeConfig getConfig() {
+    public static synchronized AlaskaConfig getConfig() {
         if (!registered) {
-            AutoConfig.register(AlaskaNativeConfig.class, GsonConfigSerializer::new);
+            AutoConfig.register(AlaskaConfig.class, GsonConfigSerializer::new);
             registered = true;
         }
 
-        return AutoConfig.getConfigHolder(AlaskaNativeConfig.class).getConfig();
+        return AutoConfig.getConfigHolder(AlaskaConfig.class).getConfig();
     }
 }

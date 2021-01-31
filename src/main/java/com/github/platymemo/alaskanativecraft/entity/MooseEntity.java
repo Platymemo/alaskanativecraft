@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaNativeConfig;
-import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
@@ -38,7 +38,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class MooseEntity extends AnimalEntity {
-    private static final AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
+    private static final AlaskaConfig config = AlaskaConfig.getConfig();
     public static final EntityDimensions ADULT = EntityDimensions.fixed(3.0F, 2.6F);
     public static final EntityDimensions CALF = EntityDimensions.fixed(1.5F, 1.3F);
 
@@ -61,15 +61,15 @@ public class MooseEntity extends AnimalEntity {
     }
 
     protected SoundEvent getAmbientSound() {
-        return this.random.nextInt(100) > 75 ? AlaskaNativeSoundEvents.ENTITY_MOOSE_AMBIENT : super.getAmbientSound();
+        return this.random.nextInt(100) > 75 ? AlaskaSoundEvents.ENTITY_MOOSE_AMBIENT : super.getAmbientSound();
     }
 
     protected SoundEvent getHurtSound(DamageSource source) {
-        return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT;
+        return AlaskaSoundEvents.ENTITY_MOOSE_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return AlaskaNativeSoundEvents.ENTITY_MOOSE_HURT;
+        return AlaskaSoundEvents.ENTITY_MOOSE_HURT;
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {
@@ -85,7 +85,7 @@ public class MooseEntity extends AnimalEntity {
     }
 
     public MooseEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
-        return AlaskaNativeEntities.MOOSE.create(serverWorld);
+        return AlaskaEntities.MOOSE.create(serverWorld);
     }
 
     public static DefaultAttributeContainer.Builder createMooseAttributes() {

@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.enchantment.LuckEnchantment;
@@ -18,7 +18,7 @@ public class LuckEnchantmentMixin extends Enchantment {
     @Override
     public boolean isAcceptableItem(ItemStack itemStack) {
         if (this.type == EnchantmentTarget.DIGGER) {
-            return itemStack.getItem() == AlaskaNativeItems.ULU;
+            return itemStack.getItem() == AlaskaItems.ULU;
         }
         return super.isAcceptableItem(itemStack);
     }

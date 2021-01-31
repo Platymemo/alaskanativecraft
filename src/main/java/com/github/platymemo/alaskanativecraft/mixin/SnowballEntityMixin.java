@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.config.AlaskaNativeConfig;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SnowballEntity.class)
 public class SnowballEntityMixin {
 
-    private static final AlaskaNativeConfig config = AlaskaNativeConfig.getConfig();
+    private static final AlaskaConfig config = AlaskaConfig.getConfig();
 
     @Inject(at = @At("TAIL"), method = "onEntityHit")
     private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {

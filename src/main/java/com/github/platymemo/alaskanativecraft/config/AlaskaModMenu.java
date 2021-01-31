@@ -7,9 +7,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
-public class AlaskaNativeModMenu implements ModMenuApi {
+public class AlaskaModMenu implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfig.getConfigScreen(AlaskaNativeConfig.class, parent).get();
+        return parent -> AutoConfig.getConfigScreen(AlaskaConfig.class, parent).get();
     }
 }

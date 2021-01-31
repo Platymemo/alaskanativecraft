@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
@@ -88,7 +88,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public DogsledEntity(World world, double x, double y, double z) {
-        this(AlaskaNativeEntities.DOGSLED, world);
+        this(AlaskaEntities.DOGSLED, world);
         this.updatePosition(x, y, z);
         this.updateTrackedPosition(x, y, z);
         this.setVelocity(Vec3d.ZERO);
@@ -143,17 +143,17 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         switch (this.getDogsledType()) {
             case OAK:
             default:
-                return AlaskaNativeItems.OAK_DOGSLED;
+                return AlaskaItems.OAK_DOGSLED;
             case SPRUCE:
-                return AlaskaNativeItems.SPRUCE_DOGSLED;
+                return AlaskaItems.SPRUCE_DOGSLED;
             case BIRCH:
-                return AlaskaNativeItems.BIRCH_DOGSLED;
+                return AlaskaItems.BIRCH_DOGSLED;
             case JUNGLE:
-                return AlaskaNativeItems.JUNGLE_DOGSLED;
+                return AlaskaItems.JUNGLE_DOGSLED;
             case ACACIA:
-                return AlaskaNativeItems.ACACIA_DOGSLED;
+                return AlaskaItems.ACACIA_DOGSLED;
             case DARK_OAK:
-                return AlaskaNativeItems.DARK_OAK_DOGSLED;
+                return AlaskaItems.DARK_OAK_DOGSLED;
         }
     }
 

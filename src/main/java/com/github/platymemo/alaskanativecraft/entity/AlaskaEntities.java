@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.item.AlaskaNativeItems;
+import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -17,15 +17,15 @@ import net.minecraft.world.biome.Biome;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AlaskaNativeEntities {
+public class AlaskaEntities {
     private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
 
-    public static final EntityType<HarpoonEntity> WOODEN_HARPOON = add("wooden_harpoon", createHarpoon(AlaskaNativeItems.WOODEN_HARPOON));
-    public static final EntityType<HarpoonEntity> STONE_HARPOON = add("stone_harpoon", createHarpoon(AlaskaNativeItems.STONE_HARPOON));
-    public static final EntityType<HarpoonEntity> IRON_HARPOON = add("iron_harpoon", createHarpoon(AlaskaNativeItems.IRON_HARPOON));
-    public static final EntityType<HarpoonEntity> GOLDEN_HARPOON = add("golden_harpoon", createHarpoon(AlaskaNativeItems.GOLDEN_HARPOON));
-    public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaNativeItems.DIAMOND_HARPOON));
-    public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaNativeItems.NETHERITE_HARPOON));
+    public static final EntityType<HarpoonEntity> WOODEN_HARPOON = add("wooden_harpoon", createHarpoon(AlaskaItems.WOODEN_HARPOON));
+    public static final EntityType<HarpoonEntity> STONE_HARPOON = add("stone_harpoon", createHarpoon(AlaskaItems.STONE_HARPOON));
+    public static final EntityType<HarpoonEntity> IRON_HARPOON = add("iron_harpoon", createHarpoon(AlaskaItems.IRON_HARPOON));
+    public static final EntityType<HarpoonEntity> GOLDEN_HARPOON = add("golden_harpoon", createHarpoon(AlaskaItems.GOLDEN_HARPOON));
+    public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaItems.DIAMOND_HARPOON));
+    public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaItems.NETHERITE_HARPOON));
 
     public static final EntityType<SealEntity> HARP_SEAL = add("harp_seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, false, 1.0F, 0.6F));
     public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
@@ -37,22 +37,22 @@ public class AlaskaNativeEntities {
             Registry.register(Registry.ENTITY_TYPE, id, ENTITY_TYPES.get(id));
         }
 
-        FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.HARP_SEAL, SealEntity.createSealAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaNativeEntities.MOOSE, MooseEntity.createMooseAttributes());
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.HARP_SEAL, SealEntity.createSealAttributes());
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.MOOSE, MooseEntity.createMooseAttributes());
 
         initSpawns();
     }
 
     private static void initSpawns() {
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.OCEAN, SpawnGroup.WATER_CREATURE, AlaskaNativeEntities.HARP_SEAL, 1, 1, 4);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.RIVER, SpawnGroup.CREATURE, AlaskaNativeEntities.HARP_SEAL, 1, 1, 2);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaNativeEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaNativeEntities.PTARMIGAN, 2, 2, 5);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.CREATURE, AlaskaNativeEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.AMBIENT, AlaskaNativeEntities.PTARMIGAN, 25, 2, 5);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.CREATURE, AlaskaNativeEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.AMBIENT, AlaskaNativeEntities.PTARMIGAN, 5, 1, 3);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.OCEAN, SpawnGroup.WATER_CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 4);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.RIVER, SpawnGroup.CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 2);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaEntities.PTARMIGAN, 2, 2, 5);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 25, 2, 5);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
+        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 5, 1, 3);
     }
 
     private static <E extends EntityType<?>> E add(String name, E type) {

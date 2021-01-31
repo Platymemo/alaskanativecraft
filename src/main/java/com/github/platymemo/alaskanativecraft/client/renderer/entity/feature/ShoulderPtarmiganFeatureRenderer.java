@@ -2,7 +2,7 @@ package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
-import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
+import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -31,7 +31,7 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
 
     private void renderShoulderPtarmigan(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T player, float limbAngle, float limbDistance, float headYaw, float headPitch, boolean leftShoulder) {
         CompoundTag compoundTag = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
-        EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaNativeEntities.PTARMIGAN).ifPresent((entityType) -> {
+        EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaEntities.PTARMIGAN).ifPresent((entityType) -> {
             matrices.push();
             matrices.translate(leftShoulder ? 0.4000000059604645D : -0.4000000059604645D, player.isInSneakingPose() ? -1.2999999523162842D : -1.5D, 0.0D);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(PtarmiganEntityRenderer.TEXTURES[compoundTag.getInt("Type")]));

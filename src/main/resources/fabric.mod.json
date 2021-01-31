@@ -23,7 +23,7 @@
       "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
     ],
     "modmenu": [
-      "com.github.platymemo.alaskanativecraft.config.AlaskaNativeModMenu"
+      "com.github.platymemo.alaskanativecraft.config.AlaskaModMenu"
     ]
   },
   "mixins": [

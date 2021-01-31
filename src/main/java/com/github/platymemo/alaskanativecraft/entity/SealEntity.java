@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import com.github.platymemo.alaskanativecraft.sound.AlaskaNativeSoundEvents;
+import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.google.common.collect.Sets;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -141,7 +141,7 @@ public class SealEntity extends AnimalEntity {
     @Nullable
     protected SoundEvent getAmbientSound() {
         if (!this.isTouchingWater() && this.onGround) {
-            return this.isBaby() ? AlaskaNativeSoundEvents.ENTITY_SEAL_AMBIENT_BABY : AlaskaNativeSoundEvents.ENTITY_SEAL_AMBIENT;
+            return this.isBaby() ? AlaskaSoundEvents.ENTITY_SEAL_AMBIENT_BABY : AlaskaSoundEvents.ENTITY_SEAL_AMBIENT;
         }
         return super.getAmbientSound();
     }
@@ -156,12 +156,12 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     protected SoundEvent getHurtSound(DamageSource source) {
-        return AlaskaNativeSoundEvents.ENTITY_SEAL_HURT;
+        return AlaskaSoundEvents.ENTITY_SEAL_HURT;
     }
 
     @Nullable
     protected SoundEvent getDeathSound() {
-        return AlaskaNativeSoundEvents.ENTITY_SEAL_HURT;
+        return AlaskaSoundEvents.ENTITY_SEAL_HURT;
     }
 
     protected void playStepSound(BlockPos pos, BlockState state) {
@@ -187,7 +187,7 @@ public class SealEntity extends AnimalEntity {
 
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return AlaskaNativeEntities.HARP_SEAL.create(world);
+        return AlaskaEntities.HARP_SEAL.create(world);
     }
 
     public boolean isBreedingItem(ItemStack stack) {

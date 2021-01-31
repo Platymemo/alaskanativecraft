@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
-import com.github.platymemo.alaskanativecraft.entity.AlaskaNativeEntities;
+import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
@@ -50,16 +50,16 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     }
 
     private static void registerEntityRenderers() {
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.WOODEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.STONE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.IRON_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.GOLDEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.IRON_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.GOLDEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
 
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.HARP_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.PTARMIGAN, (entityRenderDispatcher, context) -> new PtarmiganEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.MOOSE, (entityRenderDispatcher, context) -> new MooseEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaNativeEntities.DOGSLED, (entityRenderDispatcher, context) -> new DogsledEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.HARP_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.PTARMIGAN, (entityRenderDispatcher, context) -> new PtarmiganEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.MOOSE, (entityRenderDispatcher, context) -> new MooseEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DOGSLED, (entityRenderDispatcher, context) -> new DogsledEntityRenderer(entityRenderDispatcher));
     }
 }
