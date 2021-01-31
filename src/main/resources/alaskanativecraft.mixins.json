@@ -5,11 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AnvilScreenHandlerMixin",
-    "EfficiencyEnchantmentMixin",
     "FoxMixin",
     "IglooGeneratorMixin",
     "LeadLengthMixin",
-    "LuckEnchantmentMixin",
     "PolarBearMixin",
     "SnowballEntityMixin"
   ],
