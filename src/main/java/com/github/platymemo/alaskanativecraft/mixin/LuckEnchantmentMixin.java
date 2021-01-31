@@ -17,8 +17,8 @@ public class LuckEnchantmentMixin extends Enchantment {
 
     @Override
     public boolean isAcceptableItem(ItemStack itemStack) {
-        if (this.type == EnchantmentTarget.DIGGER) {
-            return itemStack.getItem() == AlaskaItems.ULU;
+        if (this.type == EnchantmentTarget.DIGGER && itemStack.getItem() == AlaskaItems.ULU) {
+            return true;
         }
         return super.isAcceptableItem(itemStack);
     }
