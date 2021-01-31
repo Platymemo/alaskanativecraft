@@ -5,6 +5,7 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -66,16 +67,13 @@ public class AlaskaItems {
         for (Identifier id : ITEMS.keySet()) {
             Registry.register(Registry.ITEM, id, ITEMS.get(id));
         }
+
+        addFuels();
     }
 
-    @Nullable
-    public static Item fromString(String name) {
-        for (Identifier id : ITEMS.keySet()) {
-            if (id.getPath().equals(name)) {
-                return ITEMS.get(id);
-            }
-        }
-        return null;
+    private static void addFuels() {
+        FuelRegistry fuelRegistry = FuelRegistry.INSTANCE;
+        fuelRegistry.add(WOODEN_HARPOON, 200);
     }
 
     static {
