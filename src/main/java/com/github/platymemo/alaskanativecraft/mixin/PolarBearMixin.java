@@ -20,7 +20,7 @@ public abstract class PolarBearMixin extends AnimalEntity implements Angerable {
     }
 
     @Inject(at = @At("TAIL"), method = "initGoals()V")
-    private void addSealTarget(CallbackInfo info) {
+    private void addSealTarget(CallbackInfo ci) {
         this.targetSelector.add(3, new FollowTargetGoal(this, SealEntity.class, true));
     }
 }

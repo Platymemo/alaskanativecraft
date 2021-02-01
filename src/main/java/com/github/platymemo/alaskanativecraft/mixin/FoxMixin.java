@@ -26,7 +26,7 @@ public abstract class FoxMixin extends AnimalEntity {
     }
 
     @Inject(at = @At("TAIL"), method = "initGoals()V")
-    private void addPtarmiganTarget(CallbackInfo info) {
+    private void addPtarmiganTarget(CallbackInfo ci) {
         this.followChickenAndRabbitGoal = new FollowTargetGoal(this, AnimalEntity.class, 10, false, false, (livingEntity) -> livingEntity instanceof ChickenEntity || livingEntity instanceof RabbitEntity || livingEntity instanceof PtarmiganEntity);
     }
 }

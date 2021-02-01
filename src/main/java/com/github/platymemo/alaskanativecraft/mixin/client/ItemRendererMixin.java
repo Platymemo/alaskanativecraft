@@ -22,10 +22,10 @@ public class ItemRendererMixin {
     @Inject(at = @At("HEAD"),
             method = "renderItem(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformation$Mode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/world/World;II)V",
             cancellable = true)
-    public void renderHarpoons(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, CallbackInfo info) {
+    public void renderHarpoons(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, CallbackInfo ci) {
         BakedModel model = MinecraftClient.getInstance().getItemRenderer().getHeldItemModel(stack, world, entity);
         if (stack.getItem() instanceof HarpoonItem && HarpoonItemRenderer.INSTANCE.render(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
-            info.cancel();
+            ci.cancel();
         }
     }
 
