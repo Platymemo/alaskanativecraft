@@ -4,6 +4,7 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
@@ -45,14 +46,10 @@ public class AlaskaEntities {
     }
 
     private static void initSpawns() {
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.OCEAN, SpawnGroup.WATER_CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 4);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.RIVER, SpawnGroup.CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 2);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.ICY, SpawnGroup.CREATURE, AlaskaEntities.PTARMIGAN, 2, 2, 5);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.TAIGA, SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 25, 2, 5);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(ctx -> ctx.getBiome().getCategory() == Biome.Category.FOREST, SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 5, 1, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN), SpawnGroup.WATER_CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 4);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.RIVER), SpawnGroup.CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 2);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST), SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST), SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 1, 1, 3);
     }
 
     private static <E extends EntityType<?>> E add(String name, E type) {
