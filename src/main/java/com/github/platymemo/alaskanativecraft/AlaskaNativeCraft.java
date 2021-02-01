@@ -2,6 +2,7 @@ package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
+import com.github.platymemo.alaskanativecraft.feature.AlaskaFeatures;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
@@ -26,6 +27,7 @@ public class AlaskaNativeCraft implements ModInitializer {
         AlaskaBlocks.register();
         AlaskaItems.register();
         AlaskaEntities.register();
+        AlaskaFeatures.register();
         AlaskaTags.register();
         AlaskaSoundEvents.register();
         AlaskaRecipes.register();
