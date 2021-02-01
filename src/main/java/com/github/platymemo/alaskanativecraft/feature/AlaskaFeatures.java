@@ -24,13 +24,13 @@ import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 public class AlaskaFeatures {
 
     public static void register() {
-        registerBerryPatche(AlaskaBlocks.BLUEBERRY_BUSH, "blueberry_bush");
-        registerBerryPatche(AlaskaBlocks.CLOUDBERRY_BUSH, "cloudberry_bush");
-        registerBerryPatche(AlaskaBlocks.RASPBERRY_BUSH, "raspberry_bush");
-        registerBerryPatche(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
+        registerBerryPatch(AlaskaBlocks.BLUEBERRY_BUSH, "blueberry_bush");
+        registerBerryPatch(AlaskaBlocks.CLOUDBERRY_BUSH, "cloudberry_bush");
+        registerBerryPatch(AlaskaBlocks.RASPBERRY_BUSH, "raspberry_bush");
+        registerBerryPatch(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
     }
 
-    private static void registerBerryPatche(Block berryBush, String bushName) {
+    private static void registerBerryPatch(Block berryBush, String bushName) {
         ConfiguredFeature<?, ?> patch_bush = Feature.RANDOM_PATCH.configure((new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(berryBush.getDefaultState().with(SweetBerryBushBlock.AGE, 3)), SimpleBlockPlacer.INSTANCE)).tries(64).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).cannotProject().build());
 
         ConfiguredFeature<?, ?> patch_bush_sparse = patch_bush.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE);
