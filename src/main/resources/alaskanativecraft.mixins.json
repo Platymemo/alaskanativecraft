@@ -16,6 +16,7 @@
     "client.BipedEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
     "client.ClientPlayNetworkHandlerMixin",
+    "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.LivingEntityRendererMixin",
     "client.MinecraftClientMixin",
