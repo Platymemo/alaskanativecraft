@@ -12,7 +12,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -44,8 +43,10 @@ public class AlaskaItems {
     public static final HarpoonItem DIAMOND_HARPOON;
     public static final HarpoonItem NETHERITE_HARPOON;
 
-    public static final KuspukItem KUSPUK_HOOD;
-    public static final KuspukItem KUSPUK_BODY;
+    public static final DyeableArmorItem KUSPUK_HOOD;
+    public static final DyeableArmorItem KUSPUK_BODY;
+
+    public static final ArmorItem SNOW_GOGGLES;
 
     public static final DogsledItem OAK_DOGSLED;
     public static final DogsledItem SPRUCE_DOGSLED;
@@ -101,8 +102,10 @@ public class AlaskaItems {
         DIAMOND_HARPOON = add("diamond_harpoon", new HarpoonItem(ToolMaterials.DIAMOND, 4.0F, -2.7F, () -> AlaskaEntities.DIAMOND_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
         NETHERITE_HARPOON = add("netherite_harpoon", new HarpoonItem(ToolMaterials.NETHERITE, 4.0F, -2.8F, () -> AlaskaEntities.NETHERITE_HARPOON, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
 
-        KUSPUK_HOOD = add("kuspuk_hood", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
-        KUSPUK_BODY = add("kuspuk_body", new KuspukItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_HOOD = add("kuspuk_hood", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_BODY = add("kuspuk_body", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
+
+        SNOW_GOGGLES = add("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GOGGLES, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
 
         OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
         SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));

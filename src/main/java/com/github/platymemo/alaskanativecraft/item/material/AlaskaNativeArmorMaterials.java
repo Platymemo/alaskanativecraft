@@ -14,8 +14,12 @@ import java.util.function.Supplier;
 
 public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
 
-    KUSPUK("kuspuk", 5, new int[]{1, 2, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, () -> {
+    KUSPUK("kuspuk", 5, new int[]{0, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, () -> {
         return Ingredient.fromTag(ItemTags.WOOL);
+    }),
+
+    SNOW_GOGGLES("snow_goggles", 5, new int[]{0, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, () -> {
+        return Ingredient.fromTag(ItemTags.PLANKS);
     });
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
