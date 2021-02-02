@@ -1,0 +1,38 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "alaskanativecraft:ulu"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:bowl"
+          },
+          {
+            "tag": "alaskanativecraft:akutaq_meats"
+          },
+          {
+            "tag": "alaskanativecraft:akutaq_berries"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:crafting_special_akutaq"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items",
+      "has_the_recipe"
+    ]
+  ]
+}

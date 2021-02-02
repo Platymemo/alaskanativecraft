@@ -16,11 +16,53 @@
       "conditions": {
         "block": "minecraft:snow"
       }
+    },
+    "has_the_oak_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:oak_dogsled"
+      }
+    },
+    "has_the_spruce_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:spruce_dogsled"
+      }
+    },
+    "has_the_birch_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:birch_dogsled"
+      }
+    },
+    "has_the_acacia_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:acacia_dogsled"
+      }
+    },
+    "has_the_jungle_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:jungle_dogsled"
+      }
+    },
+    "has_the_dark_oak_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:dark_oak_dogsled"
+      }
     }
   },
   "requirements": [
     [
-      "enter_snow"
+      "enter_snow",
+      "has_the_oak_recipe",
+      "has_the_spruce_recipe",
+      "has_the_birch_recipe",
+      "has_the_acacia_recipe",
+      "has_the_jungle_recipe",
+      "has_the_dark_oak_recipe"
     ]
   ]
 }

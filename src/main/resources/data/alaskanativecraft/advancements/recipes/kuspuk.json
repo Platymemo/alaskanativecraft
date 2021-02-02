@@ -12,11 +12,25 @@
       "conditions": {
         "block": "minecraft:snow"
       }
+    },
+    "has_the_body_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:kuspuk_body"
+      }
+    },
+    "has_the_hood_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "alaskanativecraft:kuspuk_hood"
+      }
     }
   },
   "requirements": [
     [
-      "enter_snow"
+      "enter_snow",
+      "has_the_body_recipe",
+      "has_the_hood_recipe"
     ]
   ]
 }
