@@ -28,5 +28,10 @@ Platymemo:
 ### v1.1.0: A Berry Good Update
 1. Added Salmonberries, Cloudberries, Raspberries, and Blueberries
 2. Added each berry's respective berry bush
-3. Added Akutaq
-4. 
+3. Berry bushes spawn in ICY and TAIGA biomes
+4. Added Akutaq
+5. Added Snow Goggles
+6. Changed UluItem to extend MiningToolItem and removed the bad mixins that invalidated
+7. Added harpoons to the harpoon tag so you can actually craft them with a lead in an anvil (was broken up until now)
+8. Made wooden harpoons burnable as fuel
+9. Updated entity spawning conditions
