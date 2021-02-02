@@ -1,15 +1,17 @@
 {
   "pattern": [
     "# #",
-    "###",
+    "L#L",
     "###"
   ],
   "key": {
     "#": {
       "tag": "minecraft:wool"
+    },
+    "L": {
+      "tag": "c:leathers"
     }
   },
-  "group": "kuspuk_body",
   "result": {
     "item": "alaskanativecraft:kuspuk_body"
   },
