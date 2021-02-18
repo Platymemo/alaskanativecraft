@@ -5,12 +5,14 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
 import java.util.LinkedHashMap;
@@ -70,11 +72,20 @@ public class AlaskaItems {
         }
 
         addFuels();
+        addLootTableEntries();
     }
 
     private static void addFuels() {
         FuelRegistry fuelRegistry = FuelRegistry.INSTANCE;
         fuelRegistry.add(WOODEN_HARPOON, 200);
+    }
+
+    private static void addLootTableEntries() {
+        FabricItemGroupBuilder.create(new Identifier(AlaskaNativeCraft.MOD_ID, "items")).icon(() -> MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
+            if (Registry.ITEM.getId(item).getNamespace().equals(AlaskaNativeCraft.MOD_ID)) {
+                item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
+            }
+        })).build();
     }
 
     static {
