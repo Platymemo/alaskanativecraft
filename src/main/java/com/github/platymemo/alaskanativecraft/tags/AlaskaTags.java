@@ -12,6 +12,7 @@ public class AlaskaTags {
     public static final Tag<Item> HARPOONS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "harpoons"));
     public static final Tag<Item> AKUTAQ_MEATS = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "akutaq_meats"));
     public static final Tag<Item> AKUTAQ_BERRIES = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "akutaq_berries"));
+    public static final Tag<Item> SEAL_FOOD = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "seal_food"));
 
     public static void register() {
         CommonBlockTags.register();

@@ -1,7 +1,9 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.entity.ai.goal.GroundFoodMateGoal;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
-import com.google.common.collect.Sets;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -18,10 +20,9 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -29,15 +30,11 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.Random;
-import java.util.Set;
 
 public class SealEntity extends AnimalEntity {
     public static final EntityDimensions ADULT = EntityDimensions.changing(1.0F, 0.6F);
@@ -68,12 +65,14 @@ public class SealEntity extends AnimalEntity {
         this.dataTracker.set(ACTIVELY_TRAVELLING, travelling);
     }
 
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(TRAVEL_POS, BlockPos.ORIGIN);
         this.dataTracker.startTracking(ACTIVELY_TRAVELLING, false);
     }
 
+    @Override
     public void writeCustomDataToTag(CompoundTag tag) {
         super.writeCustomDataToTag(tag);
         tag.putInt("TravelPosX", this.getTravelPos().getX());
@@ -81,6 +80,7 @@ public class SealEntity extends AnimalEntity {
         tag.putInt("TravelPosZ", this.getTravelPos().getZ());
     }
 
+    @Override
     public void readCustomDataFromTag(CompoundTag tag) {
         super.readCustomDataFromTag(tag);
         int l = tag.getInt("TravelPosX");
@@ -96,48 +96,61 @@ public class SealEntity extends AnimalEntity {
                 add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
     }
 
+    @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
         this.setTravelPos(BlockPos.ORIGIN);
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
     }
 
+    @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new FleeEntityGoal(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
+        this.goalSelector.add(0, new FleeEntityGoal<>(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 2.0D));
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Items.SALMON.asItem()));
-        this.goalSelector.add(3, new FleeEntityGoal(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
+        this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.fromTag(AlaskaTags.SEAL_FOOD)));
+        this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
         this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
+        if (AlaskaConfig.getConfig().animalsEatFoodFromGround) {
+            this.goalSelector.add(5, new GroundFoodMateGoal(this));
+        }
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        this.goalSelector.add(7, new MeleeAttackGoal(this, 1.2000000476837158D, true));
-        this.targetSelector.add(0, new FollowTargetGoal(this, SalmonEntity.class, true));
-        this.targetSelector.add(0, new FollowTargetGoal(this, CodEntity.class, true));
-        this.targetSelector.add(1, new FollowTargetGoal(this, SquidEntity.class, true));
+        if (AlaskaConfig.getConfig().sealsHuntFish) {
+            this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
+        }
+        this.targetSelector.add(0, new FollowTargetGoal<>(this, SalmonEntity.class, true));
+        this.targetSelector.add(0, new FollowTargetGoal<>(this, CodEntity.class, true));
+        this.targetSelector.add(1, new FollowTargetGoal<>(this, SquidEntity.class, true));
     }
 
+    @Override
     public EntityDimensions getDimensions(EntityPose pose) {
         return this.isBaby() ? PUP : ADULT;
     }
 
+    @Override
     public boolean canFly() {
         return false;
     }
 
+    @Override
     public boolean canBreatheInWater() {
         return true;
     }
 
+    @Override
     public EntityGroup getGroup() {
         return EntityGroup.AQUATIC;
     }
 
+    @Override
     public int getMinAmbientSoundDelay() {
         return 200;
     }
 
+    @Override
     @Nullable
     protected SoundEvent getAmbientSound() {
         if (!this.isTouchingWater() && this.onGround) {
@@ -146,66 +159,80 @@ public class SealEntity extends AnimalEntity {
         return super.getAmbientSound();
     }
 
+    @Override
     protected void playSwimSound(float volume) {
         super.playSwimSound(volume * 1.5F);
     }
 
+    @Override
     protected SoundEvent getSwimSound() {
         return SoundEvents.ENTITY_TURTLE_SWIM;
     }
 
+    @Override
     @Nullable
     protected SoundEvent getHurtSound(DamageSource source) {
         return AlaskaSoundEvents.ENTITY_SEAL_HURT;
     }
 
+    @Override
     @Nullable
     protected SoundEvent getDeathSound() {
         return AlaskaSoundEvents.ENTITY_SEAL_HURT;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         SoundEvent soundEvent = this.isBaby() ? SoundEvents.ENTITY_TURTLE_SHAMBLE_BABY : SoundEvents.ENTITY_TURTLE_SHAMBLE;
         this.playSound(soundEvent, 0.15F, 1.0F);
     }
 
+    @Override
     public boolean canEat() {
         return super.canEat();
     }
 
+    @Override
     protected float calculateNextStepSoundDistance() {
         return this.distanceTraveled + 0.15F;
     }
 
+    @Override
     public float getScaleFactor() {
         return this.isBaby() ? 0.3F : 1.0F;
     }
 
+    @Override
     protected EntityNavigation createNavigation(World world) {
         return new SealEntity.SealSwimNavigation(this, world);
     }
 
+    @Override
     @Nullable
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return AlaskaEntities.HARP_SEAL.create(world);
     }
 
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == Items.SALMON;
+        return stack.getItem().isIn(AlaskaTags.SEAL_FOOD);
     }
 
+    @Override
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
         if (world.getFluidState(pos).isIn(FluidTags.WATER)) {
             return 15.0F;
         } else {
-            return world.getBlockState(pos).isOf(Blocks.SAND) ? 10.0F : world.getBrightness(pos) - 0.5F;
+            return world.getBlockState(pos).isOf(Blocks.SAND) ? 10.0F : world.getLightLevel(pos) - 0.5F;
         }
     }
 
+    @Override
     public void tickMovement() {
         super.tickMovement();
     }
 
+    @Override
     public void travel(Vec3d movementInput) {
         if (this.canMoveVoluntarily() && this.isTouchingWater()) {
             this.updateVelocity(0.1F, movementInput);
@@ -217,13 +244,9 @@ public class SealEntity extends AnimalEntity {
         } else {
             super.travel(movementInput);
         }
-
     }
 
-    public boolean canBeLeashedBy(PlayerEntity player) {
-        return true;
-    }
-
+    @Override
     public boolean tryAttack(Entity target) {
         boolean bl = target.damage(DamageSource.mob(this), (float) ((int) this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE)));
         if (bl) {
@@ -243,15 +266,18 @@ public class SealEntity extends AnimalEntity {
             super(owner, world);
         }
 
+        @Override
         protected boolean isAtValidPosition() {
             return true;
         }
 
+        @Override
         protected PathNodeNavigator createPathNodeNavigator(int range) {
             this.nodeMaker = new AmphibiousPathNodeMaker();
             return new PathNodeNavigator(this.nodeMaker, range);
         }
 
+        @Override
         public boolean isValidPosition(BlockPos pos) {
             if (this.entity instanceof SealEntity) {
                 SealEntity sealEntity = (SealEntity) this.entity;
@@ -287,6 +313,7 @@ public class SealEntity extends AnimalEntity {
 
         }
 
+        @Override
         public void tick() {
             this.updateVelocity();
             if (this.state == MoveControl.State.MOVE_TO && !this.seal.getNavigation().isIdle()) {
@@ -317,10 +344,12 @@ public class SealEntity extends AnimalEntity {
             this.lowestY = -1;
         }
 
+        @Override
         public boolean shouldContinue() {
             return !this.seal.isTouchingWater() && this.tryingTime <= 1200 && this.isTargetPos(this.seal.world, this.targetPos);
         }
 
+        @Override
         public boolean canStart() {
             if (this.seal.isBaby() && !this.seal.isTouchingWater()) {
                 return super.canStart();
@@ -329,23 +358,24 @@ public class SealEntity extends AnimalEntity {
             }
         }
 
+        @Override
         public boolean shouldResetPath() {
             return this.tryingTime % 160 == 0;
         }
 
+        @Override
         protected boolean isTargetPos(WorldView world, BlockPos pos) {
             return world.getBlockState(pos).isOf(Blocks.WATER);
         }
     }
 
     static class WanderOnLandGoal extends WanderAroundGoal {
-        private final SealEntity seal;
 
         private WanderOnLandGoal(SealEntity seal, double speed, int chance) {
             super(seal, speed, chance);
-            this.seal = seal;
         }
 
+        @Override
         public boolean canStart() {
             return !this.mob.isTouchingWater() && super.canStart();
         }
@@ -357,15 +387,16 @@ public class SealEntity extends AnimalEntity {
         private final double speed;
         private PlayerEntity targetPlayer;
         private int cooldown;
-        private final Set<Item> attractiveItems;
+        private final Ingredient food;
 
-        ApproachFoodHoldingPlayerGoal(SealEntity seal, double speed, Item attractiveItem) {
+        ApproachFoodHoldingPlayerGoal(SealEntity seal, double speed, Ingredient food) {
             this.seal = seal;
             this.speed = speed;
-            this.attractiveItems = Sets.newHashSet(attractiveItem);
+            this.food = food;
             this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
         }
 
+        @Override
         public boolean canStart() {
             if (this.cooldown > 0) {
                 --this.cooldown;
@@ -381,19 +412,22 @@ public class SealEntity extends AnimalEntity {
         }
 
         private boolean isAttractive(ItemStack stack) {
-            return this.attractiveItems.contains(stack.getItem());
+            return this.food.test(stack);
         }
 
+        @Override
         public boolean shouldContinue() {
             return this.canStart();
         }
 
+        @Override
         public void stop() {
             this.targetPlayer = null;
             this.seal.getNavigation().stop();
             this.cooldown = 100;
         }
 
+        @Override
         public void tick() {
             this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getBodyYawSpeed() + 20), (float) this.seal.getLookPitchSpeed());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
@@ -415,13 +449,13 @@ public class SealEntity extends AnimalEntity {
             this.speed = speed;
         }
 
+        @Override
         public boolean canStart() {
             return this.seal.isTouchingWater();
         }
 
+        @Override
         public void start() {
-            boolean i = true;
-            boolean j = true;
             Random random = this.seal.random;
             int k = random.nextInt(1025) - 512;
             int l = random.nextInt(9) - 4;
@@ -436,6 +470,7 @@ public class SealEntity extends AnimalEntity {
             this.noPath = false;
         }
 
+        @Override
         public void tick() {
             if (this.seal.getNavigation().isIdle()) {
                 Vec3d vec3d = Vec3d.ofBottomCenter(this.seal.getTravelPos());
@@ -447,7 +482,6 @@ public class SealEntity extends AnimalEntity {
                 if (vec3d2 != null) {
                     int i = MathHelper.floor(vec3d2.x);
                     int j = MathHelper.floor(vec3d2.z);
-                    boolean k = true;
                     if (!this.seal.world.isRegionLoaded(i - 34, 0, j - 34, i + 34, 0, j + 34)) {
                         vec3d2 = null;
                     }
@@ -463,13 +497,32 @@ public class SealEntity extends AnimalEntity {
 
         }
 
+        @Override
         public boolean shouldContinue() {
             return !this.seal.getNavigation().isIdle() && !this.noPath && !this.seal.isInLove();
         }
 
+        @Override
         public void stop() {
             this.seal.setActivelyTravelling(false);
             super.stop();
+        }
+    }
+
+    static class HuntFishGoal extends MeleeAttackGoal {
+        private final AnimalEntity animal;
+
+        public HuntFishGoal(SealEntity sealEntity, double speed, boolean pauseWhenMobIdle) {
+            super(sealEntity, speed, pauseWhenMobIdle);
+            this.animal = sealEntity;
+        }
+
+        @Override
+        public boolean canStart() {
+            if (this.animal.getRandom().nextInt(1000) != 0 || !this.animal.canEat()) {
+                return false;
+            }
+            return super.canStart();
         }
     }
 
@@ -478,6 +531,7 @@ public class SealEntity extends AnimalEntity {
             super(seal, speed);
         }
 
+        @Override
         public boolean canStart() {
             if (this.mob.getAttacker() == null && !this.mob.isOnFire()) {
                 return false;

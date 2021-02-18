@@ -11,6 +11,8 @@ import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 public class AlaskaConfig implements ConfigData {
     public boolean snowballConversion = false;
     public boolean mooseEatBark = true;
+    public boolean sealsHuntFish = true;
+    public boolean animalsEatFoodFromGround = true;
 
     @ConfigEntry.Gui.Excluded
     private transient static boolean registered = false;

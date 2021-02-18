@@ -55,5 +55,7 @@
   "subtitles.item.harpoon.throw": "Harpoon clangs",
   "subtitles.item.harpoon.thunder": "Harpoon thunder cracks",
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
-  "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs"
+  "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs",
+  "text.autoconfig.alaskanativecraft.option.sealsHuntFish": "Seals Hunt Fish",
+  "text.autoconfig.alaskanativecraft.option.animalsEatFoodFromGround": "Animals Eat From Ground"
 }
