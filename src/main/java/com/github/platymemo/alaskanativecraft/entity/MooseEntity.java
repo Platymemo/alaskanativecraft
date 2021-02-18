@@ -123,11 +123,6 @@ public class MooseEntity extends AnimalEntity {
             this.distance = distance;
             this.speed = speed;
             this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK, Goal.Control.JUMP));
-
-            // Makes sure the moose actually can navigate, which should always be true
-            if (!class_5493.method_30955(moose)) {
-                throw new IllegalArgumentException("Unsupported mob type for DoorInteractGoal");
-            }
         }
 
         protected void setLogStripped() {
