@@ -45,10 +45,6 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	// Jar-in-jar, how convenient!
-	include "me.shedaniel.cloth:config-2:${project.clothconfig_version}"
-	include "me.sargunvohra.mcmods:autoconfig1u:${project.autoconfig_version}"
-
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
 }

@@ -35,3 +35,7 @@ Platymemo:
 7. Added harpoons to the harpoon tag so you can actually craft them with a lead in an anvil (was broken up until now)
 8. Made wooden harpoons burnable as fuel
 9. Updated entity spawning conditions
+
+### v1.1.1: Bugfixes
+1. Removed ClothConfig as an included Jar
+2. Removed AutoConfig as an included Jar
