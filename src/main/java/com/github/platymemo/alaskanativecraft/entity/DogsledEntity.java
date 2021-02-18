@@ -19,6 +19,7 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
@@ -129,7 +130,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public void pushAwayFrom(Entity entity) {
-        if (entity instanceof net.minecraft.entity.vehicle.BoatEntity) {
+        if (entity instanceof BoatEntity || entity instanceof DogsledEntity) {
             if (entity.getBoundingBox().minY < this.getBoundingBox().maxY) {
                 super.pushAwayFrom(entity);
             }
