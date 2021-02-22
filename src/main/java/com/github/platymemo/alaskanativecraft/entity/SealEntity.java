@@ -113,13 +113,11 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
         this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
-        if (AlaskaConfig.getConfig().animalsEatFoodFromGround) {
+        if (AlaskaConfig.getConfig().sealFishing.sealsHuntFish && AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish) {
             this.goalSelector.add(5, new GroundFoodMateGoal(this));
         }
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
-        if (AlaskaConfig.getConfig().sealsHuntFish) {
-            this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
-        }
+        this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
         this.targetSelector.add(0, new FollowTargetGoal<>(this, SalmonEntity.class, true));
         this.targetSelector.add(0, new FollowTargetGoal<>(this, CodEntity.class, true));
         this.targetSelector.add(1, new FollowTargetGoal<>(this, SquidEntity.class, true));
@@ -519,6 +517,10 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public boolean canStart() {
+            if (!AlaskaConfig.getConfig().sealFishing.sealsHuntFish) {
+                return false;
+            }
+
             if (this.animal.getRandom().nextInt(1000) != 0 || !this.animal.canEat()) {
                 return false;
             }

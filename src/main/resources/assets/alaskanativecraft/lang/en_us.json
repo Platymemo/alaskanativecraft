@@ -56,6 +56,12 @@
   "subtitles.item.harpoon.thunder": "Harpoon thunder cracks",
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
   "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs",
-  "text.autoconfig.alaskanativecraft.option.sealsHuntFish": "Seals Hunt Fish",
-  "text.autoconfig.alaskanativecraft.option.animalsEatFoodFromGround": "Animals Eat From Ground"
+  "text.autoconfig.alaskanativecraft.option.sealFishing": "Seal Fish Hunting Mechanics",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsHuntFish": "Seals Hunt Fish",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsEatHuntedFish": "Seals Eat Hunted Fish",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsEatHuntedFish.@Tooltip[0]": "WARNING:",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsEatHuntedFish.@Tooltip[1]": "Disabling this may cause lag from fish drops.",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish": "Seals Breed From Eating Hunted Fish",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[0]": "WARNING:",
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[1]": "Enabling this may cause seal populations to rise."
 }

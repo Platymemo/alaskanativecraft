@@ -15,8 +15,8 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class GroundFoodMateGoal extends Goal {
-    private final AnimalEntity animal;
-    private ItemEntity foodEntity;
+    protected final AnimalEntity animal;
+    protected ItemEntity foodEntity;
 
     public GroundFoodMateGoal(AnimalEntity animal) {
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
@@ -24,8 +24,12 @@ public class GroundFoodMateGoal extends Goal {
     }
 
     public boolean canStart() {
-        if (AlaskaConfig.getConfig().animalsEatFoodFromGround && this.animal.getEntityWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
+        if (AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish && this.animal.getEntityWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
             this.foodEntity = this.findFood();
+        }
+
+        if (this.animal.getRandom().nextInt(100) != 0) {
+            return false;
         }
 
         return this.foodEntity != null;
@@ -67,7 +71,9 @@ public class GroundFoodMateGoal extends Goal {
     private void feed() {
         if (this.foodEntity.getStack().getCount() > 0) {
             foodEntity.getStack().decrement(1);
-            animal.lovePlayer(null);
+            if (AlaskaConfig.getConfig().sealFishing.sealsBreedFromHuntedFish) {
+                animal.lovePlayer(null);
+            }
         }
 
         stop();

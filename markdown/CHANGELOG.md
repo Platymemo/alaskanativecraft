@@ -39,3 +39,6 @@ Platymemo:
 ### v1.1.1: Bugfixes
 1. Removed ClothConfig as an included Jar
 2. Removed AutoConfig as an included Jar
+3. Drastically reduced seal hunting fish rates
+4. Let seals eat the fish they hunt (or any dropped fish)
+5. Added config options for seal fish hunting and eating
