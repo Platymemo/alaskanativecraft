@@ -19,10 +19,11 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
 
     @Shadow
     @Final
-    private Property levelCost;
+    private final Property levelCost;
 
     public AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(type, syncId, playerInventory, context);
+        throw new AssertionError("AlaskaNativeCraft's AnvilScreenHandlerMixin constructor called!");
     }
 
     @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0), method = "updateResult", cancellable = true)

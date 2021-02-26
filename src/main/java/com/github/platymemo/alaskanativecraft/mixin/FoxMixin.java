@@ -23,6 +23,7 @@ public abstract class FoxMixin extends AnimalEntity {
 
     protected FoxMixin(EntityType<? extends AnimalEntity> type, World world) {
         super(type, world);
+        throw new AssertionError("AlaskaNativeCraft's FoxMixin constructor called!");
     }
 
     @Inject(at = @At("TAIL"), method = "initGoals()V")

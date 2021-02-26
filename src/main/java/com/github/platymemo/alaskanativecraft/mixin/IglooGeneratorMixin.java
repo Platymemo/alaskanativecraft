@@ -27,6 +27,7 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
 
     protected IglooGeneratorMixin(StructurePieceType type, int length) {
         super(type, length);
+        throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
     }
 
     @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),

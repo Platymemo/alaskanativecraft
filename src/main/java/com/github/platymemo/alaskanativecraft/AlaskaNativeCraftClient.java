@@ -7,9 +7,9 @@ import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.world.ClientWorld;
@@ -31,7 +31,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     }
 
     private void registerHarpoonPacket() {
-        ClientSidePacketRegistry.INSTANCE.register(HarpoonEntity.SPAWN_PACKET, (context, packet) -> {
+        ClientPlayNetworking.registerGlobalReceiver(HarpoonEntity.SPAWN_PACKET, (client, handler, packet, responseSender) -> {
             EntityType<?> type = Registry.ENTITY_TYPE.get(packet.readVarInt());
             UUID entityUUID = packet.readUuid();
             int entityID = packet.readVarInt();
@@ -42,7 +42,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
             float yaw = (packet.readByte() * 360) / 256.0F;
             ClientWorld world = MinecraftClient.getInstance().world;
             Entity entity = type.create(world);
-            context.getTaskQueue().execute(() -> {
+            client.execute(() -> {
                 if (entity != null) {
                     entity.updatePosition(x, y, z);
                     entity.updateTrackedPosition(x, y, z);
