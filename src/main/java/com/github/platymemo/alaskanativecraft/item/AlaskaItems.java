@@ -6,6 +6,7 @@ import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -28,6 +29,9 @@ public class AlaskaItems {
     public static final Item COOKED_PTARMIGAN;
     public static final Item VENISON;
     public static final Item COOKED_VENISON;
+
+    public static final Item FISH_STRIP;
+    public static final Item DRY_FISH;
 
     public static final Item BLUEBERRIES;
     public static final Item CLOUDBERRIES;
@@ -89,45 +93,48 @@ public class AlaskaItems {
     }
 
     static {
-        MUKTUK = add("muktuk", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
-        SEAL = add("seal", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
-        COOKED_SEAL = add("cooked_seal", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(1.0F).meat().build())));
-        PTARMIGAN = add("ptarmigan", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.3F).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 400, 0), 0.5F).meat().build())));
-        COOKED_PTARMIGAN = add("cooked_ptarmigan", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
-        VENISON = add("venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
-        COOKED_VENISON = add("cooked_venison", new Item(new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
+        MUKTUK = add("muktuk", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
+        SEAL = add("seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
+        COOKED_SEAL = add("cooked_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(1.0F).meat().build())));
+        PTARMIGAN = add("ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.3F).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 400, 0), 0.5F).meat().build())));
+        COOKED_PTARMIGAN = add("cooked_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
+        VENISON = add("venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
+        COOKED_VENISON = add("cooked_venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
 
-        BLUEBERRIES = add("blueberries", new AliasedBlockItem(AlaskaBlocks.BLUEBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
-        CLOUDBERRIES = add("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
-        RASPBERRIES = add("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
-        SALMONBERRIES = add("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new Item.Settings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        FISH_STRIP = add("fish_strip", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(1).saturationModifier(0.1F).snack().build())));
+        DRY_FISH = add("dry_fish", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(1).saturationModifier(1F).snack().build())));
 
-        AKUTAQ = add("akutaq", new SuspiciousStewItem(new Item.Settings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
+        BLUEBERRIES = add("blueberries", new AliasedBlockItem(AlaskaBlocks.BLUEBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        CLOUDBERRIES = add("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        RASPBERRIES = add("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+        SALMONBERRIES = add("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
 
-        ULU = add("ulu", new UluItem(new Item.Settings().group(ItemGroup.TOOLS).maxDamage(472)));
+        AKUTAQ = add("akutaq", new SuspiciousStewItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
-        WOODEN_HARPOON = add("wooden_harpoon", new HarpoonItem(ToolMaterials.WOOD, 4.0F, -2.2F, () -> AlaskaEntities.WOODEN_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
-        STONE_HARPOON = add("stone_harpoon", new HarpoonItem(ToolMaterials.STONE, 4.0F, -2.3F, () -> AlaskaEntities.STONE_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
-        IRON_HARPOON = add("iron_harpoon", new HarpoonItem(ToolMaterials.IRON, 4.0F, -2.5F, () -> AlaskaEntities.IRON_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
-        GOLDEN_HARPOON = add("golden_harpoon", new HarpoonItem(ToolMaterials.GOLD, 4.0F, -2.7F, () -> AlaskaEntities.GOLDEN_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
-        DIAMOND_HARPOON = add("diamond_harpoon", new HarpoonItem(ToolMaterials.DIAMOND, 4.0F, -2.7F, () -> AlaskaEntities.DIAMOND_HARPOON, new Item.Settings().group(ItemGroup.COMBAT)));
-        NETHERITE_HARPOON = add("netherite_harpoon", new HarpoonItem(ToolMaterials.NETHERITE, 4.0F, -2.8F, () -> AlaskaEntities.NETHERITE_HARPOON, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
+        ULU = add("ulu", new UluItem(new FabricItemSettings().group(ItemGroup.TOOLS).maxDamage(472)));
 
-        KUSPUK_HOOD = add("kuspuk_hood", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
-        KUSPUK_BODY = add("kuspuk_body", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
+        WOODEN_HARPOON = add("wooden_harpoon", new HarpoonItem(ToolMaterials.WOOD, 4.0F, -2.2F, () -> AlaskaEntities.WOODEN_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        STONE_HARPOON = add("stone_harpoon", new HarpoonItem(ToolMaterials.STONE, 4.0F, -2.3F, () -> AlaskaEntities.STONE_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        IRON_HARPOON = add("iron_harpoon", new HarpoonItem(ToolMaterials.IRON, 4.0F, -2.5F, () -> AlaskaEntities.IRON_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        GOLDEN_HARPOON = add("golden_harpoon", new HarpoonItem(ToolMaterials.GOLD, 4.0F, -2.7F, () -> AlaskaEntities.GOLDEN_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        DIAMOND_HARPOON = add("diamond_harpoon", new HarpoonItem(ToolMaterials.DIAMOND, 4.0F, -2.7F, () -> AlaskaEntities.DIAMOND_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        NETHERITE_HARPOON = add("netherite_harpoon", new HarpoonItem(ToolMaterials.NETHERITE, 4.0F, -2.8F, () -> AlaskaEntities.NETHERITE_HARPOON, new FabricItemSettings().group(ItemGroup.COMBAT).fireproof()));
 
-        SNOW_GOGGLES = add("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GOGGLES, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
+        KUSPUK_HOOD = add("kuspuk_hood", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        KUSPUK_BODY = add("kuspuk_body", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
-        OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        BIRCH_DOGSLED = add("birch_dogsled", new DogsledItem(DogsledEntity.Type.BIRCH, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        JUNGLE_DOGSLED = add("jungle_dogsled", new DogsledItem(DogsledEntity.Type.JUNGLE, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        ACACIA_DOGSLED = add("acacia_dogsled", new DogsledItem(DogsledEntity.Type.ACACIA, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
-        DARK_OAK_DOGSLED = add("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK, (new Item.Settings()).maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        SNOW_GOGGLES = add("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GOGGLES, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
-        SEAL_SPAWN_EGG = add("seal_spawn_egg", new SpawnEggItem(AlaskaEntities.HARP_SEAL, 8355711, 3355443, (new Item.Settings()).group(ItemGroup.MISC)));
-        PTARMIGAN_SPAWN_EGG = add("ptarmigan_spawn_egg", new SpawnEggItem(AlaskaEntities.PTARMIGAN, 13750737, 12763849, (new Item.Settings()).group(ItemGroup.MISC)));
-        MOOSE_SPAWN_EGG = add("moose_spawn_egg", new SpawnEggItem(AlaskaEntities.MOOSE, 3811094, 14075317, (new Item.Settings()).group(ItemGroup.MISC)));
+        OAK_DOGSLED = add("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        SPRUCE_DOGSLED = add("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        BIRCH_DOGSLED = add("birch_dogsled", new DogsledItem(DogsledEntity.Type.BIRCH, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        JUNGLE_DOGSLED = add("jungle_dogsled", new DogsledItem(DogsledEntity.Type.JUNGLE, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        ACACIA_DOGSLED = add("acacia_dogsled", new DogsledItem(DogsledEntity.Type.ACACIA, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+        DARK_OAK_DOGSLED = add("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
+
+        SEAL_SPAWN_EGG = add("seal_spawn_egg", new SpawnEggItem(AlaskaEntities.HARP_SEAL, 8355711, 3355443, new FabricItemSettings().group(ItemGroup.MISC)));
+        PTARMIGAN_SPAWN_EGG = add("ptarmigan_spawn_egg", new SpawnEggItem(AlaskaEntities.PTARMIGAN, 13750737, 12763849, new FabricItemSettings().group(ItemGroup.MISC)));
+        MOOSE_SPAWN_EGG = add("moose_spawn_egg", new SpawnEggItem(AlaskaEntities.MOOSE, 3811094, 14075317, new FabricItemSettings().group(ItemGroup.MISC)));
     }
 
 }

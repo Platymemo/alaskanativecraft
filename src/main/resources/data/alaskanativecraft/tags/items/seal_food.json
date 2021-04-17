@@ -1,8 +1,7 @@
 {
   "replace": false,
   "values": [
-    "minecraft:cod",
-    "minecraft:salmon",
-    "alaskanativecraft:muktuk"
+    "alaskanativecraft:muktuk",
+    "#alaskanativecraft:sliceable_fish"
   ]
 }
