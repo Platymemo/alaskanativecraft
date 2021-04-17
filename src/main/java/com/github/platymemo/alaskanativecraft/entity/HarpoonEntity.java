@@ -5,7 +5,7 @@ import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -82,7 +82,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         packet.writeByte(MathHelper.floor(this.pitch * 256.0F / 360.0F));
         packet.writeByte(MathHelper.floor(this.yaw * 256.0F / 360.0F));
 
-        return ServerSidePacketRegistry.INSTANCE.toPacket(SPAWN_PACKET, packet);
+        return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET, packet);
     }
 
     protected ItemStack asItemStack() {
