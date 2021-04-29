@@ -286,7 +286,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     }
 
     static {
-        ENCHANTED = DataTracker.registerData(TridentEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     }
 
     enum State {
