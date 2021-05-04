@@ -106,7 +106,7 @@ public class SealEntity extends AnimalEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new FleeEntityGoal<>(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
-        this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 2.0D));
+        this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.fromTag(AlaskaTags.SEAL_FOOD)));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
@@ -186,11 +186,6 @@ public class SealEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canEat() {
-        return super.canEat();
-    }
-
-    @Override
     protected float calculateNextStepSoundDistance() {
         return this.distanceTraveled + 0.15F;
     }
@@ -223,11 +218,6 @@ public class SealEntity extends AnimalEntity {
         } else {
             return world.getBlockState(pos).isOf(Blocks.SAND) ? 10.0F : world.getLightLevel(pos) - 0.5F;
         }
-    }
-
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
     }
 
     @Override

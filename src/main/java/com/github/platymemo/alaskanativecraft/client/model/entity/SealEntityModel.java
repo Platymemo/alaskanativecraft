@@ -66,18 +66,17 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
         this.head.pitch = headPitch * 0.017453292F;
         this.head.yaw = headYaw * 0.017453292F;
         this.torso.pitch = 0.0F;
-        float rightCalc = MathHelper.cos(limbAngle * 0.4F + 3.1415927F) * 0.5F * limbDistance;
-        float leftCalc = MathHelper.cos(limbAngle * 0.4F) * 0.5F * limbDistance;
+        float flipperAnim = MathHelper.cos(limbAngle * 0.4F) * 0.5F * limbDistance;
         if (!sealEntity.isTouchingWater() && sealEntity.isOnGround()) {
-            this.setRotations(backRightLeg, 0.0F, rightCalc, 0.0F);
-            this.setRotations(backLeftLeg, 0.0F, leftCalc, 0.0F);
-            this.setRotations(frontRightLeg, 0.0F, rightCalc * 2.0F, 0.0F);
-            this.setRotations(frontLeftLeg, 0.0F, leftCalc * 2.0F, 0.0F);
+            this.setRotations(backRightLeg, 0.0F, -flipperAnim, 0.0F);
+            this.setRotations(backLeftLeg, 0.0F, flipperAnim, 0.0F);
+            this.setRotations(frontRightLeg, 0.0F, -flipperAnim * 2.0F, 0.0F);
+            this.setRotations(frontLeftLeg, 0.0F, flipperAnim * 2.0F, 0.0F);
         } else {
-            this.setRotations(backRightLeg, leftCalc, 0.0F, 0.0F);
-            this.setRotations(backLeftLeg, rightCalc, 0.0F, 0.0F);
-            this.setRotations(frontRightLeg, -1.0F + rightCalc, rightCalc * 2.0F, -1.0F + rightCalc);
-            this.setRotations(frontLeftLeg, 1.0F + leftCalc, leftCalc * 2.0F, 1.0F + leftCalc);
+            this.setRotations(backRightLeg, flipperAnim, 0.0F, 0.0F);
+            this.setRotations(backLeftLeg, -flipperAnim, 0.0F, 0.0F);
+            this.setRotations(frontRightLeg, 1.0F + flipperAnim, -(flipperAnim * 2.0F), -(1.0F + flipperAnim));
+            this.setRotations(frontLeftLeg, 1.0F + flipperAnim, flipperAnim * 2.0F, 1.0F + flipperAnim);
         }
     }
 
