@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.client.renderer.blockentity.DryingRackBlockEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
@@ -8,6 +9,7 @@ import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.MinecraftClient;
@@ -25,6 +27,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         registerEntityRenderers();
+        registerBlockEntityRenderers();
         registerItemColors();
         registerBlockRenderLayers();
         registerHarpoonPacket();
@@ -68,6 +71,9 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.SALMONBERRY_BUSH, RenderLayer.getCutout());
     }
 
+    private static void registerBlockEntityRenderers() {
+        BlockEntityRendererRegistry.INSTANCE.register(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntityRenderer::new);
+    }
     private static void registerEntityRenderers() {
         EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
