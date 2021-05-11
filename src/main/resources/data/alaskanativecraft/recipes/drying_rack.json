@@ -1,0 +1,18 @@
+{
+  "pattern": [
+    "#/#",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "alaskanativecraft:driftwood_log"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:drying_rack"
+  },
+  "type": "minecraft:crafting_shaped"
+}
