@@ -1,0 +1,8 @@
+{
+  "ingredient": {
+    "item": "minecraft:kelp"
+  },
+  "result": "minecraft:dried_kelp",
+  "cookingtime": 1200,
+  "type": "alaskanativecraft:drying"
+}

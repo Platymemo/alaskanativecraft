@@ -1,0 +1,8 @@
+{
+  "ingredient": {
+    "item": "minecraft:cactus"
+  },
+  "result": "minecraft:green_dye",
+  "cookingtime": 1200,
+  "type": "alaskanativecraft:drying"
+}

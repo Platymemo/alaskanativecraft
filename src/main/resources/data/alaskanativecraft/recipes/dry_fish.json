@@ -1,0 +1,8 @@
+{
+  "ingredient": {
+    "item": "alaskanativecraft:fish_strip"
+  },
+  "result": "alaskanativecraft:dry_fish",
+  "cookingtime": 1200,
+  "type": "alaskanativecraft:drying"
+}
