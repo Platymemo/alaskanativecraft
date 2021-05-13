@@ -13,6 +13,8 @@
   "item.alaskanativecraft.cloudberries": "Moltebeeren",
   "item.alaskanativecraft.blueberries": "Heidelbeeren",
   "item.alaskanativecraft.akutaq": "Akutaq",
+  "item.alaskanativecraft.fish_strip": "Fischstreifen",
+  "item.alaskanativecraft.dry_fish": "Getrockneter Fisch",
   "item.alaskanativecraft.ulu": "Ulu",
   "item.alaskanativecraft.wooden_harpoon": "Holzharpune",
   "item.alaskanativecraft.stone_harpoon": "Steinharpune",
@@ -37,6 +39,8 @@
   "block.alaskanativecraft.raspberry_bush": "Himbeerstrauch",
   "block.alaskanativecraft.salmonberry_bush": "Lachsbeerstrauch",
   "block.alaskanativecraft.whale_meat_block": "Walfleisch",
+  "block.alaskanativecraft.driftwood_log": "Treibholzstamm",
+  "block.alaskanativecraft.drying_rack": "Trockengestell",
   "entity.alaskanativecraft.harp_seal": "Sattelrobbe",
   "entity.alaskanativecraft.ptarmigan": "Schneehuhn",
   "entity.alaskanativecraft.moose": "Elch",
@@ -63,5 +67,10 @@
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsEatHuntedFish.@Tooltip[1]": "Deaktivieren könnte Lag durch Fisch-Drops verursachen.",
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish": "Robben pflanzen sich durch Fischfressen fort",
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[0]": "WARNUNG:",
-  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[1]": "Dies könnte zu einer steigenden Robben-Populationen führen."
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[1]": "Dies könnte zu einer steigenden Robben-Populationen führen.",
+  "category.rei.alaskanativecraft.drying": "Trocknung",
+  "alaskanativecraft.akutaq.line1": "Akutaq ist eine traditionelles Gericht bestehend aus tierischem Fett und Beeren.",
+  "alaskanativecraft.akutaq.line2": "Kombiniere zur Herstellung eine Schüssel, ein Stück rohes Wildfleisch oder Fisch und mindestens eine Beere.",
+  "alaskanativecraft.fish_strip.line1": "Fischstreifen sind eine klasse Art Fische zur Trocknung vorzubereiten.",
+  "alaskanativecraft.fish_strip.line2": "Nutze ein Ulu, um Fisch in Streifen schneiden."
 }
