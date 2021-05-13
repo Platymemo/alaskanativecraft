@@ -3,11 +3,9 @@ package com.github.platymemo.alaskanativecraft.compat.rei;
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
 import me.shedaniel.rei.api.EntryStack;
 import me.shedaniel.rei.api.RecipeDisplay;
-import me.shedaniel.rei.plugin.DefaultPlugin;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -41,7 +39,7 @@ public class DryingDisplay implements RecipeDisplay {
 
     @Override
     public @NotNull Optional<Identifier> getRecipeLocation() {
-        return Optional.ofNullable(display).map(AbstractCookingRecipe::getId);
+        return Optional.ofNullable(display).map(DryingRecipe::getId);
     }
 
     @Override
@@ -61,6 +59,6 @@ public class DryingDisplay implements RecipeDisplay {
 
     @Override
     public @NotNull Identifier getRecipeCategory() {
-        return DefaultPlugin.CAMPFIRE;
+        return AlaskaPlugin.ALASKA_PLUGIN;
     }
 }
