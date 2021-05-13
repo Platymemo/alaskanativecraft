@@ -50,25 +50,23 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof DryingRackBlockEntity) {
+        if (!world.isClient && blockEntity instanceof DryingRackBlockEntity) {
             DryingRackBlockEntity dryingRackBlockEntity = (DryingRackBlockEntity) blockEntity;
             ItemStack itemStack = player.getStackInHand(hand);
-            if (itemStack.isEmpty()) {
-                ItemStack dryingRackItem = dryingRackBlockEntity.getDriedItem();
-                player.setStackInHand(hand, dryingRackItem);
-                return ActionResult.SUCCESS;
-            } else {
-                Optional<DryingRecipe> optional = dryingRackBlockEntity.getRecipeFor(itemStack);
-                if (optional.isPresent()) {
-                    if (!world.isClient && dryingRackBlockEntity.addItem(player.abilities.creativeMode ? itemStack.copy() : itemStack, (optional.get()).getCookTime())) {
-                        // TODO Drying rack interaction stats
-                        return ActionResult.SUCCESS;
-                    }
-                    return ActionResult.CONSUME;
+            Optional<DryingRecipe> optional = dryingRackBlockEntity.getRecipeFor(itemStack);
+            if (optional.isPresent()) {
+                if (dryingRackBlockEntity.addItem(player.abilities.creativeMode ? itemStack.copy() : itemStack, (optional.get()).getCookTime())) {
+                    // TODO Drying rack interaction stats
+                    return ActionResult.SUCCESS;
                 }
+                return ActionResult.CONSUME;
+            } else {
+                ItemStack dryingRackItem = dryingRackBlockEntity.getDriedItem();
+                ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), dryingRackItem);
+                return ActionResult.SUCCESS;
             }
         }
-        return ActionResult.PASS;
+        return ActionResult.SUCCESS;
     }
 
     @Override
