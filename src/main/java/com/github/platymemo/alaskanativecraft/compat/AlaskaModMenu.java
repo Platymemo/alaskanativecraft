@@ -1,5 +1,6 @@
-package com.github.platymemo.alaskanativecraft.config;
+package com.github.platymemo.alaskanativecraft.compat;
 
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
