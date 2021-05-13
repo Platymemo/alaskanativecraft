@@ -19,6 +19,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class AkutaqRecipe extends SpecialCraftingRecipe {
+    private static final StatusEffect[] POSSIBLE_EFFECTS = {
+            StatusEffects.ABSORPTION,
+            StatusEffects.REGENERATION,
+            StatusEffects.RESISTANCE,
+            StatusEffects.FIRE_RESISTANCE,
+            StatusEffects.HASTE,
+            StatusEffects.STRENGTH,
+            StatusEffects.SPEED,
+            StatusEffects.JUMP_BOOST,
+            StatusEffects.SATURATION
+    };
+    private static final int[] EFFECT_DURATIONS = {400, 200, 200, 200, 200, 100, 250, 200, 10};
+
 
     public AkutaqRecipe(Identifier id) {
         super(id);
@@ -61,75 +74,45 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         ItemStack akutaq = new ItemStack(AlaskaItems.AKUTAQ, 1);
         Random random = new Random();
 
-        // Probably a better way to do this but it works fine
-        Boolean[] effectAlreadyAdded = {false, false, false, false, false, false, false, false};
-
         ItemStack currentItemstack;
         for(int i = 0; i < inv.size(); ++i) {
             currentItemstack = inv.getStack(i);
             if (!currentItemstack.isEmpty() && currentItemstack.getItem().isIn(AlaskaTags.AKUTAQ_BERRIES)) {
-                int j = random.nextInt(8);
+                int randomEffect = random.nextInt(8);
 
-                // Wrapped in an if-else in case it's made in a crafting table with >10 crafting slots
-                if (Arrays.asList(effectAlreadyAdded).contains(false)) {
-
-                    // Find an effect that hasn't been added already
-                    while (effectAlreadyAdded[j]) {
-                        j = random.nextInt(8);
-                    }
-                } else {
-                    break;
-                }
-
-                // Add effects
-                switch (j) {
-                    case 0:
-                        addEffectToAkutaq(akutaq, StatusEffects.ABSORPTION, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 1:
-                        addEffectToAkutaq(akutaq, StatusEffects.REGENERATION, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 2:
-                        addEffectToAkutaq(akutaq, StatusEffects.RESISTANCE, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 3:
-                        addEffectToAkutaq(akutaq, StatusEffects.FIRE_RESISTANCE, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 4:
-                        addEffectToAkutaq(akutaq, StatusEffects.HASTE, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 5:
-                        addEffectToAkutaq(akutaq, StatusEffects.STRENGTH, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 6:
-                        addEffectToAkutaq(akutaq, StatusEffects.SPEED, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                    case 7:
-                        addEffectToAkutaq(akutaq, StatusEffects.JUMP_BOOST, 400);
-                        effectAlreadyAdded[j] = true;
-                        break;
-                }
+                // Add effect
+                addEffectToAkutaq(akutaq, POSSIBLE_EFFECTS[randomEffect], EFFECT_DURATIONS[randomEffect]);
             }
         }
 
         return akutaq;
     }
 
-    // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag
+    // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
     private static void addEffectToAkutaq(ItemStack stew, StatusEffect effect, int duration) {
         CompoundTag compoundTag = stew.getOrCreateTag();
         ListTag listTag = compoundTag.getList("Effects", 10);
-        CompoundTag compoundTag2 = new CompoundTag();
-        compoundTag2.putByte("EffectId", (byte)StatusEffect.getRawId(effect));
-        compoundTag2.putInt("EffectDuration", duration);
-        listTag.add(compoundTag2);
+
+        boolean effectExists = false;
+
+        byte effectId = (byte)StatusEffect.getRawId(effect);
+        int actualDuration = duration;
+        for(int i = 0; i < listTag.size(); ++i) {
+            CompoundTag previousEffect = listTag.getCompound(i);
+            if (previousEffect.contains("EffectDuration", 3) && effectId == previousEffect.getByte("EffectId")) {
+                actualDuration += previousEffect.getInt("EffectDuration");
+                previousEffect.putInt("EffectDuration", actualDuration);
+                effectExists = true;
+            }
+        }
+
+        if (!effectExists) {
+            CompoundTag newEffect = new CompoundTag();
+            newEffect.putByte("EffectId", effectId);
+            newEffect.putInt("EffectDuration", actualDuration);
+            listTag.add(newEffect);
+        }
+
         compoundTag.put("Effects", listTag);
     }
 
