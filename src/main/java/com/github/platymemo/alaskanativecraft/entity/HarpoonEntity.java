@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.ProjectileDamageSource;
@@ -24,6 +25,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;
@@ -39,9 +42,11 @@ import org.jetbrains.annotations.Nullable;
 public class HarpoonEntity extends PersistentProjectileEntity {
     public static final Identifier SPAWN_PACKET = new Identifier(AlaskaNativeCraft.MOD_ID, "harpoon_entity");
     private ItemStack harpoonStack;
+    private static final TrackedData<Byte> LOYALTY;
     private static final TrackedData<Boolean> ENCHANTED;
     private HarpoonEntity.State state;
     private boolean dealtDamage;
+    public int returnTimer;
 
     public HarpoonEntity(EntityType<? extends HarpoonEntity> entityType, World world, HarpoonItem item) {
         super(entityType, world);
@@ -53,19 +58,14 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         super(item.getType(), owner, world);
         this.harpoonStack = stack.copy();
         this.state = HarpoonEntity.State.FLYING;
+        this.dataTracker.set(LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
         this.dataTracker.set(ENCHANTED, stack.hasGlint());
-    }
-
-    @Environment(EnvType.CLIENT)
-    public HarpoonEntity(World world, double x, double y, double z, HarpoonItem item) {
-        super(item.getType(), x, y, z, world);
-        this.state = HarpoonEntity.State.FLYING;
-        this.harpoonStack = new ItemStack(item);
     }
 
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(LOYALTY, (byte) 0);
         this.dataTracker.startTracking(ENCHANTED, false);
     }
 
@@ -129,6 +129,38 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             this.checkBlockCollision();
             return;
         }
+
+        if (this.inGroundTime > 4) {
+            this.dealtDamage = true;
+        }
+
+        Entity entity = this.getOwner();
+        if ((this.dealtDamage || this.isNoClip()) && entity != null) {
+            int i = this.dataTracker.get(LOYALTY);
+            if (i > 0 && !entity.isAlive()) {
+                if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+                    this.dropStack(this.asItemStack(), 0.1F);
+                }
+
+                this.remove();
+            } else if (i > 0) {
+                this.setNoClip(true);
+                Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
+                this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double)i, this.getZ());
+                if (this.world.isClient) {
+                    this.lastRenderY = this.getY();
+                }
+
+                double d = 0.05D * (double)i;
+                this.setVelocity(this.getVelocity().multiply(0.95D).add(vec3d.normalize().multiply(d)));
+                if (this.returnTimer == 0) {
+                    this.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
+                }
+
+                ++this.returnTimer;
+            }
+        }
+
         super.tick();
         boolean inWater = this.isTouchingWater();
 
@@ -136,15 +168,16 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         if (this.inGround && this.state != State.LANDED) {
             this.state = State.LANDED;
             return;
-        }
-        if (!inWater || this.state != State.FLYING) {
+        } else if (!inWater || this.state != State.FLYING) {
             return;
         }
 
-        // Revert previous calculations
+        // Harpoon must be under water
+
+        // Revert previous trident calculations
         Vec3d velocity = this.getVelocity();
         double d = velocity.x;
-        double e = velocity.y + 0.05000000074505806D;
+        double e = velocity.y + 0.05D;
         double g = velocity.z;
         this.setVelocity(d, e, g);
 
@@ -165,8 +198,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         // The harpoon is still flying through water, so make it buoyant
         if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
             this.state = State.BOBBING;
-        } else
-            this.setVelocity(velocity.x, velocity.y + 0.02500000037252903D, velocity.z);
+        } else {
+            this.setVelocity(velocity.x, velocity.y + 0.025D, velocity.z);
+        }
 
         velocity = this.getVelocity().multiply(this.getDragInWater());
         h += velocity.x;
@@ -211,7 +245,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 this.onHit(livingEntity2);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && ((MobEntity) entity).canBeLeashedBy((PlayerEntity) this.getOwner()) && !((MobEntity) entity).isLeashed() && this.harpoonStack.getTag().contains("leashed") && this.harpoonStack.getTag().getBoolean("leashed")) {
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getTag().contains("leashed") && this.harpoonStack.getTag().getBoolean("leashed")) {
                     ((MobEntity) entity).attachLeash(this.getOwner(), true);
                     this.harpoonStack.removeSubTag("leashed");
                     this.setVelocity(Vec3d.ZERO);
@@ -220,6 +254,21 @@ public class HarpoonEntity extends PersistentProjectileEntity {
                 }
             }
         }
+
+        float g = 1.0F;
+        if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.harpoonStack)) {
+            BlockPos blockPos = entity.getBlockPos();
+            if (this.world.isSkyVisible(blockPos)) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
+                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
+                lightningEntity.setChanneler(entity2 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity2 : null);
+                this.world.spawnEntity(lightningEntity);
+                soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
+                g = 5.0F;
+            }
+        }
+
+        this.playSound(soundEvent, g, 1.0F);
 
         this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
         this.playSound(soundEvent, 1.0F, 1.0F);
@@ -287,6 +336,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
     static {
         ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        LOYALTY = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BYTE);
     }
 
     enum State {

@@ -101,7 +101,7 @@ public class HarpoonItem extends TridentItem {
             if (i >= 10) {
                 int j = EnchantmentHelper.getRiptide(stack);
                 if (j <= 0 || playerEntity.isTouchingWaterOrRain()) {
-                    if (!world.isClient) {
+                    if (!world.isClient && j == 0) {
                         stack.damage(1, playerEntity, entity -> entity.sendToolBreakStatus(user.getActiveHand()));
                         HarpoonEntity harpoonEntity = new HarpoonEntity(world, playerEntity, this, stack);
                         harpoonEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, 2.5F, 1.0F);
@@ -131,8 +131,7 @@ public class HarpoonItem extends TridentItem {
                         playerEntity.addVelocity(h, k, l);
                         playerEntity.setRiptideTicks(20);
                         if (playerEntity.isOnGround()) {
-                            float o = 1.1999999F;
-                            playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.1999999284744263D, 0.0D));
+                            playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.1999999D, 0.0D));
                         }
 
                         SoundEvent soundEvent3;
