@@ -52,7 +52,7 @@ Platymemo:
 2. Added Dry Fish
 3. Added Driftwood
 4. Added Drying Racks
-5. Snow Goggles now let Players look at Endermen
+5. Snow Goggles now let Players look at Endermen and prevent blindness
 6. Better quality blueberry item texture
 7. Blueberries and raspberries can be crafted into dyes
 8. Better quality seal texture (Thanks to Guaire for the texture)
