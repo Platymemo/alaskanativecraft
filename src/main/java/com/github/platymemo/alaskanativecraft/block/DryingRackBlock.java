@@ -23,7 +23,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
@@ -77,7 +76,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
-                ItemScatterer.spawn(world, pos, ((DryingRackBlockEntity)blockEntity).getItemsBeingDryed());
+                ItemScatterer.spawn(world, pos, ((DryingRackBlockEntity)blockEntity).getItemsBeingDried());
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
@@ -161,7 +160,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
         if (!(Boolean)state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
-                ((DryingRackBlockEntity)blockEntity).spawnItemsBeingDryed();
+                ((DryingRackBlockEntity)blockEntity).spawnItemsBeingDried();
             }
 
             world.setBlockState(pos, state.with(WATERLOGGED, true), 3);

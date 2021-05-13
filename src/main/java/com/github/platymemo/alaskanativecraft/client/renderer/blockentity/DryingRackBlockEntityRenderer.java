@@ -23,7 +23,7 @@ public class DryingRackBlockEntityRenderer extends BlockEntityRenderer<DryingRac
 
    public void render(DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
       Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
-      DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDryed();
+      DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
       int XOrZ = axis.choose(0, 0, 1);
 
       for(int k = 0; k < defaultedList.size(); ++k) {

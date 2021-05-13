@@ -12,13 +12,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -39,7 +37,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
         boolean bl = this.getCachedState().get(DryingRackBlock.WATERLOGGED)
                 || (this.world != null && this.world.isRaining() && this.world.isSkyVisible(this.pos));
         if (!bl) {
-            this.updateItemsBeingDryed();
+            this.updateItemsBeingDried();
         } else {
             for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
                 if (this.dryingTimes[i] > 0) {
@@ -49,7 +47,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
         }
     }
 
-    private void updateItemsBeingDryed() {
+    private void updateItemsBeingDried() {
         for(int i = 0; i < this.itemsBeingDried.size(); ++i) {
             ItemStack itemStack = this.itemsBeingDried.get(i);
             if (!itemStack.isEmpty()) {
@@ -73,7 +71,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
         }
     }
 
-    public DefaultedList<ItemStack> getItemsBeingDryed() {
+    public DefaultedList<ItemStack> getItemsBeingDried() {
         return this.itemsBeingDried;
     }
 
@@ -165,10 +163,10 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
         this.itemsBeingDried.clear();
     }
 
-    public void spawnItemsBeingDryed() {
+    public void spawnItemsBeingDried() {
         if (this.world != null) {
             if (!this.world.isClient) {
-                ItemScatterer.spawn(this.world, this.getPos(), this.getItemsBeingDryed());
+                ItemScatterer.spawn(this.world, this.getPos(), this.getItemsBeingDried());
             }
 
             this.updateListeners();
