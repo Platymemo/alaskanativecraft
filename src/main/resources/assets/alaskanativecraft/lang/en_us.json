@@ -12,6 +12,8 @@
   "item.alaskanativecraft.cloudberries": "Cloudberries",
   "item.alaskanativecraft.blueberries": "Blueberries",
   "item.alaskanativecraft.akutaq": "Akutaq",
+  "item.alaskanativecraft.fish_strip": "Fish Strips",
+  "item.alaskanativecraft.dry_fish": "Dry Fish",
   "item.alaskanativecraft.ulu": "Ulu",
   "item.alaskanativecraft.wooden_harpoon": "Wooden Harpoon",
   "item.alaskanativecraft.stone_harpoon": "Stone Harpoon",
@@ -37,6 +39,8 @@
   "block.alaskanativecraft.raspberry_bush": "Raspberry Bush",
   "block.alaskanativecraft.salmonberry_bush": "Salmonberry Bush",
   "block.alaskanativecraft.whale_meat_block": "Whale Meat",
+  "block.alaskanativecraft.driftwood_log": "Driftwood Log",
+  "block.alaskanativecraft.drying_rack": "Drying Rack",
   "entity.alaskanativecraft.harp_seal": "Harp Seal",
   "entity.alaskanativecraft.ptarmigan": "Ptarmigan",
   "entity.alaskanativecraft.moose": "Moose",
@@ -63,5 +67,10 @@
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsEatHuntedFish.@Tooltip[1]": "Disabling this may cause lag from fish drops.",
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish": "Seals Breed From Eating Hunted Fish",
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[0]": "WARNING:",
-  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[1]": "Enabling this may cause seal populations to rise."
+  "text.autoconfig.alaskanativecraft.option.sealFishing.sealsBreedFromHuntedFish.@Tooltip[1]": "Enabling this may cause seal populations to rise.",
+  "category.rei.alaskanativecraft.drying": "Drying",
+  "alaskanativecraft.akutaq.line1": "Akutaq is a traditional dish made from animal fat and berries.",
+  "alaskanativecraft.akutaq.line2": "You can craft it by combining a bowl, a piece of raw venison or fish, and as many berries as you can fit.",
+  "alaskanativecraft.fish_strip.line1": "Fish strips are a great way to prepare fish to be dried.",
+  "alaskanativecraft.fish_strip.line2": "You can cut fish into strips using an ulu."
 }
