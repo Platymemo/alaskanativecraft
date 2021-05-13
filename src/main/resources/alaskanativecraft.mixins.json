@@ -10,6 +10,7 @@
     "FoxMixin",
     "IglooGeneratorMixin",
     "LeadLengthMixin",
+    "PlayerEntityMixin",
     "PolarBearMixin",
     "SnowballEntityMixin",
     "TreeFeatureMixin",
