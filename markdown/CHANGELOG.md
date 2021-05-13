@@ -41,3 +41,19 @@ Platymemo:
 2. Drastically reduced seal hunting fish rates
 3. Let seals eat the fish they hunt (or any dropped fish)
 4. Added config options for seal fish hunting and eating
+
+### v1.2.0: Go Dry me a Sliver
+Fourmisain
+1. Fixed HarpoonEntity glint
+2. Fixed HarpoonEntity Enchantment tracking
+
+Platymemo:
+1. Added Fish Strips
+2. Added Dry Fish
+3. Added Driftwood
+4. Added Drying Racks
+5. Snow Goggles now let Players look at Endermen
+6. Better quality blueberry item texture
+7. Blueberries and raspberries can be crafted into dyes
+8. Better quality seal texture (Thanks to Guaire for the texture)
+9. Harpoons now work properly with loyalty and channeling
