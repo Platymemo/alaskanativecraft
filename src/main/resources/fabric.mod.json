@@ -5,10 +5,7 @@
   "name": "Alaska Native Craft",
   "description": "This mod aims to add various parts of Alaska Native cultures to Minecraft!\n\nArt Credit:\nMoose texture by Daimons\nRaspberries, Cloudberries, and Salmonberries by Kazoo",
   "authors": [
-    "Platymemo",
-    "Seasaltydoggo",
-    "Daimons",
-    "Kazoo"
+    "Platymemo"
   ],
   "contact": {
     "homepage": "https://github.com/Platymemo/alaskanativecraft",
@@ -26,7 +23,10 @@
       "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
     ],
     "modmenu": [
-      "com.github.platymemo.alaskanativecraft.config.AlaskaModMenu"
+      "com.github.platymemo.alaskanativecraft.compat.AlaskaModMenu"
+    ],
+    "rei_plugins": [
+      "com.github.platymemo.alaskanativecraft.compat.rei.DryingPlugin"
     ]
   },
   "mixins": [
