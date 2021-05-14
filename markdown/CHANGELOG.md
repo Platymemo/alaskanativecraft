@@ -43,6 +43,9 @@ Platymemo:
 4. Added config options for seal fish hunting and eating
 
 ### v1.2.0: Go Dry me a Sliver
+Koelle25
+1. Added German Translations
+
 Fourmisain
 1. Fixed HarpoonEntity glint
 2. Fixed HarpoonEntity Enchantment tracking
