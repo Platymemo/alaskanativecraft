@@ -51,8 +51,8 @@ Fourmisain
 2. Fixed HarpoonEntity Enchantment tracking
 
 Platymemo:
-1. Added Fish Strips
-2. Added Dry Fish
+1. Added Fish Strips (Thanks to Shard for the texture)
+2. Added Dry Fish (Thanks to Shard for the texture)
 3. Added Driftwood
 4. Added Drying Racks
 5. Snow Goggles now let Players look at Endermen and prevent blindness

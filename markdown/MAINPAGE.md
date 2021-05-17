@@ -48,7 +48,13 @@ Currently included features are described below.
 
 ## Art Credit
 
-Huge thanks to these artists for the textures they've provided! \
+Huge thanks to these artists for the textures they've provided!
 - Daimons for the moose
 - Kazoo for the cloudberries, raspberries, and salmonberries
 - Guaire for the seal
+- Shard for the fish strips and dry fish textures
+
+## Translation Credit
+
+Huge thanks to these translators for the translations they've provided!
+- Koelle25 for the German translation
