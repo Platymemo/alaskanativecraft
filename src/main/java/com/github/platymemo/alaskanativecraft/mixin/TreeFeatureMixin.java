@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
 import com.github.platymemo.alaskanativecraft.feature.FallenTrunkPlacer;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ModifiableTestableWorld;
@@ -29,8 +30,9 @@ public class TreeFeatureMixin {
 
     @Inject(method = "isDirtOrGrass", at = @At("HEAD"), cancellable = true)
     private static void isDriftwoodTreeGen(TestableWorld world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (isDriftwood) {
+        if (isDriftwood && world.testBlockState(pos, (blockState -> blockState.isIn(BlockTags.SAND) || blockState.isIn(BlockTags.ICE)))) {
             cir.setReturnValue(true);
         }
+        isDriftwood = false;
     }
 }
