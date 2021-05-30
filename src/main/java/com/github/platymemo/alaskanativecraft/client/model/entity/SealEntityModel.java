@@ -26,9 +26,9 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
         this.head.setTextureOffset(32, 18).addCuboid(-3.5F, -4.0F, -5.0F, 7.0F, 7.0F, 2.0F, scale);
         this.head.setTextureOffset(38, 10).addCuboid(-2.5F, -1.0F, -7.0F, 5.0F, 3.0F, 2.0F, scale);
 
-        this.torso = new ModelPart(this);
-        this.torso.setPivot(-0.5F, 19.0F, -4.0F);
-        this.torso.setTextureOffset(0, 0).addCuboid(-5.5F, -5.0F, -4.0F, 11.0F, 10.0F, 8.0F, scale);
+        this.body = new ModelPart(this);
+        this.body.setPivot(-0.5F, 19.0F, -4.0F);
+        this.body.setTextureOffset(0, 0).addCuboid(-5.5F, -5.0F, -4.0F, 11.0F, 10.0F, 8.0F, scale);
 
         this.stomach = new ModelPart(this);
         this.stomach.setPivot(-0.5F, 19.5F, 3.5F);
@@ -65,7 +65,7 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
     public void setAngles(T sealEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         this.head.pitch = headPitch * 0.017453292F;
         this.head.yaw = headYaw * 0.017453292F;
-        this.torso.pitch = 0.0F;
+        this.body.pitch = 0.0F;
         float flipperAnim = MathHelper.cos(limbAngle * 0.4F) * 0.5F * limbDistance;
         if (!sealEntity.isTouchingWater() && sealEntity.isOnGround()) {
             this.setRotations(backRightLeg, 0.0F, -flipperAnim, 0.0F);

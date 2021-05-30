@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "alaskanativecraft:whale_meat_block",
+    "minecraft:cobweb",
+    "minecraft:redstone_wire",
+    "minecraft:tripwire",
+    "#minecraft:leaves",
+    "#minecraft:wool"
+  ]
+}

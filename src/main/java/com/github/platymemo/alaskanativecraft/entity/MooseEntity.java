@@ -1,17 +1,16 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.mixin.AxeItemAccessor;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.PillarBlock;
-import net.minecraft.class_5493;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.NavigationConditions;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -35,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.Iterator;
-import java.util.Map;
 
 public class MooseEntity extends AnimalEntity {
     private static final AlaskaConfig config = AlaskaConfig.getConfig();
@@ -112,7 +110,6 @@ public class MooseEntity extends AnimalEntity {
         protected BlockPos logPos;
         protected BlockState logState;
         protected boolean logValid;
-        private static final Map<Block, Block> STRIPPED_BLOCKS;
         private final double distance;
         private final double speed;
         private Vec3d target;
@@ -129,9 +126,9 @@ public class MooseEntity extends AnimalEntity {
             World world = this.moose.world;
             if (this.logValid) {
                 this.logState = world.getBlockState(this.logPos);
-                if (this.logState.getBlock().isIn(CommonBlockTags.LOGS_WITH_BARK)) {
+                if (this.logState.isIn(CommonBlockTags.LOGS_WITH_BARK)) {
                     BlockState blockState = world.getBlockState(this.logPos);
-                    Block block = STRIPPED_BLOCKS.get(blockState.getBlock());
+                    Block block = AxeItemAccessor.getStrippedBlocks().get(blockState.getBlock());
                     if (block != null && !world.isClient) {
                         world.setBlockState(this.logPos, block.getDefaultState().with(PillarBlock.AXIS, blockState.get(PillarBlock.AXIS)), 11);
                     }
@@ -176,8 +173,7 @@ public class MooseEntity extends AnimalEntity {
                     blockPos2 = position.next();
                 } while (blockPos.equals(blockPos2));
 
-                Block block = this.moose.world.getBlockState(blockPos2).getBlock();
-                bl = block.isIn(CommonBlockTags.LOGS_WITH_BARK);
+                bl = this.moose.world.getBlockState(blockPos2).isIn(CommonBlockTags.LOGS_WITH_BARK);
             } while (!bl);
 
             return Vec3d.ofBottomCenter(blockPos2);
@@ -189,7 +185,7 @@ public class MooseEntity extends AnimalEntity {
             }
             if (!this.moose.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return false;
-            } else if (!class_5493.method_30955(this.moose)) {
+            } else if (!NavigationConditions.hasMobNavigation(this.moose)) {
                 return false;
             } else if (this.moose.getTarget() != null) {
                 return false;
@@ -219,10 +215,6 @@ public class MooseEntity extends AnimalEntity {
 
         public void stop() {
             setLogStripped();
-        }
-
-        static {
-            STRIPPED_BLOCKS = (new ImmutableMap.Builder()).put(Blocks.OAK_WOOD, Blocks.STRIPPED_OAK_WOOD).put(Blocks.OAK_LOG, Blocks.STRIPPED_OAK_LOG).put(Blocks.DARK_OAK_WOOD, Blocks.STRIPPED_DARK_OAK_WOOD).put(Blocks.DARK_OAK_LOG, Blocks.STRIPPED_DARK_OAK_LOG).put(Blocks.ACACIA_WOOD, Blocks.STRIPPED_ACACIA_WOOD).put(Blocks.ACACIA_LOG, Blocks.STRIPPED_ACACIA_LOG).put(Blocks.BIRCH_WOOD, Blocks.STRIPPED_BIRCH_WOOD).put(Blocks.BIRCH_LOG, Blocks.STRIPPED_BIRCH_LOG).put(Blocks.JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_WOOD).put(Blocks.JUNGLE_LOG, Blocks.STRIPPED_JUNGLE_LOG).put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD).put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG).put(Blocks.WARPED_STEM, Blocks.STRIPPED_WARPED_STEM).put(Blocks.WARPED_HYPHAE, Blocks.STRIPPED_WARPED_HYPHAE).put(Blocks.CRIMSON_STEM, Blocks.STRIPPED_CRIMSON_STEM).put(Blocks.CRIMSON_HYPHAE, Blocks.STRIPPED_CRIMSON_HYPHAE).build();
         }
     }
 }

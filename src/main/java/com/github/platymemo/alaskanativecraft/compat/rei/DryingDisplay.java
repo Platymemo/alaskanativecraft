@@ -1,3 +1,4 @@
+/*
 package com.github.platymemo.alaskanativecraft.compat.rei;
 
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
@@ -23,7 +24,7 @@ public class DryingDisplay implements RecipeDisplay {
     private DryingRecipe display;
 
     public DryingDisplay(DryingRecipe recipe) {
-        this(recipe.getPreviewInputs(), recipe.getOutput(), recipe.getCookTime());
+        this(recipe.getIngredients(), recipe.getOutput(), recipe.getCookTime());
         this.display = recipe;
     }
 
@@ -62,3 +63,4 @@ public class DryingDisplay implements RecipeDisplay {
         return AlaskaPlugin.ALASKA_PLUGIN;
     }
 }
+*/

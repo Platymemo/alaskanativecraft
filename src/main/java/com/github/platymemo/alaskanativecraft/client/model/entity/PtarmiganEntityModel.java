@@ -166,7 +166,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
     }
 
     private static PtarmiganEntityModel.Pose getPose(PtarmiganEntity ptarmigan) {
-        if (ptarmigan.getSongPlaying()) {
+        if (ptarmigan.isSongPlaying()) {
             return PtarmiganEntityModel.Pose.PARTY;
         } else if (ptarmigan.isInSittingPose()) {
             return PtarmiganEntityModel.Pose.SITTING;

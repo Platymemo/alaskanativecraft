@@ -5,67 +5,63 @@ import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import com.github.platymemo.alaskanativecraft.block.DryingRackBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.Tickable;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tickable, BlockEntityClientSerializable {
+public class DryingRackBlockEntity extends BlockEntity implements Clearable, BlockEntityClientSerializable {
     private final DefaultedList<ItemStack> itemsBeingDried;
     private final int[] dryingTimes;
     private final int[] dryingTotalTimes;
 
-    public DryingRackBlockEntity() {
-        super(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY);
+    public DryingRackBlockEntity(BlockPos pos, BlockState state) {
+        super(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, pos, state);
         this.itemsBeingDried = DefaultedList.ofSize(4, ItemStack.EMPTY);
         this.dryingTimes = new int[4];
         this.dryingTotalTimes = new int[4];
     }
 
-    @Override
-    public void tick() {
-        boolean bl = this.getCachedState().get(DryingRackBlock.WATERLOGGED)
-                || (this.world != null && this.world.isRaining() && this.world.isSkyVisible(this.pos));
-        if (!bl) {
-            this.updateItemsBeingDried();
-        } else {
-            for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
-                if (this.dryingTimes[i] > 0) {
-                    this.dryingTimes[i] = MathHelper.clamp(this.dryingTimes[i] - 2, 0, this.dryingTotalTimes[i]);
+    public static void possiblyWetTick(World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
+        if (world.isSkyVisible(pos)) {
+            for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
+                if (dryingRackBlockEntity.dryingTimes[i] > 0) {
+                    dryingRackBlockEntity.dryingTimes[i] = MathHelper.clamp(dryingRackBlockEntity.dryingTimes[i] - 2, 0, dryingRackBlockEntity.dryingTotalTimes[i]);
                 }
             }
         }
+        else {
+            updateItemsBeingDried(world, pos, state, dryingRackBlockEntity);
+        }
     }
 
-    private void updateItemsBeingDried() {
-        for(int i = 0; i < this.itemsBeingDried.size(); ++i) {
-            ItemStack itemStack = this.itemsBeingDried.get(i);
+    public static void updateItemsBeingDried(World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
+        for(int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
+            ItemStack itemStack = dryingRackBlockEntity.itemsBeingDried.get(i);
             if (!itemStack.isEmpty()) {
-                this.dryingTimes[i]++;
-                if (this.dryingTimes[i] >= this.dryingTotalTimes[i]) {
+                dryingRackBlockEntity.dryingTimes[i]++;
+                if (dryingRackBlockEntity.dryingTimes[i] >= dryingRackBlockEntity.dryingTotalTimes[i]) {
 
                     // Don't want it to keep counting up unnecessarily high
-                    this.dryingTimes[i] = this.dryingTotalTimes[i];
+                    dryingRackBlockEntity.dryingTimes[i] = dryingRackBlockEntity.dryingTotalTimes[i];
 
                     Inventory inventory = new SimpleInventory(itemStack);
-                    ItemStack itemStack2 = this.world.getRecipeManager()
-                                                     .getFirstMatch(AlaskaRecipes.DRYING,
-                                                                    inventory,
-                                                                    this.world)
+                    ItemStack itemStack2 = world.getRecipeManager()
+                                                     .getFirstMatch(AlaskaRecipes.DRYING, inventory, world)
                                                      .map((dryingRecipe) -> dryingRecipe.craft(inventory))
                                                      .orElse(itemStack);
-                    this.itemsBeingDried.set(i, itemStack2);
-                    this.updateListeners();
+                    dryingRackBlockEntity.itemsBeingDried.set(i, itemStack2);
+                    dryingRackBlockEntity.updateListeners();
                 }
             }
         }
@@ -99,10 +95,10 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
         this.itemsBeingDried.clear();
-        Inventories.fromTag(tag, this.itemsBeingDried);
+        Inventories.readNbt(tag, this.itemsBeingDried);
         int[] js;
         if (tag.contains("DryingTimes", 11)) {
             js = tag.getIntArray("DryingTimes");
@@ -117,22 +113,22 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
+    public NbtCompound writeNbt(NbtCompound tag) {
         this.saveInitialChunkData(tag);
         tag.putIntArray("DryingTimes", this.dryingTimes);
         tag.putIntArray("DryingTotalTimes", this.dryingTotalTimes);
         return tag;
     }
 
-    private CompoundTag saveInitialChunkData(CompoundTag tag) {
-        super.toTag(tag);
-        Inventories.toTag(tag, this.itemsBeingDried, true);
+    private NbtCompound saveInitialChunkData(NbtCompound tag) {
+        super.writeNbt(tag);
+        Inventories.writeNbt(tag, this.itemsBeingDried, true);
         return tag;
     }
 
     @Override
-    public CompoundTag toInitialChunkDataTag() {
-        return this.saveInitialChunkData(new CompoundTag());
+    public NbtCompound toInitialChunkDataNbt() {
+        return this.saveInitialChunkData(new NbtCompound());
     }
 
     public Optional<DryingRecipe> getRecipeFor(ItemStack item) {
@@ -159,6 +155,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
         this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);
     }
 
+    @Override
     public void clear() {
         this.itemsBeingDried.clear();
     }
@@ -175,12 +172,12 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Tic
     }
 
     @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        this.fromTag(null, compoundTag);
+    public void fromClientTag(NbtCompound compoundTag) {
+        this.readNbt(compoundTag);
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        return this.toTag(compoundTag);
+    public NbtCompound toClientTag(NbtCompound compoundTag) {
+        return this.writeNbt(compoundTag);
     }
 }

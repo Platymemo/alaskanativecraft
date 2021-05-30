@@ -7,7 +7,7 @@ import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.TargetFinder;
+import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
@@ -21,7 +21,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -73,16 +73,16 @@ public class SealEntity extends AnimalEntity {
     }
 
     @Override
-    public void writeCustomDataToTag(CompoundTag tag) {
-        super.writeCustomDataToTag(tag);
+    public void writeCustomDataToNbt(NbtCompound tag) {
+        super.writeCustomDataToNbt(tag);
         tag.putInt("TravelPosX", this.getTravelPos().getX());
         tag.putInt("TravelPosY", this.getTravelPos().getY());
         tag.putInt("TravelPosZ", this.getTravelPos().getZ());
     }
 
     @Override
-    public void readCustomDataFromTag(CompoundTag tag) {
-        super.readCustomDataFromTag(tag);
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
         int l = tag.getInt("TravelPosX");
         int m = tag.getInt("TravelPosY");
         int n = tag.getInt("TravelPosZ");
@@ -98,7 +98,7 @@ public class SealEntity extends AnimalEntity {
 
     @Override
     @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable CompoundTag entityTag) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
         this.setTravelPos(BlockPos.ORIGIN);
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
     }
@@ -129,7 +129,7 @@ public class SealEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canFly() {
+    public boolean isPushedByFluids() {
         return false;
     }
 
@@ -208,7 +208,7 @@ public class SealEntity extends AnimalEntity {
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem().isIn(AlaskaTags.SEAL_FOOD);
+        return stack.isIn(AlaskaTags.SEAL_FOOD);
     }
 
     @Override
@@ -261,7 +261,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         protected PathNodeNavigator createPathNodeNavigator(int range) {
-            this.nodeMaker = new AmphibiousPathNodeMaker();
+            this.nodeMaker = new AmphibiousPathNodeMaker(false);
             return new PathNodeNavigator(this.nodeMaker, range);
         }
 
@@ -308,12 +308,12 @@ public class SealEntity extends AnimalEntity {
                 double d = this.targetX - this.seal.getX();
                 double e = this.targetY - this.seal.getY();
                 double f = this.targetZ - this.seal.getZ();
-                double g = MathHelper.sqrt(d * d + e * e + f * f);
+                double g = Math.sqrt(d * d + e * e + f * f);
                 e /= g;
                 float h = (float) (MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
-                this.seal.yaw = this.changeAngle(this.seal.yaw, h, 90.0F);
-                this.seal.bodyYaw = this.seal.yaw;
-                this.seal.headYaw = this.seal.yaw;
+                this.seal.setYaw(this.wrapDegrees(this.seal.getYaw(), h, 90.0F));
+                this.seal.bodyYaw = this.seal.getYaw();
+                this.seal.headYaw = this.seal.getYaw();
                 float i = (float) (this.speed * this.seal.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
                 this.seal.setMovementSpeed(MathHelper.lerp(0.125F, this.seal.getMovementSpeed(), i));
                 this.seal.setVelocity(this.seal.getVelocity().add(0.0D, (double) this.seal.getMovementSpeed() * e * 0.1D, 0.0D));
@@ -370,7 +370,7 @@ public class SealEntity extends AnimalEntity {
     }
 
     static class ApproachFoodHoldingPlayerGoal extends Goal {
-        private static final TargetPredicate CLOSE_ENTITY_PREDICATE = (new TargetPredicate()).setBaseMaxDistance(10.0D).includeTeammates().includeInvulnerable();
+        private static final TargetPredicate CLOSE_ENTITY_PREDICATE = TargetPredicate.DEFAULT.setBaseMaxDistance(10.0D);
         private final SealEntity seal;
         private final double speed;
         private PlayerEntity targetPlayer;
@@ -462,9 +462,9 @@ public class SealEntity extends AnimalEntity {
         public void tick() {
             if (this.seal.getNavigation().isIdle()) {
                 Vec3d vec3d = Vec3d.ofBottomCenter(this.seal.getTravelPos());
-                Vec3d vec3d2 = TargetFinder.findTargetTowards(this.seal, 16, 3, vec3d, 0.3141592741012573D);
+                Vec3d vec3d2 = NoPenaltyTargeting.find(this.seal, 16, 3, vec3d, 0.3141592741012573D);
                 if (vec3d2 == null) {
-                    vec3d2 = TargetFinder.findTargetTowards(this.seal, 8, 7, vec3d);
+                    vec3d2 = NoPenaltyTargeting.find(this.seal, 8, 7, vec3d);
                 }
 
                 if (vec3d2 != null) {

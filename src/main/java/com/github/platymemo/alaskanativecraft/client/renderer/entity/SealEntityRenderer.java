@@ -7,6 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -15,8 +16,8 @@ import net.minecraft.util.Identifier;
 public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntityModel<SealEntity>> {
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/seal.png");
 
-    public SealEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new SealEntityModel<>(0.0F), 0.7F);
+    public SealEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx, new SealEntityModel<>(0.0F), 0.7F);
     }
 
     public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

@@ -8,19 +8,12 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.ItemTags;
-import net.minecraft.util.Lazy;
-
-import java.util.function.Supplier;
 
 public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
 
-    KUSPUK("kuspuk", 5, new int[]{0, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, () -> {
-        return Ingredient.fromTag(ItemTags.WOOL);
-    }),
+    KUSPUK("kuspuk", 5, new int[]{0, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.WOOL)),
 
-    SNOW_GOGGLES("snow_goggles", 5, new int[]{0, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, () -> {
-        return Ingredient.fromTag(ItemTags.PLANKS);
-    });
+    SNOW_GOGGLES("snow_goggles", 5, new int[]{0, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.PLANKS));
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     private final String name;
@@ -30,9 +23,9 @@ public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
     private final SoundEvent equipSound;
     private final float toughness;
     private final float knockbackResistance;
-    private final Lazy<Ingredient> repairIngredientSupplier;
+    private final Ingredient repairIngredient;
 
-    AlaskaNativeArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredientSupplier) {
+    AlaskaNativeArmorMaterials(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantability, SoundEvent equipSound, float toughness, float knockbackResistance, Ingredient repairIngredient) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
@@ -40,7 +33,7 @@ public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
         this.equipSound = equipSound;
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
-        this.repairIngredientSupplier = new Lazy<>(repairIngredientSupplier);
+        this.repairIngredient = repairIngredient;
     }
 
     public int getDurability(EquipmentSlot slot) {
@@ -60,7 +53,7 @@ public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
     }
 
     public Ingredient getRepairIngredient() {
-        return this.repairIngredientSupplier.get();
+        return this.repairIngredient;
     }
 
     @Environment(EnvType.CLIENT)

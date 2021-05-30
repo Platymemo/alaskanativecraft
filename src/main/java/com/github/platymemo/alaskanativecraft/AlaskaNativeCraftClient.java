@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
-import com.github.platymemo.alaskanativecraft.client.renderer.blockentity.DryingRackBlockEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.block.entity.DryingRackBlockEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
@@ -50,10 +50,8 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
             Entity entity = type.create(world);
             client.execute(() -> {
                 if (entity != null) {
-                    entity.updatePosition(x, y, z);
-                    entity.updateTrackedPosition(x, y, z);
-                    entity.pitch = pitch;
-                    entity.yaw = yaw;
+                    entity.updateTrackedPositionAndAngles(x, y, z, yaw, pitch, 0, false);
+                    entity.updateTrackedPosition(x, y, z); // The above does not do the same thing, for some weird reason
                     entity.setEntityId(entityID);
                     entity.setUuid(entityUUID);
                     assert world != null;
@@ -79,16 +77,16 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     }
 
     private static void registerEntityRenderers() {
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.IRON_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.GOLDEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DIAMOND_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.NETHERITE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.IRON_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.GOLDEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DIAMOND_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.NETHERITE_HARPOON, HarpoonEntityRenderer::new);
 
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.HARP_SEAL, (entityRenderDispatcher, context) -> new SealEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.PTARMIGAN, (entityRenderDispatcher, context) -> new PtarmiganEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.MOOSE, (entityRenderDispatcher, context) -> new MooseEntityRenderer(entityRenderDispatcher));
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DOGSLED, (entityRenderDispatcher, context) -> new DogsledEntityRenderer(entityRenderDispatcher));
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.HARP_SEAL, SealEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.PTARMIGAN, PtarmiganEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.MOOSE, MooseEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DOGSLED, DogsledEntityRenderer::new);
     }
 }

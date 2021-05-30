@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.ModifiableTestableWorld;
+import net.minecraft.world.TestableWorld;
 import net.minecraft.world.gen.feature.TreeFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
@@ -18,10 +19,11 @@ import net.minecraft.world.gen.trunk.TrunkPlacerType;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class FallenTrunkPlacer extends StraightTrunkPlacer {
     public static final Codec<FallenTrunkPlacer> CODEC = RecordCodecBuilder.create(
-            (instance) -> method_28904(instance).apply(instance, FallenTrunkPlacer::new)
+            (instance) -> fillTrunkPlacerFields(instance).apply(instance, FallenTrunkPlacer::new)
     );
 
     public FallenTrunkPlacer(int i, int j, int k) {
@@ -34,11 +36,11 @@ public class FallenTrunkPlacer extends StraightTrunkPlacer {
     }
 
     @Override
-    public List<FoliagePlacer.TreeNode> generate(ModifiableTestableWorld world, Random random, int trunkHeight, BlockPos pos, Set<BlockPos> placedStates, BlockBox box, TreeFeatureConfig config) {
+    public List<FoliagePlacer.TreeNode> generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, int trunkHeight, BlockPos pos, TreeFeatureConfig config) {
         Direction direction = Direction.fromHorizontal(random.nextInt(4));
 
         for (int i = 0; i < trunkHeight; ++i) {
-            if (!getAndSetSpecificState(world, random, pos.offset(direction, i), placedStates, box, config, direction.getAxis())) {
+            if (!getAndSetSpecificState(world, replacer, random, pos.offset(direction, i), config, direction.getAxis())) {
                 return ImmutableList.of();
             }
         }
@@ -46,10 +48,10 @@ public class FallenTrunkPlacer extends StraightTrunkPlacer {
         return ImmutableList.of();
     }
 
-    protected static boolean getAndSetSpecificState(ModifiableTestableWorld world, Random random, BlockPos pos, Set<BlockPos> placedStates, BlockBox box, TreeFeatureConfig config, Direction.Axis axis) {
+    protected static boolean getAndSetSpecificState(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, BlockPos pos, TreeFeatureConfig config, Direction.Axis axis) {
         if (TreeFeature.canReplace(world, pos) && !world.testBlockState(pos.down(), BlockState::isAir)) {
-            setBlockState(world, pos, config.trunkProvider.getBlockState(random, pos).with(PillarBlock.AXIS, axis), box);
-            placedStates.add(pos.toImmutable());
+            getAndSetState(world, replacer, random, pos, config,
+                    (blockState) -> config.trunkProvider.getBlockState(random, pos).with(PillarBlock.AXIS, axis));
             return true;
         } else {
             return false;

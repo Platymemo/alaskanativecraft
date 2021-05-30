@@ -84,7 +84,7 @@ public class HarpoonItem extends TridentItem {
             return 15.0F;
         } else {
             Material material = state.getMaterial();
-            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && material != Material.UNUSED_PLANT && !state.isIn(BlockTags.LEAVES) && material != Material.GOURD ? 1.0F : 1.5F;
+            return material != Material.PLANT && material != Material.REPLACEABLE_PLANT && material != Material.MOSS_BLOCK && !state.isIn(BlockTags.LEAVES) && material != Material.GOURD ? 1.0F : 1.5F;
         }
     }
 
@@ -104,22 +104,22 @@ public class HarpoonItem extends TridentItem {
                     if (!world.isClient && j == 0) {
                         stack.damage(1, playerEntity, entity -> entity.sendToolBreakStatus(user.getActiveHand()));
                         HarpoonEntity harpoonEntity = new HarpoonEntity(world, playerEntity, this, stack);
-                        harpoonEntity.setProperties(playerEntity, playerEntity.pitch, playerEntity.yaw, 0.0F, 2.5F, 1.0F);
-                        if (playerEntity.abilities.creativeMode) {
+                        harpoonEntity.setProperties(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
+                        if (playerEntity.getAbilities().creativeMode) {
                             harpoonEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                         }
 
                         world.spawnEntity(harpoonEntity);
                         world.playSoundFromEntity(null, harpoonEntity, SoundEvents.ITEM_TRIDENT_THROW, SoundCategory.PLAYERS, 1.0F, 1.0F);
-                        if (!playerEntity.abilities.creativeMode) {
-                            playerEntity.inventory.removeOne(stack);
+                        if (!playerEntity.getAbilities().creativeMode) {
+                            playerEntity.getInventory().removeOne(stack);
                         }
                     }
 
                     playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
                     if (j > 0) {
-                        float f = playerEntity.yaw;
-                        float g = playerEntity.pitch;
+                        float f = playerEntity.getYaw();
+                        float g = playerEntity.getPitch();
                         float h = -MathHelper.sin(f * 0.017453292F) * MathHelper.cos(g * 0.017453292F);
                         float k = -MathHelper.sin(g * 0.017453292F);
                         float l = MathHelper.cos(f * 0.017453292F) * MathHelper.cos(g * 0.017453292F);

@@ -13,10 +13,11 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
@@ -28,15 +29,15 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
     protected final DogsledEntityModel model = new DogsledEntityModel();
 
-    public DogsledEntityRenderer(EntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx);
         this.shadowRadius = 0.5F;
     }
 
     public void render(DogsledEntity dogsledEntity, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
         matrixStack.push();
         matrixStack.scale(1.5F, 1.5F, 1.5F);
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270 - yaw));
+        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270 - yaw));
         float h = (float) dogsledEntity.getDamageWobbleTicks() - tickDelta;
         float j = dogsledEntity.getDamageWobbleStrength() - tickDelta;
         if (j < 0.0F) {
@@ -44,7 +45,7 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
         }
 
         if (h > 0.0F) {
-            matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(MathHelper.sin(h) * h * j / 10.0F * (float) dogsledEntity.getDamageWobbleSide()));
+            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(MathHelper.sin(h) * h * j / 10.0F * (float) dogsledEntity.getDamageWobbleSide()));
         }
 
         // Chest Rendering
@@ -52,12 +53,12 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
         float s = 0.5F;
         matrixStack.scale(s, s, s);
         matrixStack.translate(-0.3D, 0.6D, 0.5D);
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
         this.renderBlock(Blocks.CHEST.getDefaultState(), matrixStack, vertexConsumerProvider, light);
         matrixStack.pop();
 
         matrixStack.scale(-1.0F, -1.0F, 1.0F);
-        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
         this.model.setAngles(dogsledEntity, tickDelta, 0.0F, -0.1F, 0.0F, 0.0F);
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(this.getTexture(dogsledEntity)));
         this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);

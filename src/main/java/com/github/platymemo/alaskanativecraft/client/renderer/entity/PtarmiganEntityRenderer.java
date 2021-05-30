@@ -5,7 +5,7 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntit
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -16,8 +16,8 @@ public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, 
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/brown_ptarmigan.png"),
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
 
-    public PtarmiganEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new PtarmiganEntityModel(), 0.3F);
+    public PtarmiganEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx, new PtarmiganEntityModel(), 0.3F);
     }
 
     public Identifier getTexture(PtarmiganEntity ptarmiganEntity) {

@@ -7,6 +7,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -15,12 +16,8 @@ import net.minecraft.util.Identifier;
 public class MooseEntityRenderer extends MobEntityRenderer<MooseEntity, MooseEntityModel<MooseEntity>> {
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/moose.png");
 
-    public MooseEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-        super(entityRenderDispatcher, new MooseEntityModel(), 1.5F);
-    }
-
-    public void render(MooseEntity mooseEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        super.render(mooseEntity, f, g, matrixStack, vertexConsumerProvider, i);
+    public MooseEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx, new MooseEntityModel(), 1.5F);
     }
 
     public Identifier getTexture(MooseEntity mooseEntity) {

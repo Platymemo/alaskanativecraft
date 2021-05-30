@@ -8,7 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.ParrotEntity;
 import net.minecraft.entity.projectile.thrown.SnowballEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -36,13 +36,13 @@ public class SnowballEntityMixin {
                     entityName = entity.getCustomName();
                 }
 
-                CompoundTag entityTag = new CompoundTag();
+                NbtCompound entityTag = new NbtCompound();
                 entityTag.putString("id", ptarmigan.toString());
 
                 if (entity.getEntityWorld() instanceof ServerWorld) {
                     ServerWorld world = (ServerWorld) entity.getEntityWorld();
                     Entity newEntity = EntityType.loadEntityWithPassengers(entityTag, world, (entityMaker) -> {
-                        entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.yaw, entityMaker.pitch);
+                        entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
                         return entityMaker;
                     });
                     if (newEntity != null) {
@@ -50,7 +50,7 @@ public class SnowballEntityMixin {
                     }
 
                     if (world.shouldCreateNewEntityWithPassenger(newEntity)) {
-                        entity.remove();
+                        entity.discard();
                     }
                 }
             }

@@ -41,13 +41,13 @@ public class AlaskaFeatures {
 
         // Sparse bushes
         ConfiguredFeature<?, ?> patchBushSparse = patchBush.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE);
-        RegistryKey<ConfiguredFeature<?, ?>> sparseBushPatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
+        RegistryKey<ConfiguredFeature<?, ?>> sparseBushPatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + bushName + "_sparse"));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sparseBushPatchRegistryKey.getValue(), patchBushSparse);
 
         // Decorated (extra sparse) bushes
         ConfiguredFeature<?, ?> patchBushDecorated = patchBush.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE).applyChance(12);
-        RegistryKey<ConfiguredFeature<?, ?>> decoratedBushPatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
+        RegistryKey<ConfiguredFeature<?, ?>> decoratedBushPatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + bushName + "_decorated"));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, decoratedBushPatchRegistryKey.getValue(), patchBushDecorated);
 
@@ -60,10 +60,11 @@ public class AlaskaFeatures {
     private static void registerWashedUpTree(Block treeLog, String treeName) {
         TreeFeatureConfig washedUpTree = new TreeFeatureConfig.Builder(
                 new SimpleBlockStateProvider(treeLog.getDefaultState()),
+                new FallenTrunkPlacer(2, 1, 1),
                 // For the memes :tnypto:
                 new SimpleBlockStateProvider(Blocks.NETHERITE_BLOCK.getDefaultState()),
+                new SimpleBlockStateProvider(Blocks.NETHERITE_BLOCK.getDefaultState()),
                 new EmptyFoliagePlacer(),
-                new FallenTrunkPlacer(2, 1, 1),
                 new TwoLayersFeatureSize(0, 0, 0)
         ).build();
 
@@ -71,13 +72,13 @@ public class AlaskaFeatures {
 
         // Sparse washed up trees
         ConfiguredFeature<?, ?> patchWashedUpTreeSparse = configuredWashedUpTree.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP);
-        RegistryKey<ConfiguredFeature<?, ?>> sparseWashedUpTreePatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
+        RegistryKey<ConfiguredFeature<?, ?>> sparseWashedUpTreePatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + treeName + "_sparse"));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sparseWashedUpTreePatchRegistryKey.getValue(), patchWashedUpTreeSparse);
 
         // Decorated (extra sparse) washed up trees
         ConfiguredFeature<?, ?> patchWashedUpTreeDecorated = configuredWashedUpTree.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP).repeatRandomly(4);
-        RegistryKey<ConfiguredFeature<?, ?>> decoratedWashedUpTreePatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_WORLDGEN,
+        RegistryKey<ConfiguredFeature<?, ?>> decoratedWashedUpTreePatchRegistryKey = RegistryKey.of(Registry.CONFIGURED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + treeName + "_decorated"));
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, decoratedWashedUpTreePatchRegistryKey.getValue(), patchWashedUpTreeDecorated);
 

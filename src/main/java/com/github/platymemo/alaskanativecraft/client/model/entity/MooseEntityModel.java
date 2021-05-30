@@ -16,15 +16,15 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
         textureWidth = 64;
         textureHeight = 64;
 
-        torso = new ModelPart(this);
-        torso.setPivot(0.5F, 7.0F, 0.0F);
-        torso.setTextureOffset(0, 25).addCuboid(-3.5F, -5.0F, -11.0F, 7.0F, 10.0F, 9.0F, 0.0F, false);
-        torso.setTextureOffset(0, 0).addCuboid(-3.5F, -4.0F, -2.0F, 7.0F, 9.0F, 16.0F, 0.0F, false);
-        torso.setTextureOffset(42, 11).addCuboid(-1.0F, -3.0F, 14.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+        body = new ModelPart(this);
+        body.setPivot(0.5F, 7.0F, 0.0F);
+        body.setTextureOffset(0, 25).addCuboid(-3.5F, -5.0F, -11.0F, 7.0F, 10.0F, 9.0F, 0.0F, false);
+        body.setTextureOffset(0, 0).addCuboid(-3.5F, -4.0F, -2.0F, 7.0F, 9.0F, 16.0F, 0.0F, false);
+        body.setTextureOffset(42, 11).addCuboid(-1.0F, -3.0F, 14.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
 
         ModelPart hump = new ModelPart(this);
         hump.setPivot(0.0F, 2.0F, -1.8F);
-        torso.addChild(hump);
+        body.addChild(hump);
         setRotationAngle(hump, -0.4363F, 0.0F, 0.0F);
         hump.setTextureOffset(30, 0).addCuboid(-3.0F, -6.0F, -10.0F, 6.0F, 4.0F, 7.0F, 0.0F, false);
 

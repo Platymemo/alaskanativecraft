@@ -9,8 +9,6 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
@@ -36,11 +34,11 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
             if (!itemStack.isEmpty()) {
 
                 // Need at least 1 fish but can have more
-                if (itemStack.getItem().isIn(AlaskaTags.SLICEABLE_FISH)) {
+                if (itemStack.isIn(AlaskaTags.SLICEABLE_FISH)) {
                     hasFish = true;
                 }
                 // Can only have one ulu
-                else if (itemStack.getItem().isIn(AlaskaTags.ULUS) && !hasUlu) {
+                else if (itemStack.isIn(AlaskaTags.ULUS) && !hasUlu) {
                     hasUlu = true;
                 } else {
                     return false;
@@ -57,7 +55,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
         ItemStack stack;
         for(int i = 0; i < inv.size(); ++i) {
             stack = inv.getStack(i);
-            if (stack.getItem().isIn(AlaskaTags.SLICEABLE_FISH)) {
+            if (stack.isIn(AlaskaTags.SLICEABLE_FISH)) {
                 numOfFish++;
             }
         }
@@ -65,12 +63,12 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainingStacks(CraftingInventory inventory) {
+    public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
 
         for(int i = 0; i < defaultedList.size(); ++i) {
             ItemStack stack = inventory.getStack(i);
-            if (stack.getItem().isIn(AlaskaTags.ULUS)) {
+            if (stack.isIn(AlaskaTags.ULUS)) {
                 stack.damage(5, new Random(), null);
                 defaultedList.set(i, stack.copy());
             }

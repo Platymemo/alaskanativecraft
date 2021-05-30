@@ -4,6 +4,8 @@ import com.github.platymemo.alaskanativecraft.block.entity.DryingRackBlockEntity
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -22,6 +24,7 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -55,7 +58,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
             ItemStack itemStack = player.getStackInHand(hand);
             Optional<DryingRecipe> optional = dryingRackBlockEntity.getRecipeFor(itemStack);
             if (optional.isPresent()) {
-                if (dryingRackBlockEntity.addItem(player.abilities.creativeMode ? itemStack.copy() : itemStack, (optional.get()).getCookTime())) {
+                if (dryingRackBlockEntity.addItem(player.getAbilities().creativeMode ? itemStack.copy() : itemStack, (optional.get()).getCookTime())) {
                     // TODO Drying rack interaction stats
                     return ActionResult.SUCCESS;
                 }
@@ -181,8 +184,21 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return new DryingRackBlockEntity();
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        if (!world.isClient) {
+            if (state.get(WATERLOGGED) || world.isRaining()) {
+                return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::possiblyWetTick);
+            } else {
+                return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::updateItemsBeingDried);
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new DryingRackBlockEntity(pos, state);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity.State;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -22,7 +23,7 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -75,12 +76,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
         packet.writeVarInt(Registry.ENTITY_TYPE.getRawId(this.getType()));
         packet.writeUuid(this.getUuid());
-        packet.writeVarInt(this.getEntityId());
+        packet.writeVarInt(this.getId());
         packet.writeDouble(this.getX());
         packet.writeDouble(this.getY());
         packet.writeDouble(this.getZ());
-        packet.writeByte(MathHelper.floor(this.pitch * 256.0F / 360.0F));
-        packet.writeByte(MathHelper.floor(this.yaw * 256.0F / 360.0F));
+        packet.writeByte(MathHelper.floor(this.getPitch() * 256.0F / 360.0F));
+        packet.writeByte(MathHelper.floor(this.getYaw() * 256.0F / 360.0F));
 
         return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET, packet);
     }
@@ -111,12 +112,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             Vec3d vec3d = this.getVelocity();
             double distanceFromLiquidHeight = this.getY() + vec3d.y - (double) blockPos.getY() - (double) fluidHeight;
 
-            // Get pitch, zero it if its minimal.
+            // Set pitch, zero it if its minimal.
             if (vec3d.y > 0.032D) {
-                this.pitch = (float) (MathHelper.atan2(vec3d.y, MathHelper.sqrt(squaredHorizontalLength(vec3d))) * 57.2957763671875D);
-                this.pitch = updateRotation(this.prevPitch, this.pitch);
+                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.method_37267()) * 57.2957763671875D));
+                this.setPitch(updateRotation(this.prevPitch, this.getPitch()));
             } else {
-                this.pitch = updateRotation(this.prevPitch, 0.0F);
+                this.setPitch(updateRotation(this.prevPitch, 0.0F));
             }
 
             // Get bobbing action
@@ -125,7 +126,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             }
             this.setVelocity(vec3d.x * 0.9D, vec3d.y - distanceFromLiquidHeight * (double) this.random.nextFloat() * 0.2D, vec3d.z * 0.9D);
             vec3d = this.getVelocity();
-            this.updatePosition(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
+            this.setPosition(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
             this.checkBlockCollision();
             return;
         }
@@ -142,7 +143,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
                     this.dropStack(this.asItemStack(), 0.1F);
                 }
 
-                this.remove();
+                this.discard();
             } else if (i > 0) {
                 this.setNoClip(true);
                 Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
@@ -206,7 +207,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         h += velocity.x;
         j += velocity.y;
         k += velocity.z;
-        this.updatePosition(h, j, k);
+        this.setPosition(h, j, k);
         this.checkBlockCollision();
     }
 
@@ -245,7 +246,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 this.onHit(livingEntity2);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getTag().contains("leashed") && this.harpoonStack.getTag().getBoolean("leashed")) {
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateTag().contains("leashed") && this.harpoonStack.getOrCreateTag().getBoolean("leashed")) {
                     ((MobEntity) entity).attachLeash(this.getOwner(), true);
                     this.harpoonStack.removeSubTag("leashed");
                     this.setVelocity(Vec3d.ZERO);
@@ -282,36 +283,34 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     public void onPlayerCollision(PlayerEntity player) {
         Entity entity = this.getOwner();
         if (entity == null || entity.getUuid() == player.getUuid()) {
-            if (this.state == State.FLYING) {
-                return;
-            } else if (!this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
-                boolean bl = this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED || this.pickupType == PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY && player.abilities.creativeMode || this.isNoClip() && this.getOwner().getUuid() == player.getUuid();
-                if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED && !player.inventory.insertStack(this.asItemStack())) {
+            if (this.state != State.FLYING && !this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
+                boolean bl = this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED || this.pickupType == PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY && player.getAbilities().creativeMode || this.isNoClip() && this.getOwner().getUuid() == player.getUuid();
+                if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED && !player.getInventory().insertStack(this.asItemStack())) {
                     bl = false;
                 }
 
                 if (bl) {
                     player.sendPickup(this, 1);
-                    this.remove();
+                    this.discard();
                 }
             } else
                 super.onPlayerCollision(player);
         }
     }
 
-    public void readCustomDataFromTag(CompoundTag tag) {
-        super.readCustomDataFromTag(tag);
+    public void readCustomDataFromNbt(NbtCompound tag) {
+        super.readCustomDataFromNbt(tag);
         if (tag.contains("Trident", 10)) {
-            this.harpoonStack = ItemStack.fromTag(tag.getCompound("Harpoon"));
+            this.harpoonStack = ItemStack.fromNbt(tag.getCompound("Harpoon"));
         }
 
         this.dealtDamage = tag.getBoolean("DealtDamage");
     }
 
     @Override
-    public void writeCustomDataToTag(CompoundTag tag) {
-        super.writeCustomDataToTag(tag);
-        tag.put("Harpoon", this.harpoonStack.toTag(new CompoundTag()));
+    public void writeCustomDataToNbt(NbtCompound tag) {
+        super.writeCustomDataToNbt(tag);
+        tag.put("Harpoon", this.harpoonStack.writeNbt(new NbtCompound()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
     }
 

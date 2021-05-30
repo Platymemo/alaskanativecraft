@@ -1,6 +1,8 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
+import com.google.common.collect.Lists;
+import com.google.common.collect.UnmodifiableIterator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
@@ -8,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.class_5459;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -30,7 +31,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -50,6 +51,7 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.PortalUtil;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -90,7 +92,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     public DogsledEntity(World world, double x, double y, double z) {
         this(AlaskaEntities.DOGSLED, world);
-        this.updatePosition(x, y, z);
+        this.setPosition(x, y, z);
         this.updateTrackedPosition(x, y, z);
         this.setVelocity(Vec3d.ZERO);
         this.prevX = x;
@@ -125,8 +127,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return true;
     }
 
-    protected Vec3d method_30633(Direction.Axis axis, class_5459.class_5460 arg) {
-        return LivingEntity.method_31079(super.method_30633(axis, arg));
+    protected Vec3d positionInPortal(Direction.Axis axis, PortalUtil.Rectangle arg) {
+        return LivingEntity.positionInPortal(super.positionInPortal(axis, arg));
     }
 
     public void pushAwayFrom(Entity entity) {
@@ -166,7 +168,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public boolean collides() {
-        return !this.removed;
+        return !this.isRemoved();
     }
 
     @Environment(EnvType.CLIENT)
@@ -220,7 +222,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 if (!MathHelper.approximatelyEquals(this.getVelocity().length(), 0.0D)) {
                     ((TameableEntity) passenger).setInSittingPose(false);
                 }
-                ((LivingEntity) passenger).method_29242(((LivingEntity) passenger), false);
+                ((LivingEntity) passenger).updateLimbs(((LivingEntity) passenger), false);
             }
         }
 
@@ -252,12 +254,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
             double d = this.getX() + (this.x - this.getX()) / (double) this.clientInterpolationSteps;
             double e = this.getY() + (this.y - this.getY()) / (double) this.clientInterpolationSteps;
             double f = this.getZ() + (this.z - this.getZ()) / (double) this.clientInterpolationSteps;
-            double g = MathHelper.wrapDegrees(this.dogsledYaw - (double) this.yaw);
-            this.yaw = (float) ((double) this.yaw + g / (double) this.clientInterpolationSteps);
-            this.pitch = (float) ((double) this.pitch + (this.dogsledPitch - (double) this.pitch) / (double) this.clientInterpolationSteps);
+            double g = MathHelper.wrapDegrees(this.dogsledYaw - (double) this.getYaw());
+            float yaw = (float) ((double) this.getYaw() + g / (double) this.clientInterpolationSteps);
+            float pitch = (float) ((double) this.getPitch() + (this.dogsledPitch - (double) this.getPitch()) / (double) this.clientInterpolationSteps);
             --this.clientInterpolationSteps;
-            this.updatePosition(d, e, f);
-            this.setRotation(this.yaw, this.pitch);
+            this.setPosition(d, e, f);
+            this.setRotation(yaw, pitch);
         }
     }
 
@@ -367,7 +369,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 f += 0.005F;
             }
 
-            this.yaw += this.yawVelocity;
+            this.setYaw(this.getYaw() + this.yawVelocity);
             if (this.pressingForward) {
                 f += 0.04F;
             }
@@ -376,7 +378,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 f -= 0.005F;
             }
 
-            this.setVelocity(this.getVelocity().add((MathHelper.sin(-this.yaw * 0.017453292F) * f), 0.0D, (MathHelper.cos(this.yaw * 0.017453292F) * f)));
+            this.setVelocity(this.getVelocity().add((MathHelper.sin(-this.getYaw() * 0.017453292F) * f), 0.0D, (MathHelper.cos(this.getYaw() * 0.017453292F) * f)));
         }
     }
 
@@ -408,26 +410,29 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public Vec3d updatePassengerForDismount(LivingEntity passenger) {
-        Vec3d vec3d = getPassengerDismountOffset((this.getWidth() * MathHelper.SQUARE_ROOT_OF_TWO), passenger.getWidth(), this.yaw);
+        Vec3d vec3d = getPassengerDismountOffset((this.getWidth() * MathHelper.SQUARE_ROOT_OF_TWO), passenger.getWidth(), passenger.getYaw());
         double d = this.getX() + vec3d.x;
         double e = this.getZ() + vec3d.z;
         BlockPos blockPos = new BlockPos(d, this.getBoundingBox().maxY, e);
         BlockPos blockPos2 = blockPos.down();
         if (!this.world.isWater(blockPos2)) {
-            double f = (double) blockPos.getY() + this.world.getDismountHeight(blockPos);
-            double g = (double) blockPos.getY() + this.world.getDismountHeight(blockPos2);
+            List<Vec3d> list = Lists.newArrayList();
+            double f = this.world.getDismountHeight(blockPos);
+            if (Dismounting.canDismountInBlock(f)) {
+                list.add(new Vec3d(d, (double)blockPos.getY() + f, e));
+            }
+
+            double g = this.world.getDismountHeight(blockPos2);
+            if (Dismounting.canDismountInBlock(g)) {
+                list.add(new Vec3d(d, (double)blockPos2.getY() + g, e));
+            }
 
             for (EntityPose entityPose : passenger.getPoses()) {
-                Vec3d vec3d2 = Dismounting.findDismountPos(this.world, d, f, e, passenger, entityPose);
-                if (vec3d2 != null) {
-                    passenger.setPose(entityPose);
-                    return vec3d2;
-                }
-
-                Vec3d vec3d3 = Dismounting.findDismountPos(this.world, d, g, e, passenger, entityPose);
-                if (vec3d3 != null) {
-                    passenger.setPose(entityPose);
-                    return vec3d3;
+                for (Vec3d vec3d2 : list) {
+                    if (Dismounting.canPlaceEntityAt(this.world, vec3d2, passenger, entityPose)) {
+                        passenger.setPose(entityPose);
+                        return vec3d2;
+                    }
                 }
             }
         }
@@ -436,12 +441,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     protected void copyEntityData(Entity entity) {
-        entity.setYaw(this.yaw);
-        float f = MathHelper.wrapDegrees(entity.yaw - this.yaw);
+        entity.setBodyYaw(this.getYaw());
+        float f = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
         float g = MathHelper.clamp(f, -105.0F, 105.0F);
-        entity.prevYaw += g - f;
-        entity.yaw += g - f;
-        entity.setHeadYaw(entity.yaw);
+        entity.prevYaw += (g - f);
+        entity.setYaw(entity.getYaw() + g - f);
+        entity.setHeadYaw(entity.getYaw());
     }
 
     @Environment(EnvType.CLIENT)
@@ -458,9 +463,9 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                         return;
                     }
 
-                    this.handleFallDamage(this.fallDistance, 1.0F);
-                    if (!this.world.isClient && !this.removed) {
-                        this.remove();
+                    this.handleFallDamage(this.fallDistance, 1.0F, DamageSource.FALL);
+                    if (!this.world.isClient && !this.isRemoved()) {
+                        this.kill();
                         if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
                             int j;
                             for (j = 0; j < 3; ++j) {
@@ -560,7 +565,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public boolean damage(DamageSource source, float amount) {
-        if (!this.world.isClient && !this.removed) {
+        if (!this.world.isClient && !this.isRemoved()) {
             if (this.isInvulnerableTo(source)) {
                 return false;
             } else {
@@ -568,11 +573,11 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 this.setDamageWobbleTicks(10);
                 this.scheduleVelocityUpdate();
                 this.setDamageWobbleStrength(this.getDamageWobbleStrength() + amount * 10.0F);
-                boolean bl = source.getAttacker() instanceof PlayerEntity && ((PlayerEntity) source.getAttacker()).abilities.creativeMode;
+                boolean bl = source.getAttacker() instanceof PlayerEntity && ((PlayerEntity) source.getAttacker()).getAbilities().creativeMode;
                 if (bl || this.getDamageWobbleStrength() > 40.0F) {
                     this.removeAllPassengers();
                     if (bl && !this.hasCustomName()) {
-                        this.remove();
+                        this.discard();
                     } else {
                         this.dropItems(source);
                     }
@@ -596,21 +601,11 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
-    public void remove() {
-        if (!this.world.isClient) {
-            ItemScatterer.spawn(this.world, this, this);
-        }
-
-        this.removeAllPassengers();
-
-        super.remove();
-    }
-
     public void dropItems(DamageSource damageSource) {
-        this.remove();
+        this.remove(RemovalReason.KILLED);
         if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
             if (damageSource != null) {
-                ItemStack itemStack = new ItemStack(this.asItem());
+                ItemStack itemStack = this.asItem().getDefaultStack();
                 if (this.hasCustomName()) {
                     itemStack.setCustomName(this.getCustomName());
                 }
@@ -628,28 +623,28 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     @Override
     public void updatePassengerPosition(Entity passenger) {
-        this.updatePassengerPosition(passenger, Entity::updatePosition);
+        this.updatePassengerPosition(passenger, Entity::setPosition);
     }
 
     private void updatePassengerPosition(Entity passenger, Entity.PositionUpdater positionUpdater) {
         if (this.hasPassenger(passenger)) {
             if (passenger instanceof PlayerEntity) {
-                float g = (float) ((this.removed ? 0.009999999776482582D : this.getMountedHeightOffset()) + passenger.getHeightOffset());
-                double x = MathHelper.cos((this.yaw + 90.0F) * 0.0174533F);
-                double z = MathHelper.sin((this.yaw + 90.0F) * 0.0174533F);
+                float g = (float) ((this.isRemoved() ? 0.009999999776482582D : this.getMountedHeightOffset()) + passenger.getHeightOffset());
+                double x = MathHelper.cos((this.getYaw() + 90.0F) * 0.0174533F);
+                double z = MathHelper.sin((this.getYaw() + 90.0F) * 0.0174533F);
                 positionUpdater.accept(passenger, this.getX() - x, this.getY() + (double) g, this.getZ() - z);
             } else if (passenger instanceof WolfEntity) {
                 passenger.noClip = true;
-                Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.yaw * 0.017453292F - 1.5707964F);
+                Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.getYaw() * 0.017453292F - 1.5707964F);
                 positionUpdater.accept(passenger, this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
-                passenger.yaw += this.yawVelocity;
+                passenger.setYaw(passenger.getYaw() + this.yawVelocity);
                 passenger.setHeadYaw(passenger.getHeadYaw() + this.yawVelocity);
                 this.copyEntityData(passenger);
             }
         }
     }
 
-    public void writeCustomDataToTag(CompoundTag tag) {
+    public void writeCustomDataToNbt(NbtCompound tag) {
         tag.putString("Type", this.getDogsledType().getName());
         if (this.lootTableId != null) {
             tag.putString("LootTable", this.lootTableId.toString());
@@ -657,12 +652,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 tag.putLong("LootTableSeed", this.lootSeed);
             }
         } else {
-            Inventories.toTag(tag, this.inventory);
+            Inventories.writeNbt(tag, this.inventory);
         }
 
     }
 
-    public void readCustomDataFromTag(CompoundTag tag) {
+    public void readCustomDataFromNbt(NbtCompound tag) {
         if (tag.contains("Type", 8)) {
             this.setDogsledType(DogsledEntity.Type.getType(tag.getString("Type")));
         }
@@ -671,7 +666,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
             this.lootTableId = new Identifier(tag.getString("LootTable"));
             this.lootSeed = tag.getLong("LootTableSeed");
         } else {
-            Inventories.fromTag(tag, this.inventory);
+            Inventories.readNbt(tag, this.inventory);
         }
 
     }
@@ -756,7 +751,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public boolean canPlayerUse(PlayerEntity player) {
-        if (this.removed) {
+        if (this.isRemoved()) {
             return false;
         } else {
             return player.squaredDistanceTo(this) <= 64.0D;

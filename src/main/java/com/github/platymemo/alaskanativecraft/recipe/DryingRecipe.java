@@ -13,7 +13,7 @@ public class DryingRecipe extends AbstractCookingRecipe {
     }
 
     @Environment(EnvType.CLIENT)
-    public ItemStack getRecipeKindIcon() {
+    public ItemStack createIcon() {
         return new ItemStack(AlaskaBlocks.DRYING_RACK);
     }
 
