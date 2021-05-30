@@ -14,8 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer {
 
-    public PlayerEntityRendererMixin(EntityRenderDispatcher dispatcher, EntityModel model, float shadowRadius) {
+    protected PlayerEntityRendererMixin(EntityRenderDispatcher dispatcher, EntityModel model, float shadowRadius) {
         super(dispatcher, model, shadowRadius);
+        throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
 
     @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;Z)V")

@@ -18,8 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity {
-    public ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+    protected ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
+        throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
 
     @Shadow

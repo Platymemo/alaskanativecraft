@@ -7,6 +7,8 @@ import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
@@ -22,6 +24,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.UUID;
 
+@Environment(EnvType.CLIENT)
 public class AlaskaNativeCraftClient implements ClientModInitializer {
 
     @Override
@@ -74,6 +77,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     private static void registerBlockEntityRenderers() {
         BlockEntityRendererRegistry.INSTANCE.register(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntityRenderer::new);
     }
+
     private static void registerEntityRenderers() {
         EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));
         EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, (dispatcher, context) -> new HarpoonEntityRenderer(dispatcher));

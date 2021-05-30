@@ -14,12 +14,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ArmorStandEntityRenderer.class)
 public abstract class ArmorStandEntityRendererMixin extends LivingEntityRenderer<ArmorStandEntity, ArmorStandArmorEntityModel> {
 
-    public ArmorStandEntityRendererMixin(EntityRenderDispatcher dispatcher, ArmorStandArmorEntityModel model, float shadowRadius) {
+    protected ArmorStandEntityRendererMixin(EntityRenderDispatcher dispatcher, ArmorStandArmorEntityModel model, float shadowRadius) {
         super(dispatcher, model, shadowRadius);
+        throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
 
     @Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;)V")
     private void addFeatures(EntityRenderDispatcher entityRenderDispatcher, CallbackInfo ci) {
-        this.addFeature(new KuspukSkirtFeatureRenderer(this));
+        this.addFeature(new KuspukSkirtFeatureRenderer<>(this));
     }
 }
