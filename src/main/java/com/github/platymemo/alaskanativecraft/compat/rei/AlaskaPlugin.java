@@ -1,3 +1,4 @@
+/*
 package com.github.platymemo.alaskanativecraft.compat.rei;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
@@ -43,3 +44,4 @@ public class AlaskaPlugin implements REIClientPlugin {
                 });
     }
 }
+*/

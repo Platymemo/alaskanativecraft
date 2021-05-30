@@ -1,3 +1,4 @@
+/*
 package com.github.platymemo.alaskanativecraft.compat.rei;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
@@ -54,3 +55,4 @@ public class DryingCategory implements DisplayCategory<DryingDisplay> {
         return 49;
     }
 }
+*/
