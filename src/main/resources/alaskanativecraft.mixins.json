@@ -21,6 +21,7 @@
     "client.BipedEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
     "client.ClientPlayNetworkHandlerMixin",
+    "client.ClientRecipeBookMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.LivingEntityRendererMixin",

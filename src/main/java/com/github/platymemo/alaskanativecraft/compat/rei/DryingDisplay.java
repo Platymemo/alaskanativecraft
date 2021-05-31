@@ -59,6 +59,6 @@ public class DryingDisplay implements RecipeDisplay {
 
     @Override
     public @NotNull Identifier getRecipeCategory() {
-        return AlaskaPlugin.ALASKA_PLUGIN;
+        return AlaskaPlugin.DRYING_ID;
     }
 }

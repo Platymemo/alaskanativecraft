@@ -60,3 +60,9 @@ Platymemo:
 7. Blueberries and raspberries can be crafted into dyes
 8. Better quality seal texture (Thanks to Guaire for the texture)
 9. Harpoons now work properly with loyalty and channeling
+
+
+### v1.2.1: Bugfixes
+1. Fixed REI plugin to not spam logs
+2. Early cancelled recipe book so it doesn't spam logs
+3. Added a config option for driftwood gen

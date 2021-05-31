@@ -11,6 +11,7 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 public class AlaskaConfig implements ConfigData {
     public boolean snowballConversion = false;
     public boolean mooseEatBark = true;
+    public boolean genDriftwood = true;
     @ConfigEntry.Gui.CollapsibleObject
     public SealFishing sealFishing = new SealFishing();
 
