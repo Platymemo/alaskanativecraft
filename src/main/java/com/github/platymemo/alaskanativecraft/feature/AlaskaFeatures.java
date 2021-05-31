@@ -2,6 +2,7 @@ package com.github.platymemo.alaskanativecraft.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.mixin.FoliagePlacerTypeInvoker;
 import com.github.platymemo.alaskanativecraft.mixin.TrunkPlacerTypeInvoker;
 import com.google.common.collect.ImmutableSet;
@@ -83,7 +84,15 @@ public class AlaskaFeatures {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, decoratedWashedUpTreePatchRegistryKey.getValue(), patchWashedUpTreeDecorated);
 
         // Add the features to actually spawn
-        BiomeModifications.addFeature(BiomeSelectors.categories(Biome.Category.BEACH).and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN), GenerationStep.Feature.VEGETAL_DECORATION, decoratedWashedUpTreePatchRegistryKey);
-        BiomeModifications.addFeature(BiomeSelectors.categories(Biome.Category.BEACH).and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW), GenerationStep.Feature.VEGETAL_DECORATION, sparseWashedUpTreePatchRegistryKey);
+        BiomeModifications.addFeature(BiomeSelectors.categories(Biome.Category.BEACH)
+                    .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN)
+                    .and(ctx -> AlaskaConfig.getConfig().genDriftwood),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                decoratedWashedUpTreePatchRegistryKey);
+        BiomeModifications.addFeature(BiomeSelectors.categories(Biome.Category.BEACH)
+                        .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW)
+                        .and(ctx -> AlaskaConfig.getConfig().genDriftwood),
+                GenerationStep.Feature.VEGETAL_DECORATION,
+                sparseWashedUpTreePatchRegistryKey);
     }
 }
