@@ -4,55 +4,91 @@ import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import com.google.common.collect.ImmutableList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.CompositeEntityModel;
+import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.passive.ParrotEntity;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
-public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> {
-    private final ModelPart torso;
+public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity> {
+    private final ModelPart root;
+    private final ModelPart body;
     private final ModelPart tail;
     private final ModelPart leftWing;
     private final ModelPart rightWing;
     private final ModelPart head;
-    private final ModelPart beak;
     private final ModelPart leftLeg;
     private final ModelPart rightLeg;
 
-    public PtarmiganEntityModel() {
-        this.textureWidth = 32;
-        this.textureHeight = 32;
-        this.torso = new ModelPart(this, 0, 7);
-        this.torso.addCuboid(-2.5F, 0.0F, -2.5F, 5.0F, 6.0F, 5.0F);
-        this.torso.setPivot(0.0F, 16.5F, -3.0F);
-        this.tail = new ModelPart(this, 24, 0);
-        this.tail.addCuboid(-1.5F, -1.0F, 0.0F, 3.0F, 4.0F, 1.0F);
-        this.tail.setPivot(0.0F, 21.07F, 1.16F);
-        this.leftWing = new ModelPart(this, 2, 22);
-        this.leftWing.addCuboid(-2.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F);
-        this.leftWing.setPivot(2.5F, 16.94F, -2.76F);
-        this.rightWing = new ModelPart(this, 2, 22);
-        this.rightWing.addCuboid(1.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F);
-        this.rightWing.setPivot(-2.5F, 16.94F, -2.76F);
-        this.head = new ModelPart(this, 0, 0);
-        this.head.addCuboid(-1.0F, -1.5F, -1.0F, 2.0F, 3.0F, 2.0F);
-        this.head.setPivot(0.0F, 15.69F, -2.76F);
-        this.beak = new ModelPart(this, 9, 0);
-        this.beak.addCuboid(-0.5F, -1.0F, -0.5F, 1.0F, 2.0F, 1.0F);
-        this.beak.setPivot(0.0F, -0.5F, -1.5F);
-        this.head.addChild(this.beak);
-        this.leftLeg = new ModelPart(this, 14, 24);
-        this.leftLeg.addCuboid(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
-        this.leftLeg.setPivot(1.0F, 22.0F, -1.05F);
-        this.rightLeg = new ModelPart(this, 14, 24);
-        this.rightLeg.addCuboid(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
-        this.rightLeg.setPivot(-1.0F, 22.0F, -1.05F);
+    public PtarmiganEntityModel(ModelPart root) {
+        this.root = root;
+        this.body = root.getChild(EntityModelPartNames.BODY);
+        this.tail = root.getChild(EntityModelPartNames.TAIL);
+        this.leftWing = root.getChild(EntityModelPartNames.LEFT_WING);
+        this.rightWing = root.getChild(EntityModelPartNames.RIGHT_WING);
+        this.head = root.getChild(EntityModelPartNames.HEAD);
+        this.leftLeg = root.getChild(EntityModelPartNames.LEFT_LEG);
+        this.rightLeg = root.getChild(EntityModelPartNames.RIGHT_LEG);
     }
 
-    public Iterable<ModelPart> getParts() {
-        return ImmutableList.of(this.torso, this.leftWing, this.rightWing, this.tail, this.head, this.leftLeg, this.rightLeg);
+    public static TexturedModelData getTexturedModelData() {
+        ModelData modelData = new ModelData();
+        ModelPartData root = modelData.getRoot();
+        root.addChild(EntityModelPartNames.BODY,
+                ModelPartBuilder.create()
+                        .uv(0, 7)
+                        .cuboid(-2.5F, 0.0F, -2.5F, 5.0F, 6.0F, 5.0F),
+                ModelTransform.pivot(0.0F, 16.5F, -3.0F)
+        );
+
+        root.addChild(EntityModelPartNames.TAIL,
+                ModelPartBuilder.create()
+                        .uv(24, 0)
+                        .cuboid(-1.5F, -1.0F, 0.0F, 3.0F, 4.0F, 1.0F),
+                ModelTransform.pivot(0.0F, 21.07F, 1.16F)
+        );
+
+        root.addChild(EntityModelPartNames.LEFT_WING,
+                ModelPartBuilder.create()
+                        .uv(2, 22)
+                        .cuboid(-2.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F),
+                ModelTransform.pivot(2.5F, 16.94F, -2.76F)
+        );
+
+        root.addChild(EntityModelPartNames.RIGHT_WING,
+                ModelPartBuilder.create()
+                        .uv(2, 22)
+                        .cuboid(1.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F),
+                ModelTransform.pivot(-2.5F, 16.94F, -2.76F)
+        );
+
+        ModelPartData head = root.addChild(EntityModelPartNames.HEAD,
+                ModelPartBuilder.create()
+                        .uv(0, 0)
+                        .cuboid(-1.0F, -1.5F, -1.0F, 2.0F, 3.0F, 2.0F),
+                ModelTransform.pivot(0.0F, 15.69F, -2.76F)
+        );
+
+        head.addChild("beak",
+                ModelPartBuilder.create()
+                        .uv(9, 0)
+                        .cuboid(-0.5F, -1.0F, -0.5F, 1.0F, 2.0F, 1.0F),
+                ModelTransform.pivot(0.0F, -0.5F, -1.5F)
+        );
+
+        ModelPartBuilder legBuilder = ModelPartBuilder.create().uv(14, 24).cuboid(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F);
+        root.addChild(EntityModelPartNames.LEFT_LEG, legBuilder, ModelTransform.pivot(1.0F, 22.0F, -1.05F));
+        root.addChild(EntityModelPartNames.RIGHT_LEG, legBuilder, ModelTransform.pivot(-1.0F, 22.0F, -1.05F));
+
+        return TexturedModelData.of(modelData, 32, 32);
+    }
+
+    public ModelPart getPart() {
+        return this.root;
     }
 
     public void setAngles(PtarmiganEntity ptarmiganEntity, float f, float g, float h, float i, float j) {
@@ -66,7 +102,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
     public void poseOnShoulder(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float limbAngle, float limbDistance, float headYaw, float headPitch, int danceAngle) {
         this.animateModel(PtarmiganEntityModel.Pose.ON_SHOULDER);
         this.setAngles(PtarmiganEntityModel.Pose.ON_SHOULDER, danceAngle, limbAngle, limbDistance, 0.0F, headYaw, headPitch);
-        this.getParts().forEach((modelPart) -> modelPart.render(matrices, vertexConsumer, light, overlay));
+        this.root.render(matrices, vertexConsumer, light, overlay);
     }
 
     private void setAngles(PtarmiganEntityModel.Pose pose, int danceAngle, float limbAngle, float limbDistance, float age, float headYaw, float headPitch) {
@@ -74,7 +110,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
         this.head.yaw = headYaw * 0.017453292F;
         this.head.roll = 0.0F;
         this.head.pivotX = 0.0F;
-        this.torso.pivotX = 0.0F;
+        this.body.pivotX = 0.0F;
         this.tail.pivotX = 0.0F;
         this.rightWing.pivotX = -1.5F;
         this.leftWing.pivotX = 1.5F;
@@ -89,8 +125,8 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
                 this.head.pitch = 0.0F;
                 this.head.yaw = 0.0F;
                 this.head.roll = MathHelper.sin((float) danceAngle) * 0.4F;
-                this.torso.pivotX = cosDanceAngle;
-                this.torso.pivotY = 16.5F + sinDanceAngle;
+                this.body.pivotX = cosDanceAngle;
+                this.body.pivotY = 16.5F + sinDanceAngle;
                 this.leftWing.roll = -0.0873F - age;
                 this.leftWing.pivotX = 1.5F + cosDanceAngle;
                 this.leftWing.pivotY = 16.94F + sinDanceAngle;
@@ -101,10 +137,8 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
                 this.tail.pivotY = 21.07F + sinDanceAngle;
                 break;
             case STANDING:
-                ModelPart leg = this.leftLeg;
-                leg.pitch += MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
-                leg = this.rightLeg;
-                leg.pitch += MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
+                this.leftLeg.pitch += MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
+                this.rightLeg.pitch += MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
             case FLYING:
             case ON_SHOULDER:
             default:
@@ -112,7 +146,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
                 this.head.pivotY = 15.69F + thirdOfAge;
                 this.tail.pitch = 1.015F + MathHelper.cos(limbAngle * 0.6662F) * 0.3F * limbDistance;
                 this.tail.pivotY = 21.07F + thirdOfAge;
-                this.torso.pivotY = 16.5F + thirdOfAge;
+                this.body.pivotY = 16.5F + thirdOfAge;
                 this.leftWing.roll = -0.0873F - age;
                 this.leftWing.pivotY = 16.94F + thirdOfAge;
                 this.rightWing.roll = 0.0873F + age;
@@ -124,7 +158,7 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
     }
 
     private void animateModel(PtarmiganEntityModel.Pose pose) {
-        this.torso.pitch = 0.4937F;
+        this.body.pitch = 0.4937F;
         this.leftWing.pitch = -0.6981F;
         this.leftWing.yaw = -3.1415927F;
         this.rightWing.pitch = -0.6981F;
@@ -137,11 +171,10 @@ public class PtarmiganEntityModel extends CompositeEntityModel<PtarmiganEntity> 
         this.rightLeg.roll = 0.0F;
         switch (pose) {
             case SITTING:
-                float f = 1.9F;
                 this.head.pivotY = 17.59F;
                 this.tail.pitch = 1.5388988F;
                 this.tail.pivotY = 22.97F;
-                this.torso.pivotY = 18.4F;
+                this.body.pivotY = 18.4F;
                 this.leftWing.roll = -0.0873F;
                 this.leftWing.pivotY = 18.84F;
                 this.rightWing.roll = 0.0873F;
