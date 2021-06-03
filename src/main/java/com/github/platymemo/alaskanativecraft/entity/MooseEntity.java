@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PillarBlock;
-import net.minecraft.class_5493;
+import net.minecraft.entity.ai.NavigationConditions;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -189,7 +189,7 @@ public class MooseEntity extends AnimalEntity {
             }
             if (!this.moose.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return false;
-            } else if (!class_5493.method_30955(this.moose)) {
+            } else if (!NavigationConditions.hasMobNavigation(this.moose)) {
                 return false;
             } else if (this.moose.getTarget() != null) {
                 return false;

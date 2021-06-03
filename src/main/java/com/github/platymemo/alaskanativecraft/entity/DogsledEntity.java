@@ -8,7 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.class_5459;
+import net.minecraft.world.PortalUtil;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
@@ -125,7 +125,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return true;
     }
 
-    protected Vec3d method_30633(Direction.Axis axis, class_5459.class_5460 arg) {
+    protected Vec3d method_30633(Direction.Axis axis, PortalUtil.Rectangle arg) {
         return LivingEntity.method_31079(super.method_30633(axis, arg));
     }
 
