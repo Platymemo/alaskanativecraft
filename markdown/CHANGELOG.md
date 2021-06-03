@@ -66,6 +66,6 @@ Platymemo:
 2. Early cancelled recipe book so it doesn't spam logs
 3. Added a config option for driftwood gen
 
-### v1.2.2: Spawn
+### v1.2.2: Spawning Changes
 1. Alaskanativecraft entities now respect spawn restrictions
-2. Alaskanativecraft entities spawn weights can be configured
+2. Alaskanativecraft entities spawn options can be configured
