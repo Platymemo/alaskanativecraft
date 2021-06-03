@@ -13,6 +13,7 @@
     "PlayerEntityMixin",
     "PolarBearMixin",
     "SnowballEntityMixin",
+    "SpawnRestrictionMixin",
     "TreeFeatureMixin",
     "TrunkPlacerTypeInvoker"
   ],

@@ -6,6 +6,7 @@ import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.TurtleEggBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetFinder;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -47,6 +48,10 @@ public class SealEntity extends AnimalEntity {
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
         this.moveControl = new SealEntity.SealMoveControl(this);
         this.stepHeight = 1.0F;
+    }
+
+    public static <T extends Entity> boolean canSpawn(EntityType<T> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
     }
 
     private void setTravelPos(BlockPos pos) {
