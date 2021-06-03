@@ -1,18 +1,19 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.ParrotEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 
 import java.util.LinkedHashMap;
@@ -38,18 +39,58 @@ public class AlaskaEntities {
             Registry.register(Registry.ENTITY_TYPE, id, ENTITY_TYPES.get(id));
         }
 
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.HARP_SEAL, SealEntity.createSealAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.MOOSE, MooseEntity.createMooseAttributes());
-
+        initAttributes();
         initSpawns();
     }
 
+    public static void registerSpawnRestrictions(Map<EntityType<?>, SpawnRestriction.Entry> restrictions) {
+        restrictions.put(HARP_SEAL,
+                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                        SpawnRestriction.Location.NO_RESTRICTIONS,
+                        SealEntity::canSpawn)
+        );
+        restrictions.put(MOOSE,
+                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                        SpawnRestriction.Location.ON_GROUND,
+                        (SpawnRestriction.SpawnPredicate<MooseEntity>) AnimalEntity::isValidNaturalSpawn)
+        );
+        restrictions.put(PTARMIGAN,
+                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING,
+                        SpawnRestriction.Location.ON_GROUND,
+                        (SpawnRestriction.SpawnPredicate<ParrotEntity>) ParrotEntity::canSpawn)
+        );
+    }
+
+    private static void initAttributes() {
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.HARP_SEAL, SealEntity.createSealAttributes());
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
+        FabricDefaultAttributeRegistry.register(AlaskaEntities.MOOSE, MooseEntity.createMooseAttributes());
+    }
+
     private static void initSpawns() {
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN), SpawnGroup.WATER_CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 4);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.RIVER), SpawnGroup.CREATURE, AlaskaEntities.HARP_SEAL, 1, 1, 2);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST), SpawnGroup.CREATURE, AlaskaEntities.MOOSE, 1, 1, 3);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST), SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN, 1, 1, 3);
+        AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawnOptions;
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),
+                SpawnGroup.WATER_CREATURE,
+                AlaskaEntities.HARP_SEAL,
+                spawnOptions.sealOceanSettings.weight,
+                spawnOptions.sealOceanSettings.minGroupSize,
+                spawnOptions.sealOceanSettings.maxGroupSize);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.RIVER),
+                SpawnGroup.WATER_CREATURE,
+                AlaskaEntities.HARP_SEAL,
+                spawnOptions.sealRiverSettings.weight,
+                spawnOptions.sealRiverSettings.minGroupSize,
+                spawnOptions.sealRiverSettings.maxGroupSize);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
+                SpawnGroup.CREATURE, AlaskaEntities.MOOSE,
+                spawnOptions.mooseSettings.weight,
+                spawnOptions.mooseSettings.minGroupSize,
+                spawnOptions.mooseSettings.maxGroupSize);
+        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
+                SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN,
+                spawnOptions.ptarmiganSettings.weight,
+                spawnOptions.ptarmiganSettings.minGroupSize,
+                spawnOptions.ptarmiganSettings.maxGroupSize);
     }
 
     private static <E extends EntityType<?>> E add(String name, E type) {

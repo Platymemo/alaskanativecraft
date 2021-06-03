@@ -61,8 +61,11 @@ Platymemo:
 8. Better quality seal texture (Thanks to Guaire for the texture)
 9. Harpoons now work properly with loyalty and channeling
 
-
 ### v1.2.1: Bugfixes
 1. Fixed REI plugin to not spam logs
 2. Early cancelled recipe book so it doesn't spam logs
 3. Added a config option for driftwood gen
+
+### v1.2.2: Spawn
+1. Alaskanativecraft entities now respect spawn restrictions
+2. Alaskanativecraft entities spawn weights can be configured

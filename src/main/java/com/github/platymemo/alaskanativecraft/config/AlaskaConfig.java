@@ -14,6 +14,19 @@ public class AlaskaConfig implements ConfigData {
     public boolean genDriftwood = true;
     @ConfigEntry.Gui.CollapsibleObject
     public SealFishing sealFishing = new SealFishing();
+    @ConfigEntry.Gui.CollapsibleObject
+    public SpawnOptions spawnOptions = new SpawnOptions();
+
+    public static class SpawnOptions {
+        @ConfigEntry.Gui.CollapsibleObject
+        public SpawnSettings sealOceanSettings = new SpawnSettings(5, 1, 4);
+        @ConfigEntry.Gui.CollapsibleObject
+        public SpawnSettings sealRiverSettings = new SpawnSettings(5, 1, 2);
+        @ConfigEntry.Gui.CollapsibleObject
+        public SpawnSettings mooseSettings = new SpawnSettings(2, 1, 3);
+        @ConfigEntry.Gui.CollapsibleObject
+        public SpawnSettings ptarmiganSettings = new SpawnSettings(5, 2, 5);
+    }
 
     public static class SealFishing {
         public boolean sealsHuntFish = true;
@@ -21,6 +34,18 @@ public class AlaskaConfig implements ConfigData {
         public boolean sealsEatHuntedFish = true;
         @ConfigEntry.Gui.Tooltip(count = 2)
         public boolean sealsBreedFromHuntedFish = false;
+    }
+
+    public static class SpawnSettings {
+        public int weight;
+        public int minGroupSize;
+        public int maxGroupSize;
+
+        public SpawnSettings(int weight, int minGroupSize, int maxGroupSize) {
+            this.weight = weight;
+            this.minGroupSize = minGroupSize;
+            this.maxGroupSize = maxGroupSize;
+        }
     }
 
     @ConfigEntry.Gui.Excluded
