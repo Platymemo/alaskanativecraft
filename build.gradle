@@ -36,7 +36,6 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
 	// REI integration
-	// TODO when it has a 1.17 version
 	 modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
 	// ClothConfig
