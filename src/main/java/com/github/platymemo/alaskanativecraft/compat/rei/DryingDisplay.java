@@ -1,9 +1,10 @@
-/*
 package com.github.platymemo.alaskanativecraft.compat.rei;
 
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
-import me.shedaniel.rei.api.EntryStack;
-import me.shedaniel.rei.api.RecipeDisplay;
+import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.display.Display;
+import me.shedaniel.rei.api.common.entry.EntryIngredient;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
@@ -17,9 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
-public class DryingDisplay implements RecipeDisplay {
-    private List<List<EntryStack>> inputs;
-    private List<EntryStack> output;
+public class DryingDisplay implements Display {
+    private List<EntryIngredient> inputs;
+    private List<EntryIngredient> output;
     private int dryTime;
     private DryingRecipe display;
 
@@ -29,8 +30,8 @@ public class DryingDisplay implements RecipeDisplay {
     }
 
     public DryingDisplay(DefaultedList<Ingredient> ingredients, ItemStack output, int dryTime) {
-        this.inputs = EntryStack.ofIngredients(ingredients);
-        this.output = Collections.singletonList(EntryStack.create(output));
+        this.inputs = EntryIngredients.ofIngredients(ingredients);
+        this.output = Collections.singletonList(EntryIngredients.of(output));
         this.dryTime = dryTime;
     }
 
@@ -39,28 +40,23 @@ public class DryingDisplay implements RecipeDisplay {
     }
 
     @Override
-    public @NotNull Optional<Identifier> getRecipeLocation() {
+    public @NotNull Optional<Identifier> getDisplayLocation() {
         return Optional.ofNullable(display).map(DryingRecipe::getId);
     }
 
     @Override
-    public @NotNull List<List<EntryStack>> getInputEntries() {
+    public @NotNull List<EntryIngredient> getInputEntries() {
         return inputs;
     }
 
     @Override
-    public @NotNull List<List<EntryStack>> getResultingEntries() {
-        return Collections.singletonList(output);
+    public @NotNull List<EntryIngredient> getOutputEntries() {
+        return output;
     }
 
     @Override
-    public @NotNull List<List<EntryStack>> getRequiredEntries() {
-        return inputs;
-    }
-
-    @Override
-    public @NotNull Identifier getRecipeCategory() {
-        return AlaskaPlugin.ALASKA_PLUGIN;
+    public CategoryIdentifier<?> getCategoryIdentifier() {
+        return AlaskaPlugin.DRYING_ID;
     }
 }
-*/
+

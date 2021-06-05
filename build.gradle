@@ -37,7 +37,7 @@ dependencies {
 
 	// REI integration
 	// TODO when it has a 1.17 version
-	// modImplementation "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	 modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
 	// ClothConfig
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
