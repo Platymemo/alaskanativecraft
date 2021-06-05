@@ -44,35 +44,30 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
                         .cuboid(-2.5F, 0.0F, -2.5F, 5.0F, 6.0F, 5.0F),
                 ModelTransform.pivot(0.0F, 16.5F, -3.0F)
         );
-
         root.addChild(EntityModelPartNames.TAIL,
                 ModelPartBuilder.create()
                         .uv(24, 0)
                         .cuboid(-1.5F, -1.0F, 0.0F, 3.0F, 4.0F, 1.0F),
                 ModelTransform.pivot(0.0F, 21.07F, 1.16F)
         );
-
         root.addChild(EntityModelPartNames.LEFT_WING,
                 ModelPartBuilder.create()
                         .uv(2, 22)
                         .cuboid(-2.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F),
                 ModelTransform.pivot(2.5F, 16.94F, -2.76F)
         );
-
         root.addChild(EntityModelPartNames.RIGHT_WING,
                 ModelPartBuilder.create()
                         .uv(2, 22)
                         .cuboid(1.0F, 0.0F, -1.5F, 1.0F, 5.0F, 3.0F),
                 ModelTransform.pivot(-2.5F, 16.94F, -2.76F)
         );
-
         ModelPartData head = root.addChild(EntityModelPartNames.HEAD,
                 ModelPartBuilder.create()
                         .uv(0, 0)
                         .cuboid(-1.0F, -1.5F, -1.0F, 2.0F, 3.0F, 2.0F),
                 ModelTransform.pivot(0.0F, 15.69F, -2.76F)
         );
-
         head.addChild("beak",
                 ModelPartBuilder.create()
                         .uv(9, 0)

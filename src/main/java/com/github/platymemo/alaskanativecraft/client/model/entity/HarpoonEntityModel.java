@@ -1,39 +1,61 @@
 package com.github.platymemo.alaskanativecraft.client.model.entity;
 
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
+import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
+import net.minecraft.client.model.*;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 
-public class HarpoonEntityModel extends EntityModel<Entity> {
-    private final ModelPart harpoon;
+public class HarpoonEntityModel extends SinglePartEntityModel<HarpoonEntity> {
+    private final ModelPart root;
 
-    public HarpoonEntityModel() {
-        textureWidth = 32;
-        textureHeight = 32;
+    public HarpoonEntityModel(ModelPart root) {
+        this.root = root;
+    }
 
-        harpoon = new ModelPart(this);
-        harpoon.setPivot(-6.0F, 16.0F, 7.0F);
-        harpoon.setTextureOffset(4, 0).addCuboid(6.0F, -19.0F, -10.0F, 1.0F, 2.0F, 1.0F, 0.0F, false);
-        harpoon.setTextureOffset(0, 0).addCuboid(6.0F, -19.0F, -8.0F, 1.0F, 27.0F, 1.0F, 0.0F, false);
-        harpoon.setTextureOffset(4, 4).addCuboid(6.0F, -20.0F, -9.0F, 1.0F, 1.0F, 2.0F, 0.0F, false);
-        harpoon.setTextureOffset(4, 0).addCuboid(6.0F, -23.0F, -8.0F, 1.0F, 3.0F, 1.0F, 0.0F, false);
+    public static TexturedModelData getTexturedModelData() {
+        ModelData modelData = new ModelData();
+        ModelPartData root = modelData.getRoot();
+        root.addChild(HarpoonModelPartNames.BODY,
+                ModelPartBuilder.create()
+                        .uv(0, 0)
+                        .cuboid(6.0F, -19.0F, -8.0F, 1.0F, 27.0F, 1.0F),
+                ModelTransform.pivot(-6.0F, 16.0F, 7.0F)
+        );
+        root.addChild(HarpoonModelPartNames.WRAP,
+                ModelPartBuilder.create()
+                        .uv(4, 4)
+                        .cuboid(6.0F, -20.0F, -9.0F, 1.0F, 1.0F, 2.0F),
+                ModelTransform.pivot(-6.0F, 16.0F, 7.0F)
+        );
+        root.addChild(HarpoonModelPartNames.PRONG,
+                ModelPartBuilder.create()
+                        .uv(4, 0)
+                        .cuboid(6.0F, -19.0F, -10.0F, 1.0F, 2.0F, 1.0F),
+                ModelTransform.pivot(-6.0F, 16.0F, 7.0F)
+        );
+        root.addChild(HarpoonModelPartNames.TIP,
+                ModelPartBuilder.create()
+                        .uv(4, 0)
+                        .cuboid(6.0F, -23.0F, -8.0F, 1.0F, 3.0F, 1.0F),
+                ModelTransform.pivot(-6.0F, 16.0F, 7.0F)
+        );
+
+        return TexturedModelData.of(modelData, 32, 32);
     }
 
     @Override
-    public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        // Not Called
+    public ModelPart getPart() {
+        return root;
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        harpoon.render(matrixStack, buffer, packedLight, packedOverlay);
+    public void setAngles(HarpoonEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+
     }
 
-    public void setRotationAngle(ModelPart bone, float x, float y, float z) {
-        bone.pitch = x;
-        bone.yaw = y;
-        bone.roll = z;
+    static class HarpoonModelPartNames {
+        static final String BODY = "body";
+        static final String TIP = "tip";
+        static final String WRAP = "wrap";
+        static final String PRONG = "prong";
     }
 }
