@@ -8,9 +8,9 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.ParrotEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
@@ -22,17 +22,17 @@ import java.util.Map;
 public class AlaskaEntities {
     private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
 
+    public static final EntityType<SealEntity> HARP_SEAL = add("harp_seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, false, 1.0F, 0.6F));
+    public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
+    public static final EntityType<MooseEntity> MOOSE = add("moose", createEntity(SpawnGroup.CREATURE, MooseEntity::new, true, 1.5F, 1.3F));
+    public static final EntityType<DogsledEntity> DOGSLED = add("dogsled", createEntity(SpawnGroup.MISC, DogsledEntity::new, false, 1.5F, 1.0F));
+
     public static final EntityType<HarpoonEntity> WOODEN_HARPOON = add("wooden_harpoon", createHarpoon(AlaskaItems.WOODEN_HARPOON));
     public static final EntityType<HarpoonEntity> STONE_HARPOON = add("stone_harpoon", createHarpoon(AlaskaItems.STONE_HARPOON));
     public static final EntityType<HarpoonEntity> IRON_HARPOON = add("iron_harpoon", createHarpoon(AlaskaItems.IRON_HARPOON));
     public static final EntityType<HarpoonEntity> GOLDEN_HARPOON = add("golden_harpoon", createHarpoon(AlaskaItems.GOLDEN_HARPOON));
     public static final EntityType<HarpoonEntity> DIAMOND_HARPOON = add("diamond_harpoon", createHarpoon(AlaskaItems.DIAMOND_HARPOON));
     public static final EntityType<HarpoonEntity> NETHERITE_HARPOON = add("netherite_harpoon", createHarpoon(AlaskaItems.NETHERITE_HARPOON));
-
-    public static final EntityType<SealEntity> HARP_SEAL = add("harp_seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, false, 1.0F, 0.6F));
-    public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
-    public static final EntityType<MooseEntity> MOOSE = add("moose", createEntity(SpawnGroup.CREATURE, MooseEntity::new, true, 1.5F, 1.3F));
-    public static final EntityType<DogsledEntity> DOGSLED = add("dogsled", createEntity(SpawnGroup.MISC, DogsledEntity::new, false, 1.5F, 1.0F));
 
     public static void register() {
         for (Identifier id : ENTITY_TYPES.keySet()) {
@@ -41,24 +41,13 @@ public class AlaskaEntities {
 
         initAttributes();
         initSpawns();
+        initSpawnRestrictions();
     }
 
-    public static void registerSpawnRestrictions(Map<EntityType<?>, SpawnRestriction.Entry> restrictions) {
-        restrictions.put(HARP_SEAL,
-                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                        SpawnRestriction.Location.NO_RESTRICTIONS,
-                        SealEntity::canSpawn)
-        );
-        restrictions.put(MOOSE,
-                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                        SpawnRestriction.Location.ON_GROUND,
-                        (SpawnRestriction.SpawnPredicate<MooseEntity>) AnimalEntity::isValidNaturalSpawn)
-        );
-        restrictions.put(PTARMIGAN,
-                new SpawnRestriction.Entry(Heightmap.Type.MOTION_BLOCKING,
-                        SpawnRestriction.Location.ON_GROUND,
-                        (SpawnRestriction.SpawnPredicate<ParrotEntity>) ParrotEntity::canSpawn)
-        );
+    private static void initSpawnRestrictions() {
+        SpawnRestrictionAccessor.callRegister(HARP_SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
+        SpawnRestrictionAccessor.callRegister(MOOSE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::isValidNaturalSpawn);
+        SpawnRestrictionAccessor.callRegister(PTARMIGAN, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, PtarmiganEntity::isValidSpawn);
     }
 
     private static void initAttributes() {
@@ -103,7 +92,7 @@ public class AlaskaEntities {
         return FabricEntityTypeBuilder.<HarpoonEntity>create(SpawnGroup.MISC, (entity, world) -> new HarpoonEntity(entity, world, item)).dimensions(EntityDimensions.fixed(0.5F, 0.5F)).build();
     }
 
-    private static <T extends Entity> EntityType<T> createEntity(SpawnGroup group, net.minecraft.entity.EntityType.EntityFactory<T> factory, boolean changingDimensions, float width, float height) {
+    private static <T extends Entity> EntityType<T> createEntity(SpawnGroup group, EntityType.EntityFactory<T> factory, boolean changingDimensions, float width, float height) {
         if (changingDimensions) {
             return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.changing(width, height)).build();
         }
