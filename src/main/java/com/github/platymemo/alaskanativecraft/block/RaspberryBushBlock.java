@@ -30,7 +30,7 @@ public class RaspberryBushBlock extends SweetBerryBushBlock {
 
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return new ItemStack(AlaskaItems.RASPBERRIES);
+        return AlaskaItems.RASPBERRIES.getDefaultStack();
     }
 
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
