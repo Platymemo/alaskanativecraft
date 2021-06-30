@@ -2,6 +2,7 @@ package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.SealEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
@@ -26,7 +27,7 @@ public class AlaskaNativeCraftModels {
         EntityModelLayerRegistry.registerModelLayer(PTARMIGAN_MODEL, PtarmiganEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(DOGSLED_MODEL, DogsledEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(HARPOON_MODEL, HarpoonEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(MOOSE_MODEL, HarpoonEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(MOOSE_MODEL, MooseEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(SEAL_MODEL, SealEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT_MODEL, KuspukSkirtModel::getTexturedModelData);
     }

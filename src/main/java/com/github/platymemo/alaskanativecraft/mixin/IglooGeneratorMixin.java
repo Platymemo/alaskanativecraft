@@ -30,7 +30,8 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
         throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
     }
 
-    @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
+    //TODO: fix
+    /*@Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
             method = "generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)Z",
             locals = LocalCapture.CAPTURE_FAILSOFT)
     private void addDogsleds(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci, StructurePlacementData structurePlacementData) {
@@ -43,5 +44,5 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
             structureWorldAccess.spawnEntity(dogsled);
             lastPos = chestLocation;
         }
-    }
+    }*/
 }

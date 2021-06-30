@@ -25,9 +25,11 @@ public class ClientPlayNetworkHandlerMixin {
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci, double x, double y, double z, EntityType<?> type) {
+    private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci, EntityType<?> type) {
         Entity entity = null;
-
+        double x = packet.getX();
+        double y = packet.getY();
+        double z = packet.getZ();
         if (type == AlaskaEntities.DOGSLED) {
             entity = new DogsledEntity(world, x, y, z);
         }
