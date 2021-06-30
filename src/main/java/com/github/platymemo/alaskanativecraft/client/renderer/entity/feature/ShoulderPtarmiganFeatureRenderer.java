@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
@@ -10,9 +11,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
-import net.minecraft.client.render.entity.model.ParrotEntityModel;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
@@ -21,11 +20,11 @@ import net.minecraft.nbt.NbtCompound;
 
 @Environment(EnvType.CLIENT)
 public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends FeatureRenderer<T, PlayerEntityModel<T>> {
-    private final PtarmiganEntityModel model = new PtarmiganEntityModel();
+    private final PtarmiganEntityModel model;
 
     public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, EntityModelLoader loader) {
         super(context);
-        this.model = new PtarmiganEntityModel(loader.getModelPart(// TODO EntityModelLayers.PTARMIGAN));
+        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaNativeCraftModels.PTARMIGAN_MODEL));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {

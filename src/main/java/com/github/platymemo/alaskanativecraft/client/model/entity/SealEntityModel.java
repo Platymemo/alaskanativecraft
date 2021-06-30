@@ -17,10 +17,14 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
     protected final ModelPart stomach;
     protected final ModelPart tail;
 
-    public SealEntityModel(ModelPart root, Dilation dilation) {
+    public SealEntityModel(ModelPart root) {
         super(root, true, 0.0F, 0.0F, 1.0F, 1.0F, 0);
         stomach = root.getChild(STOMACH);
         tail = root.getChild(TAIL);
+    }
+
+    public static TexturedModelData getTexturedModelData(){
+        return getTexturedModelData(new Dilation(0));
     }
 
     public static TexturedModelData getTexturedModelData(Dilation dilation) {
