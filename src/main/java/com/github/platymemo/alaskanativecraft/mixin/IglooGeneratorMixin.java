@@ -25,8 +25,8 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
     private static final Identifier DOGSLED_LOOT_TABLE = LootTables.VILLAGE_SNOWY_HOUSE_CHEST;
     private static BlockPos lastPos;
 
-    protected IglooGeneratorMixin(StructurePieceType type, int length) {
-        super(type, length);
+    protected IglooGeneratorMixin(StructurePieceType type, int length, StructureManager structureManager, Identifier identifier, String string, StructurePlacementData structurePlacementData, BlockPos blockPos) {
+        super(type, length, structureManager, identifier, string, structurePlacementData, blockPos);
         throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
     }
 

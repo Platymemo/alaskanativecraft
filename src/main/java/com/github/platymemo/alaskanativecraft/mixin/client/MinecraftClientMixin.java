@@ -39,10 +39,10 @@ public class MinecraftClientMixin {
 
         if (entity instanceof DogsledEntity) {
             ItemStack pickedDogsled = new ItemStack(((DogsledEntity) entity).asItem());
-            PlayerInventory playerInventory = this.player.inventory;
+            PlayerInventory playerInventory = this.player.getInventory();
 
             int i = playerInventory.getSlotWithStack(pickedDogsled);
-            if (this.player.abilities.creativeMode) {
+            if (this.player.getAbilities().creativeMode) {
                 playerInventory.addPickBlock(pickedDogsled);
                 this.interactionManager.clickCreativeStack(this.player.getStackInHand(Hand.MAIN_HAND), 36 + playerInventory.selectedSlot);
             } else if (i != -1) {

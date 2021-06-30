@@ -4,6 +4,7 @@ import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -19,8 +20,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements FeatureRendererContext<T, M> {
 
-    protected LivingEntityRendererMixin(EntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    protected LivingEntityRendererMixin(EntityRendererFactory.Context context) {
+        super(context);
     }
 
     @ModifyVariable(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
