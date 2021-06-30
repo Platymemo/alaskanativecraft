@@ -19,6 +19,10 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
         ModelPartData body = modelPartData.addChild(EntityModelPartNames.BODY, ModelPartBuilder.create()
+                        .uv(0, 25)
+                        .cuboid(-3.5F, -5.0F, -11.0F, 7.0F, 10.0F, 9.0F)
+                        .uv(0, 0)
+                        .cuboid(-3.5F, -4.0F, -2.0F, 7.0F, 9.0F, 16.0F)
                         .uv(42, 11)
                         .cuboid(-1.0f, -3.0f, 14.0f, 2.0f, 3.0f, 1.0f),
                 ModelTransform.pivot(0.5f, 7.0f, 0.0f));
@@ -30,21 +34,29 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
                         -0.4363f, 0.0f, 0.0f));
 
         modelPartData.addChild(EntityModelPartNames.LEFT_HIND_LEG, ModelPartBuilder.create()
+                        .uv(0, 1)
+                        .cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 8.0F, 5.0F)
                         .uv(52, 30)
                         .cuboid(0.0f, 6.0f, -1.0f, 2.0f, 12.0f, 3.0f),
                 ModelTransform.pivot(4.0f, 6.0f, 9.0f));
 
         modelPartData.addChild(EntityModelPartNames.RIGHT_HIND_LEG, ModelPartBuilder.create()
+                        .uv(0, 1)
+                        .cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 8.0F, 5.0F)
                         .uv(52, 30)
                         .cuboid(-2.0f, 6.0f, -1.0f, 2.0f, 12.0f, 3.0f),
                 ModelTransform.pivot(-3.0f, 6.0f, 9.0f));
 
         modelPartData.addChild(EntityModelPartNames.LEFT_FRONT_LEG, ModelPartBuilder.create()
+                        .uv(0, 1)
+                        .cuboid(-1.0F, -2.0F, -3.0F, 3.0F, 8.0F, 5.0F)
                         .uv(52, 30)
                         .cuboid(0.0f, 6.0f, -2.0f, 2.0f, 12.0f, 3.0f),
                 ModelTransform.pivot(4.0f, 6.0f, -6.0f));
 
         modelPartData.addChild(EntityModelPartNames.RIGHT_FRONT_LEG, ModelPartBuilder.create()
+                        .uv(0, 1)
+                        .cuboid(-2.0F, -2.0F, -3.0F, 3.0F, 8.0F, 5.0F)
                         .uv(52, 30)
                         .cuboid(-2.0f, 6.0f, -2.0f, 2.0f, 12.0f, 3.0f),
                 ModelTransform.pivot(-3.0f, 6.0f, -6.0f));
