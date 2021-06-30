@@ -49,7 +49,7 @@ public class DogsledItem extends Item {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 DogsledEntity dogsledEntity = new DogsledEntity(world, hitResult.getPos().x, hitResult.getPos().y, hitResult.getPos().z);
                 dogsledEntity.setDogsledType(this.type);
-                dogsledEntity.setYaw(user.getYaw());
+                dogsledEntity.setBodyYaw(user.getYaw());
                 if (!world.isSpaceEmpty(dogsledEntity, dogsledEntity.getBoundingBox().expand(-0.1D))) {
                     return TypedActionResult.fail(itemStack);
                 } else {

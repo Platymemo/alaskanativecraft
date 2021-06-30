@@ -114,7 +114,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
             // Set pitch, zero it if its minimal.
             if (vec3d.y > 0.032D) {
-                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.method_37267()) * 57.2957763671875D));
+                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.horizontalLength()) * 57.2957763671875D));
                 this.setPitch(updateRotation(this.prevPitch, this.getPitch()));
             } else {
                 this.setPitch(updateRotation(this.prevPitch, 0.0F));

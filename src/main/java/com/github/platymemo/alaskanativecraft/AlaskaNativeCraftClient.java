@@ -59,7 +59,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
                 if (entity != null) {
                     entity.updateTrackedPositionAndAngles(x, y, z, yaw, pitch, 0, false);
                     entity.updateTrackedPosition(x, y, z); // The above does not do the same thing, for some weird reason
-                    entity.setEntityId(entityID);
+                    entity.setId(entityID);
                     entity.setUuid(entityUUID);
                     assert world != null;
                     world.addEntity(entityID, entity);

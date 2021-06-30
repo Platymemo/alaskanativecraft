@@ -35,7 +35,7 @@ public class ClientPlayNetworkHandlerMixin {
         if (entity != null) {
             int i = packet.getId();
             entity.updatePositionAndAngles(x, y, z, (float) (packet.getYaw() * 360) / 256.0F, 0);
-            entity.setEntityId(i);
+            entity.setId(i);
             entity.setUuid(packet.getUuid());
             this.world.addEntity(i, entity);
             ci.cancel();
