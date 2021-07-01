@@ -64,7 +64,7 @@ public class AlaskaFeatures {
                 new FallenTrunkPlacer(2, 1, 1),
                 // For the memes :tnypto:
                 new SimpleBlockStateProvider(Blocks.NETHERITE_BLOCK.getDefaultState()),
-                new SimpleBlockStateProvider(Blocks.NETHERITE_BLOCK.getDefaultState()),
+                new SimpleBlockStateProvider(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState()),
                 new EmptyFoliagePlacer(),
                 new TwoLayersFeatureSize(0, 0, 0)
         ).build();

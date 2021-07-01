@@ -14,7 +14,6 @@
     "PlayerEntityMixin",
     "PolarBearMixin",
     "SnowballEntityMixin",
-    "TreeFeatureMixin",
     "TrunkPlacerTypeInvoker"
   ],
   "client": [
