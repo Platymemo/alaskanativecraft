@@ -25,9 +25,11 @@ public class ClientPlayNetworkHandlerMixin {
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci, double x, double y, double z, EntityType<?> type) {
+    private void onEntitySpawn(EntitySpawnS2CPacket packet, CallbackInfo ci, EntityType<?> type) {
         Entity entity = null;
-
+        double x = packet.getX();
+        double y = packet.getY();
+        double z = packet.getZ();
         if (type == AlaskaEntities.DOGSLED) {
             entity = new DogsledEntity(world, x, y, z);
         }
@@ -35,7 +37,7 @@ public class ClientPlayNetworkHandlerMixin {
         if (entity != null) {
             int i = packet.getId();
             entity.updatePositionAndAngles(x, y, z, (float) (packet.getYaw() * 360) / 256.0F, 0);
-            entity.setEntityId(i);
+            entity.setId(i);
             entity.setUuid(packet.getUuid());
             this.world.addEntity(i, entity);
             ci.cancel();

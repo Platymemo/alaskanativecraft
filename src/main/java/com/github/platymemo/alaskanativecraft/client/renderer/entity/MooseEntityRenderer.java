@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.MooseEntity;
 import net.fabricmc.api.EnvType;
@@ -17,7 +18,7 @@ public class MooseEntityRenderer extends MobEntityRenderer<MooseEntity, MooseEnt
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/moose.png");
 
     public MooseEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new MooseEntityModel(), 1.5F);
+        super(ctx, new MooseEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.MOOSE_MODEL)), 1.5F);
     }
 
     public Identifier getTexture(MooseEntity mooseEntity) {

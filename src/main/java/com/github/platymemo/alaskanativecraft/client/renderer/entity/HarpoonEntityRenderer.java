@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -21,10 +22,11 @@ import java.util.Map;
 
 public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
     private static final Map<EntityType<?>, Identifier> TEXTURES = new HashMap<>();
-    private final HarpoonEntityModel model = new HarpoonEntityModel();
+    private final HarpoonEntityModel model;
 
     public HarpoonEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
+        model = new HarpoonEntityModel(ctx.getPart(AlaskaNativeCraftModels.HARPOON_MODEL));
     }
 
     @Override

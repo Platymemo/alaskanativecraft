@@ -25,15 +25,15 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
     private static final Identifier DOGSLED_LOOT_TABLE = LootTables.VILLAGE_SNOWY_HOUSE_CHEST;
     private static BlockPos lastPos;
 
-    protected IglooGeneratorMixin(StructurePieceType type, int length) {
-        super(type, length);
+    protected IglooGeneratorMixin(StructurePieceType type, int length, StructureManager structureManager, Identifier identifier, String string, StructurePlacementData structurePlacementData, BlockPos blockPos) {
+        super(type, length, structureManager, identifier, string, structurePlacementData, blockPos);
         throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
     }
 
     @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
             method = "generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)Z",
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void addDogsleds(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci, StructurePlacementData structurePlacementData) {
+    private void addDogsleds(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci, Identifier identifier, StructurePlacementData structurePlacementData) {
         BlockPos chestLocation = this.pos.add(Structure.transform(structurePlacementData, new BlockPos(0, 1, 0)));
         if (lastPos == null || !lastPos.equals(chestLocation)) {
             DogsledEntity dogsled = new DogsledEntity(structureWorldAccess.toServerWorld(), (double) chestLocation.getX() + 0.5D, (double) chestLocation.getY() + 0.5D, (double) chestLocation.getZ() + 0.5D);

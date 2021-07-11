@@ -114,7 +114,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
             // Set pitch, zero it if its minimal.
             if (vec3d.y > 0.032D) {
-                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.method_37267()) * 57.2957763671875D));
+                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.horizontalLength()) * 57.2957763671875D));
                 this.setPitch(updateRotation(this.prevPitch, this.getPitch()));
             } else {
                 this.setPitch(updateRotation(this.prevPitch, 0.0F));
@@ -246,9 +246,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 this.onHit(livingEntity2);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateTag().contains("leashed") && this.harpoonStack.getOrCreateTag().getBoolean("leashed")) {
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
                     ((MobEntity) entity).attachLeash(this.getOwner(), true);
-                    this.harpoonStack.removeSubTag("leashed");
+                    this.harpoonStack.removeSubNbt("leashed");
                     this.setVelocity(Vec3d.ZERO);
                     this.playSound(soundEvent, 1.0F, 1.0F);
                     return;

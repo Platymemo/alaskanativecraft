@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import net.fabricmc.api.EnvType;
@@ -11,7 +12,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -27,10 +27,11 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/jungle.png"),
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/acacia.png"),
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
-    protected final DogsledEntityModel model = new DogsledEntityModel();
+    protected final DogsledEntityModel model;
 
     public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
+        this.model = new DogsledEntityModel(ctx.getPart(AlaskaNativeCraftModels.DOGSLED_MODEL));
         this.shadowRadius = 0.5F;
     }
 

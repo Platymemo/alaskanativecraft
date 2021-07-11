@@ -22,12 +22,12 @@ public abstract class EndermanEntityMixin extends HostileEntity implements Anger
         throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;", ordinal = 0),
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isOf(Lnet/minecraft/item/Item;)Z", ordinal = 0),
             method = "isPlayerStaring(Lnet/minecraft/entity/player/PlayerEntity;)Z",
             locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true)
     private void isPlayerWearingSnowGoggles(PlayerEntity player, CallbackInfoReturnable<Boolean> cir, ItemStack stack) {
-        if (stack.getItem() == AlaskaItems.SNOW_GOGGLES) {
+        if (stack.isOf(AlaskaItems.SNOW_GOGGLES.asItem())) {
             cir.setReturnValue(false);
         }
     }
