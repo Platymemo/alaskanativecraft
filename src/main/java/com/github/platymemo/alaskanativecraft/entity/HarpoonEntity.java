@@ -246,9 +246,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 this.onHit(livingEntity2);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateTag().contains("leashed") && this.harpoonStack.getOrCreateTag().getBoolean("leashed")) {
+                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
                     ((MobEntity) entity).attachLeash(this.getOwner(), true);
-                    this.harpoonStack.removeSubTag("leashed");
+                    this.harpoonStack.removeSubNbt("leashed");
                     this.setVelocity(Vec3d.ZERO);
                     this.playSound(soundEvent, 1.0F, 1.0F);
                     return;

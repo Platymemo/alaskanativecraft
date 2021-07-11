@@ -90,7 +90,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 
     // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
     private static void addEffectToAkutaq(ItemStack stew, StatusEffect effect, int duration) {
-        NbtCompound compoundTag = stew.getOrCreateTag();
+        NbtCompound compoundTag = stew.getOrCreateNbt();
         NbtList listTag = compoundTag.getList("Effects", 10);
 
         boolean effectExists = false;

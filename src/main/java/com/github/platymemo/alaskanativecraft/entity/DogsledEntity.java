@@ -50,8 +50,8 @@ import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockLocating;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.PortalUtil;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -127,7 +127,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return true;
     }
 
-    protected Vec3d positionInPortal(Direction.Axis axis, PortalUtil.Rectangle arg) {
+    protected Vec3d positionInPortal(Direction.Axis axis, BlockLocating.Rectangle arg) {
         return LivingEntity.positionInPortal(super.positionInPortal(axis, arg));
     }
 

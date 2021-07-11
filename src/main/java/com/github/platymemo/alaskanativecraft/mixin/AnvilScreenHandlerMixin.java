@@ -32,7 +32,7 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
         ItemStack addition = this.input.getStack(1);
         if (base.isIn(AlaskaTags.HARPOONS) && addition.getItem() == Items.LEAD && addition.getCount() == 1) {
             ItemStack result = base.copy();
-            result.getOrCreateTag().putBoolean("leashed", true);
+            result.getOrCreateNbt().putBoolean("leashed", true);
             this.output.setStack(0, result);
             this.levelCost.set(1);
             sendContentUpdates();
