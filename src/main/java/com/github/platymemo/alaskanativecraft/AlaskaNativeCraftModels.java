@@ -14,12 +14,12 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class AlaskaNativeCraftModels {
-    public static final EntityModelLayer PTARMIGAN_MODEL = registerMain("ptarmigan");
-    public static final EntityModelLayer DOGSLED_MODEL = registerMain("dogsled");
-    public static final EntityModelLayer HARPOON_MODEL = registerMain("harpoon");
-    public static final EntityModelLayer MOOSE_MODEL = registerMain("moose");
-    public static final EntityModelLayer SEAL_MODEL = registerMain("seal");
-    public static final EntityModelLayer KUSPUK_SKIRT_MODEL = registerMain("kuspuk_skirt");
+    public static final EntityModelLayer PTARMIGAN = registerMain("ptarmigan");
+    public static final EntityModelLayer DOGSLED = registerMain("dogsled");
+    public static final EntityModelLayer HARPOON = registerMain("harpoon");
+    public static final EntityModelLayer MOOSE = registerMain("moose");
+    public static final EntityModelLayer SEAL = registerMain("seal");
+    public static final EntityModelLayer KUSPUK_SKIRT = registerMain("kuspuk_skirt");
 
 
     private static EntityModelLayer registerMain(String id){
