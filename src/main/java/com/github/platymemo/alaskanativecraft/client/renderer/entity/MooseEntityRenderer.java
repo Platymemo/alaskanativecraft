@@ -18,7 +18,7 @@ public class MooseEntityRenderer extends MobEntityRenderer<MooseEntity, MooseEnt
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/moose.png");
 
     public MooseEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new MooseEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.MOOSE_MODEL)), 1.5F);
+        super(ctx, new MooseEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.MOOSE)), 1.5F);
     }
 
     public Identifier getTexture(MooseEntity mooseEntity) {

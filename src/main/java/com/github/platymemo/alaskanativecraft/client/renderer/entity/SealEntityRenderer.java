@@ -17,7 +17,7 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/seal.png");
 
     public SealEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.SEAL_MODEL)), 0.7F);
+        super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.SEAL)), 0.7F);
     }
 
     public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

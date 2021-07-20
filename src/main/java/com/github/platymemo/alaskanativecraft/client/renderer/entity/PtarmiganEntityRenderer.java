@@ -18,7 +18,7 @@ public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, 
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
 
     public PtarmiganEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new PtarmiganEntityModel(ctx.getPart(AlaskaNativeCraftModels.PTARMIGAN_MODEL)), 0.3F);
+        super(ctx, new PtarmiganEntityModel(ctx.getPart(AlaskaNativeCraftModels.PTARMIGAN)), 0.3F);
     }
 
     public Identifier getTexture(PtarmiganEntity ptarmiganEntity) {

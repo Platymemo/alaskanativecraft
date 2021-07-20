@@ -27,11 +27,11 @@ public class AlaskaNativeCraftModels {
     }
 
     public static void registerEntityModels() {
-        EntityModelLayerRegistry.registerModelLayer(PTARMIGAN_MODEL, PtarmiganEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(DOGSLED_MODEL, DogsledEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(HARPOON_MODEL, HarpoonEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(MOOSE_MODEL, MooseEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(SEAL_MODEL, SealEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT_MODEL, KuspukSkirtModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(DOGSLED, DogsledEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(HARPOON, HarpoonEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(MOOSE, MooseEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SEAL, SealEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
     }
 }

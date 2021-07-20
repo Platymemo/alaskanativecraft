@@ -24,7 +24,7 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
 
     public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, EntityModelLoader loader) {
         super(context);
-        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaNativeCraftModels.PTARMIGAN_MODEL));
+        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaNativeCraftModels.PTARMIGAN));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {

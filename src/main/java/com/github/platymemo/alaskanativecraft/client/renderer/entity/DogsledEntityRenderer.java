@@ -31,7 +31,7 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
 
     public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        this.model = new DogsledEntityModel(ctx.getPart(AlaskaNativeCraftModels.DOGSLED_MODEL));
+        this.model = new DogsledEntityModel(ctx.getPart(AlaskaNativeCraftModels.DOGSLED));
         this.shadowRadius = 0.5F;
     }
 

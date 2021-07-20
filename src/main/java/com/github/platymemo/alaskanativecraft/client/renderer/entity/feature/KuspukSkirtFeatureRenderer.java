@@ -29,7 +29,7 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
 
     public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context, EntityModelLoader loader) {
         super(context);
-        this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaNativeCraftModels.KUSPUK_SKIRT_MODEL));
+        this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaNativeCraftModels.KUSPUK_SKIRT));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

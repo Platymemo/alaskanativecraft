@@ -26,7 +26,7 @@ public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
 
     public HarpoonEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        model = new HarpoonEntityModel(ctx.getPart(AlaskaNativeCraftModels.HARPOON_MODEL));
+        model = new HarpoonEntityModel(ctx.getPart(AlaskaNativeCraftModels.HARPOON));
     }
 
     @Override
