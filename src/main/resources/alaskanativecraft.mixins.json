@@ -20,7 +20,6 @@
     "client.ArmorStandEntityRendererMixin",
     "client.BipedEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
-    "client.ClientPlayNetworkHandlerMixin",
     "client.ClientRecipeBookMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
