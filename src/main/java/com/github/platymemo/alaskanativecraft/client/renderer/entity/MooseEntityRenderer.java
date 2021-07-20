@@ -1,13 +1,11 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.MooseEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;

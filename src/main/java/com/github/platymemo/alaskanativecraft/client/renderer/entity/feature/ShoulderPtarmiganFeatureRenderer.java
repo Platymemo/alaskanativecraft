@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
-import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;

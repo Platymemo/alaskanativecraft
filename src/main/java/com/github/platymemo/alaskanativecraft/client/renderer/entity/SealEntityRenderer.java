@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.SealEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import net.fabricmc.api.EnvType;

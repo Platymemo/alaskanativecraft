@@ -1,5 +1,6 @@
-package com.github.platymemo.alaskanativecraft;
+package com.github.platymemo.alaskanativecraft.client.model.entity;
 
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;

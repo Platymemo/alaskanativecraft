@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;

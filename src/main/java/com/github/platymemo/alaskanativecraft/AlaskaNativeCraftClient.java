@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
@@ -9,7 +10,6 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.SealEntityMode
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.block.entity.DryingRackBlockEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
-import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
@@ -24,12 +24,10 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.UUID;
