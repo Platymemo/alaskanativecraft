@@ -2,7 +2,11 @@ package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.SealEntityModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.block.entity.DryingRackBlockEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
@@ -40,7 +44,16 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         registerItemColors();
         registerBlockRenderLayers();
         registerHarpoonPacket();
-        AlaskaNativeCraftModels.registerEntityModels();
+        registerEntityModels();
+    }
+    
+    private void registerEntityModels() {
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.DOGSLED, DogsledEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.HARPOON, HarpoonEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.MOOSE, MooseEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.SEAL, SealEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
     }
 
     private void registerHarpoonPacket() {

@@ -25,13 +25,4 @@ public class AlaskaNativeCraftModels {
     private static EntityModelLayer registerMain(String id){
         return new EntityModelLayer(new Identifier(AlaskaNativeCraft.MOD_ID, id), "main");
     }
-
-    public static void registerEntityModels() {
-        EntityModelLayerRegistry.registerModelLayer(PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(DOGSLED, DogsledEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(HARPOON, HarpoonEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(MOOSE, MooseEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(SEAL, SealEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
-    }
 }
