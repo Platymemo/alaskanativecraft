@@ -15,7 +15,7 @@ public class HarpoonEntityModel extends SinglePartEntityModel<HarpoonEntity> {
     private static final String WRAP = "wrap";
     private static final String PRONG = "prong";
     private final ModelPart root;
-
+    
     public HarpoonEntityModel(ModelPart root) {
         this.root = root;
     }
