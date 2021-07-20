@@ -24,7 +24,7 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
-    private final KuspukSkirtModel<T> model ;
+    private final KuspukSkirtModel<T> model;
     private final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/skirt_layer.png");
 
     public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context, EntityModelLoader loader) {
