@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import net.fabricmc.api.EnvType;
@@ -17,7 +18,7 @@ public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, 
             new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/ptarmigan/grey_ptarmigan.png")};
 
     public PtarmiganEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new PtarmiganEntityModel(), 0.3F);
+        super(ctx, new PtarmiganEntityModel(ctx.getPart(AlaskaNativeCraftModels.PTARMIGAN)), 0.3F);
     }
 
     public Identifier getTexture(PtarmiganEntity ptarmiganEntity) {

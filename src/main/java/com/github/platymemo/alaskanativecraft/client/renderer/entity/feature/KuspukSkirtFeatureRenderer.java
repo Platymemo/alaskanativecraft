@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
@@ -12,6 +13,7 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
@@ -22,11 +24,12 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends EntityModel<T>> extends FeatureRenderer<T, M> {
-    private final KuspukSkirtModel<T> model = new KuspukSkirtModel<>();
+    private final KuspukSkirtModel<T> model;
     private final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/skirt_layer.png");
 
-    public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context) {
+    public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context, EntityModelLoader loader) {
         super(context);
+        this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaNativeCraftModels.KUSPUK_SKIRT));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

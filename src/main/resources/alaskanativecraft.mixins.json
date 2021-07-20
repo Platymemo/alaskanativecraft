@@ -14,14 +14,12 @@
     "PlayerEntityMixin",
     "PolarBearMixin",
     "SnowballEntityMixin",
-    "TreeFeatureMixin",
     "TrunkPlacerTypeInvoker"
   ],
   "client": [
     "client.ArmorStandEntityRendererMixin",
     "client.BipedEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
-    "client.ClientPlayNetworkHandlerMixin",
     "client.ClientRecipeBookMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",

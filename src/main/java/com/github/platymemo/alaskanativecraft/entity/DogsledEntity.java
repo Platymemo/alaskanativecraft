@@ -2,7 +2,6 @@ package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.google.common.collect.Lists;
-import com.google.common.collect.UnmodifiableIterator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
@@ -10,7 +9,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Dismounting;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -47,11 +52,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockLocating;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.PortalUtil;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -127,7 +136,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return true;
     }
 
-    protected Vec3d positionInPortal(Direction.Axis axis, PortalUtil.Rectangle arg) {
+    protected Vec3d positionInPortal(Direction.Axis axis, BlockLocating.Rectangle arg) {
         return LivingEntity.positionInPortal(super.positionInPortal(axis, arg));
     }
 
@@ -369,7 +378,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 f += 0.005F;
             }
 
-            this.setYaw(this.getYaw() + this.yawVelocity);
+            this.setBodyYaw(this.getYaw() + this.yawVelocity);
             if (this.pressingForward) {
                 f += 0.04F;
             }
@@ -445,7 +454,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         float f = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
         float g = MathHelper.clamp(f, -105.0F, 105.0F);
         entity.prevYaw += (g - f);
-        entity.setYaw(entity.getYaw() + g - f);
+        entity.setBodyYaw(entity.getYaw() + g - f);
         entity.setHeadYaw(entity.getYaw());
     }
 
@@ -637,7 +646,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 passenger.noClip = true;
                 Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.getYaw() * 0.017453292F - 1.5707964F);
                 positionUpdater.accept(passenger, this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
-                passenger.setYaw(passenger.getYaw() + this.yawVelocity);
+                passenger.setBodyYaw(passenger.getYaw() + this.yawVelocity);
                 passenger.setHeadYaw(passenger.getHeadYaw() + this.yawVelocity);
                 this.copyEntityData(passenger);
             }
@@ -762,7 +771,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         if (this.lootTableId != null && this.world.getServer() != null) {
             LootTable lootTable = this.world.getServer().getLootManager().getTable(this.lootTableId);
             if (player instanceof ServerPlayerEntity) {
-                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity) player, this.lootTableId);
+                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger((ServerPlayerEntity) player, this.lootTableId);
             }
 
             this.lootTableId = null;

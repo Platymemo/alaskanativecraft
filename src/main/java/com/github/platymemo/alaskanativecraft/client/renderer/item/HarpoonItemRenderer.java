@@ -15,9 +15,8 @@ import net.minecraft.util.math.Vec3f;
 
 public enum HarpoonItemRenderer {
     INSTANCE;
-
-    private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel();
-
+    private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());
+    
     public boolean render(LivingEntity entity, ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
         if (renderMode == ModelTransformation.Mode.GUI || renderMode == ModelTransformation.Mode.GROUND || renderMode == ModelTransformation.Mode.FIXED) {
             return false;
