@@ -81,60 +81,10 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
 
 
     public DogsledEntityModel(ModelPart modelPart) {
-        /*textureWidth = 64;
-        textureHeight = 64;
-        frame = new ModelPart(this);
-        frame.setPivot(0.0F, 24.0F, 3.0F);
-        frame.setTextureOffset(20, 18).addCuboid(-5.0F, -9.0F, -18.0F, 10.0F, 1.0F, 1.0F, 0.0F, false);
-        frame.setTextureOffset(0, 0).addCuboid(-4.0F, -9.0F, -17.0F, 8.0F, 1.0F, 17.0F, 0.0F, false);
-        frame.setTextureOffset(0, 18).addCuboid(-4.0F, -14.0F, -1.0F, 8.0F, 1.0F, 1.0F, 0.0F, false);
-
-        ModelPart leftRunner = new ModelPart(this);
-        leftRunner.setPivot(5.0F, 0.0F, 0.0F);
-        leftRunner.setTextureOffset(0, 18).addCuboid(-1.0F, -1.0F, -9.0F, 1.0F, 1.0F, 18.0F, 0.0F, false);
-        leftRunner.setTextureOffset(0, 0).addCuboid(-1.0F, -5.0F, -5.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
-        leftRunner.setTextureOffset(0, 20).addCuboid(-1.0F, -10.0F, 2.0F, 1.0F, 9.0F, 1.0F, 0.0F, false);
-        leftRunner.setTextureOffset(20, 20).addCuboid(-1.0F, -5.0F, -14.0F, 1.0F, 1.0F, 9.0F, 0.0F, false);
-
-        ModelPart cube_r1 = new ModelPart(this);
-        cube_r1.setPivot(0.0F, -10.0F, 2.0F);
-        setRotationAngle(cube_r1, 0.6109F, 0.0F, 0.0F);
-        cube_r1.setTextureOffset(29, 30).addCuboid(-0.999F, 0.0F, -9.0F, 1.0F, 1.0F, 9.0F, 0.0F, false);
-        leftRunner.addChild(cube_r1);
-
-        ModelPart cube_r2 = new ModelPart(this);
-        cube_r2.setPivot(-0.5F, 0.0F, -9.0F);
-        setRotationAngle(cube_r2, -0.6109F, 0.0F, 0.0F);
-        cube_r2.setTextureOffset(0, 0).addCuboid(-0.499F, -1.0F, -7.0F, 1.0F, 1.0F, 7.0F, 0.0F, false);
-        leftRunner.addChild(cube_r2);
-
-        ModelPart rightRunner = new ModelPart(this);
-        rightRunner.setPivot(-4.0F, 0.0F, 0.0F);
-        rightRunner.setTextureOffset(0, 18).addCuboid(-1.0F, -1.0F, -9.0F, 1.0F, 1.0F, 18.0F, 0.0F, false);
-        rightRunner.setTextureOffset(0, 0).addCuboid(-1.0F, -5.0F, -5.0F, 1.0F, 4.0F, 1.0F, 0.0F, false);
-        rightRunner.setTextureOffset(0, 20).addCuboid(-1.0F, -10.0F, 2.0F, 1.0F, 9.0F, 1.0F, 0.0F, false);
-        rightRunner.setTextureOffset(20, 20).addCuboid(-1.0F, -5.0F, -14.0F, 1.0F, 1.0F, 9.0F, 0.0F, false);
-
-        ModelPart cube_r3 = new ModelPart(this);
-        cube_r3.setPivot(0.0F, -10.0F, 2.0F);
-        setRotationAngle(cube_r3, 0.6109F, 0.0F, 0.0F);
-        cube_r3.setTextureOffset(29, 30).addCuboid(-1.001F, 0.0F, -9.0F, 1.0F, 1.0F, 9.0F, 0.0F, false);
-        rightRunner.addChild(cube_r3);
-
-        ModelPart cube_r4 = new ModelPart(this);
-        cube_r4.setPivot(-0.5F, 0.0F, -9.0F);
-        setRotationAngle(cube_r4, -0.6109F, 0.0F, 0.0F);
-        cube_r4.setTextureOffset(0, 0).addCuboid(-0.501F, -1.0F, -7.0F, 1.0F, 1.0F, 7.0F, 0.0F, false);
-        rightRunner.addChild(cube_r4);*/
-
         frame = modelPart.getChild("frame");
         ModelPart leftRunner = modelPart.getChild("leftRunner");
-        //ModelPart cube_r1 = leftRunner.getChild("cube_r1");
-        //ModelPart cube_r2 = leftRunner.getChild("cube_r2");
         ModelPart rightRunner = modelPart.getChild("rightRunner");
-        //ModelPart cube_r3 = rightRunner.getChild("cube_r3");
-        //ModelPart cube_r4 = rightRunner.getChild("cube_r4");
-
+        
         ImmutableList.Builder<ModelPart> builder = ImmutableList.builder();
         builder.add(this.frame).add(leftRunner).add(rightRunner);
         this.parts = builder.build();
