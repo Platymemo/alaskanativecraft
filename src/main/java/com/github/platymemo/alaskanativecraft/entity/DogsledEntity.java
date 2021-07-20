@@ -2,7 +2,6 @@ package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.google.common.collect.Lists;
-import com.google.common.collect.UnmodifiableIterator;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
@@ -10,7 +9,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Dismounting;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -47,7 +52,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockLocating;
@@ -762,7 +771,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         if (this.lootTableId != null && this.world.getServer() != null) {
             LootTable lootTable = this.world.getServer().getLootManager().getTable(this.lootTableId);
             if (player instanceof ServerPlayerEntity) {
-                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.test((ServerPlayerEntity) player, this.lootTableId);
+                Criteria.PLAYER_GENERATES_CONTAINER_LOOT.trigger((ServerPlayerEntity) player, this.lootTableId);
             }
 
             this.lootTableId = null;
