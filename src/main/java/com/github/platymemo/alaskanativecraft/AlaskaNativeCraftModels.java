@@ -9,7 +9,10 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.feature.Kuspuk
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
+@Environment(EnvType.CLIENT)
 public class AlaskaNativeCraftModels {
     public static final EntityModelLayer PTARMIGAN_MODEL = registerMain("ptarmigan");
     public static final EntityModelLayer DOGSLED_MODEL = registerMain("dogsled");
