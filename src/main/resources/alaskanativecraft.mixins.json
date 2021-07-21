@@ -7,14 +7,12 @@
     "AnvilScreenHandlerMixin",
     "AxeItemAccessor",
     "EndermanEntityMixin",
-    "FoliagePlacerTypeInvoker",
     "FoxMixin",
     "IglooGeneratorMixin",
     "LeadLengthMixin",
     "PlayerEntityMixin",
     "PolarBearMixin",
-    "SnowballEntityMixin",
-    "TrunkPlacerTypeInvoker"
+    "SnowballEntityMixin"
   ],
   "client": [
     "client.ArmorStandEntityRendererMixin",

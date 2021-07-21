@@ -12,6 +12,7 @@ public class AlaskaConfig implements ConfigData {
     public boolean snowballConversion = false;
     public boolean mooseEatBark = true;
     public boolean genDriftwood = true;
+    public boolean snowyGen = false;
     @ConfigEntry.Gui.CollapsibleObject
     public SealFishing sealFishing = new SealFishing();
     @ConfigEntry.Gui.CollapsibleObject
