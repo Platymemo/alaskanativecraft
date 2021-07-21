@@ -30,6 +30,10 @@ public class AlaskaItems {
     public static final Item VENISON;
     public static final Item COOKED_VENISON;
 
+    public static final Item DRIFTWOOD_CHUNK;
+    public static final Item ANTLER;
+    public static final Item IVORY;
+
     public static final Item FISH_STRIP;
     public static final Item DRY_FISH;
 
@@ -100,6 +104,10 @@ public class AlaskaItems {
         COOKED_PTARMIGAN = add("cooked_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
         VENISON = add("venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = add("cooked_venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
+
+        DRIFTWOOD_CHUNK = add("driftwood_chunk", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
+        ANTLER = add("antler", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
+        IVORY = add("ivory", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
 
         FISH_STRIP = add("fish_strip", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(1).saturationModifier(0.1F).snack().build())));
         DRY_FISH = add("dry_fish", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(1).saturationModifier(1F).snack().build())));

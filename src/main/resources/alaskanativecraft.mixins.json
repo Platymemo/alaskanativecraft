@@ -9,6 +9,7 @@
     "EndermanEntityMixin",
     "FoxMixin",
     "IglooGeneratorMixin",
+    "IngredientMixin",
     "LeadLengthMixin",
     "PlayerEntityMixin",
     "PolarBearMixin",
