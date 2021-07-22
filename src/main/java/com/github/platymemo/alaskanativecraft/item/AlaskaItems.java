@@ -7,11 +7,16 @@ import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
@@ -20,8 +25,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AlaskaItems {
-    private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
-
     public static final Item MUKTUK;
     public static final Item SEAL;
     public static final Item COOKED_SEAL;
@@ -29,72 +32,36 @@ public class AlaskaItems {
     public static final Item COOKED_PTARMIGAN;
     public static final Item VENISON;
     public static final Item COOKED_VENISON;
-
     public static final Item DRIFTWOOD_CHUNK;
     public static final Item ANTLER;
     public static final Item IVORY;
-
     public static final Item FISH_STRIP;
     public static final Item DRY_FISH;
-
     public static final Item BLUEBERRIES;
     public static final Item CLOUDBERRIES;
     public static final Item RASPBERRIES;
     public static final Item SALMONBERRIES;
-
     public static final SuspiciousStewItem AKUTAQ;
-
     public static final UluItem ULU;
-
     public static final HarpoonItem WOODEN_HARPOON;
     public static final HarpoonItem STONE_HARPOON;
     public static final HarpoonItem IRON_HARPOON;
     public static final HarpoonItem GOLDEN_HARPOON;
     public static final HarpoonItem DIAMOND_HARPOON;
     public static final HarpoonItem NETHERITE_HARPOON;
-
     public static final DyeableArmorItem KUSPUK_HOOD;
     public static final DyeableArmorItem KUSPUK_BODY;
-
     public static final ArmorItem SNOW_GOGGLES;
-
     public static final DogsledItem OAK_DOGSLED;
     public static final DogsledItem SPRUCE_DOGSLED;
     public static final DogsledItem BIRCH_DOGSLED;
     public static final DogsledItem JUNGLE_DOGSLED;
     public static final DogsledItem ACACIA_DOGSLED;
     public static final DogsledItem DARK_OAK_DOGSLED;
-
     public static final SpawnEggItem SEAL_SPAWN_EGG;
     public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
     public static final SpawnEggItem MOOSE_SPAWN_EGG;
-
-    private static <I extends Item> I add(String name, I item) {
-        ITEMS.put(new Identifier(AlaskaNativeCraft.MOD_ID, name), item);
-        return item;
-    }
-
-    public static void register() {
-        for (Identifier id : ITEMS.keySet()) {
-            Registry.register(Registry.ITEM, id, ITEMS.get(id));
-        }
-
-        addFuels();
-        addLootTableEntries();
-    }
-
-    private static void addFuels() {
-        FuelRegistry fuelRegistry = FuelRegistry.INSTANCE;
-        fuelRegistry.add(WOODEN_HARPOON, 200);
-    }
-
-    private static void addLootTableEntries() {
-        FabricItemGroupBuilder.create(new Identifier(AlaskaNativeCraft.MOD_ID, "items")).icon(() -> MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
-            if (Registry.ITEM.getId(item).getNamespace().equals(AlaskaNativeCraft.MOD_ID)) {
-                item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
-            }
-        })).build();
-    }
+    private static final Map<Identifier, Item> ITEMS = new LinkedHashMap<>();
 
     static {
         MUKTUK = add("muktuk", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
@@ -145,4 +112,43 @@ public class AlaskaItems {
         MOOSE_SPAWN_EGG = add("moose_spawn_egg", new SpawnEggItem(AlaskaEntities.MOOSE, 3811094, 14075317, new FabricItemSettings().group(ItemGroup.MISC)));
     }
 
+    private static <I extends Item> I add(String name, I item) {
+        ITEMS.put(new Identifier(AlaskaNativeCraft.MOD_ID, name), item);
+        return item;
+    }
+
+    public static void register() {
+        for (Identifier id : ITEMS.keySet()) {
+            Registry.register(Registry.ITEM, id, ITEMS.get(id));
+        }
+
+        addFuels();
+        addItemGroupEntries();
+        addSnowGogglesToLootTable();
+    }
+
+    private static void addFuels() {
+        FuelRegistry fuelRegistry = FuelRegistry.INSTANCE;
+        fuelRegistry.add(WOODEN_HARPOON, 200);
+    }
+
+    private static void addItemGroupEntries() {
+        FabricItemGroupBuilder.create(new Identifier(AlaskaNativeCraft.MOD_ID, "items")).icon(() -> MUKTUK.asItem().getDefaultStack()).appendItems(stacks -> Registry.ITEM.forEach(item -> {
+            if (Registry.ITEM.getId(item).getNamespace().equals(AlaskaNativeCraft.MOD_ID)) {
+                item.appendStacks(item.getGroup(), (DefaultedList<ItemStack>) stacks);
+            }
+        })).build();
+    }
+
+    private static void addSnowGogglesToLootTable() {
+        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
+            if (LootTables.VILLAGE_SNOWY_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_TAIGA_HOUSE_CHEST.equals(id)) {
+                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                        .rolls(UniformLootNumberProvider.create(0.0F, 1.0F))
+                        .withEntry(ItemEntry.builder(AlaskaItems.SNOW_GOGGLES).build());
+
+                supplier.pool(poolBuilder);
+            }
+        });
+    }
 }

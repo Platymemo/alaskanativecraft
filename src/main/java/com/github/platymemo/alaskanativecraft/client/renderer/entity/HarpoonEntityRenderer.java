@@ -29,6 +29,13 @@ public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
         model = new HarpoonEntityModel(ctx.getPart(AlaskaNativeCraftModels.HARPOON));
     }
 
+    public static Identifier getTexture(EntityType<?> type) {
+        if (!TEXTURES.containsKey(type)) {
+            TEXTURES.put(type, new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/harpoon/" + Registry.ENTITY_TYPE.getId(type).getPath() + ".png"));
+        }
+        return TEXTURES.get(type);
+    }
+
     @Override
     public void render(HarpoonEntity harpoon, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
@@ -44,13 +51,6 @@ public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
     @Override
     public Identifier getTexture(HarpoonEntity harpoon) {
         return getTexture(harpoon.getType());
-    }
-
-    public static Identifier getTexture(EntityType<?> type) {
-        if (!TEXTURES.containsKey(type)) {
-            TEXTURES.put(type, new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/harpoon/" + Registry.ENTITY_TYPE.getId(type).getPath() + ".png"));
-        }
-        return TEXTURES.get(type);
     }
 }
 

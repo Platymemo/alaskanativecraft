@@ -28,6 +28,10 @@ import java.util.Random;
 public class PtarmiganEntity extends ParrotEntity {
     private static final TrackedData<Integer> TYPE;
 
+    static {
+        TYPE = DataTracker.registerData(PtarmiganEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    }
+
     public PtarmiganEntity(EntityType<? extends ParrotEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -35,6 +39,13 @@ public class PtarmiganEntity extends ParrotEntity {
     public static boolean isValidSpawn(EntityType<PtarmiganEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         BlockState blockState = world.getBlockState(pos.down());
         return (blockState.isIn(BlockTags.LEAVES) || blockState.isOf(Blocks.GRASS_BLOCK) || blockState.isIn(BlockTags.LOGS) || blockState.isOf(Blocks.AIR)) && world.getBaseLightLevel(pos, 0) > 8;
+    }
+
+    public static DefaultAttributeContainer.Builder createPtarmiganAttributes() {
+        return PtarmiganEntity.createMobAttributes().
+                add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D).
+                add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4000000059604645D).
+                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
@@ -66,13 +77,6 @@ public class PtarmiganEntity extends ParrotEntity {
         return SoundEvents.ENTITY_PARROT_AMBIENT;
     }
 
-    public static DefaultAttributeContainer.Builder createPtarmiganAttributes() {
-        return PtarmiganEntity.createMobAttributes().
-                add(EntityAttributes.GENERIC_MAX_HEALTH, 6.0D).
-                add(EntityAttributes.GENERIC_FLYING_SPEED, 0.4000000059604645D).
-                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D);
-    }
-
     public int getPtarmiganType() {
         return this.dataTracker.get(TYPE);
     }
@@ -91,9 +95,5 @@ public class PtarmiganEntity extends ParrotEntity {
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
         this.setType(tag.getInt("Type"));
-    }
-
-    static {
-        TYPE = DataTracker.registerData(PtarmiganEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }
 }

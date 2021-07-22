@@ -28,6 +28,11 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
     private static final VoxelShape MID_SHAPE;
     private static final VoxelShape FULL_SHAPE;
 
+    static {
+        MID_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
+        FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
+    }
+
     public CloudberryBushBlock(Settings settings) {
         super(settings);
     }
@@ -37,6 +42,7 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
         return AlaskaItems.CLOUDBERRIES.getDefaultStack();
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int i = state.get(AGE);
         boolean bl = i == 3;
@@ -53,12 +59,14 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
         }
     }
 
+    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
             entity.slowMovement(state, new Vec3d(1.0D, 0.90D, 1.0D));
         }
     }
 
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (state.get(AGE) > 0 && state.get(AGE) < 3) {
             return MID_SHAPE;
@@ -67,10 +75,5 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
         } else {
             return super.getOutlineShape(state, world, pos, context);
         }
-    }
-
-    static {
-        MID_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 9.0D, 15.0D);
-        FULL_SHAPE = Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 9.0D, 16.0D);
     }
 }

@@ -39,14 +39,13 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
                     dryingRackBlockEntity.dryingTimes[i] = MathHelper.clamp(dryingRackBlockEntity.dryingTimes[i] - 2, 0, dryingRackBlockEntity.dryingTotalTimes[i]);
                 }
             }
-        }
-        else {
+        } else {
             updateItemsBeingDried(world, pos, state, dryingRackBlockEntity);
         }
     }
 
     public static void updateItemsBeingDried(World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
-        for(int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
+        for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
             ItemStack itemStack = dryingRackBlockEntity.itemsBeingDried.get(i);
             if (!itemStack.isEmpty()) {
                 dryingRackBlockEntity.dryingTimes[i]++;
@@ -57,9 +56,9 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
 
                     Inventory inventory = new SimpleInventory(itemStack);
                     ItemStack itemStack2 = world.getRecipeManager()
-                                                     .getFirstMatch(AlaskaRecipes.DRYING, inventory, world)
-                                                     .map((dryingRecipe) -> dryingRecipe.craft(inventory))
-                                                     .orElse(itemStack);
+                            .getFirstMatch(AlaskaRecipes.DRYING, inventory, world)
+                            .map((dryingRecipe) -> dryingRecipe.craft(inventory))
+                            .orElse(itemStack);
                     dryingRackBlockEntity.itemsBeingDried.set(i, itemStack2);
                     dryingRackBlockEntity.updateListeners();
                 }
@@ -73,7 +72,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
 
     public ItemStack getDriedItem() {
         ItemStack stack;
-        for(int i = 0; i < this.itemsBeingDried.size(); ++i) {
+        for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
             if (this.dryingTimes[i] >= this.dryingTotalTimes[i]) {
                 stack = this.itemsBeingDried.get(i);
                 if (!stack.isEmpty()) {
@@ -83,7 +82,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
                 }
             }
         }
-        for(int i = 0; i < this.itemsBeingDried.size(); ++i) {
+        for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
             stack = this.itemsBeingDried.get(i);
             if (!stack.isEmpty()) {
                 this.itemsBeingDried.set(i, ItemStack.EMPTY);
@@ -131,12 +130,13 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
         return this.saveInitialChunkData(new NbtCompound());
     }
 
+    @SuppressWarnings("ConstantConditions")
     public Optional<DryingRecipe> getRecipeFor(ItemStack item) {
         return this.itemsBeingDried.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, new SimpleInventory(item), this.world);
     }
 
     public boolean addItem(ItemStack item, int integer) {
-        for(int i = 0; i < this.itemsBeingDried.size(); ++i) {
+        for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
             ItemStack itemStack = this.itemsBeingDried.get(i);
             if (itemStack.isEmpty()) {
                 this.dryingTotalTimes[i] = integer;
@@ -150,6 +150,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
         return false;
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void updateListeners() {
         this.markDirty();
         this.getWorld().updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), 3);

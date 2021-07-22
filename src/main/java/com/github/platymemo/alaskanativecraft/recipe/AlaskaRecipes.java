@@ -2,7 +2,6 @@ package com.github.platymemo.alaskanativecraft.recipe;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import com.google.common.collect.ImmutableCollection;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -13,10 +12,8 @@ import net.minecraft.recipe.SpecialRecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class AlaskaRecipes {
     public static SpecialRecipeSerializer<AkutaqRecipe> AKUTAQ = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(AlaskaNativeCraft.MOD_ID, "crafting_special_akutaq"), new SpecialRecipeSerializer<>(AkutaqRecipe::new));

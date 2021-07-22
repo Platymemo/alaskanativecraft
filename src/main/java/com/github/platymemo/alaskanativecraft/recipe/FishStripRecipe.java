@@ -2,20 +2,14 @@ package com.github.platymemo.alaskanativecraft.recipe;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class FishStripRecipe extends SpecialCraftingRecipe {
@@ -53,7 +47,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     public ItemStack craft(CraftingInventory inv) {
         int numOfFish = 0;
         ItemStack stack;
-        for(int i = 0; i < inv.size(); ++i) {
+        for (int i = 0; i < inv.size(); ++i) {
             stack = inv.getStack(i);
             if (stack.isIn(AlaskaTags.SLICEABLE_FISH)) {
                 numOfFish++;
@@ -66,7 +60,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
 
-        for(int i = 0; i < defaultedList.size(); ++i) {
+        for (int i = 0; i < defaultedList.size(); ++i) {
             ItemStack stack = inventory.getStack(i);
             if (stack.isIn(AlaskaTags.ULUS)) {
                 stack.damage(5, new Random(), null);

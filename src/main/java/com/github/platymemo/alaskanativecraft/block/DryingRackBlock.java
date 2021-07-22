@@ -24,7 +24,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -33,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+@SuppressWarnings("deprecation")
 public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     public static final BooleanProperty WATERLOGGED;
     public static final BooleanProperty CONNECTED_POS;
@@ -40,6 +40,13 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<Direction.Axis> AXIS;
     private static final VoxelShape X_SHAPE = Block.createCuboidShape(0, 0, 6, 16, 8, 10);
     private static final VoxelShape Z_SHAPE = Block.createCuboidShape(6, 0, 0, 10, 8, 16);
+
+    static {
+        WATERLOGGED = Properties.WATERLOGGED;
+        CONNECTED_POS = BooleanProperty.of("positive");
+        CONNECTED_NEG = BooleanProperty.of("negative");
+        AXIS = EnumProperty.of("axis", Direction.Axis.class, Direction.Axis::isHorizontal);
+    }
 
     public DryingRackBlock(Settings settings) {
         super(settings);
@@ -53,8 +60,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!world.isClient && blockEntity instanceof DryingRackBlockEntity) {
-            DryingRackBlockEntity dryingRackBlockEntity = (DryingRackBlockEntity) blockEntity;
+        if (!world.isClient && blockEntity instanceof DryingRackBlockEntity dryingRackBlockEntity) {
             ItemStack itemStack = player.getStackInHand(hand);
             Optional<DryingRecipe> optional = dryingRackBlockEntity.getRecipeFor(itemStack);
             if (optional.isPresent()) {
@@ -77,7 +83,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
-                ItemScatterer.spawn(world, pos, ((DryingRackBlockEntity)blockEntity).getItemsBeingDried());
+                ItemScatterer.spawn(world, pos, ((DryingRackBlockEntity) blockEntity).getItemsBeingDried());
             }
 
             super.onStateReplaced(state, world, pos, newState, moved);
@@ -107,27 +113,21 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
         Direction left = Direction.get(Direction.AxisDirection.NEGATIVE, axis);
         Direction right = Direction.get(Direction.AxisDirection.POSITIVE, axis);
         return state.with(AXIS, axis)
-                    .with(CONNECTED_NEG, this.canConnect(left, world.getBlockState(blockPos.offset(left))))
-                    .with(CONNECTED_POS, this.canConnect(right, world.getBlockState(blockPos.offset(right))))
-                    .with(WATERLOGGED, bl);
+                .with(CONNECTED_NEG, this.canConnect(left, world.getBlockState(blockPos.offset(left))))
+                .with(CONNECTED_POS, this.canConnect(right, world.getBlockState(blockPos.offset(right))))
+                .with(WATERLOGGED, bl);
     }
 
     @Override
     public BlockState rotate(BlockState state, BlockRotation rotation) {
-        switch(rotation) {
-            case COUNTERCLOCKWISE_90:
-            case CLOCKWISE_90:
-                switch(state.get(AXIS)) {
-                    case X:
-                        return state.with(AXIS, Direction.Axis.Z);
-                    case Z:
-                        return state.with(AXIS, Direction.Axis.X);
-                    default:
-                        return state;
-                }
-            default:
-                return state;
-        }
+        return switch (rotation) {
+            case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.get(AXIS)) {
+                case X -> state.with(AXIS, Direction.Axis.Z);
+                case Z -> state.with(AXIS, Direction.Axis.X);
+                default -> state;
+            };
+            default -> state;
+        };
     }
 
     private boolean canConnect(Direction direction, BlockState otherState) {
@@ -158,10 +158,10 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 
     @Override
     public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!(Boolean)state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
+        if (!(Boolean) state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
-                ((DryingRackBlockEntity)blockEntity).spawnItemsBeingDried();
+                ((DryingRackBlockEntity) blockEntity).spawnItemsBeingDried();
             }
 
             world.setBlockState(pos, state.with(WATERLOGGED, true), 3);
@@ -205,12 +205,5 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(WATERLOGGED).add(CONNECTED_POS).add(CONNECTED_NEG).add(AXIS);
-    }
-
-    static {
-        WATERLOGGED = Properties.WATERLOGGED;
-        CONNECTED_POS = BooleanProperty.of("positive");
-        CONNECTED_NEG = BooleanProperty.of("negative");
-        AXIS = EnumProperty.of("axis", Direction.Axis.class, Direction.Axis::isHorizontal);
     }
 }

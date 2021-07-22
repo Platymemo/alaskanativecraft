@@ -17,32 +17,32 @@ import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
 public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<DryingRackBlockEntity> {
-   public DryingRackBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+    public DryingRackBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
 
-   }
+    }
 
-   public void render(DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-      Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
-      DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
-      int XOrZ = axis.choose(0, 0, 1);
-      int k = (int)dryingRackBlockEntity.getPos().asLong();
+    public void render(DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
+        Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
+        DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
+        int XOrZ = axis.choose(0, 0, 1);
+        int k = (int) dryingRackBlockEntity.getPos().asLong();
 
-      for(int l = 0; l < defaultedList.size(); ++l) {
-         ItemStack itemStack = defaultedList.get(l);
-         if (itemStack != ItemStack.EMPTY) {
-            matrixStack.push();
-            matrixStack.translate(0.5D, 0.44921875D, 0.5D);
-            Direction direction2 = Direction.fromHorizontal((k % 2) * 2 + XOrZ);
-            float g = -direction2.asRotation();
-            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(g));
-            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-            matrixStack.translate(-0.25D, 0.1D, 0.075D * (k < 1 || k > 2 ? 1 : -1));
-            matrixStack.scale(0.375F, 0.375F, 0.375F);
-            MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Mode.FIXED, i, j, matrixStack, vertexConsumerProvider, k + l);
-            matrixStack.pop();
-         }
-      }
+        for (int l = 0; l < defaultedList.size(); ++l) {
+            ItemStack itemStack = defaultedList.get(l);
+            if (itemStack != ItemStack.EMPTY) {
+                matrixStack.push();
+                matrixStack.translate(0.5D, 0.44921875D, 0.5D);
+                Direction direction2 = Direction.fromHorizontal((k % 2) * 2 + XOrZ);
+                float g = -direction2.asRotation();
+                matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(g));
+                matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+                matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
+                matrixStack.translate(-0.25D, 0.1D, 0.075D * (k < 1 || k > 2 ? 1 : -1));
+                matrixStack.scale(0.375F, 0.375F, 0.375F);
+                MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Mode.FIXED, i, j, matrixStack, vertexConsumerProvider, k + l);
+                matrixStack.pop();
+            }
+        }
 
-   }
+    }
 }

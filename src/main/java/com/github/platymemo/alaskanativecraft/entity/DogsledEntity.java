@@ -9,13 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.entity.Dismounting;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -52,11 +46,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockLocating;
@@ -72,6 +62,14 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     private static final TrackedData<Integer> DAMAGE_WOBBLE_SIDE;
     private static final TrackedData<Float> DAMAGE_WOBBLE_STRENGTH;
     private static final TrackedData<Integer> DOGSLED_TYPE;
+
+    static {
+        DAMAGE_WOBBLE_TICKS = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        DAMAGE_WOBBLE_SIDE = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        DAMAGE_WOBBLE_STRENGTH = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.FLOAT);
+        DOGSLED_TYPE = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    }
+
     private float ticksUnderwater;
     private float yawVelocity;
     private float velocityDecay;
@@ -109,6 +107,10 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.prevZ = z;
     }
 
+    public static boolean method_30959(Entity entity, Entity entity2) {
+        return (entity2.isCollidable() || entity2.isPushable()) && !entity.isConnectedThroughVehicle(entity2);
+    }
+
     protected float getEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height;
     }
@@ -122,10 +124,6 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     public boolean collidesWith(Entity other) {
         return method_30959(this, other);
-    }
-
-    public static boolean method_30959(Entity entity, Entity entity2) {
-        return (entity2.isCollidable() || entity2.isPushable()) && !entity.isConnectedThroughVehicle(entity2);
     }
 
     public boolean isCollidable() {
@@ -152,21 +150,14 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     public Item asItem() {
-        switch (this.getDogsledType()) {
-            case OAK:
-            default:
-                return AlaskaItems.OAK_DOGSLED;
-            case SPRUCE:
-                return AlaskaItems.SPRUCE_DOGSLED;
-            case BIRCH:
-                return AlaskaItems.BIRCH_DOGSLED;
-            case JUNGLE:
-                return AlaskaItems.JUNGLE_DOGSLED;
-            case ACACIA:
-                return AlaskaItems.ACACIA_DOGSLED;
-            case DARK_OAK:
-                return AlaskaItems.DARK_OAK_DOGSLED;
-        }
+        return switch (this.getDogsledType()) {
+            default -> AlaskaItems.OAK_DOGSLED;
+            case SPRUCE -> AlaskaItems.SPRUCE_DOGSLED;
+            case BIRCH -> AlaskaItems.BIRCH_DOGSLED;
+            case JUNGLE -> AlaskaItems.JUNGLE_DOGSLED;
+            case ACACIA -> AlaskaItems.ACACIA_DOGSLED;
+            case DARK_OAK -> AlaskaItems.DARK_OAK_DOGSLED;
+        };
     }
 
     @Environment(EnvType.CLIENT)
@@ -428,12 +419,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
             List<Vec3d> list = Lists.newArrayList();
             double f = this.world.getDismountHeight(blockPos);
             if (Dismounting.canDismountInBlock(f)) {
-                list.add(new Vec3d(d, (double)blockPos.getY() + f, e));
+                list.add(new Vec3d(d, (double) blockPos.getY() + f, e));
             }
 
             double g = this.world.getDismountHeight(blockPos2);
             if (Dismounting.canDismountInBlock(g)) {
-                list.add(new Vec3d(d, (double)blockPos2.getY() + g, e));
+                list.add(new Vec3d(d, (double) blockPos2.getY() + g, e));
             }
 
             for (EntityPose entityPose : passenger.getPoses()) {
@@ -498,36 +489,36 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
-    public void setDamageWobbleStrength(float wobbleStrength) {
-        this.dataTracker.set(DAMAGE_WOBBLE_STRENGTH, wobbleStrength);
-    }
-
     public float getDamageWobbleStrength() {
         return this.dataTracker.get(DAMAGE_WOBBLE_STRENGTH);
     }
 
-    public void setDamageWobbleTicks(int wobbleTicks) {
-        this.dataTracker.set(DAMAGE_WOBBLE_TICKS, wobbleTicks);
+    public void setDamageWobbleStrength(float wobbleStrength) {
+        this.dataTracker.set(DAMAGE_WOBBLE_STRENGTH, wobbleStrength);
     }
 
     public int getDamageWobbleTicks() {
         return this.dataTracker.get(DAMAGE_WOBBLE_TICKS);
     }
 
-    public void setDamageWobbleSide(int side) {
-        this.dataTracker.set(DAMAGE_WOBBLE_SIDE, side);
+    public void setDamageWobbleTicks(int wobbleTicks) {
+        this.dataTracker.set(DAMAGE_WOBBLE_TICKS, wobbleTicks);
     }
 
     public int getDamageWobbleSide() {
         return this.dataTracker.get(DAMAGE_WOBBLE_SIDE);
     }
 
-    public void setDogsledType(DogsledEntity.Type type) {
-        this.dataTracker.set(DOGSLED_TYPE, type.ordinal());
+    public void setDamageWobbleSide(int side) {
+        this.dataTracker.set(DAMAGE_WOBBLE_SIDE, side);
     }
 
     public DogsledEntity.Type getDogsledType() {
         return DogsledEntity.Type.getType(this.dataTracker.get(DOGSLED_TYPE));
+    }
+
+    public void setDogsledType(DogsledEntity.Type type) {
+        this.dataTracker.set(DOGSLED_TYPE, type.ordinal());
     }
 
     protected boolean canAddPassenger(Entity passenger) {
@@ -809,13 +800,6 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return GenericContainerScreenHandler.createGeneric9x3(syncId, playerInventory, this);
     }
 
-    static {
-        DAMAGE_WOBBLE_TICKS = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        DAMAGE_WOBBLE_SIDE = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        DAMAGE_WOBBLE_STRENGTH = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.FLOAT);
-        DOGSLED_TYPE = DataTracker.registerData(DogsledEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    }
-
     public enum Type {
         OAK(Blocks.OAK_PLANKS, "oak"),
         SPRUCE(Blocks.SPRUCE_PLANKS, "spruce"),
@@ -830,18 +814,6 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         Type(Block baseBlock, String name) {
             this.name = name;
             this.baseBlock = baseBlock;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public Block getBaseBlock() {
-            return this.baseBlock;
-        }
-
-        public String toString() {
-            return this.name;
         }
 
         public static DogsledEntity.Type getType(int i) {
@@ -863,6 +835,18 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
             }
 
             return types[0];
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public Block getBaseBlock() {
+            return this.baseBlock;
+        }
+
+        public String toString() {
+            return this.name;
         }
     }
 

@@ -9,6 +9,8 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 
 @Config(name = AlaskaNativeCraft.MOD_ID)
 public class AlaskaConfig implements ConfigData {
+    @ConfigEntry.Gui.Excluded
+    private transient static boolean registered = false;
     public boolean snowballConversion = false;
     public boolean mooseEatBark = true;
     public boolean genDriftwood = true;
@@ -17,6 +19,15 @@ public class AlaskaConfig implements ConfigData {
     public SealFishing sealFishing = new SealFishing();
     @ConfigEntry.Gui.CollapsibleObject
     public SpawnOptions spawnOptions = new SpawnOptions();
+
+    public static synchronized AlaskaConfig getConfig() {
+        if (!registered) {
+            AutoConfig.register(AlaskaConfig.class, GsonConfigSerializer::new);
+            registered = true;
+        }
+
+        return AutoConfig.getConfigHolder(AlaskaConfig.class).getConfig();
+    }
 
     public static class SpawnOptions {
         @ConfigEntry.Gui.CollapsibleObject
@@ -47,17 +58,5 @@ public class AlaskaConfig implements ConfigData {
             this.minGroupSize = minGroupSize;
             this.maxGroupSize = maxGroupSize;
         }
-    }
-
-    @ConfigEntry.Gui.Excluded
-    private transient static boolean registered = false;
-
-    public static synchronized AlaskaConfig getConfig() {
-        if (!registered) {
-            AutoConfig.register(AlaskaConfig.class, GsonConfigSerializer::new);
-            registered = true;
-        }
-
-        return AutoConfig.getConfigHolder(AlaskaConfig.class).getConfig();
     }
 }

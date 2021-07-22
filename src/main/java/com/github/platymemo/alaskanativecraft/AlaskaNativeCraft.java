@@ -8,14 +8,8 @@ import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 
 public class AlaskaNativeCraft implements ModInitializer {
-
     public static final String MOD_ID = "alaskanativecraft";
 
     @Override
@@ -31,19 +25,5 @@ public class AlaskaNativeCraft implements ModInitializer {
         AlaskaTags.register();
         AlaskaSoundEvents.register();
         AlaskaRecipes.register();
-
-        addSnowGogglesToLootTable();
-    }
-
-    private static void addSnowGogglesToLootTable() {
-        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
-            if (LootTables.VILLAGE_SNOWY_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_TAIGA_HOUSE_CHEST.equals(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
-                        .rolls(UniformLootNumberProvider.create(0.0F, 1.0F))
-                        .withEntry(ItemEntry.builder(AlaskaItems.SNOW_GOGGLES).build());
-
-                supplier.pool(poolBuilder);
-            }
-        });
     }
 }

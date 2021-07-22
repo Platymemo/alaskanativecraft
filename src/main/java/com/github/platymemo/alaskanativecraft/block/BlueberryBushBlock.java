@@ -8,7 +8,6 @@ import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -33,6 +32,7 @@ public class BlueberryBushBlock extends SweetBerryBushBlock {
         return AlaskaItems.BLUEBERRIES.getDefaultStack();
     }
 
+    @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int i = state.get(AGE);
         boolean bl = i == 3;
@@ -49,6 +49,7 @@ public class BlueberryBushBlock extends SweetBerryBushBlock {
         }
     }
 
+    @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity && entity.getType() != EntityType.FOX && entity.getType() != EntityType.BEE) {
             entity.slowMovement(state, new Vec3d(0.800000011920929D, 0.75D, 0.800000011920929D));

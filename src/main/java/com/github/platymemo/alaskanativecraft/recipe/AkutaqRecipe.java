@@ -7,7 +7,6 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.SuspiciousStewItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
@@ -15,7 +14,6 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class AkutaqRecipe extends SpecialCraftingRecipe {
@@ -35,6 +33,34 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 
     public AkutaqRecipe(Identifier id) {
         super(id);
+    }
+
+    // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
+    private static void addEffectToAkutaq(ItemStack stew, StatusEffect effect, int duration) {
+        NbtCompound compoundTag = stew.getOrCreateNbt();
+        NbtList listTag = compoundTag.getList("Effects", 10);
+
+        boolean effectExists = false;
+
+        byte effectId = (byte) StatusEffect.getRawId(effect);
+        int actualDuration = duration;
+        for (int i = 0; i < listTag.size(); ++i) {
+            NbtCompound previousEffect = listTag.getCompound(i);
+            if (previousEffect.contains("EffectDuration", 3) && effectId == previousEffect.getByte("EffectId")) {
+                actualDuration += previousEffect.getInt("EffectDuration");
+                previousEffect.putInt("EffectDuration", actualDuration);
+                effectExists = true;
+            }
+        }
+
+        if (!effectExists) {
+            NbtCompound newEffect = new NbtCompound();
+            newEffect.putByte("EffectId", effectId);
+            newEffect.putInt("EffectDuration", actualDuration);
+            listTag.add(newEffect);
+        }
+
+        compoundTag.put("Effects", listTag);
     }
 
     @Override
@@ -75,7 +101,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         Random random = new Random();
 
         ItemStack currentItemstack;
-        for(int i = 0; i < inv.size(); ++i) {
+        for (int i = 0; i < inv.size(); ++i) {
             currentItemstack = inv.getStack(i);
             if (!currentItemstack.isEmpty() && currentItemstack.isIn(AlaskaTags.AKUTAQ_BERRIES)) {
                 int randomEffect = random.nextInt(8);
@@ -86,34 +112,6 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         }
 
         return akutaq;
-    }
-
-    // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
-    private static void addEffectToAkutaq(ItemStack stew, StatusEffect effect, int duration) {
-        NbtCompound compoundTag = stew.getOrCreateNbt();
-        NbtList listTag = compoundTag.getList("Effects", 10);
-
-        boolean effectExists = false;
-
-        byte effectId = (byte)StatusEffect.getRawId(effect);
-        int actualDuration = duration;
-        for(int i = 0; i < listTag.size(); ++i) {
-            NbtCompound previousEffect = listTag.getCompound(i);
-            if (previousEffect.contains("EffectDuration", 3) && effectId == previousEffect.getByte("EffectId")) {
-                actualDuration += previousEffect.getInt("EffectDuration");
-                previousEffect.putInt("EffectDuration", actualDuration);
-                effectExists = true;
-            }
-        }
-
-        if (!effectExists) {
-            NbtCompound newEffect = new NbtCompound();
-            newEffect.putByte("EffectId", effectId);
-            newEffect.putInt("EffectDuration", actualDuration);
-            listTag.add(newEffect);
-        }
-
-        compoundTag.put("Effects", listTag);
     }
 
     @Override

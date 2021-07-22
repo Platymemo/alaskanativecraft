@@ -17,14 +17,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
 
-    @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
-
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
         throw new AssertionError("wut");
     }
 
-    @Inject(at=@At("HEAD"), method = "updateTurtleHelmet")
+    @Shadow
+    public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+
+    @Inject(at = @At("HEAD"), method = "updateTurtleHelmet")
     private void updateSnowGoggles(CallbackInfo ci) {
         ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
         if (stack.getItem() == AlaskaItems.SNOW_GOGGLES) {

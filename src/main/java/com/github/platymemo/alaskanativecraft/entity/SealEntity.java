@@ -6,7 +6,6 @@ import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.TurtleEggBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -31,7 +30,10 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.*;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -43,6 +45,11 @@ public class SealEntity extends AnimalEntity {
     private static final TrackedData<BlockPos> TRAVEL_POS;
     private static final TrackedData<Boolean> ACTIVELY_TRAVELLING;
 
+    static {
+        TRAVEL_POS = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
+        ACTIVELY_TRAVELLING = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    }
+
     public SealEntity(EntityType<? extends SealEntity> entityType, World world) {
         super(entityType, world);
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
@@ -50,16 +57,24 @@ public class SealEntity extends AnimalEntity {
         this.stepHeight = 1.0F;
     }
 
+    @SuppressWarnings("deprecation")
     public static <T extends Entity> boolean canSpawn(EntityType<T> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
     }
 
-    private void setTravelPos(BlockPos pos) {
-        this.dataTracker.set(TRAVEL_POS, pos);
+    public static DefaultAttributeContainer.Builder createSealAttributes() {
+        return SealEntity.createMobAttributes().
+                add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D).
+                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
+                add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
     }
 
     private BlockPos getTravelPos() {
         return this.dataTracker.get(TRAVEL_POS);
+    }
+
+    private void setTravelPos(BlockPos pos) {
+        this.dataTracker.set(TRAVEL_POS, pos);
     }
 
     private boolean isActivelyTravelling() {
@@ -92,13 +107,6 @@ public class SealEntity extends AnimalEntity {
         int m = tag.getInt("TravelPosY");
         int n = tag.getInt("TravelPosZ");
         this.setTravelPos(new BlockPos(l, m, n));
-    }
-
-    public static DefaultAttributeContainer.Builder createSealAttributes() {
-        return SealEntity.createMobAttributes().
-                add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D).
-                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
-                add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
     }
 
     @Override
@@ -249,11 +257,6 @@ public class SealEntity extends AnimalEntity {
         return bl;
     }
 
-    static {
-        TRAVEL_POS = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
-        ACTIVELY_TRAVELLING = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    }
-
     static class SealSwimNavigation extends SwimNavigation {
         SealSwimNavigation(SealEntity owner, World world) {
             super(owner, world);
@@ -272,8 +275,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public boolean isValidPosition(BlockPos pos) {
-            if (this.entity instanceof SealEntity) {
-                SealEntity sealEntity = (SealEntity) this.entity;
+            if (this.entity instanceof SealEntity sealEntity) {
                 if (sealEntity.isActivelyTravelling()) {
                     return this.world.getBlockState(pos).isOf(Blocks.WATER);
                 }
@@ -378,9 +380,9 @@ public class SealEntity extends AnimalEntity {
         private static final TargetPredicate CLOSE_ENTITY_PREDICATE = TargetPredicate.DEFAULT.setBaseMaxDistance(10.0D);
         private final SealEntity seal;
         private final double speed;
+        private final Ingredient food;
         private PlayerEntity targetPlayer;
         private int cooldown;
-        private final Ingredient food;
 
         ApproachFoodHoldingPlayerGoal(SealEntity seal, double speed, Ingredient food) {
             this.seal = seal;
@@ -432,6 +434,7 @@ public class SealEntity extends AnimalEntity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     static class TravelGoal extends Goal {
         private final SealEntity seal;
         private final double speed;

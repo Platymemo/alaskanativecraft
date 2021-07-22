@@ -26,16 +26,12 @@ public class AlaskaBlocks {
 
     private static final Map<Identifier, BlockItem> ITEMS = new LinkedHashMap<>();
     private static final Map<Identifier, Block> BLOCKS = new LinkedHashMap<>();
-
     public static final WhaleMeatBlock WHALE_MEAT_BLOCK = add("whale_meat_block", new WhaleMeatBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).breakByTool(AlaskaTags.ULUS).sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroup.BREWING);
-
     public static final BlueberryBushBlock BLUEBERRY_BUSH = add("blueberry_bush", new BlueberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
     public static final CloudberryBushBlock CLOUDBERRY_BUSH = add("cloudberry_bush", new CloudberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
     public static final RaspberryBushBlock RASPBERRY_BUSH = add("raspberry_bush", new RaspberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
     public static final SalmonberryBushBlock SALMONBERRY_BUSH = add("salmonberry_bush", new SalmonberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
-
     public static final PillarBlock DRIFTWOOD_LOG = add("driftwood_log", new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
-
     public static final DryingRackBlock DRYING_RACK = add("drying_rack", new DryingRackBlock(FabricBlockSettings.copyOf(Blocks.OAK_FENCE)), ItemGroup.DECORATIONS);
     public static final BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "drying_rack"), FabricBlockEntityTypeBuilder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
 

@@ -20,13 +20,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
     private static final Identifier SNOWGOOGLES_BLUR = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/misc/gogglesblur.png");
-    
+
     @Shadow
     @Final
     private MinecraftClient client;
-    
-    @Shadow protected abstract void renderOverlay(Identifier texture, float opacity);
-    
+
+    @Shadow
+    protected abstract void renderOverlay(Identifier texture, float opacity);
+
+    @SuppressWarnings("ConstantConditions")
     @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 1), method = "render")
     private void renderSnowGogglesOverlay(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         if (this.client.options.getPerspective().isFirstPerson() && this.client.player.getInventory().getArmorStack(3).getItem() == AlaskaItems.SNOW_GOGGLES) {

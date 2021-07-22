@@ -3,12 +3,7 @@ package com.github.platymemo.alaskanativecraft.client.model.entity;
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelData;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.model.ModelPartBuilder;
-import net.minecraft.client.model.ModelPartData;
-import net.minecraft.client.model.ModelTransform;
-import net.minecraft.client.model.TexturedModelData;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
@@ -82,6 +77,16 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
         root.addChild(EntityModelPartNames.RIGHT_LEG, legBuilder, ModelTransform.pivot(-1.0F, 22.0F, -1.05F));
 
         return TexturedModelData.of(modelData, 32, 32);
+    }
+
+    private static PtarmiganEntityModel.Pose getPose(PtarmiganEntity ptarmigan) {
+        if (ptarmigan.isSongPlaying()) {
+            return PtarmiganEntityModel.Pose.PARTY;
+        } else if (ptarmigan.isInSittingPose()) {
+            return PtarmiganEntityModel.Pose.SITTING;
+        } else {
+            return ptarmigan.isInAir() ? PtarmiganEntityModel.Pose.FLYING : PtarmiganEntityModel.Pose.STANDING;
+        }
     }
 
     public ModelPart getPart() {
@@ -193,16 +198,6 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
                 this.rightLeg.pitch += 0.6981317F;
         }
 
-    }
-
-    private static PtarmiganEntityModel.Pose getPose(PtarmiganEntity ptarmigan) {
-        if (ptarmigan.isSongPlaying()) {
-            return PtarmiganEntityModel.Pose.PARTY;
-        } else if (ptarmigan.isInSittingPose()) {
-            return PtarmiganEntityModel.Pose.SITTING;
-        } else {
-            return ptarmigan.isInAir() ? PtarmiganEntityModel.Pose.FLYING : PtarmiganEntityModel.Pose.STANDING;
-        }
     }
 
     @Environment(EnvType.CLIENT)

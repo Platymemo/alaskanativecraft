@@ -15,12 +15,16 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.ConfiguredFeatures;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 
 import java.util.Set;
 
+@SuppressWarnings("deprecation")
 public class AlaskaFeatures {
     public static void register() {
         registerBerryPatch(AlaskaBlocks.BLUEBERRY_BUSH, "blueberry_bush");
@@ -53,8 +57,8 @@ public class AlaskaFeatures {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sparsePatchRegistryKey.getValue(), sparsePatch);
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
-                              .and(ctx -> !AlaskaConfig.getConfig().snowyGen)
-                              .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN),
+                        .and(ctx -> !AlaskaConfig.getConfig().snowyGen)
+                        .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 sparsePatchRegistryKey
         );
@@ -73,7 +77,7 @@ public class AlaskaFeatures {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, decoratedPatchRegistryKey.getValue(), decoratedPatch);
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
-                              .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW),
+                        .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 decoratedPatchRegistryKey
         );

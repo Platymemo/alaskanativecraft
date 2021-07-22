@@ -19,9 +19,9 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class DryingDisplay implements Display {
-    private List<EntryIngredient> inputs;
-    private List<EntryIngredient> output;
-    private int dryTime;
+    private final List<EntryIngredient> inputs;
+    private final List<EntryIngredient> output;
+    private final int dryTime;
     private DryingRecipe display;
 
     public DryingDisplay(DryingRecipe recipe) {

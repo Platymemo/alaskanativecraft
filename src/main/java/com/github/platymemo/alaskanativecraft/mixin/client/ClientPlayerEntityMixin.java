@@ -18,21 +18,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity {
+    @Shadow
+    public Input input;
+    @Shadow
+    private boolean riding;
+
     protected ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
         throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
 
-    @Shadow
-    public Input input;
-
-    @Shadow
-    private boolean riding;
-
     @Inject(at = @At("TAIL"), method = "tickRiding()V")
     private void rideDogsled(CallbackInfo ci) {
-        if (this.getVehicle() instanceof DogsledEntity) {
-            DogsledEntity dogsledEntity = (DogsledEntity) this.getVehicle();
+        if (this.getVehicle() instanceof DogsledEntity dogsledEntity) {
             dogsledEntity.setInputs(this.input.pressingLeft, this.input.pressingRight, this.input.pressingForward, this.input.pressingBack);
             this.riding |= this.input.pressingLeft || this.input.pressingRight || this.input.pressingForward || this.input.pressingBack;
         }

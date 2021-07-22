@@ -36,14 +36,20 @@ import java.util.EnumSet;
 import java.util.Iterator;
 
 public class MooseEntity extends AnimalEntity {
-    private static final AlaskaConfig config = AlaskaConfig.getConfig();
     public static final EntityDimensions ADULT = EntityDimensions.fixed(3.0F, 2.6F);
     public static final EntityDimensions CALF = EntityDimensions.fixed(1.5F, 1.3F);
+    private static final AlaskaConfig config = AlaskaConfig.getConfig();
 
     protected MooseEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
         this.calculateDimensions();
         this.stepHeight = this.isBaby() ? 1.0F : 2.0F;
+    }
+
+    public static DefaultAttributeContainer.Builder createMooseAttributes() {
+        return MooseEntity.createMobAttributes().
+                add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D).
+                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
     protected void initGoals() {
@@ -78,18 +84,8 @@ public class MooseEntity extends AnimalEntity {
         return 0.2F;
     }
 
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return super.interactMob(player, hand);
-    }
-
     public MooseEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
         return AlaskaEntities.MOOSE.create(serverWorld);
-    }
-
-    public static DefaultAttributeContainer.Builder createMooseAttributes() {
-        return MooseEntity.createMobAttributes().
-                add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D).
-                add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
     protected void onGrowUp() {
@@ -106,12 +102,12 @@ public class MooseEntity extends AnimalEntity {
     }
 
     static class EatBarkGoal extends Goal {
+        private final double distance;
+        private final double speed;
         protected MooseEntity moose;
         protected BlockPos logPos;
         protected BlockState logState;
         protected boolean logValid;
-        private final double distance;
-        private final double speed;
         private Vec3d target;
 
         public EatBarkGoal(MooseEntity moose, double distance, double speed) {

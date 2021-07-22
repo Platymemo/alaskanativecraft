@@ -1,7 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity.State;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
@@ -20,7 +19,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -42,12 +40,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class HarpoonEntity extends PersistentProjectileEntity {
     public static final Identifier SPAWN_PACKET = new Identifier(AlaskaNativeCraft.MOD_ID, "harpoon_entity");
-    private ItemStack harpoonStack;
     private static final TrackedData<Byte> LOYALTY;
     private static final TrackedData<Boolean> ENCHANTED;
+
+    static {
+        ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+        LOYALTY = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BYTE);
+    }
+
+    public int returnTimer;
+    private ItemStack harpoonStack;
     private HarpoonEntity.State state;
     private boolean dealtDamage;
-    public int returnTimer;
 
     public HarpoonEntity(EntityType<? extends HarpoonEntity> entityType, World world, HarpoonItem item) {
         super(entityType, world);
@@ -61,6 +65,10 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         this.state = HarpoonEntity.State.FLYING;
         this.dataTracker.set(LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
         this.dataTracker.set(ENCHANTED, stack.hasGlint());
+    }
+
+    public static DamageSource createHarpoonDamageSource(Entity harpoon, Entity owner) {
+        return new ProjectileDamageSource("harpoon", harpoon, owner).setProjectile();
     }
 
     @Override
@@ -147,12 +155,12 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             } else if (i > 0) {
                 this.setNoClip(true);
                 Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
-                this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double)i, this.getZ());
+                this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double) i, this.getZ());
                 if (this.world.isClient) {
                     this.lastRenderY = this.getY();
                 }
 
-                double d = 0.05D * (double)i;
+                double d = 0.05D * (double) i;
                 this.setVelocity(this.getVelocity().multiply(0.95D).add(vec3d.normalize().multiply(d)));
                 if (this.returnTimer == 0) {
                     this.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
@@ -219,35 +227,34 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        Entity entity = entityHitResult.getEntity();
+        Entity hitEntity = entityHitResult.getEntity();
         float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingEntity.getGroup());
+        if (hitEntity instanceof LivingEntity livingHitEntity) {
+            f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingHitEntity.getGroup());
         }
 
-        Entity entity2 = this.getOwner();
-        DamageSource damageSource = createHarpoonDamageSource(this, (entity2 == null ? this : entity2));
+        Entity owner = this.getOwner();
+        DamageSource damageSource = createHarpoonDamageSource(this, (owner == null ? this : owner));
         this.dealtDamage = true;
         SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
-        if (entity.damage(damageSource, f)) {
-            if (entity.getType() == EntityType.ENDERMAN) {
+        if (hitEntity.damage(damageSource, f)) {
+            if (hitEntity.getType() == EntityType.ENDERMAN) {
                 return;
             }
 
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingEntity2 = (LivingEntity) entity;
-                if (entity2 instanceof LivingEntity) {
-                    EnchantmentHelper.onUserDamaged(livingEntity2, entity2);
-                    EnchantmentHelper.onTargetDamaged((LivingEntity) entity2, livingEntity2);
+            if (hitEntity instanceof LivingEntity livingHitEntity) {
+                if (owner instanceof LivingEntity) {
+                    EnchantmentHelper.onUserDamaged(livingHitEntity, owner);
+                    EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingHitEntity);
                 }
 
-                this.onHit(livingEntity2);
+                this.onHit(livingHitEntity);
 
-                if (entity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) entity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
-                    ((MobEntity) entity).attachLeash(this.getOwner(), true);
+                if (hitEntity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) hitEntity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
+                    ((MobEntity) hitEntity).attachLeash(this.getOwner(), true);
                     this.harpoonStack.removeSubNbt("leashed");
                     this.setVelocity(Vec3d.ZERO);
                     this.playSound(soundEvent, 1.0F, 1.0F);
@@ -258,11 +265,11 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
         float g = 1.0F;
         if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.harpoonStack)) {
-            BlockPos blockPos = entity.getBlockPos();
+            BlockPos blockPos = hitEntity.getBlockPos();
             if (this.world.isSkyVisible(blockPos)) {
                 LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
                 lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                lightningEntity.setChanneler(entity2 instanceof ServerPlayerEntity ? (ServerPlayerEntity)entity2 : null);
+                lightningEntity.setChanneler(owner instanceof ServerPlayerEntity ? (ServerPlayerEntity) owner : null);
                 this.world.spawnEntity(lightningEntity);
                 soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
                 g = 5.0F;
@@ -327,15 +334,6 @@ public class HarpoonEntity extends PersistentProjectileEntity {
     @Environment(EnvType.CLIENT)
     public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
         return true;
-    }
-
-    public static DamageSource createHarpoonDamageSource(Entity harpoon, Entity owner) {
-        return new ProjectileDamageSource("harpoon", harpoon, owner).setProjectile();
-    }
-
-    static {
-        ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-        LOYALTY = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BYTE);
     }
 
     enum State {

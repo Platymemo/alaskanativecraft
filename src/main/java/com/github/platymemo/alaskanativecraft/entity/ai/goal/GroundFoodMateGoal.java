@@ -58,7 +58,7 @@ public class GroundFoodMateGoal extends Goal {
         double d = Double.MAX_VALUE;
 
         ItemEntity result = null;
-        for (ItemEntity itemEntity: list) {
+        for (ItemEntity itemEntity : list) {
             if (this.animal.isBreedingItem(itemEntity.getStack()) && this.animal.squaredDistanceTo(itemEntity) < d) {
                 result = itemEntity;
                 d = this.animal.squaredDistanceTo(itemEntity);

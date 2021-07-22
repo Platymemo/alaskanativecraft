@@ -4,7 +4,9 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
+import net.minecraft.recipe.AbstractCookingRecipe;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 
 public class DryingRecipe extends AbstractCookingRecipe {

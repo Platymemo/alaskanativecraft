@@ -20,6 +20,11 @@ import java.util.function.Predicate;
 
 public class DogsledItem extends Item {
     private static final Predicate<Entity> RIDERS;
+
+    static {
+        RIDERS = EntityPredicates.EXCEPT_SPECTATOR.and(Entity::collides);
+    }
+
     private final DogsledEntity.Type type;
 
     public DogsledItem(DogsledEntity.Type type, Item.Settings settings) {
@@ -67,9 +72,5 @@ public class DogsledItem extends Item {
                 return TypedActionResult.pass(itemStack);
             }
         }
-    }
-
-    static {
-        RIDERS = EntityPredicates.EXCEPT_SPECTATOR.and(Entity::collides);
     }
 }

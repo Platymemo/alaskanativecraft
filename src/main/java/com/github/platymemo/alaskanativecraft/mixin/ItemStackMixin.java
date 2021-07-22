@@ -11,8 +11,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    @Shadow public abstract NbtCompound getOrCreateNbt();
-    @Shadow @Nullable public abstract NbtCompound getNbt();
+    @Shadow
+    public abstract NbtCompound getOrCreateNbt();
+
+    @Shadow
+    @Nullable
+    public abstract NbtCompound getNbt();
 
     @SuppressWarnings("ConstantConditions")
     @Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
