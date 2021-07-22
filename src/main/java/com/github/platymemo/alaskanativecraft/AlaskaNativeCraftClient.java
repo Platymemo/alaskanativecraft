@@ -45,6 +45,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         registerEntityModels();
     }
     
+    @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     private void registerEntityModels() {
         EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(AlaskaNativeCraftModels.DOGSLED, DogsledEntityModel::getTexturedModelData);

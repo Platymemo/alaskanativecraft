@@ -10,9 +10,11 @@
     "FoxMixin",
     "IglooGeneratorMixin",
     "IngredientMixin",
+    "ItemStackMixin",
     "LeadLengthMixin",
     "PlayerEntityMixin",
     "PolarBearMixin",
+    "ShapedRecipeMixin",
     "SnowballEntityMixin"
   ],
   "client": [

@@ -42,6 +42,7 @@ public class AlaskaRecipes {
         @Override
         public Collection<ItemStack> getStacks() {
             return Arrays.asList(
+                    Items.STICK.getDefaultStack(),
                     AlaskaItems.DRIFTWOOD_CHUNK.getDefaultStack(),
                     AlaskaItems.ANTLER.getDefaultStack(),
                     AlaskaItems.IVORY.getDefaultStack()
