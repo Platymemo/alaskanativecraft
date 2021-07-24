@@ -77,6 +77,17 @@ public class PtarmiganEntity extends ParrotEntity {
         return SoundEvents.ENTITY_PARROT_AMBIENT;
     }
 
+    /**
+     * This is so the Ptarmigan doesn't imitate mobs as parrots do
+     */
+    @Override
+    public void tickMovement() {
+        boolean silent = this.isSilent();
+        this.setSilent(true);
+        super.tickMovement();
+        this.setSilent(silent);
+    }
+
     public int getPtarmiganType() {
         return this.dataTracker.get(TYPE);
     }
