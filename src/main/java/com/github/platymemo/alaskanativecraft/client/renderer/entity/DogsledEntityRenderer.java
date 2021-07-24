@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import net.fabricmc.api.EnvType;
@@ -31,7 +31,7 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
 
     public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        this.model = new DogsledEntityModel(ctx.getPart(AlaskaNativeCraftModels.DOGSLED));
+        this.model = new DogsledEntityModel(ctx.getPart(AlaskaModels.DOGSLED));
         this.shadowRadius = 0.5F;
     }
 

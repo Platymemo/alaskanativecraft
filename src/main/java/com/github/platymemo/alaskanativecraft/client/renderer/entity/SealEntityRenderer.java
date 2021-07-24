@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.SealEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import net.fabricmc.api.EnvType;
@@ -17,7 +17,7 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
     private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/seal.png");
 
     public SealEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaNativeCraftModels.SEAL)), 0.7F);
+        super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaModels.SEAL)), 0.7F);
     }
 
     public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {

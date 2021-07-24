@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
-import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntityModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
@@ -24,7 +24,7 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
 
     public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, EntityModelLoader loader) {
         super(context);
-        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaNativeCraftModels.PTARMIGAN));
+        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaModels.PTARMIGAN));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {
@@ -36,7 +36,7 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
         NbtCompound compoundTag = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
         EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaEntities.PTARMIGAN).ifPresent((entityType) -> {
             matrices.push();
-            matrices.translate(leftShoulder ? 0.4000000059604645D : -0.4000000059604645D, player.isInSneakingPose() ? -1.2999999523162842D : -1.5D, 0.0D);
+            matrices.translate(leftShoulder ? 0.4D : -0.4D, player.isInSneakingPose() ? -1.3D : -1.5D, 0.0D);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(PtarmiganEntityRenderer.TEXTURES[compoundTag.getInt("Type")]));
             this.model.poseOnShoulder(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, limbAngle, limbDistance, headYaw, headPitch, player.age);
             matrices.pop();

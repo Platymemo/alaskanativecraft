@@ -1,14 +1,21 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.Identifier;
@@ -18,6 +25,7 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AlaskaEntities {
     private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
@@ -56,6 +64,7 @@ public class AlaskaEntities {
         FabricDefaultAttributeRegistry.register(AlaskaEntities.MOOSE, MooseEntity.createMooseAttributes());
     }
 
+    @SuppressWarnings("deprecation")
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawnOptions;
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),
@@ -97,5 +106,46 @@ public class AlaskaEntities {
             return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.changing(width, height)).build();
         }
         return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.fixed(width, height)).build();
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static void registerEntityRenderers() {
+        EntityRendererRegistry.INSTANCE.register(WOODEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(STONE_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(IRON_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(GOLDEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(DIAMOND_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(NETHERITE_HARPOON, HarpoonEntityRenderer::new);
+
+        EntityRendererRegistry.INSTANCE.register(HARP_SEAL, SealEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(PTARMIGAN, PtarmiganEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(MOOSE, MooseEntityRenderer::new);
+        EntityRendererRegistry.INSTANCE.register(DOGSLED, DogsledEntityRenderer::new);
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static void registerHarpoonPacket() {
+        ClientPlayNetworking.registerGlobalReceiver(HarpoonEntity.SPAWN_PACKET, (client, handler, packet, responseSender) -> {
+            EntityType<?> type = Registry.ENTITY_TYPE.get(packet.readVarInt());
+            UUID entityUUID = packet.readUuid();
+            int entityID = packet.readVarInt();
+            double x = packet.readDouble();
+            double y = packet.readDouble();
+            double z = packet.readDouble();
+            float pitch = (packet.readByte() * 360) / 256.0F;
+            float yaw = (packet.readByte() * 360) / 256.0F;
+            ClientWorld world = MinecraftClient.getInstance().world;
+            Entity entity = type.create(world);
+            client.execute(() -> {
+                if (entity != null) {
+                    entity.updateTrackedPositionAndAngles(x, y, z, yaw, pitch, 0, false);
+                    entity.updateTrackedPosition(x, y, z); // The above does not do the same thing, for some weird reason
+                    entity.setId(entityID);
+                    entity.setUuid(entityUUID);
+                    assert world != null;
+                    world.addEntity(entityID, entity);
+                }
+            });
+        });
     }
 }

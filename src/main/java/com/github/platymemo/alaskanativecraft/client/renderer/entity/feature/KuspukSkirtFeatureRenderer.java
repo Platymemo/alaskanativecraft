@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import net.fabricmc.api.EnvType;
@@ -29,7 +29,7 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
 
     public KuspukSkirtFeatureRenderer(FeatureRendererContext<T, M> context, EntityModelLoader loader) {
         super(context);
-        this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaNativeCraftModels.KUSPUK_SKIRT));
+        this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaModels.KUSPUK_SKIRT));
     }
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {

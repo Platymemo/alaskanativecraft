@@ -1,7 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaNativeCraftModels;
+import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -26,7 +26,7 @@ public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
 
     public HarpoonEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx);
-        model = new HarpoonEntityModel(ctx.getPart(AlaskaNativeCraftModels.HARPOON));
+        model = new HarpoonEntityModel(ctx.getPart(AlaskaModels.HARPOON));
     }
 
     public static Identifier getTexture(EntityType<?> type) {
