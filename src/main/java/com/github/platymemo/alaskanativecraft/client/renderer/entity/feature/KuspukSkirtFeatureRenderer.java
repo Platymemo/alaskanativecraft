@@ -34,11 +34,11 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
 
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, T livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         ItemStack armorItemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-        if (armorItemStack.getItem() == AlaskaItems.KUSPUK_BODY) {
-            int color = ((DyeableArmorItem) armorItemStack.getItem()).getColor(armorItemStack);
-            float f = (float) (color >> 16 & 255) / 255.0F;
+        if (armorItemStack.isOf(AlaskaItems.KUSPUK_BODY)) {
+            int color = AlaskaItems.KUSPUK_BODY.getColor(armorItemStack);
+            float r = (float) (color >> 16 & 255) / 255.0F;
             float g = (float) (color >> 8 & 255) / 255.0F;
-            float h = (float) (color & 255) / 255.0F;
+            float b = (float) (color & 255) / 255.0F;
             matrixStack.push();
             if (livingEntity.isInSneakingPose()) {
                 matrixStack.translate(0.0D, -2.55D, 0.3D);
@@ -48,7 +48,7 @@ public class KuspukSkirtFeatureRenderer<T extends LivingEntity, M extends Entity
             matrixStack.scale(2.5F, 2.5F, 2.5F);
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());
             this.model.setAngles(livingEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-            this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, f, g, h, 1.0F);
+            this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
             matrixStack.pop();
         }
     }
