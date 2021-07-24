@@ -18,15 +18,12 @@
     "SnowballEntityMixin"
   ],
   "client": [
-    "client.ArmorStandEntityRendererMixin",
-    "client.BipedEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
     "client.ClientRecipeBookMixin",
     "client.InGameHudMixin",
     "client.ItemRendererMixin",
     "client.LivingEntityRendererMixin",
-    "client.MinecraftClientMixin",
-    "client.PlayerEntityRendererMixin"
+    "client.MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1
