@@ -2,6 +2,7 @@ package com.github.platymemo.alaskanativecraft.client.model.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.KuspukSkirtModel;
+import com.github.platymemo.alaskanativecraft.client.model.entity.feature.SnowshoeModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
@@ -16,6 +17,7 @@ public class AlaskaModels {
     public static final EntityModelLayer MOOSE = registerMain("moose");
     public static final EntityModelLayer SEAL = registerMain("seal");
     public static final EntityModelLayer KUSPUK_SKIRT = registerMain("kuspuk_skirt");
+    public static final EntityModelLayer SNOWSHOES = registerMain("snowshoes");
 
     private static EntityModelLayer registerMain(String id) {
         return new EntityModelLayer(new Identifier(AlaskaNativeCraft.MOD_ID, id), "main");
@@ -24,11 +26,12 @@ public class AlaskaModels {
     @Environment(EnvType.CLIENT)
     @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     public static void registerEntityModels() {
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.DOGSLED, DogsledEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.HARPOON, HarpoonEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.MOOSE, MooseEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.SEAL, SealEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(AlaskaModels.KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(DOGSLED, DogsledEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(HARPOON, HarpoonEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(MOOSE, MooseEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SEAL, SealEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(SNOWSHOES, SnowshoeModel::getTexturedModelData);
     }
 }

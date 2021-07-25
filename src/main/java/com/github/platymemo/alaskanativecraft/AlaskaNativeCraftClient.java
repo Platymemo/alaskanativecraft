@@ -13,11 +13,11 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        AlaskaEntities.registerEntityRenderers();
         AlaskaBlocks.registerBlockEntityRenderers();
         AlaskaBlocks.registerBlockRenderLayers();
         AlaskaItems.registerItemColors();
-        AlaskaEntities.registerHarpoonPacket();
         AlaskaModels.registerEntityModels();
+        AlaskaEntities.registerEntityRenderers();
+        AlaskaEntities.registerHarpoonPacket();
     }
 }

@@ -36,7 +36,7 @@ public class BlueberryBushBlock extends SweetBerryBushBlock {
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int i = state.get(AGE);
         boolean bl = i == 3;
-        if (!bl && player.getStackInHand(hand).getItem() == Items.BONE_MEAL) {
+        if (!bl && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
             return ActionResult.PASS;
         } else if (i > 1) {
             int j = 1 + world.random.nextInt(2);

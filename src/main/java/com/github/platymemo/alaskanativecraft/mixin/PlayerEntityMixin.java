@@ -1,12 +1,15 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,11 +29,19 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
     @Inject(at = @At("HEAD"), method = "updateTurtleHelmet")
-    private void updateSnowGoggles(CallbackInfo ci) {
+    private void updateAlaskaItems(CallbackInfo ci) {
         ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
-        if (stack.getItem() == AlaskaItems.SNOW_GOGGLES) {
+        if (stack.isOf(AlaskaItems.SNOW_GOGGLES)) {
             if (this.getStatusEffect(StatusEffects.BLINDNESS) != null) {
                 this.removeStatusEffect(StatusEffects.BLINDNESS);
+            }
+        }
+
+        stack = this.getEquippedStack(EquipmentSlot.FEET);
+        if (stack.isOf(AlaskaItems.SNOWSHOES) && this.onGround) {
+            BlockState landingState = this.getLandingBlockState();
+            if (landingState.isIn(BlockTags.ICE) || landingState.isIn(BlockTags.SNOW)) {
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0, true, false));
             }
         }
     }

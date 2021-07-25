@@ -5,7 +5,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.entity.LivingEntity;
 
-public class KuspukSkirtModel<T extends LivingEntity> extends AnimalModel<T> {
+public class KuspukSkirtModel<E extends LivingEntity> extends AnimalModel<E> {
     private final ModelPart skirt;
 
     public KuspukSkirtModel(ModelPart modelPart) {
@@ -71,7 +71,8 @@ public class KuspukSkirtModel<T extends LivingEntity> extends AnimalModel<T> {
     }
 
     @Override
-    public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setAngles(E entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+
     }
 
     @Override

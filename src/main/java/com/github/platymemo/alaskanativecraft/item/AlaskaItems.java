@@ -52,6 +52,7 @@ public class AlaskaItems {
     public static final DyeableArmorItem KUSPUK_HOOD;
     public static final DyeableArmorItem KUSPUK_BODY;
     public static final ArmorItem SNOW_GOGGLES;
+    public static final ArmorItem SNOWSHOES;
     public static final DogsledItem OAK_DOGSLED;
     public static final DogsledItem SPRUCE_DOGSLED;
     public static final DogsledItem BIRCH_DOGSLED;
@@ -97,7 +98,8 @@ public class AlaskaItems {
         KUSPUK_HOOD = register("kuspuk_hood", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
         KUSPUK_BODY = register("kuspuk_body", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
-        SNOW_GOGGLES = register("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GOGGLES, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        SNOW_GOGGLES = register("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GEAR, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        SNOWSHOES = register("snowshoes", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GEAR, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
         OAK_DOGSLED = register("oak_dogsled", new DogsledItem(DogsledEntity.Type.OAK, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
         SPRUCE_DOGSLED = register("spruce_dogsled", new DogsledItem(DogsledEntity.Type.SPRUCE, new FabricItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));

@@ -4,6 +4,7 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.KuspukSkirtFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
@@ -118,6 +119,7 @@ public class AlaskaEntities {
         return FabricEntityTypeBuilder.create(group, factory).dimensions(EntityDimensions.fixed(width, height)).build();
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Environment(EnvType.CLIENT)
     public static void registerEntityRenderers() {
         EntityRendererRegistry.INSTANCE.register(WOODEN_HARPOON, HarpoonEntityRenderer::new);
@@ -135,8 +137,10 @@ public class AlaskaEntities {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof BipedEntityRenderer || entityRenderer instanceof ArmorStandEntityRenderer) {
                 registrationHelper.register(new KuspukSkirtFeatureRenderer<>(entityRenderer, context.getModelLoader()));
+                registrationHelper.register(new SnowshoeFeatureRenderer(entityRenderer, context.getModelLoader()));
             } else if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
                 registrationHelper.register(new KuspukSkirtFeatureRenderer<>(playerEntityRenderer, context.getModelLoader()));
+                registrationHelper.register(new SnowshoeFeatureRenderer<>(playerEntityRenderer, context.getModelLoader()));
                 registrationHelper.register(new ShoulderPtarmiganFeatureRenderer<>(playerEntityRenderer, context.getModelLoader()));
             }
         });
