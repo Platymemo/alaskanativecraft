@@ -16,6 +16,7 @@ public class AlaskaTags {
     public static final Tag<Item> SLICEABLE_FISH = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "sliceable_fish"));
     public static final Tag<Item> SEAL_FOOD = TagRegistry.item(new Identifier(AlaskaNativeCraft.MOD_ID, "seal_food"));
 
+    public static final Tag<Block> SNOWSHOE_SPEED_BLOCKS = TagRegistry.block(new Identifier(AlaskaNativeCraft.MOD_ID, "snowshoe_speed_blocks"));
     public static final Tag<Block> ULU_MINEABLE = TagRegistry.block(new Identifier(AlaskaNativeCraft.MOD_ID, "mineable/ulu"));
 
     public static void register() {

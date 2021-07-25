@@ -12,6 +12,7 @@
     "IngredientMixin",
     "ItemStackMixin",
     "LeadLengthMixin",
+    "LivingEntityMixin",
     "PlayerEntityMixin",
     "PolarBearMixin",
     "PowderSnowBlockMixin",

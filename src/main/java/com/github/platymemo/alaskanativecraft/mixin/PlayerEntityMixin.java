@@ -29,19 +29,11 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
     @Inject(at = @At("HEAD"), method = "updateTurtleHelmet")
-    private void updateAlaskaItems(CallbackInfo ci) {
+    private void updateSnowGoggles(CallbackInfo ci) {
         ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
         if (stack.isOf(AlaskaItems.SNOW_GOGGLES)) {
             if (this.getStatusEffect(StatusEffects.BLINDNESS) != null) {
                 this.removeStatusEffect(StatusEffects.BLINDNESS);
-            }
-        }
-
-        stack = this.getEquippedStack(EquipmentSlot.FEET);
-        if (stack.isOf(AlaskaItems.SNOWSHOES) && this.onGround) {
-            BlockState landingState = this.getLandingBlockState();
-            if (landingState.isIn(BlockTags.ICE) || landingState.isIn(BlockTags.SNOW)) {
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 20, 0, true, false));
             }
         }
     }
