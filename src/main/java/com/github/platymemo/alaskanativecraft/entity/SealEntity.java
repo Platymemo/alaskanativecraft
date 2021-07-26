@@ -40,8 +40,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class SealEntity extends AnimalEntity {
-    public static final EntityDimensions ADULT = EntityDimensions.changing(1.0F, 0.6F);
-    public static final EntityDimensions PUP = EntityDimensions.changing(0.5F, 0.3F);
     private static final TrackedData<BlockPos> TRAVEL_POS;
     private static final TrackedData<Boolean> ACTIVELY_TRAVELLING;
 
@@ -134,11 +132,6 @@ public class SealEntity extends AnimalEntity {
         this.targetSelector.add(0, new FollowTargetGoal<>(this, SalmonEntity.class, true));
         this.targetSelector.add(0, new FollowTargetGoal<>(this, CodEntity.class, true));
         this.targetSelector.add(1, new FollowTargetGoal<>(this, SquidEntity.class, true));
-    }
-
-    @Override
-    public EntityDimensions getDimensions(EntityPose pose) {
-        return this.isBaby() ? PUP : ADULT;
     }
 
     @Override

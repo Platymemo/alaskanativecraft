@@ -34,8 +34,6 @@ import java.util.EnumSet;
 import java.util.Iterator;
 
 public class MooseEntity extends AnimalEntity {
-    public static final EntityDimensions ADULT = EntityDimensions.fixed(3.0F, 2.6F);
-    public static final EntityDimensions CALF = EntityDimensions.fixed(1.5F, 1.3F);
     private static final AlaskaConfig config = AlaskaConfig.getConfig();
 
     protected MooseEntity(EntityType<? extends AnimalEntity> entityType, World world) {
@@ -93,10 +91,6 @@ public class MooseEntity extends AnimalEntity {
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.95F;
-    }
-
-    public EntityDimensions getDimensions(EntityPose pose) {
-        return this.isBaby() ? CALF : ADULT;
     }
 
     static class EatBarkGoal extends Goal {

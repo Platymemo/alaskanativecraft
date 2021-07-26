@@ -20,22 +20,7 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
         super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaModels.SEAL)), 0.7F);
     }
 
-    public void render(SealEntity sealEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        if (sealEntity.isBaby()) {
-            this.shadowRadius *= 0.5F;
-        }
-
-        super.render(sealEntity, f, g, matrixStack, vertexConsumerProvider, i);
-    }
-
     public Identifier getTexture(SealEntity sealEntity) {
         return TEXTURE;
-    }
-
-    protected void setupTransforms(SealEntity sealEntity, MatrixStack matrixStack, float f, float g, float h) {
-        super.setupTransforms(sealEntity, matrixStack, f, g, h);
-        if (sealEntity.isBaby()) {
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
-        }
     }
 }

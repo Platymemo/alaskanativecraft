@@ -19,16 +19,14 @@ public class MooseEntityRenderer extends MobEntityRenderer<MooseEntity, MooseEnt
         super(ctx, new MooseEntityModel<>(ctx.getPart(AlaskaModels.MOOSE)), 1.5F);
     }
 
+    @Override
     public Identifier getTexture(MooseEntity mooseEntity) {
         return TEXTURE;
     }
 
-    protected void setupTransforms(MooseEntity mooseEntity, MatrixStack matrixStack, float f, float g, float h) {
-        if (!mooseEntity.isBaby()) {
-            super.setupTransforms(mooseEntity, matrixStack, f, g, h);
-            matrixStack.scale(2.0F, 2.0F, 2.0F);
-        } else {
-            super.setupTransforms(mooseEntity, matrixStack, f, g, h);
-        }
+    @Override
+    protected void scale(MooseEntity entity, MatrixStack matrices, float amount) {
+        super.scale(entity, matrices, amount);
+        matrices.scale(2.0F, 2.0F, 2.0F);
     }
 }

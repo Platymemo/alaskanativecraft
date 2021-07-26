@@ -10,8 +10,8 @@ import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> {
-    public MooseEntityModel(ModelPart modelPart) {
-        super(modelPart, false, 0.0F, 0.0F, 1.0F, 1.0F, 0);
+    public MooseEntityModel(ModelPart root) {
+        super(root, true, 14.0F, 3.0F, 2.0F, 2.0F, 24);
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -174,14 +174,5 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
                 ModelTransform.pivot(-0.5f, 5.3817f, -4.3128f));
 
         return TexturedModelData.of(modelData, 64, 64);
-    }
-
-    public void setAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        this.head.pitch = headPitch * 0.017453292F;
-        this.head.yaw = headYaw * 0.017453292F;
-        this.rightHindLeg.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
-        this.leftHindLeg.pitch = MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
-        this.rightFrontLeg.pitch = MathHelper.cos(limbAngle * 0.6662F + 3.1415927F) * 1.4F * limbDistance;
-        this.leftFrontLeg.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
     }
 }

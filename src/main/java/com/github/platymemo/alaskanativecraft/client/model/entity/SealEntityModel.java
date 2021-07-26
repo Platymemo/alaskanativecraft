@@ -18,7 +18,7 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
     protected final ModelPart tail;
 
     public SealEntityModel(ModelPart root) {
-        super(root, true, 0.0F, 0.0F, 1.0F, 1.0F, 0);
+        super(root, true, 24.0F, 0.0F, 2.0F, 1.5F, 24);
         stomach = root.getChild(STOMACH);
         tail = root.getChild(TAIL);
     }
