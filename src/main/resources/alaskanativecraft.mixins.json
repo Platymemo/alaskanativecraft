@@ -13,6 +13,7 @@
     "ItemStackMixin",
     "LeadLengthMixin",
     "LivingEntityMixin",
+    "MeleeAttackGoalAccessor",
     "PlayerEntityMixin",
     "PolarBearMixin",
     "PowderSnowBlockMixin",
