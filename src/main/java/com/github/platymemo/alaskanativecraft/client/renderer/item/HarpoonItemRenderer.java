@@ -22,29 +22,27 @@ public enum HarpoonItemRenderer {
             return false;
         }
 
-        matrices.push();
+        matrices.push(); {
+            model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
-        model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
+            if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
+                matrices.translate(0, 2, 0);
+            } else {
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.translate(0, 0.85, 0);
+            }
 
+            matrices.scale(2.0F, -2.0F, -2.0F);
+            VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
+                    vertexConsumers,
+                    this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
+                    false,
+                    stack.hasGlint()
+            );
+            this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
-            matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180));
-            matrices.translate(0, 2, 0);
-        } else {
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
-            matrices.translate(0, 0.85, 0);
-        }
-
-        matrices.scale(2.0F, -2.0F, -2.0F);
-        VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
-                vertexConsumers,
-                this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
-                false,
-                stack.hasGlint()
-        );
-        this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-
-        matrices.pop();
+        } matrices.pop();
         return true;
     }
 }

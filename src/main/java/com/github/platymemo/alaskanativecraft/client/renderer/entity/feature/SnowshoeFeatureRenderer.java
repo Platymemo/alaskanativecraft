@@ -30,7 +30,7 @@ import net.minecraft.util.math.Vec3f;
 @Environment(EnvType.CLIENT)
 public class SnowshoeFeatureRenderer<E extends LivingEntity, M extends BipedEntityModel<E>> extends FeatureRenderer<E, M> {
     private final SnowshoeModel<E> model;
-    private final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/snowshoe.png");
+    public static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/snowshoe.png");
 
     public SnowshoeFeatureRenderer(FeatureRendererContext<E, M> context, EntityModelLoader loader) {
         super(context);

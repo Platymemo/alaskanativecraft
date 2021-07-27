@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "alaskanativecraft:item/mukluks",
+    "layer1": "alaskanativecraft:item/mukluks_overlay"
+  }
+}

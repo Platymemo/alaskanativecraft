@@ -51,6 +51,7 @@ public class AlaskaItems {
     public static final HarpoonItem NETHERITE_HARPOON;
     public static final DyeableArmorItem KUSPUK_HOOD;
     public static final DyeableArmorItem KUSPUK_BODY;
+    public static final ArmorItem MUKLUKS;
     public static final ArmorItem SNOW_GOGGLES;
     public static final ArmorItem SNOWSHOES;
     public static final DogsledItem OAK_DOGSLED;
@@ -97,6 +98,7 @@ public class AlaskaItems {
 
         KUSPUK_HOOD = register("kuspuk_hood", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
         KUSPUK_BODY = register("kuspuk_body", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT)));
+        MUKLUKS = register("mukluks", new DyeableArmorItem(AlaskaNativeArmorMaterials.KUSPUK, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
 
         SNOW_GOGGLES = register("snow_goggles", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GEAR, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT)));
         SNOWSHOES = register("snowshoes", new ArmorItem(AlaskaNativeArmorMaterials.SNOW_GEAR, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT)));
@@ -114,8 +116,7 @@ public class AlaskaItems {
     }
 
     private static <I extends Item> I register(String name, I item) {
-        Registry.register(Registry.ITEM, new Identifier(AlaskaNativeCraft.MOD_ID, name), item);
-        return item;
+        return Registry.register(Registry.ITEM, new Identifier(AlaskaNativeCraft.MOD_ID, name), item);
     }
 
     public static void register() {
@@ -151,6 +152,6 @@ public class AlaskaItems {
 
     @Environment(EnvType.CLIENT)
     public static void registerItemColors() {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), AlaskaItems.KUSPUK_HOOD, AlaskaItems.KUSPUK_BODY);
+        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), KUSPUK_HOOD, KUSPUK_BODY, MUKLUKS);
     }
 }

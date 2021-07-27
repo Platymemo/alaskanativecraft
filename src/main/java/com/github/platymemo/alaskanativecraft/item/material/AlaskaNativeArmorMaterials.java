@@ -11,7 +11,7 @@ import net.minecraft.tag.ItemTags;
 
 public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
 
-    KUSPUK("kuspuk", 5, new int[]{0, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.WOOL)),
+    KUSPUK("kuspuk", 5, new int[]{1, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.WOOL)),
 
     SNOW_GEAR("snow_goggles", 5, new int[]{1, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.PLANKS));
 
