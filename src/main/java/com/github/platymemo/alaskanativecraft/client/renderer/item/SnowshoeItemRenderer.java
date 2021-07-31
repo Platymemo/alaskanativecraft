@@ -1,9 +1,7 @@
 package com.github.platymemo.alaskanativecraft.client.renderer.item;
 
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.SnowshoeModel;
-import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
-import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;

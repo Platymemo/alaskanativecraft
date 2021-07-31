@@ -16,7 +16,7 @@ public class PowderSnowBlockMixin {
     private static void isWearingSnowshoes(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof LivingEntity livingEntity
                 && (livingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.SNOWSHOES)
-                        || livingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.MUKLUKS))) {
+                || livingEntity.getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.MUKLUKS))) {
             cir.setReturnValue(true);
         }
     }

@@ -16,12 +16,12 @@ public class SnowshoeModel<E extends LivingEntity> extends AnimalModel<E> {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
         modelPartData.addChild("shoe", ModelPartBuilder.create()
-					.uv(23, 5).cuboid(-1.0F, -24.0F, 8.0F, 2.0F, 1.0F, 5.0F)
-					.uv(23, 0).cuboid(-2.0F, -24.0F, 4.0F, 4.0F, 1.0F, 4.0F)
-					.uv(0, 0).cuboid(-3.0F, -24.0F, -7.0F, 6.0F, 1.0F, 11.0F)
-					.uv(0, 0).cuboid(-2.0F, -24.0F, -8.0F, 4.0F, 1.0F, 1.0F)
-					.uv(0, 9).cuboid(-1.0F, -24.0F, -10.0F, 2.0F, 1.0F, 2.0F),
-			ModelTransform.NONE);
+                        .uv(23, 5).cuboid(-1.0F, -24.0F, 8.0F, 2.0F, 1.0F, 5.0F)
+                        .uv(23, 0).cuboid(-2.0F, -24.0F, 4.0F, 4.0F, 1.0F, 4.0F)
+                        .uv(0, 0).cuboid(-3.0F, -24.0F, -7.0F, 6.0F, 1.0F, 11.0F)
+                        .uv(0, 0).cuboid(-2.0F, -24.0F, -8.0F, 4.0F, 1.0F, 1.0F)
+                        .uv(0, 9).cuboid(-1.0F, -24.0F, -10.0F, 2.0F, 1.0F, 2.0F),
+                ModelTransform.NONE);
         return TexturedModelData.of(modelData, 64, 16);
     }
 
@@ -30,13 +30,13 @@ public class SnowshoeModel<E extends LivingEntity> extends AnimalModel<E> {
 
     }
 
-	@Override
-	protected Iterable<ModelPart> getHeadParts() {
-		return ImmutableList.of();
-	}
+    @Override
+    protected Iterable<ModelPart> getHeadParts() {
+        return ImmutableList.of();
+    }
 
-	@Override
-	protected Iterable<ModelPart> getBodyParts() {
-		return ImmutableList.of(this.snowshoe);
-	}
+    @Override
+    protected Iterable<ModelPart> getBodyParts() {
+        return ImmutableList.of(this.snowshoe);
+    }
 }

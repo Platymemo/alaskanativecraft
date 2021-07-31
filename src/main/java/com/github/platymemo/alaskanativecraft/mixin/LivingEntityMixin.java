@@ -28,22 +28,24 @@ public abstract class LivingEntityMixin extends Entity {
     @Unique
     private static final UUID SNOWSHOE_SPEED_BOOST_ID = UUID.fromString("0b824742-8bbc-4043-8caf-f997a543495f");
 
-    @Shadow
-    public abstract EntityAttributeInstance getAttributeInstance(EntityAttribute genericMovementSpeed);
-    @Shadow
-    public abstract ItemStack getEquippedStack(EquipmentSlot feet);
-    @Shadow
-    public abstract Random getRandom();
-
     protected LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
         throw new AssertionError("wut");
     }
 
+    @Shadow
+    public abstract EntityAttributeInstance getAttributeInstance(EntityAttribute genericMovementSpeed);
+
+    @Shadow
+    public abstract ItemStack getEquippedStack(EquipmentSlot feet);
+
+    @Shadow
+    public abstract Random getRandom();
+
     @Inject(method = "removeSoulSpeedBoost", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     protected void removeSnowshoeSpeedBoost(CallbackInfo ci, EntityAttributeInstance entityAttributeInstance) {
         if (entityAttributeInstance != null && entityAttributeInstance.getModifier(SNOWSHOE_SPEED_BOOST_ID) != null) {
-                entityAttributeInstance.removeModifier(SNOWSHOE_SPEED_BOOST_ID);
+            entityAttributeInstance.removeModifier(SNOWSHOE_SPEED_BOOST_ID);
         }
     }
 

@@ -23,6 +23,15 @@ public class AlaskaConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public SealFishing sealFishing = new SealFishing();
 
+    public static synchronized AlaskaConfig getConfig() {
+        if (!registered) {
+            AutoConfig.register(AlaskaConfig.class, GsonConfigSerializer::new);
+            registered = true;
+        }
+
+        return AutoConfig.getConfigHolder(AlaskaConfig.class).getConfig();
+    }
+
     public static class SealFishing {
         public boolean sealsHuntFish = true;
         @ConfigEntry.Gui.Tooltip(count = 2)
@@ -70,14 +79,5 @@ public class AlaskaConfig implements ConfigData {
         public boolean genSalmonberry = true;
         @ConfigEntry.Gui.RequiresRestart
         public boolean snowyGen = false;
-    }
-
-    public static synchronized AlaskaConfig getConfig() {
-        if (!registered) {
-            AutoConfig.register(AlaskaConfig.class, GsonConfigSerializer::new);
-            registered = true;
-        }
-
-        return AutoConfig.getConfigHolder(AlaskaConfig.class).getConfig();
     }
 }
