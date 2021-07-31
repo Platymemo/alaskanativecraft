@@ -38,7 +38,6 @@ import java.util.EnumSet;
 import java.util.Iterator;
 
 public class MooseEntity extends AnimalEntity {
-    private static final AlaskaConfig config = AlaskaConfig.getConfig();
 
     protected MooseEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -202,9 +201,10 @@ public class MooseEntity extends AnimalEntity {
         }
 
         public boolean canStart() {
-            if (!config.mooseEatBark) {
+            if (!AlaskaConfig.getConfig().mooseEatBark) {
                 return false;
             }
+
             if (!MooseEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return false;
             } else if (!NavigationConditions.hasMobNavigation(MooseEntity.this)) {

@@ -32,7 +32,6 @@ public enum SnowshoeItemRenderer {
                 matrices.scale(1.5F, 1.5F, 1.5F);
             }
 
-
             VertexConsumer snowshoe = ItemRenderer.getArmorGlintConsumer(
                     vertexConsumers,
                     this.snowshoeModel.getLayer(SnowshoeFeatureRenderer.TEXTURE),

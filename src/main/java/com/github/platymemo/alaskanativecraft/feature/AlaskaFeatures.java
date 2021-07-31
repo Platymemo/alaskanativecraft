@@ -27,11 +27,25 @@ import java.util.Set;
 @SuppressWarnings("deprecation")
 public class AlaskaFeatures {
     public static void register() {
-        registerBerryPatch(AlaskaBlocks.BLUEBERRY_BUSH, "blueberry_bush");
-        registerBerryPatch(AlaskaBlocks.CLOUDBERRY_BUSH, "cloudberry_bush");
-        registerBerryPatch(AlaskaBlocks.RASPBERRY_BUSH, "raspberry_bush");
-        registerBerryPatch(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
-        if (AlaskaConfig.getConfig().genDriftwood) {
+        AlaskaConfig.GenerationOptions genOptions = AlaskaConfig.getConfig().generation;
+
+        if (genOptions.genBlueberry) {
+            registerBerryPatch(AlaskaBlocks.BLUEBERRY_BUSH, "blueberry_bush");
+        }
+
+        if (genOptions.genCloudberry) {
+            registerBerryPatch(AlaskaBlocks.CLOUDBERRY_BUSH, "cloudberry_bush");
+        }
+
+        if (genOptions.genRaspberry) {
+            registerBerryPatch(AlaskaBlocks.RASPBERRY_BUSH, "raspberry_bush");
+        }
+
+        if (genOptions.genSalmonberry) {
+            registerBerryPatch(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
+        }
+
+        if (genOptions.genDriftwood) {
             registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", Biome.Category.BEACH, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
         }
     }
@@ -57,7 +71,7 @@ public class AlaskaFeatures {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sparsePatchRegistryKey.getValue(), sparsePatch);
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
-                        .and(ctx -> !AlaskaConfig.getConfig().snowyGen)
+                        .and(ctx -> !AlaskaConfig.getConfig().generation.snowyGen)
                         .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN),
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 sparsePatchRegistryKey

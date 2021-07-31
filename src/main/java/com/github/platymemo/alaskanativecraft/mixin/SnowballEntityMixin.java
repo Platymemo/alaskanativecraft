@@ -20,12 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SnowballEntity.class)
 public class SnowballEntityMixin {
-
-    private static final AlaskaConfig config = AlaskaConfig.getConfig();
-
     @Inject(at = @At("TAIL"), method = "onEntityHit")
     private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (config.snowballConversion) {
+        if (AlaskaConfig.getConfig().snowballConversion) {
             Entity entity = entityHitResult.getEntity();
             if ((entity instanceof ParrotEntity && !(entity instanceof PtarmiganEntity)) || entity instanceof ChickenEntity) {
 
@@ -39,8 +36,7 @@ public class SnowballEntityMixin {
                 NbtCompound entityTag = new NbtCompound();
                 entityTag.putString("id", ptarmigan.toString());
 
-                if (entity.getEntityWorld() instanceof ServerWorld) {
-                    ServerWorld world = (ServerWorld) entity.getEntityWorld();
+                if (entity.getEntityWorld() instanceof ServerWorld world) {
                     Entity newEntity = EntityType.loadEntityWithPassengers(entityTag, world, (entityMaker) -> {
                         entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
                         return entityMaker;

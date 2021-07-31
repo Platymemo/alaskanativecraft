@@ -55,7 +55,7 @@ public class SealEntity extends AnimalEntity {
         this.stepHeight = 1.0F;
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation", "unused"})
     public static <T extends Entity> boolean canSpawn(EntityType<T> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
         return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
     }
@@ -124,9 +124,7 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
         this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
-        if (AlaskaConfig.getConfig().sealFishing.sealsHuntFish && AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish) {
-            this.goalSelector.add(5, new GroundFoodMateGoal(this));
-        }
+        this.goalSelector.add(5, new GroundFoodMateGoal(this));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
         this.targetSelector.add(0, new FollowTargetGoal<>(this, SalmonEntity.class, true));

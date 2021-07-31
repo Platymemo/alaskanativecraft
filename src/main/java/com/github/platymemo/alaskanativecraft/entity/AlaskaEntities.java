@@ -77,7 +77,7 @@ public class AlaskaEntities {
 
     @SuppressWarnings("deprecation")
     private static void initSpawns() {
-        AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawnOptions;
+        AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),
                 SpawnGroup.WATER_CREATURE,
                 AlaskaEntities.HARP_SEAL,

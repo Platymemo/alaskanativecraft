@@ -31,6 +31,7 @@ public class AlaskaPlugin implements REIClientPlugin {
                 (list) -> {
                     list.add(new TranslatableText("alaskanativecraft.akutaq.line1"));
                     list.add(new TranslatableText("alaskanativecraft.akutaq.line2"));
+                    list.add(new TranslatableText("alaskanativecraft.akutaq.line3"));
                     return list;
                 });
         BuiltinClientPlugin.getInstance().registerInformation(

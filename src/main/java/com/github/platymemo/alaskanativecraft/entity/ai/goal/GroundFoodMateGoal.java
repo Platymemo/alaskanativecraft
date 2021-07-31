@@ -6,6 +6,7 @@
 package com.github.platymemo.alaskanativecraft.entity.ai.goal;
 
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -24,7 +25,11 @@ public class GroundFoodMateGoal extends Goal {
     }
 
     public boolean canStart() {
-        if (AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish && this.animal.getEntityWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
+        if (this.animal instanceof SealEntity && !AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish) {
+            return false;
+        }
+
+        if (this.animal.getEntityWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
             this.foodEntity = this.findFood();
         }
 
@@ -71,7 +76,7 @@ public class GroundFoodMateGoal extends Goal {
     private void feed() {
         if (this.foodEntity.getStack().getCount() > 0) {
             foodEntity.getStack().decrement(1);
-            if (AlaskaConfig.getConfig().sealFishing.sealsBreedFromHuntedFish) {
+            if (!(this.animal instanceof SealEntity) || AlaskaConfig.getConfig().sealFishing.sealsBreedFromHuntedFish) {
                 animal.lovePlayer(null);
             }
         }
