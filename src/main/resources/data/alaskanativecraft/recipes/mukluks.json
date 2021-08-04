@@ -1,0 +1,18 @@
+{
+  "pattern": [
+    "# #",
+    "L L"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:wool"
+    },
+    "L": {
+      "tag": "c:leathers"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:mukluks"
+  },
+  "type": "minecraft:crafting_shaped"
+}

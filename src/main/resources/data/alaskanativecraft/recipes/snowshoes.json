@@ -1,0 +1,19 @@
+{
+  "pattern": [
+    "# #",
+    "S S",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:snowshoes"
+  },
+  "type": "minecraft:crafting_shaped"
+}
