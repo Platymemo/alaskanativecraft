@@ -71,8 +71,12 @@ Platymemo:
 2. Alaskanativecraft entities spawn options can be configured
 
 ### v1.3.0: New Version New Me
+Quiqueck
 1. Updated to 1.17
-2. Added config options
+
+Platymemo
+1. Reformatted Config
+2. Added new config options
 3. Drastically reduced driftwood spawn rates
 4. Added Driftwood Chunk, Antler, and Ivory (Durability Enhancers)
 5. Added Snowshoes
