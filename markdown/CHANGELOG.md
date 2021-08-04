@@ -69,3 +69,13 @@ Platymemo:
 ### v1.2.2: Spawning Changes
 1. Alaskanativecraft entities now respect spawn restrictions
 2. Alaskanativecraft entities spawn options can be configured
+
+### v1.3.0: New Version New Me
+1. Updated to 1.17
+2. Added config options
+3. Drastically reduced driftwood spawn rates
+4. Added Driftwood Chunk, Antler, and Ivory (Durability Enhancers)
+5. Added Snowshoes
+6. Added Mukluks
+7. Ptarmigans no longer imitate mobs
+8. Moose now charge attackers
