@@ -46,6 +46,9 @@ public class AlaskaBlocks {
         DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "drying_rack"), FabricBlockEntityTypeBuilder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
     }
 
+    /**
+     * registers the {@link Block} along with a {@link BlockItem} in the provided {@link ItemGroup}
+     */
     private static <B extends Block> B register(String name, B block, ItemGroup tab) {
         Item.Settings settings = new Item.Settings();
         if (tab != null) {
@@ -54,6 +57,9 @@ public class AlaskaBlocks {
         return register(name, block, new BlockItem(block, settings));
     }
 
+    /**
+     * registers the {@link Block} along with the provided {@link BlockItem}
+     */
     private static <B extends Block> B register(String name, B block, BlockItem item) {
         register(name, block);
         if (item != null) {
@@ -63,6 +69,9 @@ public class AlaskaBlocks {
         return block;
     }
 
+    /**
+     * registers the {@link Block}
+     */
     private static <B extends Block> B register(String name, B block) {
         Registry.register(Registry.BLOCK, new Identifier(AlaskaNativeCraft.MOD_ID, name), block);
         return block;

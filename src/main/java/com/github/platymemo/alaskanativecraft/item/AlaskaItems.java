@@ -5,6 +5,7 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -131,6 +133,7 @@ public class AlaskaItems {
 
     public static void register() {
         addFuels();
+        addCompostables();
         addItemGroupEntries();
         addSnowGogglesToLootTable();
     }
@@ -138,6 +141,11 @@ public class AlaskaItems {
     private static void addFuels() {
         FuelRegistry fuelRegistry = FuelRegistry.INSTANCE;
         fuelRegistry.add(WOODEN_HARPOON, 200);
+    }
+
+    private static void addCompostables() {
+        CompostingChanceRegistry compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
+        compostingChanceRegistry.add(AlaskaTags.AKUTAQ_BERRIES, 0.3F);
     }
 
     private static void addItemGroupEntries() {
