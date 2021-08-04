@@ -5,7 +5,6 @@ import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
-import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -145,7 +144,10 @@ public class AlaskaItems {
 
     private static void addCompostables() {
         CompostingChanceRegistry compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
-        compostingChanceRegistry.add(AlaskaTags.AKUTAQ_BERRIES, 0.3F);
+        compostingChanceRegistry.add(BLUEBERRIES, 0.3F);
+        compostingChanceRegistry.add(CLOUDBERRIES, 0.3F);
+        compostingChanceRegistry.add(RASPBERRIES, 0.3F);
+        compostingChanceRegistry.add(SALMONBERRIES, 0.3F);
     }
 
     private static void addItemGroupEntries() {
