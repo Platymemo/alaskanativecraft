@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<DryingRackBlockEntity> {
@@ -21,7 +22,8 @@ public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<Drying
 
     }
 
-    public void render(DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
+    @Override
+    public void render(@NotNull DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
         Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
         DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
         int XOrZ = axis.choose(0, 0, 1);
@@ -31,7 +33,7 @@ public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<Drying
             ItemStack itemStack = defaultedList.get(l);
             if (itemStack != ItemStack.EMPTY) {
                 matrixStack.push();
-                matrixStack.translate(0.5D, 0.44921875D, 0.5D);
+                matrixStack.translate(0.5D, 0.45D, 0.5D);
                 Direction direction2 = Direction.fromHorizontal((k % 2) * 2 + XOrZ);
                 float g = -direction2.asRotation();
                 matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(g));

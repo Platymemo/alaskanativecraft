@@ -8,6 +8,8 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class AlaskaModels {
@@ -19,7 +21,8 @@ public class AlaskaModels {
     public static final EntityModelLayer KUSPUK_SKIRT = registerMain("kuspuk_skirt");
     public static final EntityModelLayer SNOWSHOES = registerMain("snowshoes");
 
-    private static EntityModelLayer registerMain(String id) {
+    @Contract("_ -> new")
+    private static @NotNull EntityModelLayer registerMain(String id) {
         return new EntityModelLayer(new Identifier(AlaskaNativeCraft.MOD_ID, id), "main");
     }
 

@@ -18,6 +18,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3f;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
@@ -35,7 +36,8 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
         this.shadowRadius = 0.5F;
     }
 
-    public void render(DogsledEntity dogsledEntity, float yaw, float tickDelta, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
+    @Override
+    public void render(@NotNull DogsledEntity dogsledEntity, float yaw, float tickDelta, @NotNull MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
         matrixStack.push();
         matrixStack.scale(1.5F, 1.5F, 1.5F);
         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270 - yaw));
@@ -69,7 +71,7 @@ public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
     }
 
     @Override
-    public Identifier getTexture(DogsledEntity dogsledEntity) {
+    public Identifier getTexture(@NotNull DogsledEntity dogsledEntity) {
         return TEXTURES[dogsledEntity.getDogsledType().ordinal()];
     }
 

@@ -5,6 +5,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.ShapedRecipe;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,7 +22,7 @@ public class ShapedRecipeMixin {
     ItemStack output;
 
     @Inject(at = @At("RETURN"), method = "craft", cancellable = true)
-    private void addDurability(CraftingInventory craftingInventory, CallbackInfoReturnable<ItemStack> cir) {
+    private void addDurability(@NotNull CraftingInventory craftingInventory, CallbackInfoReturnable<ItemStack> cir) {
         if (craftingInventory.containsAny(Set.of(AlaskaItems.DRIFTWOOD_CHUNK, AlaskaItems.ANTLER, AlaskaItems.IVORY)) && this.output.getItem().isDamageable()) {
             ItemStack protectedItem = this.output.copy();
             NbtCompound tag = protectedItem.getOrCreateNbt();

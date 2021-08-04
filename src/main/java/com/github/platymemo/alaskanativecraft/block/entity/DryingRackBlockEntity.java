@@ -17,6 +17,7 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
         this.dryingTotalTimes = new int[4];
     }
 
-    public static void possiblyWetTick(World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
+    public static void possiblyWetTick(@NotNull World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
         if (world.isSkyVisible(pos)) {
             for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
                 if (dryingRackBlockEntity.dryingTimes[i] > 0) {
@@ -44,7 +45,8 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
         }
     }
 
-    public static void updateItemsBeingDried(World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
+    @SuppressWarnings("unused")
+    public static void updateItemsBeingDried(World world, BlockPos pos, BlockState state, @NotNull DryingRackBlockEntity dryingRackBlockEntity) {
         for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
             ItemStack itemStack = dryingRackBlockEntity.itemsBeingDried.get(i);
             if (!itemStack.isEmpty()) {

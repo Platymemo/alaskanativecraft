@@ -34,7 +34,7 @@ public class DryingCategory implements DisplayCategory<DryingDisplay> {
     }
 
     @Override
-    public @NotNull List<Widget> setupDisplay(DryingDisplay display, Rectangle bounds) {
+    public @NotNull List<Widget> setupDisplay(@NotNull DryingDisplay display, @NotNull Rectangle bounds) {
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.y + 10);
         final double cookingTime = display.getDryTime();
         DecimalFormat df = new DecimalFormat("###.##");

@@ -22,6 +22,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class PtarmiganEntity extends ParrotEntity {
         super(entityType, world);
     }
 
-    public static boolean isValidSpawn(EntityType<PtarmiganEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+    public static boolean isValidSpawn(EntityType<PtarmiganEntity> type, @NotNull WorldAccess world, SpawnReason spawnReason, @NotNull BlockPos pos, Random random) {
         BlockState blockState = world.getBlockState(pos.down());
         return (blockState.isIn(BlockTags.LEAVES) || blockState.isOf(Blocks.GRASS_BLOCK) || blockState.isIn(BlockTags.LOGS) || blockState.isOf(Blocks.AIR)) && world.getBaseLightLevel(pos, 0) > 8;
     }
@@ -48,7 +49,8 @@ public class PtarmiganEntity extends ParrotEntity {
                 add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.20000000298023224D);
     }
 
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
+    @Override
+    public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
         if (world.getBiome(this.getBlockPos()).getTemperature() <= 0.2F) {
             this.setType(0);
         } else {
@@ -61,6 +63,7 @@ public class PtarmiganEntity extends ParrotEntity {
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
     }
 
+    @Override
     public PtarmiganEntity createChild(ServerWorld world, PassiveEntity entity) {
         PtarmiganEntity ptarmiganEntity = AlaskaEntities.PTARMIGAN.create(world);
         if (ptarmiganEntity != null)
@@ -68,11 +71,13 @@ public class PtarmiganEntity extends ParrotEntity {
         return ptarmiganEntity;
     }
 
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(TYPE, 0);
     }
 
+    @Override
     public SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_PARROT_AMBIENT;
     }

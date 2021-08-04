@@ -9,6 +9,7 @@ import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World world) {
+    public boolean matches(@NotNull CraftingInventory inv, World world) {
         boolean hasUlu = false;
         boolean hasFish = false;
 
@@ -44,7 +45,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inv) {
+    public ItemStack craft(@NotNull CraftingInventory inv) {
         int numOfFish = 0;
         ItemStack stack;
         for (int i = 0; i < inv.size(); ++i) {
@@ -57,7 +58,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory) {
+    public DefaultedList<ItemStack> getRemainder(@NotNull CraftingInventory inventory) {
         DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
 
         for (int i = 0; i < defaultedList.size(); ++i) {

@@ -29,6 +29,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -41,7 +42,7 @@ public class HarpoonItem extends TridentItem {
     private final Supplier<EntityType<HarpoonEntity>> typeSupplier;
     private EntityType<HarpoonEntity> cachedType = null;
 
-    public HarpoonItem(ToolMaterial material, float attackDamage, float attackSpeed, Supplier<EntityType<HarpoonEntity>> typeSupplier, Item.Settings settings) {
+    public HarpoonItem(@NotNull ToolMaterial material, float attackDamage, float attackSpeed, Supplier<EntityType<HarpoonEntity>> typeSupplier, @NotNull Item.Settings settings) {
         super(settings.maxDamageIfAbsent(material.getDurability()));
         this.material = material;
         this.attackDamage = attackDamage + material.getAttackDamage();
@@ -78,7 +79,7 @@ public class HarpoonItem extends TridentItem {
     }
 
     @Override
-    public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
+    public float getMiningSpeedMultiplier(ItemStack stack, @NotNull BlockState state) {
         Block block = state.getBlock();
         if (block == Blocks.COBWEB) {
             return 15.0F;
@@ -95,8 +96,7 @@ public class HarpoonItem extends TridentItem {
 
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        if (user instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) user;
+        if (user instanceof PlayerEntity playerEntity) {
             int i = this.getMaxUseTime(stack) - remainingUseTicks;
             if (i >= 10) {
                 int j = EnchantmentHelper.getRiptide(stack);

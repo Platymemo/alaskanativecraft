@@ -18,6 +18,7 @@ public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntity
         super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaModels.SEAL)), 0.7F);
     }
 
+    @Override
     public Identifier getTexture(SealEntity sealEntity) {
         return TEXTURE;
     }

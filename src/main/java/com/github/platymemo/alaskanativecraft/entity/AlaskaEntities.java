@@ -1,7 +1,11 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.client.renderer.entity.*;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.DogsledEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.MooseEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.KuspukSkirtFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
@@ -23,7 +27,11 @@ import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -66,33 +74,31 @@ public class AlaskaEntities {
     }
 
     private static void initAttributes() {
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.HARP_SEAL, SealEntity.createSealAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
-        FabricDefaultAttributeRegistry.register(AlaskaEntities.MOOSE, MooseEntity.createMooseAttributes());
+        FabricDefaultAttributeRegistry.register(HARP_SEAL, SealEntity.createSealAttributes());
+        FabricDefaultAttributeRegistry.register(PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
+        FabricDefaultAttributeRegistry.register(MOOSE, MooseEntity.createMooseAttributes());
     }
 
     @SuppressWarnings("deprecation")
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),
-                SpawnGroup.WATER_CREATURE,
-                AlaskaEntities.HARP_SEAL,
+                SpawnGroup.WATER_CREATURE, HARP_SEAL,
                 spawnOptions.sealOceanSettings.weight,
                 spawnOptions.sealOceanSettings.minGroupSize,
                 spawnOptions.sealOceanSettings.maxGroupSize);
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.RIVER),
-                SpawnGroup.WATER_CREATURE,
-                AlaskaEntities.HARP_SEAL,
+                SpawnGroup.WATER_CREATURE, HARP_SEAL,
                 spawnOptions.sealRiverSettings.weight,
                 spawnOptions.sealRiverSettings.minGroupSize,
                 spawnOptions.sealRiverSettings.maxGroupSize);
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
-                SpawnGroup.CREATURE, AlaskaEntities.MOOSE,
+                SpawnGroup.CREATURE, MOOSE,
                 spawnOptions.mooseSettings.weight,
                 spawnOptions.mooseSettings.minGroupSize,
                 spawnOptions.mooseSettings.maxGroupSize);
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
-                SpawnGroup.AMBIENT, AlaskaEntities.PTARMIGAN,
+                SpawnGroup.AMBIENT, PTARMIGAN,
                 spawnOptions.ptarmiganSettings.weight,
                 spawnOptions.ptarmiganSettings.minGroupSize,
                 spawnOptions.ptarmiganSettings.maxGroupSize);

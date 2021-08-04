@@ -20,18 +20,20 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class KuspukSkirtFeatureRenderer<E extends LivingEntity, M extends EntityModel<E>> extends FeatureRenderer<E, M> {
     private final KuspukSkirtModel<E> model;
     private final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/skirt_layer.png");
 
-    public KuspukSkirtFeatureRenderer(FeatureRendererContext<E, M> context, EntityModelLoader loader) {
+    public KuspukSkirtFeatureRenderer(FeatureRendererContext<E, M> context, @NotNull EntityModelLoader loader) {
         super(context);
         this.model = new KuspukSkirtModel<>(loader.getModelPart(AlaskaModels.KUSPUK_SKIRT));
     }
 
-    public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, E livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+    @Override
+    public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, @NotNull E livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         ItemStack armorItemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
         if (armorItemStack.isOf(AlaskaItems.KUSPUK_BODY)) {
             int color = AlaskaItems.KUSPUK_BODY.getColor(armorItemStack);

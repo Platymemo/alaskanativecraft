@@ -21,6 +21,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.placer.SimpleBlockPlacer;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -50,7 +51,7 @@ public class AlaskaFeatures {
         }
     }
 
-    private static void registerBerryPatch(Block berryBush, String bushName) {
+    private static void registerBerryPatch(@NotNull Block berryBush, String bushName) {
         registerPatch(
                 berryBush.getDefaultState().with(SweetBerryBushBlock.AGE, 3),
                 bushName,

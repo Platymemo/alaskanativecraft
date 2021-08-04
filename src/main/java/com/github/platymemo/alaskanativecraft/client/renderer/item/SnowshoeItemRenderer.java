@@ -11,12 +11,13 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
+import org.jetbrains.annotations.NotNull;
 
 public enum SnowshoeItemRenderer {
     INSTANCE;
     private final SnowshoeModel<LivingEntity> snowshoeModel = new SnowshoeModel<>(SnowshoeModel.getTexturedModelData().createModel());
 
-    public boolean render(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
+    public boolean render(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, @NotNull MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, @NotNull BakedModel model) {
         matrices.push(); {
             model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 

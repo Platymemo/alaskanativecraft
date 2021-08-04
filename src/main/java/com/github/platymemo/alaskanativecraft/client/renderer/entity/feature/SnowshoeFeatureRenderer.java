@@ -22,18 +22,20 @@ import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3f;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class SnowshoeFeatureRenderer<E extends LivingEntity, M extends BipedEntityModel<E>> extends FeatureRenderer<E, M> {
     public static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/feature/snowshoe.png");
     private final SnowshoeModel<E> model;
 
-    public SnowshoeFeatureRenderer(FeatureRendererContext<E, M> context, EntityModelLoader loader) {
+    public SnowshoeFeatureRenderer(FeatureRendererContext<E, M> context, @NotNull EntityModelLoader loader) {
         super(context);
         this.model = new SnowshoeModel<>(loader.getModelPart(AlaskaModels.SNOWSHOES));
     }
 
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, E entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+    @Override
+    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, @NotNull E entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         ItemStack armorItemStack = entity.getEquippedStack(EquipmentSlot.FEET);
         if (armorItemStack.isOf(AlaskaItems.SNOWSHOES)) {
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());

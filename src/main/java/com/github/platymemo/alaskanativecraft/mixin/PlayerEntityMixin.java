@@ -22,6 +22,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         throw new AssertionError("wut");
     }
 
+    @Override
     @Shadow
     public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 

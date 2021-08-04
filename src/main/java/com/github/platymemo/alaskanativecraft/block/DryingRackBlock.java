@@ -2,7 +2,12 @@ package com.github.platymemo.alaskanativecraft.block;
 
 import com.github.platymemo.alaskanativecraft.block.entity.DryingRackBlockEntity;
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -28,6 +33,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -58,7 +64,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (!world.isClient && blockEntity instanceof DryingRackBlockEntity dryingRackBlockEntity) {
             ItemStack itemStack = player.getStackInHand(hand);
@@ -79,7 +85,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+    public void onStateReplaced(@NotNull BlockState state, World world, BlockPos pos, @NotNull BlockState newState, boolean moved) {
         if (!state.isOf(newState.getBlock())) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
@@ -91,7 +97,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getOutlineShape(@NotNull BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (state.get(AXIS) == Direction.Axis.X) {
             return X_SHAPE;
         } else {
@@ -101,7 +107,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
+    public BlockState getPlacementState(@NotNull ItemPlacementContext ctx) {
         boolean bl = ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
         World world = ctx.getWorld();
         BlockPos blockPos = ctx.getBlockPos();
@@ -119,7 +125,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public BlockState rotate(BlockState state, BlockRotation rotation) {
+    public BlockState rotate(@NotNull BlockState state, BlockRotation rotation) {
         return switch (rotation) {
             case COUNTERCLOCKWISE_90, CLOCKWISE_90 -> switch (state.get(AXIS)) {
                 case X -> state.with(AXIS, Direction.Axis.Z);
@@ -130,7 +136,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
         };
     }
 
-    private boolean canConnect(Direction direction, BlockState otherState) {
+    private boolean canConnect(Direction direction, @NotNull BlockState otherState) {
         if (otherState.isIn(BlockTags.LOGS) || otherState.isIn(BlockTags.WALLS) || otherState.isIn(BlockTags.FENCES) || otherState.isIn(BlockTags.FENCE_GATES)) {
             return true;
         } else if (otherState.isOf(this)) {
@@ -141,7 +147,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
+    public BlockState getStateForNeighborUpdate(@NotNull BlockState state, Direction direction, BlockState newState, WorldAccess world, BlockPos pos, BlockPos posFrom) {
         if (state.get(WATERLOGGED)) {
             world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
@@ -157,7 +163,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, @NotNull BlockState state, FluidState fluidState) {
         if (!(Boolean) state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof DryingRackBlockEntity) {
@@ -173,7 +179,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     @Override
-    public FluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(@NotNull BlockState state) {
         return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
@@ -184,7 +190,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
         if (!world.isClient) {
             if (state.get(WATERLOGGED) || world.isRaining()) {
                 return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::possiblyWetTick);

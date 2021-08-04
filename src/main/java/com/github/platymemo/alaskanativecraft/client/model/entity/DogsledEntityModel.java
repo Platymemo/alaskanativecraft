@@ -2,16 +2,22 @@ package com.github.platymemo.alaskanativecraft.client.model.entity;
 
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.ModelPartBuilder;
+import net.minecraft.client.model.ModelPartData;
+import net.minecraft.client.model.ModelTransform;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.CompositeEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import org.jetbrains.annotations.NotNull;
 
 public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
     private final ModelPart frame;
     private final ImmutableList<ModelPart> parts;
 
-    public DogsledEntityModel(ModelPart modelPart) {
+    public DogsledEntityModel(@NotNull ModelPart modelPart) {
         frame = modelPart.getChild("frame");
         ModelPart leftRunner = modelPart.getChild("leftRunner");
         ModelPart rightRunner = modelPart.getChild("rightRunner");
@@ -21,7 +27,7 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
         this.parts = builder.build();
     }
 
-    public static TexturedModelData getTexturedModelData() {
+    public static @NotNull TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
 
@@ -94,7 +100,7 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+    public void render(@NotNull MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
         matrices.translate(0.0F, 0.0F, 0.3F);
         super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
     }

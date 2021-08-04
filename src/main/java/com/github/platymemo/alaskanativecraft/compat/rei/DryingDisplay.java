@@ -24,7 +24,7 @@ public class DryingDisplay implements Display {
     private final int dryTime;
     private DryingRecipe display;
 
-    public DryingDisplay(DryingRecipe recipe) {
+    public DryingDisplay(@NotNull DryingRecipe recipe) {
         this(recipe.getIngredients(), recipe.getOutput(), recipe.getCookTime());
         this.display = recipe;
     }

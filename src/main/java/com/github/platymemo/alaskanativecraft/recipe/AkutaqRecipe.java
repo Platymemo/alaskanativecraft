@@ -13,6 +13,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -36,7 +37,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
     }
 
     // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
-    private static void addEffectToAkutaq(ItemStack stew, StatusEffect effect, int duration) {
+    private static void addEffectToAkutaq(@NotNull ItemStack stew, StatusEffect effect, int duration) {
         NbtCompound compoundTag = stew.getOrCreateNbt();
         NbtList listTag = compoundTag.getList("Effects", 10);
 
@@ -64,7 +65,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public boolean matches(CraftingInventory inv, World world) {
+    public boolean matches(@NotNull CraftingInventory inv, World world) {
         boolean hasMeat = false;
         boolean hasBerries = false;
         boolean hasBowl = false;
@@ -96,7 +97,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inv) {
+    public ItemStack craft(@NotNull CraftingInventory inv) {
         ItemStack akutaq = new ItemStack(AlaskaItems.AKUTAQ, 1);
         Random random = new Random();
 

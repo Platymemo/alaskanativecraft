@@ -14,11 +14,13 @@ public class DryingRecipe extends AbstractCookingRecipe {
         super(AlaskaRecipes.DRYING, id, group, input, output, experience, cookTime);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public ItemStack createIcon() {
         return new ItemStack(AlaskaBlocks.DRYING_RACK);
     }
 
+    @Override
     public RecipeSerializer<?> getSerializer() {
         return AlaskaRecipes.DRYING_SERIALIZER;
     }

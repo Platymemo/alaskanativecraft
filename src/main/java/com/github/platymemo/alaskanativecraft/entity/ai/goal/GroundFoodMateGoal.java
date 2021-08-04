@@ -24,6 +24,7 @@ public class GroundFoodMateGoal extends Goal {
         this.animal = animal;
     }
 
+    @Override
     public boolean canStart() {
         if (this.animal instanceof SealEntity && !AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish) {
             return false;
@@ -40,14 +41,17 @@ public class GroundFoodMateGoal extends Goal {
         return this.foodEntity != null;
     }
 
+    @Override
     public boolean shouldContinue() {
         return this.foodEntity != null && this.foodEntity.getStack().getCount() > 0 && this.animal.canEat() && this.animal.getBreedingAge() == 0;
     }
 
+    @Override
     public void stop() {
         this.foodEntity = null;
     }
 
+    @Override
     public void tick() {
         if (this.foodEntity != null) {
             this.animal.getLookControl().lookAt(this.foodEntity, 10.0F, (float) this.animal.getLookPitchSpeed());

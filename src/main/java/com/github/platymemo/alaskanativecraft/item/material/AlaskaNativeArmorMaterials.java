@@ -8,6 +8,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.ItemTags;
+import org.jetbrains.annotations.NotNull;
 
 public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
 
@@ -36,35 +37,43 @@ public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
         this.repairIngredient = repairIngredient;
     }
 
-    public int getDurability(EquipmentSlot slot) {
+    @Override
+    public int getDurability(@NotNull EquipmentSlot slot) {
         return BASE_DURABILITY[slot.getEntitySlotId()] * this.durabilityMultiplier;
     }
 
-    public int getProtectionAmount(EquipmentSlot slot) {
+    @Override
+    public int getProtectionAmount(@NotNull EquipmentSlot slot) {
         return this.protectionAmounts[slot.getEntitySlotId()];
     }
 
+    @Override
     public int getEnchantability() {
         return this.enchantability;
     }
 
+    @Override
     public SoundEvent getEquipSound() {
         return this.equipSound;
     }
 
+    @Override
     public Ingredient getRepairIngredient() {
         return this.repairIngredient;
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public String getName() {
         return this.name;
     }
 
+    @Override
     public float getToughness() {
         return this.toughness;
     }
 
+    @Override
     public float getKnockbackResistance() {
         return this.knockbackResistance;
     }

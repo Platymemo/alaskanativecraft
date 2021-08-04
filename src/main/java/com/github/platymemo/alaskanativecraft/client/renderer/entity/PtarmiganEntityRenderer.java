@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, PtarmiganEntityModel> {
@@ -21,11 +22,13 @@ public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, 
         super(ctx, new PtarmiganEntityModel(ctx.getPart(AlaskaModels.PTARMIGAN)), 0.3F);
     }
 
-    public Identifier getTexture(PtarmiganEntity ptarmiganEntity) {
+    @Override
+    public Identifier getTexture(@NotNull PtarmiganEntity ptarmiganEntity) {
         return TEXTURES[ptarmiganEntity.getPtarmiganType()];
     }
 
-    public float getAnimationProgress(PtarmiganEntity ptarmiganEntity, float f) {
+    @Override
+    public float getAnimationProgress(@NotNull PtarmiganEntity ptarmiganEntity, float f) {
         float g = MathHelper.lerp(f, ptarmiganEntity.prevFlapProgress, ptarmiganEntity.flapProgress);
         float h = MathHelper.lerp(f, ptarmiganEntity.prevMaxWingDeviation, ptarmiganEntity.maxWingDeviation);
         return (MathHelper.sin(g) + 1.0F) * h;

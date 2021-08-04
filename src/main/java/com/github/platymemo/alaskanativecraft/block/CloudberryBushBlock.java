@@ -23,6 +23,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 public class CloudberryBushBlock extends SweetBerryBushBlock {
     private static final VoxelShape MID_SHAPE;
@@ -37,13 +38,14 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
         super(settings);
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return AlaskaItems.CLOUDBERRIES.getDefaultStack();
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    public ActionResult onUse(@NotNull BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int i = state.get(AGE);
         boolean bl = i == 3;
         if (!bl && player.getStackInHand(hand).isOf(Items.BONE_MEAL)) {
@@ -67,7 +69,7 @@ public class CloudberryBushBlock extends SweetBerryBushBlock {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    public VoxelShape getOutlineShape(@NotNull BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (state.get(AGE) > 0 && state.get(AGE) < 3) {
             return MID_SHAPE;
         } else if (state.get(AGE) == 3) {

@@ -7,6 +7,7 @@ import net.minecraft.block.FacingBlock;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.util.math.Direction;
+import org.jetbrains.annotations.NotNull;
 
 public class WhaleMeatBlock extends FacingBlock {
 
@@ -15,11 +16,13 @@ public class WhaleMeatBlock extends FacingBlock {
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
+    @Override
+    public BlockState getPlacementState(@NotNull ItemPlacementContext ctx) {
         return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite());
     }
 
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    @Override
+    protected void appendProperties(StateManager.@NotNull Builder<Block, BlockState> builder) {
         builder.add(FACING);
     }
 }

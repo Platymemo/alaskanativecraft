@@ -14,7 +14,16 @@ import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.NavigationConditions;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.AnimalMateGoal;
+import net.minecraft.entity.ai.goal.FollowParentGoal;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -28,14 +37,13 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.Iterator;
 
 public class MooseEntity extends AnimalEntity {
 
@@ -54,6 +62,7 @@ public class MooseEntity extends AnimalEntity {
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1.0D);
     }
 
+    @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new ChildEscapeDangerGoal(this, 2.5D));
@@ -62,42 +71,50 @@ public class MooseEntity extends AnimalEntity {
         this.goalSelector.add(3, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.WHEAT), false));
         this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0D));
-        this.goalSelector.add(6, new MooseEntity.EatBarkGoal(this, 2.25D, 0.2D));
+        this.goalSelector.add(6, new MooseEntity.EatBarkGoal(2.25D, 0.2D));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(7, new LookAroundGoal(this));
         this.targetSelector.add(0, new RevengeGoal(this).setGroupRevenge());
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return this.random.nextInt(100) > 75 ? AlaskaSoundEvents.ENTITY_MOOSE_AMBIENT : super.getAmbientSound();
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return AlaskaSoundEvents.ENTITY_MOOSE_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return AlaskaSoundEvents.ENTITY_MOOSE_HURT;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
     }
 
+    @Override
     protected float getSoundVolume() {
         return 0.2F;
     }
 
+    @Override
     public MooseEntity createChild(ServerWorld serverWorld, PassiveEntity passiveEntity) {
         return AlaskaEntities.MOOSE.create(serverWorld);
     }
 
+    @Override
     protected void onGrowUp() {
         super.onGrowUp();
         this.stepHeight = 2.0F;
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, @NotNull EntityDimensions dimensions) {
         return dimensions.height * 0.95F;
     }
 
@@ -122,7 +139,7 @@ public class MooseEntity extends AnimalEntity {
         }
 
         @Override
-        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+        protected double getSquaredMaxAttackDistance(@NotNull LivingEntity entity) {
             float f = MooseEntity.this.getWidth() - 0.1F;
             return (f * 2.0F * f * 2.0F + entity.getWidth());
         }
@@ -136,7 +153,7 @@ public class MooseEntity extends AnimalEntity {
         protected boolean logValid;
         private Vec3d target;
 
-        public EatBarkGoal(MooseEntity moose, double distance, double speed) {
+        public EatBarkGoal(double distance, double speed) {
             this.logPos = BlockPos.ORIGIN;
             this.distance = distance;
             this.speed = speed;
@@ -174,60 +191,51 @@ public class MooseEntity extends AnimalEntity {
 
         @Nullable
         protected Vec3d locateLogPos() {
-            BlockPos blockPos = MooseEntity.this.getBlockPos();
-            Iterable<BlockPos> iterable = BlockPos.iterate(MathHelper.floor(MooseEntity.this.getX() - 3.0D),
-                    MathHelper.floor(MooseEntity.this.getY() - 6.0D),
-                    MathHelper.floor(MooseEntity.this.getZ() - 3.0D),
-                    MathHelper.floor(MooseEntity.this.getX() + 3.0D),
-                    MathHelper.floor(MooseEntity.this.getY() + 6.0D),
-                    MathHelper.floor(MooseEntity.this.getZ() + 3.0D));
-            Iterator<BlockPos> position = iterable.iterator();
+            Iterable<BlockPos> iterable = BlockPos.iterate(
+                    MooseEntity.this.getBlockX() - 3,
+                    MooseEntity.this.getBlockY() - 1,
+                    MooseEntity.this.getBlockZ() - 3,
+                    MooseEntity.this.getBlockX() + 3,
+                    MooseEntity.this.getBlockY() + 4,
+                    MooseEntity.this.getBlockZ() + 3
+            );
 
-            BlockPos blockPos2;
-            boolean bl;
-            do {
-                do {
-                    if (!position.hasNext()) {
-                        return null;
-                    }
-
-                    blockPos2 = position.next();
-                } while (blockPos.equals(blockPos2));
-
-                bl = MooseEntity.this.world.getBlockState(blockPos2).isIn(CommonBlockTags.LOGS_WITH_BARK);
-            } while (!bl);
-
-            return Vec3d.ofBottomCenter(blockPos2);
+            for (var blockPos : iterable) {
+                if (MooseEntity.this.world.getBlockState(blockPos).isIn(CommonBlockTags.LOGS_WITH_BARK)) {
+                    return Vec3d.ofBottomCenter(blockPos);
+                }
+            }
+            return null;
         }
 
+        @Override
         public boolean canStart() {
             if (!AlaskaConfig.getConfig().mooseEatBark) {
                 return false;
             }
 
-            if (!MooseEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
-                return false;
-            } else if (!NavigationConditions.hasMobNavigation(MooseEntity.this)) {
-                return false;
-            } else if (MooseEntity.this.getTarget() != null) {
+            if (!MooseEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
+                    || !NavigationConditions.hasMobNavigation(MooseEntity.this)
+                    || MooseEntity.this.getTarget() != null
+                    || MooseEntity.this.isBaby()
+                    || MooseEntity.this.getRandom().nextInt(200) != 0) {
                 return false;
             } else {
-                if (MooseEntity.this.isBaby() || MooseEntity.this.getRandom().nextInt(200) != 0) {
-                    return false;
-                } else {
-                    return this.targetLogPos();
-                }
+                return this.targetLogPos();
             }
         }
 
+        @Override
         public boolean shouldContinue() {
             return !MooseEntity.this.getNavigation().isIdle();
         }
 
+        @Override
         public void start() {
             MooseEntity.this.getNavigation().startMovingTo(this.target.x, this.target.y, this.target.z, this.speed);
         }
 
+        @Override
         public void tick() {
             double h = MooseEntity.this.getPos().distanceTo(this.target);
             if (h < this.distance) {
@@ -235,8 +243,10 @@ public class MooseEntity extends AnimalEntity {
             }
         }
 
+        @Override
         public void stop() {
-            setLogStripped();
+            this.setLogStripped();
+            MooseEntity.this.getNavigation().stop();
         }
     }
 }

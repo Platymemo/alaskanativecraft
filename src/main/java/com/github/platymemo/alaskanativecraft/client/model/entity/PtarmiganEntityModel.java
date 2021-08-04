@@ -3,12 +3,18 @@ package com.github.platymemo.alaskanativecraft.client.model.entity;
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.ModelData;
+import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.ModelPartBuilder;
+import net.minecraft.client.model.ModelPartData;
+import net.minecraft.client.model.ModelTransform;
+import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity> {
@@ -21,7 +27,7 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
     private final ModelPart leftLeg;
     private final ModelPart rightLeg;
 
-    public PtarmiganEntityModel(ModelPart root) {
+    public PtarmiganEntityModel(@NotNull ModelPart root) {
         this.root = root;
         this.body = root.getChild(EntityModelPartNames.BODY);
         this.tail = root.getChild(EntityModelPartNames.TAIL);
@@ -32,7 +38,7 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
         this.rightLeg = root.getChild(EntityModelPartNames.RIGHT_LEG);
     }
 
-    public static TexturedModelData getTexturedModelData() {
+    public static @NotNull TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData root = modelData.getRoot();
         root.addChild(EntityModelPartNames.BODY,
@@ -79,7 +85,7 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
         return TexturedModelData.of(modelData, 32, 32);
     }
 
-    private static PtarmiganEntityModel.Pose getPose(PtarmiganEntity ptarmigan) {
+    private static PtarmiganEntityModel.Pose getPose(@NotNull PtarmiganEntity ptarmigan) {
         if (ptarmigan.isSongPlaying()) {
             return PtarmiganEntityModel.Pose.PARTY;
         } else if (ptarmigan.isInSittingPose()) {
@@ -89,14 +95,17 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
         }
     }
 
+    @Override
     public ModelPart getPart() {
         return this.root;
     }
 
+    @Override
     public void setAngles(PtarmiganEntity ptarmiganEntity, float f, float g, float h, float i, float j) {
         this.setAngles(getPose(ptarmiganEntity), ptarmiganEntity.age, f, g, h, i, j);
     }
 
+    @Override
     public void animateModel(PtarmiganEntity ptarmiganEntity, float f, float g, float h) {
         this.animateModel(getPose(ptarmiganEntity));
     }
@@ -107,7 +116,7 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
         this.root.render(matrices, vertexConsumer, light, overlay);
     }
 
-    private void setAngles(PtarmiganEntityModel.Pose pose, int danceAngle, float limbAngle, float limbDistance, float age, float headYaw, float headPitch) {
+    private void setAngles(@NotNull PtarmiganEntityModel.Pose pose, int danceAngle, float limbAngle, float limbDistance, float age, float headYaw, float headPitch) {
         this.head.pitch = headPitch * 0.017453292F;
         this.head.yaw = headYaw * 0.017453292F;
         this.head.roll = 0.0F;
@@ -159,7 +168,7 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
 
     }
 
-    private void animateModel(PtarmiganEntityModel.Pose pose) {
+    private void animateModel(@NotNull PtarmiganEntityModel.Pose pose) {
         this.body.pitch = 0.4937F;
         this.leftWing.pitch = -0.6981F;
         this.leftWing.yaw = -3.1415927F;

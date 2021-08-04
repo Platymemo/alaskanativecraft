@@ -17,16 +17,18 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends FeatureRenderer<T, PlayerEntityModel<T>> {
     private final PtarmiganEntityModel model;
 
-    public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, EntityModelLoader loader) {
+    public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, @NotNull EntityModelLoader loader) {
         super(context);
         this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaModels.PTARMIGAN));
     }
 
+    @Override
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {
         this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, true);
         this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, false);

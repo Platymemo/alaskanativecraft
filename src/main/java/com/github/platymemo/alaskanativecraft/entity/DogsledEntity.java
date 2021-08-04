@@ -9,7 +9,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LilyPadBlock;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Dismounting;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -46,12 +52,17 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockLocating;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -107,14 +118,16 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.prevZ = z;
     }
 
-    public static boolean method_30959(Entity entity, Entity entity2) {
+    public static boolean method_30959(Entity entity, @NotNull Entity entity2) {
         return (entity2.isCollidable() || entity2.isPushable()) && !entity.isConnectedThroughVehicle(entity2);
     }
 
-    protected float getEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+    @Override
+    protected float getEyeHeight(EntityPose pose, @NotNull EntityDimensions dimensions) {
         return dimensions.height;
     }
 
+    @Override
     protected void initDataTracker() {
         this.dataTracker.startTracking(DAMAGE_WOBBLE_TICKS, 0);
         this.dataTracker.startTracking(DAMAGE_WOBBLE_SIDE, 1);
@@ -122,22 +135,27 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.dataTracker.startTracking(DOGSLED_TYPE, DogsledEntity.Type.OAK.ordinal());
     }
 
+    @Override
     public boolean collidesWith(Entity other) {
         return method_30959(this, other);
     }
 
+    @Override
     public boolean isCollidable() {
         return true;
     }
 
+    @Override
     public boolean isPushable() {
         return true;
     }
 
+    @Override
     protected Vec3d positionInPortal(Direction.Axis axis, BlockLocating.Rectangle arg) {
         return LivingEntity.positionInPortal(super.positionInPortal(axis, arg));
     }
 
+    @Override
     public void pushAwayFrom(Entity entity) {
         if (entity instanceof BoatEntity || entity instanceof DogsledEntity) {
             if (entity.getBoundingBox().minY < this.getBoundingBox().maxY) {
@@ -160,6 +178,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         };
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public void animateDamage() {
         this.setDamageWobbleSide(-this.getDamageWobbleSide());
@@ -167,10 +186,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.setDamageWobbleStrength(this.getDamageWobbleStrength() * 11.0F);
     }
 
+    @Override
     public boolean collides() {
         return !this.isRemoved();
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public void updateTrackedPositionAndAngles(double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
         this.x = x;
@@ -181,10 +202,12 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.clientInterpolationSteps = 10;
     }
 
+    @Override
     public Direction getMovementDirection() {
         return this.getHorizontalFacing().rotateYClockwise();
     }
 
+    @Override
     public void tick() {
         this.location = this.checkLocation();
         if (this.location != Location.UNDER_WATER && this.location != Location.UNDER_FLOWING_WATER) {
@@ -409,7 +432,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
-    public Vec3d updatePassengerForDismount(LivingEntity passenger) {
+    @Override
+    public Vec3d updatePassengerForDismount(@NotNull LivingEntity passenger) {
         Vec3d vec3d = getPassengerDismountOffset((this.getWidth() * MathHelper.SQUARE_ROOT_OF_TWO), passenger.getWidth(), passenger.getYaw());
         double d = this.getX() + vec3d.x;
         double e = this.getZ() + vec3d.z;
@@ -440,7 +464,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return super.updatePassengerForDismount(passenger);
     }
 
-    protected void copyEntityData(Entity entity) {
+    protected void copyEntityData(@NotNull Entity entity) {
         entity.setBodyYaw(this.getYaw());
         float f = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
         float g = MathHelper.clamp(f, -105.0F, 105.0F);
@@ -449,11 +473,13 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         entity.setHeadYaw(entity.getYaw());
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public void onPassengerLookAround(Entity passenger) {
         this.copyEntityData(passenger);
     }
 
+    @Override
     protected void fall(double heightDifference, boolean onGround, BlockState landedState, BlockPos landedPosition) {
         if (!this.hasVehicle()) {
             if (onGround) {
@@ -517,10 +543,11 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return DogsledEntity.Type.getType(this.dataTracker.get(DOGSLED_TYPE));
     }
 
-    public void setDogsledType(DogsledEntity.Type type) {
+    public void setDogsledType(@NotNull DogsledEntity.Type type) {
         this.dataTracker.set(DOGSLED_TYPE, type.ordinal());
     }
 
+    @Override
     protected boolean canAddPassenger(Entity passenger) {
         int i = this.getPassengerList().size();
         if (this.isSubmergedIn(FluidTags.WATER)) {
@@ -534,16 +561,19 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return false;
     }
 
+    @Override
     @Nullable
     public Entity getPrimaryPassenger() {
         List<Entity> list = this.getPassengerList();
         return list.isEmpty() ? null : list.get(0);
     }
 
+    @Override
     public boolean isSubmergedInWater() {
         return this.location == Location.UNDER_WATER || this.location == Location.UNDER_FLOWING_WATER;
     }
 
+    @Override
     public Packet<?> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
     }
@@ -556,14 +586,17 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.pressingBack = pressingBack;
     }
 
+    @Override
     public int size() {
         return 27;
     }
 
+    @Override
     public double getMountedHeightOffset() {
         return 0.2D;
     }
 
+    @Override
     public boolean damage(DamageSource source, float amount) {
         if (!this.world.isClient && !this.isRemoved()) {
             if (this.isInvulnerableTo(source)) {
@@ -644,7 +677,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
-    public void writeCustomDataToNbt(NbtCompound tag) {
+    @Override
+    public void writeCustomDataToNbt(@NotNull NbtCompound tag) {
         tag.putString("Type", this.getDogsledType().getName());
         if (this.lootTableId != null) {
             tag.putString("LootTable", this.lootTableId.toString());
@@ -657,7 +691,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     }
 
-    public void readCustomDataFromNbt(NbtCompound tag) {
+    @Override
+    public void readCustomDataFromNbt(@NotNull NbtCompound tag) {
         if (tag.contains("Type", 8)) {
             this.setDogsledType(DogsledEntity.Type.getType(tag.getString("Type")));
         }
@@ -671,7 +706,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     }
 
-    public ActionResult interact(PlayerEntity player, Hand hand) {
+    @Override
+    public ActionResult interact(@NotNull PlayerEntity player, Hand hand) {
         if (player.isSneaking()) {
             player.openHandledScreen(this);
             if (!player.world.isClient) {
@@ -693,6 +729,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
+    @Override
     public boolean isEmpty() {
         Iterator<ItemStack> var1 = this.inventory.iterator();
 
@@ -708,16 +745,19 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         return false;
     }
 
+    @Override
     public ItemStack getStack(int slot) {
         this.generateLoot(null);
         return this.inventory.get(slot);
     }
 
+    @Override
     public ItemStack removeStack(int slot, int amount) {
         this.generateLoot(null);
         return Inventories.splitStack(this.inventory, slot, amount);
     }
 
+    @Override
     public ItemStack removeStack(int slot) {
         this.generateLoot(null);
         ItemStack itemStack = this.inventory.get(slot);
@@ -729,6 +769,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
+    @Override
     public void setStack(int slot, ItemStack stack) {
         this.generateLoot(null);
         this.inventory.set(slot, stack);
@@ -747,9 +788,11 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         }
     }
 
+    @Override
     public void markDirty() {
     }
 
+    @Override
     public boolean canPlayerUse(PlayerEntity player) {
         if (this.isRemoved()) {
             return false;
@@ -776,6 +819,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     }
 
+    @Override
     public void clear() {
         this.generateLoot(null);
         this.inventory.clear();
@@ -786,6 +830,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.lootSeed = lootSeed;
     }
 
+    @Override
     @Nullable
     public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
         if (this.lootTableId != null && playerEntity.isSpectator()) {

@@ -11,19 +11,18 @@ import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
 import net.minecraft.text.TranslatableText;
+import org.jetbrains.annotations.NotNull;
 
 public class AlaskaPlugin implements REIClientPlugin {
     public static final CategoryIdentifier<DryingDisplay> DRYING_ID = CategoryIdentifier.of(AlaskaNativeCraft.MOD_ID, "plugins/drying");
 
     @Override
-    public void registerCategories(CategoryRegistry registry) {
-        registry.add(new DryingCategory(), config -> {
-            config.addWorkstations(EntryStacks.of(AlaskaBlocks.DRYING_RACK));
-        });
+    public void registerCategories(@NotNull CategoryRegistry registry) {
+        registry.add(new DryingCategory(), config -> config.addWorkstations(EntryStacks.of(AlaskaBlocks.DRYING_RACK)));
     }
 
     @Override
-    public void registerDisplays(DisplayRegistry registry) {
+    public void registerDisplays(@NotNull DisplayRegistry registry) {
         registry.registerFiller(DryingRecipe.class, DryingDisplay::new);
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(AlaskaItems.AKUTAQ),

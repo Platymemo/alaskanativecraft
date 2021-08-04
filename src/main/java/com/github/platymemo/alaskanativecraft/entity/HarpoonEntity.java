@@ -36,6 +36,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class HarpoonEntity extends PersistentProjectileEntity {
@@ -59,7 +60,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         this.harpoonStack = new ItemStack(item);
     }
 
-    public HarpoonEntity(World world, LivingEntity owner, HarpoonItem item, ItemStack stack) {
+    public HarpoonEntity(World world, LivingEntity owner, @NotNull HarpoonItem item, @NotNull ItemStack stack) {
         super(item.getType(), owner, world);
         this.harpoonStack = stack.copy();
         this.state = HarpoonEntity.State.FLYING;
@@ -94,6 +95,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET, packet);
     }
 
+    @Override
     protected ItemStack asItemStack() {
         return this.harpoonStack.copy();
     }
@@ -103,6 +105,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         return this.dataTracker.get(ENCHANTED);
     }
 
+    @Override
     @Nullable
     protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
         return this.dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
@@ -229,7 +232,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
+    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
         Entity hitEntity = entityHitResult.getEntity();
         float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
         if (hitEntity instanceof LivingEntity livingHitEntity) {
@@ -282,6 +285,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         this.playSound(soundEvent, 1.0F, 1.0F);
     }
 
+    @Override
     protected SoundEvent getHitSound() {
         return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
     }
@@ -305,6 +309,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         }
     }
 
+    @Override
     public void readCustomDataFromNbt(NbtCompound tag) {
         super.readCustomDataFromNbt(tag);
         if (tag.contains("Trident", 10)) {
@@ -321,16 +326,19 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         tag.putBoolean("DealtDamage", this.dealtDamage);
     }
 
+    @Override
     public void age() {
         if (this.pickupType != PersistentProjectileEntity.PickupPermission.ALLOWED) {
             super.age();
         }
     }
 
+    @Override
     protected float getDragInWater() {
         return 0.9F;
     }
 
+    @Override
     @Environment(EnvType.CLIENT)
     public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
         return true;
