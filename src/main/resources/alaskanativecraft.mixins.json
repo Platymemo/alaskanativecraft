@@ -8,8 +8,10 @@
     "AxeItemAccessor",
     "EndermanEntityMixin",
     "FoxMixin",
+    "GrindstoneScreenHandlerMixin",
     "IglooGeneratorMixin",
     "IngredientMixin",
+    "ItemMixin",
     "ItemStackMixin",
     "LeadLengthMixin",
     "LivingEntityMixin",
@@ -17,6 +19,7 @@
     "PlayerEntityMixin",
     "PolarBearMixin",
     "PowderSnowBlockMixin",
+    "RepairItemRecipeMixin",
     "ShapedRecipeMixin",
     "SnowballEntityMixin"
   ],

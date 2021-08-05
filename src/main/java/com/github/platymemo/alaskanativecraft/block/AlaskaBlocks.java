@@ -99,17 +99,4 @@ public class AlaskaBlocks {
         flammableRegistry.add(SALMONBERRY_BUSH, 60, 100);
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void registerBlockEntityRenderers() {
-        BlockEntityRendererRegistry.INSTANCE.register(DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntityRenderer::new);
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void registerBlockRenderLayers() {
-        RenderLayer cutout = RenderLayer.getCutout();
-        BlockRenderLayerMap.INSTANCE.putBlock(BLUEBERRY_BUSH, cutout);
-        BlockRenderLayerMap.INSTANCE.putBlock(CLOUDBERRY_BUSH, cutout);
-        BlockRenderLayerMap.INSTANCE.putBlock(RASPBERRY_BUSH, cutout);
-        BlockRenderLayerMap.INSTANCE.putBlock(SALMONBERRY_BUSH, cutout);
-    }
 }

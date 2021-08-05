@@ -170,8 +170,4 @@ public class AlaskaItems {
         });
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void registerItemColors() {
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) -> tintIndex > 0 ? -1 : ((DyeableItem) stack.getItem()).getColor(stack), KUSPUK_HOOD, KUSPUK_BODY, MUKLUKS);
-    }
 }

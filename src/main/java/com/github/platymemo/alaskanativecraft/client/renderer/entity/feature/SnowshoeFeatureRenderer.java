@@ -52,7 +52,7 @@ public class SnowshoeFeatureRenderer<E extends LivingEntity, M extends BipedEnti
         }
     }
 
-    private void translateToRightLeg(MatrixStack matrices, M model, E entity) {
+    private void translateToRightLeg(MatrixStack matrices, M model, @NotNull E entity) {
         if (entity.isInSneakingPose() && !model.riding && !entity.isSwimming()) {
             matrices.translate(0.0F, 0.0F, 0.25F);
         }
@@ -66,7 +66,7 @@ public class SnowshoeFeatureRenderer<E extends LivingEntity, M extends BipedEnti
         matrices.scale(2.0F, 2.0F, 2.0F);
     }
 
-    private void translateToLeftLeg(MatrixStack matrices, M model, E entity) {
+    private void translateToLeftLeg(MatrixStack matrices, M model, @NotNull E entity) {
         if (entity.isInSneakingPose() && !model.riding && !entity.isSwimming()) {
             matrices.translate(0.0F, 0.0F, 0.25F);
         }

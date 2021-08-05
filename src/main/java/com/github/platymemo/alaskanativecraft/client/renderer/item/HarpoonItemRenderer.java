@@ -3,6 +3,8 @@ package com.github.platymemo.alaskanativecraft.client.renderer.item;
 import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -13,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 
+@Environment(EnvType.CLIENT)
 public enum HarpoonItemRenderer {
     INSTANCE;
     private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());

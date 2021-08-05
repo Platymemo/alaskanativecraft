@@ -2,6 +2,8 @@ package com.github.platymemo.alaskanativecraft.client.renderer.item;
 
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.SnowshoeModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.NotNull;
 
+@Environment(EnvType.CLIENT)
 public enum SnowshoeItemRenderer {
     INSTANCE;
     private final SnowshoeModel<LivingEntity> snowshoeModel = new SnowshoeModel<>(SnowshoeModel.getTexturedModelData().createModel());
