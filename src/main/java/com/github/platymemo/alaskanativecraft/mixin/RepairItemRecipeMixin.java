@@ -4,7 +4,6 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RepairItemRecipe;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.util.List;
 
 @Mixin(RepairItemRecipe.class)
-public class RepairItemRecipeMixin {
+public abstract class RepairItemRecipeMixin {
 
     @Unique
     private ItemStack anc$cachedStack;
@@ -30,5 +29,12 @@ public class RepairItemRecipeMixin {
     @Redirect(method = "craft", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/Item;getMaxDamage()I"))
     private int redirectGetMaxDamage(Item item) {
         return this.anc$cachedStack.getMaxDamage();
+    }
+
+    @Inject(method = "craft", at = @At("RETURN"))
+    private void addDurabilityMultiplier(CraftingInventory craftingInventory, @NotNull CallbackInfoReturnable<ItemStack> cir) {
+        if (!cir.getReturnValue().isEmpty() && anc$cachedStack.getOrCreateNbt().contains("DurabilityMultiplier")) {
+            cir.getReturnValue().getOrCreateNbt().putFloat("DurabilityMultiplier", anc$cachedStack.getOrCreateNbt().getFloat("DurabilityMultiplier"));
+        }
     }
 }
