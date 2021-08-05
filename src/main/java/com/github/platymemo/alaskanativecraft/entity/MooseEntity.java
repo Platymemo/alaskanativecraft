@@ -1,9 +1,9 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.entity.ai.goal.AdultMeleeAttackGoal;
 import com.github.platymemo.alaskanativecraft.entity.ai.goal.ChildEscapeDangerGoal;
 import com.github.platymemo.alaskanativecraft.mixin.AxeItemAccessor;
-import com.github.platymemo.alaskanativecraft.mixin.MeleeAttackGoalAccessor;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 import net.minecraft.block.Block;
@@ -12,14 +12,12 @@ import net.minecraft.block.PillarBlock;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.NavigationConditions;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.FollowParentGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
@@ -27,7 +25,6 @@ import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -66,7 +63,7 @@ public class MooseEntity extends AnimalEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new ChildEscapeDangerGoal(this, 2.5D));
-        this.goalSelector.add(1, new AdultMeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.add(1, new AdultMeleeAttackGoal(this, 2.5D, true));
         this.goalSelector.add(2, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(3, new TemptGoal(this, 1.25D, Ingredient.ofItems(Items.WHEAT), false));
         this.goalSelector.add(4, new FollowParentGoal(this, 1.25D));
@@ -116,33 +113,6 @@ public class MooseEntity extends AnimalEntity {
     @Override
     protected float getActiveEyeHeight(EntityPose pose, @NotNull EntityDimensions dimensions) {
         return dimensions.height * 0.95F;
-    }
-
-    class AdultMeleeAttackGoal extends MeleeAttackGoal {
-
-        public AdultMeleeAttackGoal(PathAwareEntity mob, double speed, boolean pauseWhenMobIdle) {
-            super(mob, speed, pauseWhenMobIdle);
-        }
-
-        @Override
-        public boolean canStart() {
-            if (!mob.isBaby()) {
-                return super.canStart();
-            } else {
-                return false;
-            }
-        }
-
-        @Override
-        protected void resetCooldown() {
-            ((MeleeAttackGoalAccessor) this).setCooldown(50);
-        }
-
-        @Override
-        protected double getSquaredMaxAttackDistance(@NotNull LivingEntity entity) {
-            float f = MooseEntity.this.getWidth() - 0.1F;
-            return (f * 2.0F * f * 2.0F + entity.getWidth());
-        }
     }
 
     class EatBarkGoal extends Goal {
