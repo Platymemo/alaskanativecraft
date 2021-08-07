@@ -20,7 +20,8 @@ public abstract class ItemStackMixin {
 
     @Inject(method = "getMaxDamage", at = @At("RETURN"), cancellable = true)
     private void durabilityMultiplier(CallbackInfoReturnable<Integer> cir) {
-        if (this.getOrCreateNbt().contains("DurabilityMultiplier")) {
+        final NbtCompound tag = getNbt();
+        if (tag!=null && tag.contains("DurabilityMultiplier")) {
             int newDurability = cir.getReturnValue();
             newDurability *= this.getOrCreateNbt().getFloat("DurabilityMultiplier");
             cir.setReturnValue(newDurability);

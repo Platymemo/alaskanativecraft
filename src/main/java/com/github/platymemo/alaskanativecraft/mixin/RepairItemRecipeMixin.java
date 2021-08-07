@@ -3,6 +3,7 @@ package com.github.platymemo.alaskanativecraft.mixin;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.RepairItemRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,8 +34,9 @@ public abstract class RepairItemRecipeMixin {
 
     @Inject(method = "craft", at = @At("RETURN"))
     private void addDurabilityMultiplier(CraftingInventory craftingInventory, @NotNull CallbackInfoReturnable<ItemStack> cir) {
-        if (!cir.getReturnValue().isEmpty() && anc$cachedStack.getOrCreateNbt().contains("DurabilityMultiplier")) {
-            cir.getReturnValue().getOrCreateNbt().putFloat("DurabilityMultiplier", anc$cachedStack.getOrCreateNbt().getFloat("DurabilityMultiplier"));
+        final NbtCompound tag = anc$cachedStack.getNbt();
+        if (!cir.getReturnValue().isEmpty() && tag!=null && tag.contains("DurabilityMultiplier")) {
+            cir.getReturnValue().getOrCreateNbt().putFloat("DurabilityMultiplier", tag.getFloat("DurabilityMultiplier"));
         }
     }
 }
