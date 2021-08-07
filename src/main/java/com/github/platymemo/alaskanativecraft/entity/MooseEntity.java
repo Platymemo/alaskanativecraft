@@ -162,7 +162,7 @@ public class MooseEntity extends AnimalEntity {
                     MooseEntity.this.getBlockZ() + 3
             );
 
-            for (var blockPos : iterable) {
+            for (BlockPos blockPos : iterable) {
                 if (MooseEntity.this.world.getBlockState(blockPos).isIn(CommonBlockTags.LOGS_WITH_BARK)) {
                     return Vec3d.ofBottomCenter(blockPos);
                 }
