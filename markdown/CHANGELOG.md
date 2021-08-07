@@ -83,3 +83,7 @@ Platymemo
 6. Added Mukluks
 7. Ptarmigans no longer imitate mobs
 8. Moose now charge attackers
+
+### v1.3.1: Quick Fix
+Quiqueck
+1. Fix stacking problems

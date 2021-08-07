@@ -3,7 +3,6 @@ package com.github.platymemo.alaskanativecraft.mixin;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.GrindstoneScreenHandler;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Final;
@@ -25,11 +24,11 @@ public abstract class GrindstoneScreenHandlerMixin {
         return this.input.getStack(0).getMaxDamage();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Inject(method = "transferEnchantments", at = @At("RETURN"))
     private void copyDurabilityMultiplier(ItemStack target, @NotNull ItemStack source, CallbackInfoReturnable<ItemStack> cir) {
-        final NbtCompound tag = source.getNbt();
-        if (tag!=null && tag.contains("DurabilityMultiplier")) {
-            cir.getReturnValue().getOrCreateNbt().putFloat("DurabilityMultiplier", source.getOrCreateNbt().getFloat("DurabilityMultiplier"));
+        if (source.hasNbt() && source.getNbt().contains("DurabilityMultiplier")) {
+            cir.getReturnValue().getNbt().putFloat("DurabilityMultiplier", source.getOrCreateNbt().getFloat("DurabilityMultiplier"));
         }
     }
 }
