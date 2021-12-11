@@ -15,17 +15,16 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeatures;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
-import net.minecraft.world.gen.placer.SimpleBlockPlacer;
-import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.decorator.BiomePlacementModifier;
+import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
+import net.minecraft.world.gen.decorator.SquarePlacementModifier;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
+import java.util.List;
 
-@SuppressWarnings("deprecation")
+//@SuppressWarnings("deprecation")
 public class AlaskaFeatures {
     public static void register() {
         AlaskaConfig.GenerationOptions genOptions = AlaskaConfig.getConfig().generation;
@@ -61,15 +60,15 @@ public class AlaskaFeatures {
     }
 
     private static void registerPatch(BlockState blockState, String featureName, Biome.Category biomeCategory, Block... whitelist) {
-        ConfiguredFeature<?, ?> patchFeature = Feature.RANDOM_PATCH.configure((new RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(blockState), SimpleBlockPlacer.INSTANCE)).tries(64).whitelist(Set.of(whitelist)).cannotProject().build());
+        ConfiguredFeature<RandomPatchFeatureConfig, ?> patchFeature = Feature.RANDOM_PATCH.configure(ConfiguredFeatures.createRandomPatchFeatureConfig(Feature.SIMPLE_BLOCK.configure(new SimpleBlockFeatureConfig(BlockStateProvider.of(blockState))), List.of(whitelist), 64));
 
         // Sparse feature
-        ConfiguredFeature<?, ?> sparsePatch = patchFeature.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE);
-        RegistryKey<ConfiguredFeature<?, ?>> sparsePatchRegistryKey = RegistryKey.of(
-                Registry.CONFIGURED_FEATURE_KEY,
+        PlacedFeature sparsePatch = patchFeature.withPlacement(SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of());
+        RegistryKey<PlacedFeature> sparsePatchRegistryKey = RegistryKey.of(
+                Registry.PLACED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_sparse")
         );
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, sparsePatchRegistryKey.getValue(), sparsePatch);
+        Registry.register(BuiltinRegistries.PLACED_FEATURE, sparsePatchRegistryKey.getValue(), sparsePatch);
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
                         .and(ctx -> !AlaskaConfig.getConfig().generation.snowyGen)
@@ -84,12 +83,12 @@ public class AlaskaFeatures {
         );
 
         // Decorated (extra sparse) patches
-        ConfiguredFeature<?, ?> decoratedPatch = patchFeature.decorate(ConfiguredFeatures.Decorators.SQUARE_HEIGHTMAP_SPREAD_DOUBLE).applyChance(12);
-        RegistryKey<ConfiguredFeature<?, ?>> decoratedPatchRegistryKey = RegistryKey.of(
-                Registry.CONFIGURED_FEATURE_KEY,
+        PlacedFeature decoratedPatch = patchFeature.withPlacement(RarityFilterPlacementModifier.of(32), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of());
+        RegistryKey<PlacedFeature> decoratedPatchRegistryKey = RegistryKey.of(
+                Registry.PLACED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_decorated")
         );
-        Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, decoratedPatchRegistryKey.getValue(), decoratedPatch);
+        Registry.register(BuiltinRegistries.PLACED_FEATURE, decoratedPatchRegistryKey.getValue(), decoratedPatch);
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
                         .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW),

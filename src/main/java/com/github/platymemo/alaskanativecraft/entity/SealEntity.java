@@ -128,9 +128,9 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(5, new GroundFoodMateGoal(this));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
-        this.targetSelector.add(0, new FollowTargetGoal<>(this, SalmonEntity.class, true));
-        this.targetSelector.add(0, new FollowTargetGoal<>(this, CodEntity.class, true));
-        this.targetSelector.add(1, new FollowTargetGoal<>(this, SquidEntity.class, true));
+        this.targetSelector.add(0, new ActiveTargetGoal<>(this, SalmonEntity.class, true));
+        this.targetSelector.add(0, new ActiveTargetGoal<>(this, CodEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, SquidEntity.class, true));
     }
 
     @Override
@@ -416,7 +416,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getBodyYawSpeed() + 20), (float) this.seal.getLookPitchSpeed());
+            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getMaxHeadRotation() + 20), (float) this.seal.getMaxLookPitchChange());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
                 this.seal.getNavigation().stop();
             } else {
@@ -462,9 +462,9 @@ public class SealEntity extends AnimalEntity {
         public void tick() {
             if (this.seal.getNavigation().isIdle()) {
                 Vec3d vec3d = Vec3d.ofBottomCenter(this.seal.getTravelPos());
-                Vec3d vec3d2 = NoPenaltyTargeting.find(this.seal, 16, 3, vec3d, 0.3141592741012573D);
+                Vec3d vec3d2 = NoPenaltyTargeting.findTo(this.seal, 16, 3, vec3d, 0.3141592741012573D);
                 if (vec3d2 == null) {
-                    vec3d2 = NoPenaltyTargeting.find(this.seal, 8, 7, vec3d);
+                    vec3d2 = NoPenaltyTargeting.findFrom(this.seal, 8, 7, vec3d);
                 }
 
                 if (vec3d2 != null) {
@@ -528,7 +528,7 @@ public class SealEntity extends AnimalEntity {
             if (this.mob.getAttacker() == null && !this.mob.isOnFire()) {
                 return false;
             } else {
-                BlockPos blockPos = this.locateClosestWater(this.mob.world, this.mob, 16, 4);
+                BlockPos blockPos = this.locateClosestWater(this.mob.world, this.mob, 5);
                 if (blockPos != null) {
                     this.targetX = blockPos.getX();
                     this.targetY = blockPos.getY();

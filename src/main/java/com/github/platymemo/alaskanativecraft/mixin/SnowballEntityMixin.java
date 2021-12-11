@@ -45,7 +45,7 @@ public class SnowballEntityMixin {
                         newEntity.setCustomName(entityName);
                     }
 
-                    if (world.shouldCreateNewEntityWithPassenger(newEntity)) {
+                    if (world.spawnNewEntityAndPassengers(newEntity)) {
                         entity.discard();
                     }
                 }

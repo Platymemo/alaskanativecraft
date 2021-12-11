@@ -2,7 +2,7 @@ package com.github.platymemo.alaskanativecraft.mixin;
 
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.FollowTargetGoal;
+import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PolarBearEntity;
@@ -21,6 +21,6 @@ public abstract class PolarBearMixin extends AnimalEntity implements Angerable {
 
     @Inject(at = @At("TAIL"), method = "initGoals()V")
     private void addSealTarget(CallbackInfo ci) {
-        this.targetSelector.add(3, new FollowTargetGoal<>(this, SealEntity.class, true));
+        targetSelector.add(3, new ActiveTargetGoal<>(this, SealEntity.class, true));
     }
 }
