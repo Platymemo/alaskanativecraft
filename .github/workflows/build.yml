@@ -1,10 +1,5 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
-
 name: build
-on: [pull_request, push]
+on: [workflow_dispatch]
 
 jobs:
   build:
@@ -12,10 +7,10 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          16,  # Minimum supported by Minecraft
+          17,  # Minimum supported by Minecraft
         ]
-        # and run on both Linux and Windows
-        os: [ubuntu-20.04, windows-latest]
+        # and run on Linux
+        os: [ubuntu-21.10]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout repository
@@ -27,13 +22,42 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: make gradle wrapper executable
-        if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
       - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '16' }} # Only upload artifacts built from latest java on one OS
+        if: ${{ runner.os == 'Linux' && matrix.java == '17' }} # Only upload artifacts built from latest java on Linux
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
           path: build/libs/
+    steps:
+      - uses: Kir-Antipov/mc-publish@v2.0
+        with:
+          # modrinth-id: AANobbMI
+          # modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 555284
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          github-tag: mc1.18.1-1.4.0
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          files-primary: build/libs/!(*-@(dev|sources)).jar
+          files-secondary: build/libs/*-@(dev|sources).jar
+
+          name: Alaska Native Craft 2 0.4.0 for Minecraft 1.18.x
+          version: mc1.18.1-1.4.0
+          version-type: release
+          changelog-file: CHANGELOG.md
+
+          loaders: |
+            fabric
+          game-versions: |
+            1.18
+          dependencies: |
+            fabric | depends | *
+            cloth-config | depends | *
+            modmenu | suggests | 3.0.0
+          java: |
+            Java 17
