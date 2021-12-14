@@ -97,8 +97,13 @@ public class PtarmiganEntity extends ParrotEntity {
         return this.dataTracker.get(TYPE);
     }
 
+    /*
+     * Somehow a player spawned a ptarmigan with type = 3, so this is a safety check
+     */
     private void setType(int type) {
-        this.dataTracker.set(TYPE, type);
+        if (type >= 0 && type < 3) {
+            this.dataTracker.set(TYPE, type);
+        }
     }
 
     @Override
