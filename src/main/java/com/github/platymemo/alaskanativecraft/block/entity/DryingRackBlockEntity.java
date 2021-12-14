@@ -3,7 +3,6 @@ package com.github.platymemo.alaskanativecraft.block.entity;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
@@ -11,6 +10,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.Clearable;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
@@ -18,10 +20,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class DryingRackBlockEntity extends BlockEntity implements Clearable, BlockEntityClientSerializable {
+public class DryingRackBlockEntity extends BlockEntity implements Clearable {
     private final DefaultedList<ItemStack> itemsBeingDried;
     private final int[] dryingTimes;
     private final int[] dryingTotalTimes;
@@ -57,15 +60,18 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
                     dryingRackBlockEntity.dryingTimes[i] = dryingRackBlockEntity.dryingTotalTimes[i];
 
                     Inventory inventory = new SimpleInventory(itemStack);
-                    ItemStack itemStack2 = world.getRecipeManager()
-                            .getFirstMatch(AlaskaRecipes.DRYING, inventory, world)
-                            .map((dryingRecipe) -> dryingRecipe.craft(inventory))
-                            .orElse(itemStack);
+                    ItemStack itemStack2 = world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, inventory, world).map((dryingRecipe) -> dryingRecipe.craft(inventory)).orElse(itemStack);
                     dryingRackBlockEntity.itemsBeingDried.set(i, itemStack2);
                     dryingRackBlockEntity.updateListeners();
                 }
             }
         }
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
     }
 
     public DefaultedList<ItemStack> getItemsBeingDried() {
@@ -96,33 +102,24 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
     }
 
     @Override
-    public void readNbt(NbtCompound tag) {
-        super.readNbt(tag);
+    public void readNbt(NbtCompound nbt) {
         this.itemsBeingDried.clear();
-        Inventories.readNbt(tag, this.itemsBeingDried);
+        Inventories.readNbt(nbt, this.itemsBeingDried);
         int[] js;
-        if (tag.contains("DryingTimes", 11)) {
-            js = tag.getIntArray("DryingTimes");
+        if (nbt.contains("DryingTimes", 11)) {
+            js = nbt.getIntArray("DryingTimes");
             System.arraycopy(js, 0, this.dryingTimes, 0, Math.min(this.dryingTotalTimes.length, js.length));
         }
-
-        if (tag.contains("DryingTotalTimes", 11)) {
-            js = tag.getIntArray("DryingTotalTimes");
-            System.arraycopy(js, 0, this.dryingTotalTimes, 0, Math.min(this.dryingTotalTimes.length, js.length));
-        }
-
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
-        this.saveInitialChunkData(tag);
-        tag.putIntArray("DryingTimes", this.dryingTimes);
-        tag.putIntArray("DryingTotalTimes", this.dryingTotalTimes);
-        return tag;
+    public void writeNbt(NbtCompound nbt) {
+        saveInitialChunkData(nbt);
+        nbt.putIntArray("DryingTimes", dryingTimes);
+        nbt.putIntArray("DryingTotalTimes", dryingTotalTimes);
     }
 
     private NbtCompound saveInitialChunkData(NbtCompound tag) {
-        super.writeNbt(tag);
         Inventories.writeNbt(tag, this.itemsBeingDried, true);
         return tag;
     }
@@ -172,15 +169,5 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable, Blo
             this.updateListeners();
         }
 
-    }
-
-    @Override
-    public void fromClientTag(NbtCompound compoundTag) {
-        this.readNbt(compoundTag);
-    }
-
-    @Override
-    public NbtCompound toClientTag(NbtCompound compoundTag) {
-        return this.writeNbt(compoundTag);
     }
 }

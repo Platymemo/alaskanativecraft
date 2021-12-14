@@ -15,6 +15,7 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -31,16 +32,16 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
     }
 
     @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0),
-            method = "generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)Z",
+            method = "generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)V",
             locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void addDogsleds(StructureWorldAccess structureWorldAccess, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos blockPos, CallbackInfoReturnable<Boolean> ci, Identifier identifier, StructurePlacementData structurePlacementData) {
+    private void addDogsleds(StructureWorldAccess world, StructureAccessor structureAccessor, ChunkGenerator chunkGenerator, Random random, BlockBox chunkBox, ChunkPos chunkPos, BlockPos pos, CallbackInfo ci, Identifier identifier, StructurePlacementData structurePlacementData) {
         BlockPos chestLocation = this.pos.add(Structure.transform(structurePlacementData, new BlockPos(0, 1, 0)));
         if (lastPos == null || !lastPos.equals(chestLocation)) {
-            DogsledEntity dogsled = new DogsledEntity(structureWorldAccess.toServerWorld(), (double) chestLocation.getX() + 0.5D, (double) chestLocation.getY() + 0.5D, (double) chestLocation.getZ() + 0.5D);
+            DogsledEntity dogsled = new DogsledEntity(world.toServerWorld(), (double) chestLocation.getX() + 0.5D, (double) chestLocation.getY() + 0.5D, (double) chestLocation.getZ() + 0.5D);
             dogsled.setDogsledType(DogsledEntity.Type.SPRUCE);
             dogsled.setCustomName(new LiteralText("Abandoned Dogsled"));
             dogsled.setLootTable(DOGSLED_LOOT_TABLE, random.nextLong());
-            structureWorldAccess.spawnEntity(dogsled);
+            world.spawnEntity(dogsled);
             lastPos = chestLocation;
         }
     }
