@@ -118,32 +118,32 @@ public class HarpoonItem extends TridentItem {
 
                     playerEntity.incrementStat(Stats.USED.getOrCreateStat(this));
                     if (j > 0) {
-                        float f = playerEntity.getYaw();
-                        float g = playerEntity.getPitch();
-                        float h = -MathHelper.sin(f * 0.017453292F) * MathHelper.cos(g * 0.017453292F);
-                        float k = -MathHelper.sin(g * 0.017453292F);
-                        float l = MathHelper.cos(f * 0.017453292F) * MathHelper.cos(g * 0.017453292F);
-                        float m = MathHelper.sqrt(h * h + k * k + l * l);
-                        float n = 3.0F * ((1.0F + (float) j) / 4.0F);
-                        h *= n / m;
-                        k *= n / m;
-                        l *= n / m;
+                        float yaw = playerEntity.getYaw();
+                        float pitch = playerEntity.getPitch();
+                        float h = -MathHelper.sin(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
+                        float k = -MathHelper.sin(pitch * 0.017453292F);
+                        float l = MathHelper.cos(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
+                        float length = MathHelper.sqrt(h * h + k * k + l * l);
+                        float multiplier = 3.0F * ((1.0F + (float) j) / 5.5F);
+                        h *= multiplier / length;
+                        k *= multiplier / length;
+                        l *= multiplier / length;
                         playerEntity.addVelocity(h, k, l);
                         playerEntity.setRiptideTicks(20);
                         if (playerEntity.isOnGround()) {
-                            playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.1999999D, 0.0D));
+                            playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.2D, 0.0D));
                         }
 
-                        SoundEvent soundEvent3;
+                        SoundEvent soundEvent;
                         if (j >= 3) {
-                            soundEvent3 = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_3;
                         } else if (j == 2) {
-                            soundEvent3 = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_2;
                         } else {
-                            soundEvent3 = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
+                            soundEvent = SoundEvents.ITEM_TRIDENT_RIPTIDE_1;
                         }
 
-                        world.playSoundFromEntity(null, playerEntity, soundEvent3, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        world.playSoundFromEntity(null, playerEntity, soundEvent, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     }
                 }
             }
