@@ -1,6 +1,8 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
 	id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
+	id "com.matthewprenger.cursegradle" version "1.4.0"
+	id "com.modrinth.minotaur" version "1.2.1"
 	id 'maven-publish'
 }
 
@@ -89,4 +91,58 @@ publishing {
 	repositories {
 		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	}
+}
+
+curseforge {
+	if (project.hasProperty("curse_api_key") || System.getenv("curse_api_key") != null) {
+		apiKey = project.hasProperty("curse_api_key") ? project.property("curse_api_key") : System.getenv("curse_api_key")
+
+		project {
+			id = '435197'
+			changelogType = 'markdown'
+			changelog = file("markdown/CHANGELOG.md")
+			releaseType = 'release'
+			addGameVersion "1.18-Snapshot"
+			addGameVersion "1.18"
+			addGameVersion "Java 17"
+			addGameVersion "Fabric"
+			relations {
+				requiredDependency 'cloth-config'
+				requiredDependency 'fabric-api'
+				optionalDependency 'modmenu'
+			}
+
+			mainArtifact(remapJar.archivePath) {
+				displayName = "Alaska Native Craft v${project.mod_version}"
+			}
+
+			afterEvaluate {
+				uploadTask.dependsOn(remapJar)
+			}
+		}
+
+		options {
+			javaVersionAutoDetect = false
+			forgeGradleIntegration = false
+		}
+	}
+}
+
+import com.modrinth.minotaur.TaskModrinthUpload
+
+task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after build!
+	onlyIf {
+		System.getenv("MODRINTH") // Only attempt to run this task if the MODRINTH variable is set, otherwise SKIP it
+	}
+
+	token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
+	projectId = 'iFnEtHsI'
+	versionName = "Alaska Native Craft v${project.mod_version}"
+	versionNumber = "${project.mod_version}" // Will fail if Modrinth has this version already
+	// On fabric, use 'remapJar' instead of 'jar'
+	uploadFile = remapJar
+	changelog = file("markdown/CHANGELOG.md")
+	addGameVersion('1.18') // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
+	addGameVersion('1.18.1')
+	addLoader('fabric')
 }
