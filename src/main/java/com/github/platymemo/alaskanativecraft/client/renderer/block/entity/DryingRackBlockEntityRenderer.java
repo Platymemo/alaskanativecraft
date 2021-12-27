@@ -26,6 +26,7 @@ public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<Drying
     public void render(@NotNull DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
         Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
         DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
+        // Returns 0 if axis=X, 1 if axis=Z
         int XOrZ = axis.choose(0, 0, 1);
         int k = (int) dryingRackBlockEntity.getPos().asLong();
 
@@ -34,12 +35,12 @@ public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<Drying
             if (itemStack != ItemStack.EMPTY) {
                 matrixStack.push();
                 matrixStack.translate(0.5D, 0.45D, 0.5D);
-                Direction direction2 = Direction.fromHorizontal((k % 2) * 2 + XOrZ);
+                Direction direction2 = Direction.fromHorizontal((l % 2) * 2 + XOrZ);
                 float g = -direction2.asRotation();
                 matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(g));
                 matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
                 matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90.0F));
-                matrixStack.translate(-0.25D, 0.1D, 0.075D * (k < 1 || k > 2 ? 1 : -1));
+                matrixStack.translate(-0.25D, 0.1D, 0.075D * (l < 1 || l > 2 ? 1 : -1));
                 matrixStack.scale(0.375F, 0.375F, 0.375F);
                 MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Mode.FIXED, i, j, matrixStack, vertexConsumerProvider, k + l);
                 matrixStack.pop();
