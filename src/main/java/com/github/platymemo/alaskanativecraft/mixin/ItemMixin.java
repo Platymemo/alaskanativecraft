@@ -10,9 +10,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
-    @Shadow public abstract boolean isDamageable();
+    @Shadow
+    @Final
+    private int maxDamage;
 
-    @Shadow @Final private int maxDamage;
+    @Shadow
+    public abstract boolean isDamageable();
 
     @SuppressWarnings("ConstantConditions")
     @Redirect(method = {"getItemBarStep", "getItemBarColor"}, at = @At(value = "FIELD", target = "Lnet/minecraft/item/Item;maxDamage:I"))

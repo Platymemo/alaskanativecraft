@@ -1,7 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity.State;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
