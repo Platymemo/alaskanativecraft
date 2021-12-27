@@ -177,7 +177,7 @@ public class HarpoonEntity extends PersistentProjectileEntity {
         super.tick();
         boolean inWater = this.isTouchingWater();
 
-        // We don't change anything unless the Harpoon is under water
+        // We don't change anything unless the Harpoon is underwater
         if (this.inGround && this.state != State.LANDED) {
             this.state = State.LANDED;
             return;
@@ -185,9 +185,9 @@ public class HarpoonEntity extends PersistentProjectileEntity {
             return;
         }
 
-        // Harpoon must be under water
+        // Harpoon must be underwater
 
-        // Revert previous trident calculations
+        // Revert previous fall calculations
         Vec3d velocity = this.getVelocity();
         double d = velocity.x;
         double e = velocity.y + 0.05D;
@@ -259,7 +259,11 @@ public class HarpoonEntity extends PersistentProjectileEntity {
 
                 if (hitEntity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) hitEntity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
                     ((MobEntity) hitEntity).attachLeash(this.getOwner(), true);
-                    this.harpoonStack.removeSubNbt("leashed");
+                    // Chance to lose the leash, based on level of Loyalty
+                    // 100% at 0, 50% at 1, 33% at 2, etc.
+                    if (this.random.nextInt(this.dataTracker.get(LOYALTY) + 1) == 0) {
+                        this.harpoonStack.removeSubNbt("leashed");
+                    }
                     this.setVelocity(Vec3d.ZERO);
                     this.playSound(soundEvent, 1.0F, 1.0F);
                     return;
