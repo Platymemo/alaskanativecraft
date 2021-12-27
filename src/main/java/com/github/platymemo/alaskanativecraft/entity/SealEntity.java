@@ -310,7 +310,7 @@ public class SealEntity extends AnimalEntity {
                 double g = Math.sqrt(d * d + e * e + f * f);
                 e /= g;
                 float h = (float) (MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
-                this.seal.setBodyYaw(this.wrapDegrees(this.seal.getYaw(), h, 90.0F));
+                this.seal.setYaw(this.wrapDegrees(this.seal.getYaw(), h, 90.0F));
                 this.seal.bodyYaw = this.seal.getYaw();
                 this.seal.headYaw = this.seal.getYaw();
                 float i = (float) (this.speed * this.seal.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));

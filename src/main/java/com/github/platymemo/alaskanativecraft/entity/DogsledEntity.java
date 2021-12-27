@@ -382,7 +382,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 f += 0.005F;
             }
 
-            this.setBodyYaw(this.getYaw() + this.yawVelocity);
+            this.setYaw(this.getYaw() + this.yawVelocity);
             if (this.pressingForward) {
                 f += 0.04F;
             }
@@ -459,7 +459,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         float f = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
         float g = MathHelper.clamp(f, -105.0F, 105.0F);
         entity.prevYaw += (g - f);
-        entity.setBodyYaw(entity.getYaw() + g - f);
+        entity.setYaw(entity.getYaw() + g - f);
         entity.setHeadYaw(entity.getYaw());
     }
 
@@ -660,7 +660,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                 passenger.noClip = true;
                 Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.getYaw() * 0.017453292F - 1.5707964F);
                 positionUpdater.accept(passenger, this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
-                passenger.setBodyYaw(passenger.getYaw() + this.yawVelocity);
+                passenger.setYaw(passenger.getYaw() + this.yawVelocity);
                 passenger.setHeadYaw(passenger.getHeadYaw() + this.yawVelocity);
                 this.copyEntityData(passenger);
             }
