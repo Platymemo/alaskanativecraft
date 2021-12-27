@@ -87,3 +87,11 @@ Platymemo
 ### v1.3.1: Quick Fix
 Quiqueck
 1. Fix stacking problems
+
+### v1.3.2: Harpoons
+1. Ptarmigan type safety checks
+2. Drying Rack rendering fixes
+3. Loyalty now affects chance to use up the lead on a harpoon
+4. You can now place a stack of leads in the anvil (only one is used)
+5. Can no longer waste a lead on a harpoon that already has one
+6. Nerfed harpoon riptide speed
