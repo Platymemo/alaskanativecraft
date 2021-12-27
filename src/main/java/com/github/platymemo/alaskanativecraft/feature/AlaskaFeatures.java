@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-//@SuppressWarnings("deprecation")
 public class AlaskaFeatures {
     public static void register() {
         AlaskaConfig.GenerationOptions genOptions = AlaskaConfig.getConfig().generation;

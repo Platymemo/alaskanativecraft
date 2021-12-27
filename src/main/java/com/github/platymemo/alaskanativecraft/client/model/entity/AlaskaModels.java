@@ -5,7 +5,7 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.feature.Kuspuk
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.SnowshoeModel;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
@@ -27,7 +27,6 @@ public class AlaskaModels {
     }
 
     @Environment(EnvType.CLIENT)
-    @SuppressWarnings({"deprecation", "UnstableApiUsage"})
     public static void registerEntityModels() {
         EntityModelLayerRegistry.registerModelLayer(PTARMIGAN, PtarmiganEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(DOGSLED, DogsledEntityModel::getTexturedModelData);

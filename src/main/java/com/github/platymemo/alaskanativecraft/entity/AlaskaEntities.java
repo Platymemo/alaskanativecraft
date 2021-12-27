@@ -56,7 +56,6 @@ public class AlaskaEntities {
         FabricDefaultAttributeRegistry.register(MOOSE, MooseEntity.createMooseAttributes());
     }
 
-    @SuppressWarnings("deprecation")
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),

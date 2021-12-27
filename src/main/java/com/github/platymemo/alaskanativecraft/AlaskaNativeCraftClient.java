@@ -15,9 +15,9 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
@@ -38,17 +38,17 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     @SuppressWarnings({"unchecked", "rawtypes"})
     @Environment(EnvType.CLIENT)
     public static void registerEntityRenderers() {
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.WOODEN_HARPOON, HarpoonEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.STONE_HARPOON, HarpoonEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.IRON_HARPOON, HarpoonEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.GOLDEN_HARPOON, HarpoonEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DIAMOND_HARPOON, HarpoonEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.NETHERITE_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.WOODEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.STONE_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.IRON_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.GOLDEN_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.DIAMOND_HARPOON, HarpoonEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.NETHERITE_HARPOON, HarpoonEntityRenderer::new);
 
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.HARP_SEAL, SealEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.PTARMIGAN, PtarmiganEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.MOOSE, MooseEntityRenderer::new);
-        EntityRendererRegistry.INSTANCE.register(AlaskaEntities.DOGSLED, DogsledEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.HARP_SEAL, SealEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.MOOSE, MooseEntityRenderer::new);
+        EntityRendererRegistry.register(AlaskaEntities.DOGSLED, DogsledEntityRenderer::new);
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (entityRenderer instanceof BipedEntityRenderer || entityRenderer instanceof ArmorStandEntityRenderer) {
@@ -90,7 +90,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
 
     @Environment(EnvType.CLIENT)
     public static void registerBlockEntityRenderers() {
-        BlockEntityRendererRegistry.INSTANCE.register(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntityRenderer::new);
+        BlockEntityRendererRegistry.register(AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntityRenderer::new);
     }
 
     @Environment(EnvType.CLIENT)
