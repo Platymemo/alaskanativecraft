@@ -21,6 +21,9 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     @Final
     private final Property levelCost;
 
+    @Shadow
+    private int repairItemUsage;
+
     protected AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(type, syncId, playerInventory, context);
         throw new AssertionError("AlaskaNativeCraft's AnvilScreenHandlerMixin constructor called!");
@@ -30,11 +33,12 @@ public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
     private void addLeashedHarpoon(CallbackInfo ci) {
         ItemStack base = this.input.getStack(0);
         ItemStack addition = this.input.getStack(1);
-        if (base.isIn(AlaskaTags.HARPOONS) && addition.getItem() == Items.LEAD && addition.getCount() == 1) {
+        if (base.isIn(AlaskaTags.HARPOONS) && !base.getOrCreateNbt().getBoolean("leashed") && addition.isOf(Items.LEAD)) {
             ItemStack result = base.copy();
-            result.getOrCreateNbt().putBoolean("leashed", true);
+            result.getOrCreateNbt().putInt("leashed", addition.getCount());
             this.output.setStack(0, result);
             this.levelCost.set(1);
+            this.repairItemUsage = 1;
             sendContentUpdates();
             ci.cancel();
         }
