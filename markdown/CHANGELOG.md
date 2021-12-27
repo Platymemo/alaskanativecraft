@@ -95,3 +95,9 @@ Quiqueck
 4. You can now place a stack of leads in the anvil (only one is used)
 5. Can no longer waste a lead on a harpoon that already has one
 6. Nerfed harpoon riptide speed
+
+### v1.4.0
+Voleil
+1. Updated to 1.18
+Platymemo
+1. Fix Dogsled controls
