@@ -102,3 +102,7 @@ Voleil
 
 Platymemo
 1. Fix Dogsled controls
+
+### v1.4.1: Fish Camps
+1. Added Fish Camps
+2. Vastly reduced feature generation

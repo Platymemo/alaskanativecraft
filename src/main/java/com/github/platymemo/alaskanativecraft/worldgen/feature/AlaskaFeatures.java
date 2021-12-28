@@ -1,4 +1,4 @@
-package com.github.platymemo.alaskanativecraft.feature;
+package com.github.platymemo.alaskanativecraft.worldgen.feature;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;

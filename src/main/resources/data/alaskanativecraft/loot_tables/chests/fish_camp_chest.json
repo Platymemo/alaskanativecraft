@@ -11,6 +11,95 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "alaskanativecraft:set_akutaq_effects",
+              "amount": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 5.0
+              },
+              "effects": [
+                {
+                  "type": "minecraft:absorption",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 13.0,
+                    "max": 20.0
+                  }
+                },
+                {
+                  "type": "minecraft:regeneration",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                },
+                {
+                  "type": "minecraft:resistance",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                },
+                {
+                  "type": "minecraft:fire_resistance",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                },
+                {
+                  "type": "minecraft:haste",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                },
+                {
+                  "type": "minecraft:strength",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 3.0,
+                    "max": 5.0
+                  }
+                },
+                {
+                  "type": "minecraft:speed",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 9.0,
+                    "max": 12.0
+                  }
+                },
+                {
+                  "type": "minecraft:jump_boost",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                },
+                {
+                  "type": "minecraft:saturation",
+                  "duration": {
+                    "type": "minecraft:uniform",
+                    "min": 7.0,
+                    "max": 10.0
+                  }
+                }
+              ]
+            }
+          ],
+          "name": "alaskanativecraft:akutaq"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 15,
           "functions": [
             {
@@ -103,95 +192,6 @@
           "name": "minecraft:wheat"
         }
       ]
-    },
-    {
-      "type": "minecraft:item",
-      "weight": 10,
-      "functions": [
-        {
-          "function": "alaskanativecraft:set_akutaq_effects",
-          "amount": {
-            "type": "minecraft:uniform",
-            "min": 1.0,
-            "max": 5.0
-          },
-          "effects": [
-            {
-              "type": "minecraft:absorption",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 13.0,
-                "max": 20.0
-              }
-            },
-            {
-              "type": "minecraft:regeneration",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            },
-            {
-              "type": "minecraft:resistance",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            },
-            {
-              "type": "minecraft:fire_resistance",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            },
-            {
-              "type": "minecraft:haste",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            },
-            {
-              "type": "minecraft:strength",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 5.0
-              }
-            },
-            {
-              "type": "minecraft:speed",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 9.0,
-                "max": 12.0
-              }
-            },
-            {
-              "type": "minecraft:jump_boost",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            },
-            {
-              "type": "minecraft:saturation",
-              "duration": {
-                "type": "minecraft:uniform",
-                "min": 7.0,
-                "max": 10.0
-              }
-            }
-          ]
-        }
-      ],
-      "name": "alaskanativecraft:akutaq"
     },
     {
       "rolls": 1.0,
