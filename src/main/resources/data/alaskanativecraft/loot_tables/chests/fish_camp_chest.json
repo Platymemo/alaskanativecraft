@@ -1,0 +1,207 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 2.0,
+        "max": 8.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "alaskanativecraft:dry_fish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 4.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:coal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "alaskanativecraft:antler"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "alaskanativecraft:stone_harpoon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "alaskanativecraft:kuspuk_body"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "alaskanativecraft:kuspuk_hood"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "name": "alaskanativecraft:mukluks"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "alaskanativecraft:muktuk"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 2.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:wheat"
+        }
+      ]
+    },
+    {
+      "type": "minecraft:item",
+      "weight": 10,
+      "functions": [
+        {
+          "function": "alaskanativecraft:set_akutaq_effects",
+          "amount": {
+            "type": "minecraft:uniform",
+            "min": 1.0,
+            "max": 5.0
+          },
+          "effects": [
+            {
+              "type": "minecraft:absorption",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 13.0,
+                "max": 20.0
+              }
+            },
+            {
+              "type": "minecraft:regeneration",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            },
+            {
+              "type": "minecraft:resistance",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            },
+            {
+              "type": "minecraft:fire_resistance",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            },
+            {
+              "type": "minecraft:haste",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            },
+            {
+              "type": "minecraft:strength",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 3.0,
+                "max": 5.0
+              }
+            },
+            {
+              "type": "minecraft:speed",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 9.0,
+                "max": 12.0
+              }
+            },
+            {
+              "type": "minecraft:jump_boost",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            },
+            {
+              "type": "minecraft:saturation",
+              "duration": {
+                "type": "minecraft:uniform",
+                "min": 7.0,
+                "max": 10.0
+              }
+            }
+          ]
+        }
+      ],
+      "name": "alaskanativecraft:akutaq"
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "alaskanativecraft:snow_goggles"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package com.github.platymemo.alaskanativecraft.recipe;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.inventory.CraftingInventory;
@@ -12,32 +13,31 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Pair;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
 public class AkutaqRecipe extends SpecialCraftingRecipe {
-    private static final StatusEffect[] POSSIBLE_EFFECTS = {
-            StatusEffects.ABSORPTION,
-            StatusEffects.REGENERATION,
-            StatusEffects.RESISTANCE,
-            StatusEffects.FIRE_RESISTANCE,
-            StatusEffects.HASTE,
-            StatusEffects.STRENGTH,
-            StatusEffects.SPEED,
-            StatusEffects.JUMP_BOOST,
-            StatusEffects.SATURATION
-    };
-    private static final int[] EFFECT_DURATIONS = {400, 200, 200, 200, 200, 100, 250, 200, 10};
-
+    private static final ImmutableList<Pair<StatusEffect, Integer>> POSSIBLE_EFFECTS = ImmutableList.of(
+        new Pair<>(StatusEffects.ABSORPTION, 20),
+        new Pair<>(StatusEffects.REGENERATION, 10),
+        new Pair<>(StatusEffects.RESISTANCE, 10),
+        new Pair<>(StatusEffects.FIRE_RESISTANCE, 10),
+        new Pair<>(StatusEffects.HASTE, 10),
+        new Pair<>(StatusEffects.STRENGTH, 5),
+        new Pair<>(StatusEffects.SPEED, 12),
+        new Pair<>(StatusEffects.JUMP_BOOST, 10),
+        new Pair<>(StatusEffects.SATURATION, 10)
+    );
 
     public AkutaqRecipe(Identifier id) {
         super(id);
     }
 
     // Can't use SuspiciousStewItem.addEffectToStew because it overwrites the list tag each time
-    private static void addEffectToAkutaq(@NotNull ItemStack stew, StatusEffect effect, int duration) {
+    public static void addEffectToAkutaq(@NotNull ItemStack stew, StatusEffect effect, int duration) {
         NbtCompound compoundTag = stew.getOrCreateNbt();
         NbtList listTag = compoundTag.getList("Effects", 10);
 
@@ -105,10 +105,15 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
         for (int i = 0; i < inv.size(); ++i) {
             currentItemstack = inv.getStack(i);
             if (!currentItemstack.isEmpty() && currentItemstack.isIn(AlaskaTags.AKUTAQ_BERRIES)) {
-                int randomEffect = random.nextInt(8);
+                Pair<StatusEffect, Integer> pair = POSSIBLE_EFFECTS.get(random.nextInt(POSSIBLE_EFFECTS.size()));
+                StatusEffect statusEffect = pair.getLeft();
+                int duration = pair.getRight();
+                if (!statusEffect.isInstant()) {
+                    duration *= 20;
+                }
 
                 // Add effect
-                addEffectToAkutaq(akutaq, POSSIBLE_EFFECTS[randomEffect], EFFECT_DURATIONS[randomEffect]);
+                addEffectToAkutaq(akutaq, statusEffect, duration);
             }
         }
 
