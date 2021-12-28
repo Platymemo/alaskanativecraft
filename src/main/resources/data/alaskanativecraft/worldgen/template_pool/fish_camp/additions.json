@@ -1,0 +1,42 @@
+{
+  "name": "alaskanativecraft:fish_camp/additions",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/cabin",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/leanto",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/firepit",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/tall_rack",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

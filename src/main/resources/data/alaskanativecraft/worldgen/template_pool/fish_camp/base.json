@@ -1,0 +1,24 @@
+{
+  "name": "alaskanativecraft:fish_camp/base",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 25,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "terrain_matching",
+        "location": "alaskanativecraft:fish_camp/base_1",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 75,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "terrain_matching",
+        "location": "alaskanativecraft:fish_camp/base_2",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

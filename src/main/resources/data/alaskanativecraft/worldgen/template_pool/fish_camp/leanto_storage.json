@@ -1,0 +1,33 @@
+{
+  "name": "alaskanativecraft:fish_camp/base",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 35,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/leanto_storage/dogsled",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 15,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/leanto_storage/whale_meat",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/leanto_storage/nothing",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

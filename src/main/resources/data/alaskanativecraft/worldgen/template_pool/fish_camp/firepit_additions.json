@@ -1,0 +1,24 @@
+{
+  "name": "alaskanativecraft:fish_camp/firepit_additions",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/firepit/air",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 50,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "alaskanativecraft:fish_camp/firepit/log",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}
