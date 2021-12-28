@@ -96,7 +96,7 @@ Quiqueck
 5. Can no longer waste a lead on a harpoon that already has one
 6. Nerfed harpoon riptide speed
 
-### v1.4.0
+### v1.4.0: It's 1.18 Time
 Voleil
 1. Updated to 1.18
 
