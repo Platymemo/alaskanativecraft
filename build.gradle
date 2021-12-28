@@ -130,19 +130,18 @@ curseforge {
 
 import com.modrinth.minotaur.TaskModrinthUpload
 
-task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after build!
+task publishModrinth (type: TaskModrinthUpload) {
 	onlyIf {
-		System.getenv("MODRINTH") // Only attempt to run this task if the MODRINTH variable is set, otherwise SKIP it
+		System.getenv("MODRINTH")
 	}
 
-	token = System.getenv("MODRINTH") // An environment property called MODRINTH that is your token, set via Gradle CLI, GitHub Actions, Idea Run Configuration, or other
+	token = System.getenv("MODRINTH")
 	projectId = 'iFnEtHsI'
 	versionName = "Alaska Native Craft v${project.mod_version}"
-	versionNumber = "${project.mod_version}" // Will fail if Modrinth has this version already
-	// On fabric, use 'remapJar' instead of 'jar'
+	versionNumber = "${project.mod_version}"
 	uploadFile = remapJar
-	changelog = file("markdown/CHANGELOG.md")
-	addGameVersion('1.18') // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
+	changelog = new File("markdown/CHANGELOG.md").getText('UTF-8')
+	addGameVersion('1.18')
 	addGameVersion('1.18.1')
 	addLoader('fabric')
 }
