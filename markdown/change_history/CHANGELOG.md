@@ -95,3 +95,7 @@ Quiqueck
 4. You can now place a stack of leads in the anvil (only one is used)
 5. Can no longer waste a lead on a harpoon that already has one
 6. Nerfed harpoon riptide speed
+
+### v1.3.3: FlexSeal
+1. Fix seals traveling in one direction indefinitely
+2. Fix seals not spawning
