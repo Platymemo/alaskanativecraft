@@ -155,7 +155,7 @@ task publishModrinth (type: TaskModrinthUpload){ // Make sure it runs after buil
 	versionNumber = "${project.mod_version}" // Will fail if Modrinth has this version already
 	// On fabric, use 'remapJar' instead of 'jar'
 	uploadFile = remapJar
-	changelog = file("markdown/CHANGELOG.md").text
+	changelog = file("markdown/CHANGELOG.md").getText('UTF-8')
 	addGameVersion('1.17') // Call this multiple times to add multiple game versions. There are tools that can help you generate the list of versions
 	addGameVersion('1.17.1')
 	addLoader('fabric')
