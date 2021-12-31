@@ -328,7 +328,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getBodyYawSpeed() + 20), (float) this.seal.getLookPitchSpeed());
+            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getMaxHeadRotation() + 20), (float) this.seal.getMaxLookPitchChange());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
                 this.seal.getNavigation().stop();
             } else {
