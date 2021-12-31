@@ -7,7 +7,6 @@ import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
@@ -15,9 +14,6 @@ import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,13 +37,6 @@ import java.util.EnumSet;
 import java.util.Random;
 
 public class SealEntity extends AnimalEntity {
-    private static final TrackedData<BlockPos> TRAVEL_POS;
-    private static final TrackedData<Boolean> ACTIVELY_TRAVELLING;
-
-    static {
-        TRAVEL_POS = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
-        ACTIVELY_TRAVELLING = DataTracker.registerData(SealEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    }
 
     public SealEntity(EntityType<? extends SealEntity> entityType, World world) {
         super(entityType, world);
@@ -61,6 +50,11 @@ public class SealEntity extends AnimalEntity {
         return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
     }
 
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return world.intersectsEntities(this);
+    }
+
     public static DefaultAttributeContainer.Builder createSealAttributes() {
         return SealEntity.createMobAttributes().
                 add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D).
@@ -68,50 +62,9 @@ public class SealEntity extends AnimalEntity {
                 add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
     }
 
-    private BlockPos getTravelPos() {
-        return this.dataTracker.get(TRAVEL_POS);
-    }
-
-    private void setTravelPos(BlockPos pos) {
-        this.dataTracker.set(TRAVEL_POS, pos);
-    }
-
-    private boolean isActivelyTravelling() {
-        return this.dataTracker.get(ACTIVELY_TRAVELLING);
-    }
-
-    private void setActivelyTravelling(boolean travelling) {
-        this.dataTracker.set(ACTIVELY_TRAVELLING, travelling);
-    }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(TRAVEL_POS, BlockPos.ORIGIN);
-        this.dataTracker.startTracking(ACTIVELY_TRAVELLING, false);
-    }
-
-    @Override
-    public void writeCustomDataToNbt(NbtCompound tag) {
-        super.writeCustomDataToNbt(tag);
-        tag.putInt("TravelPosX", this.getTravelPos().getX());
-        tag.putInt("TravelPosY", this.getTravelPos().getY());
-        tag.putInt("TravelPosZ", this.getTravelPos().getZ());
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        int l = tag.getInt("TravelPosX");
-        int m = tag.getInt("TravelPosY");
-        int n = tag.getInt("TravelPosZ");
-        this.setTravelPos(new BlockPos(l, m, n));
-    }
-
     @Override
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
-        this.setTravelPos(BlockPos.ORIGIN);
         return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
     }
 
@@ -122,8 +75,7 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
         this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.fromTag(AlaskaTags.SEAL_FOOD)));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
-        this.goalSelector.add(3, new SealEntity.WanderInWaterGoal(this, 1.0D));
-        this.goalSelector.add(4, new SealEntity.TravelGoal(this, 1.0D));
+        this.goalSelector.add(3, new SwimAroundGoal(this, this.isBaby() ? 2.0D : 1.0D, 40));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
         this.goalSelector.add(5, new GroundFoodMateGoal(this));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
@@ -267,12 +219,6 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public boolean isValidPosition(BlockPos pos) {
-            if (this.entity instanceof SealEntity sealEntity) {
-                if (sealEntity.isActivelyTravelling()) {
-                    return this.world.getBlockState(pos).isOf(Blocks.WATER);
-                }
-            }
-
             return !this.world.getBlockState(pos.down()).isAir();
         }
     }
@@ -310,7 +256,7 @@ public class SealEntity extends AnimalEntity {
                 double g = Math.sqrt(d * d + e * e + f * f);
                 e /= g;
                 float h = (float) (MathHelper.atan2(f, d) * 57.2957763671875D) - 90.0F;
-                this.seal.setBodyYaw(this.wrapDegrees(this.seal.getYaw(), h, 90.0F));
+                this.seal.setYaw(this.wrapDegrees(this.seal.getYaw(), h, 90.0F));
                 this.seal.bodyYaw = this.seal.getYaw();
                 this.seal.headYaw = this.seal.getYaw();
                 float i = (float) (this.speed * this.seal.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
@@ -319,40 +265,6 @@ public class SealEntity extends AnimalEntity {
             } else {
                 this.seal.setMovementSpeed(0.0F);
             }
-        }
-    }
-
-    static class WanderInWaterGoal extends MoveToTargetPosGoal {
-        private final SealEntity seal;
-
-        private WanderInWaterGoal(SealEntity seal, double speed) {
-            super(seal, seal.isBaby() ? 2.0D : speed, 24);
-            this.seal = seal;
-            this.lowestY = -1;
-        }
-
-        @Override
-        public boolean shouldContinue() {
-            return !this.seal.isTouchingWater() && this.tryingTime <= 1200 && this.isTargetPos(this.seal.world, this.targetPos);
-        }
-
-        @Override
-        public boolean canStart() {
-            if (this.seal.isBaby() && !this.seal.isTouchingWater()) {
-                return super.canStart();
-            } else {
-                return !this.seal.isTouchingWater() && super.canStart();
-            }
-        }
-
-        @Override
-        public boolean shouldResetPath() {
-            return this.tryingTime % 160 == 0;
-        }
-
-        @Override
-        protected boolean isTargetPos(@NotNull WorldView world, BlockPos pos) {
-            return world.getBlockState(pos).isOf(Blocks.WATER);
         }
     }
 
@@ -423,77 +335,6 @@ public class SealEntity extends AnimalEntity {
                 this.seal.getNavigation().startMovingTo(this.targetPlayer, this.speed);
             }
 
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    static class TravelGoal extends Goal {
-        private final SealEntity seal;
-        private final double speed;
-        private boolean noPath;
-
-        TravelGoal(SealEntity seal, double speed) {
-            this.seal = seal;
-            this.speed = speed;
-        }
-
-        @Override
-        public boolean canStart() {
-            return this.seal.isTouchingWater();
-        }
-
-        @Override
-        public void start() {
-            Random random = this.seal.random;
-            int k = random.nextInt(1025) - 512;
-            int l = random.nextInt(9) - 4;
-            int m = random.nextInt(1025) - 512;
-            if ((double) l + this.seal.getY() > (double) (this.seal.world.getSeaLevel() - 1)) {
-                l = 0;
-            }
-
-            BlockPos blockPos = new BlockPos((double) k + this.seal.getX(), (double) l + this.seal.getY(), (double) m + this.seal.getZ());
-            this.seal.setTravelPos(blockPos);
-            this.seal.setActivelyTravelling(true);
-            this.noPath = false;
-        }
-
-        @Override
-        public void tick() {
-            if (this.seal.getNavigation().isIdle()) {
-                Vec3d vec3d = Vec3d.ofBottomCenter(this.seal.getTravelPos());
-                Vec3d vec3d2 = NoPenaltyTargeting.find(this.seal, 16, 3, vec3d, 0.3141592741012573D);
-                if (vec3d2 == null) {
-                    vec3d2 = NoPenaltyTargeting.find(this.seal, 8, 7, vec3d);
-                }
-
-                if (vec3d2 != null) {
-                    int i = MathHelper.floor(vec3d2.x);
-                    int j = MathHelper.floor(vec3d2.z);
-                    if (!this.seal.world.isRegionLoaded(i - 34, 0, j - 34, i + 34, 0, j + 34)) {
-                        vec3d2 = null;
-                    }
-                }
-
-                if (vec3d2 == null) {
-                    this.noPath = true;
-                    return;
-                }
-
-                this.seal.getNavigation().startMovingTo(vec3d2.x, vec3d2.y, vec3d2.z, this.speed);
-            }
-
-        }
-
-        @Override
-        public boolean shouldContinue() {
-            return !this.seal.getNavigation().isIdle() && !this.noPath && !this.seal.isInLove();
-        }
-
-        @Override
-        public void stop() {
-            this.seal.setActivelyTravelling(false);
-            super.stop();
         }
     }
 
