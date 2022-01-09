@@ -100,7 +100,7 @@ curseforge {
 		project {
 			id = '435197'
 			changelogType = 'markdown'
-			changelog = file("markdown/CHANGELOG.md")
+			changelog = file("markdown/versions/${project.mod_version}.md")
 			releaseType = 'release'
 			addGameVersion "1.18-Snapshot"
 			addGameVersion "1.18"
@@ -140,7 +140,7 @@ task publishModrinth (type: TaskModrinthUpload) {
 	versionName = "Alaska Native Craft v${project.mod_version}"
 	versionNumber = "${project.mod_version}"
 	uploadFile = remapJar
-	changelog = new File("markdown/CHANGELOG.md").getText('UTF-8')
+	changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
 	addGameVersion('1.18')
 	addGameVersion('1.18.1')
 	addLoader('fabric')
