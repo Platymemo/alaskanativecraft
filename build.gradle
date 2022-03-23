@@ -126,20 +126,3 @@ curseforge {
 		}
 	}
 }
-
-import com.modrinth.minotaur.TaskModrinthUpload
-
-task publishModrinth (type: TaskModrinthUpload) {
-	onlyIf {
-		System.getenv("MODRINTH")
-	}
-
-	token = System.getenv("MODRINTH")
-	projectId = 'iFnEtHsI'
-	versionName = "Alaska Native Craft v${project.mod_version}"
-	versionNumber = "${project.mod_version}"
-	uploadFile = remapJar
-	changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
-	addGameVersion('1.18.2')
-	addLoader('fabric')
-}
