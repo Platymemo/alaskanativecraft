@@ -1,8 +1,5 @@
 plugins {
 	id 'fabric-loom' version '0.11-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
-	id "com.matthewprenger.cursegradle" version "1.4.0"
-	id "com.modrinth.minotaur" version "1.2.1"
 	id 'maven-publish'
 }
 
@@ -90,39 +87,5 @@ publishing {
 	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
 	repositories {
 		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	}
-}
-
-curseforge {
-	if (project.hasProperty("curse_api_key") || System.getenv("curse_api_key") != null) {
-		apiKey = project.hasProperty("curse_api_key") ? project.property("curse_api_key") : System.getenv("curse_api_key")
-
-		project {
-			id = '435197'
-			changelogType = 'markdown'
-			changelog = file("markdown/versions/${project.mod_version}.md")
-			releaseType = 'release'
-			addGameVersion "1.18.2"
-			addGameVersion "Java 17"
-			addGameVersion "Fabric"
-			relations {
-				requiredDependency 'cloth-config'
-				requiredDependency 'fabric-api'
-				optionalDependency 'modmenu'
-			}
-
-			mainArtifact(remapJar.archivePath) {
-				displayName = "Alaska Native Craft v${project.mod_version}"
-			}
-
-			afterEvaluate {
-				uploadTask.dependsOn(remapJar)
-			}
-		}
-
-		options {
-			javaVersionAutoDetect = false
-			forgeGradleIntegration = false
-		}
 	}
 }
