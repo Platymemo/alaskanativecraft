@@ -129,7 +129,7 @@ public class HarpoonItem extends TridentItem {
                         k *= multiplier / length;
                         l *= multiplier / length;
                         playerEntity.addVelocity(h, k, l);
-                        playerEntity.setRiptideTicks(20);
+                        playerEntity.useRiptide(20);
                         if (playerEntity.isOnGround()) {
                             playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.2D, 0.0D));
                         }
