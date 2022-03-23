@@ -102,8 +102,7 @@ curseforge {
 			changelogType = 'markdown'
 			changelog = file("markdown/versions/${project.mod_version}.md")
 			releaseType = 'release'
-			addGameVersion "1.18-Snapshot"
-			addGameVersion "1.18"
+			addGameVersion "1.18.2"
 			addGameVersion "Java 17"
 			addGameVersion "Fabric"
 			relations {
