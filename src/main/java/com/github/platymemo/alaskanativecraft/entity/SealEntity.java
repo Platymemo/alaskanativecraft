@@ -52,7 +52,7 @@ public class SealEntity extends AnimalEntity {
 
     @Override
     public boolean canSpawn(WorldView world) {
-        return world.intersectsEntities(this);
+        return world.doesNotIntersectEntities(this);
     }
 
     public static DefaultAttributeContainer.Builder createSealAttributes() {
