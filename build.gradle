@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'fabric-loom' version '0.11-SNAPSHOT'
 	id 'io.github.juuxel.loom-quiltflower-mini' version '1.2.1'
 	id "com.matthewprenger.cursegradle" version "1.4.0"
 	id "com.modrinth.minotaur" version "1.2.1"
@@ -141,7 +141,6 @@ task publishModrinth (type: TaskModrinthUpload) {
 	versionNumber = "${project.mod_version}"
 	uploadFile = remapJar
 	changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
-	addGameVersion('1.18')
-	addGameVersion('1.18.1')
+	addGameVersion('1.18.2')
 	addLoader('fabric')
 }
