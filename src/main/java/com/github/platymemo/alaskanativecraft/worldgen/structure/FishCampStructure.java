@@ -41,24 +41,6 @@ public class FishCampStructure extends StructureFeature<StructurePoolFeatureConf
         return biomes.stream().anyMatch(biome -> biome.isIn(BiomeTags.IS_RIVER) || biome.isIn(BiomeTags.IS_OCEAN)) && !context.chunkGenerator().method_41053(StructureSetKeys.VILLAGES, context.seed(), chunkpos.x, chunkpos.z, 10);
     }
 
-    /**
-     * Checks for a village within 10 chunks
-     * identical to {@link net.minecraft.world.gen.feature.PillagerOutpostFeature::isVillageNearby}
-     */
-    private static boolean canGenerate(StructureGeneratorFactory.Context<StructurePoolFeatureConfig> context) {
-        ChunkPos chunkPos = context.chunkPos();
-        int i = chunkPos.x >> 4;
-        int j = chunkPos.z >> 4;
-        ChunkRandom chunkRandom = new ChunkRandom(new AtomicSimpleRandom(0L));
-        chunkRandom.setSeed((long)(i ^ j << 4) ^ context.seed());
-        chunkRandom.nextInt();
-        if (chunkRandom.nextInt(5) != 0) {
-            return false;
-        } else {
-            return !context.chunkGenerator().method_41053(StructureSetKeys.VILLAGES, context.seed(), chunkPos.x, chunkPos.z, 10);
-        }
-    }
-
     public static Optional<StructurePiecesGenerator<StructurePoolFeatureConfig>> createPiecesGenerator(StructureGeneratorFactory.Context<StructurePoolFeatureConfig> context) {
         if (!FishCampStructure.isFeatureChunk(context)) {
             return Optional.empty();
