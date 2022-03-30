@@ -42,6 +42,7 @@ public class AlaskaItems {
     public static final Item LABRADOR_TEA_LEAVES;
     public static final Item LABRADOR_TEA_SEEDS;
     public static final SuspiciousStewItem AKUTAQ;
+    public static final LabradorTeaItem LABRADOR_TEA;
     public static final UluItem ULU;
     public static final HarpoonItem WOODEN_HARPOON;
     public static final HarpoonItem STONE_HARPOON;
@@ -87,6 +88,7 @@ public class AlaskaItems {
 
         LABRADOR_TEA_SEEDS = register("labrador_tea_seeds", new AliasedBlockItem(AlaskaBlocks.LABRADOR_TEA_BUSH, new FabricItemSettings().group(ItemGroup.MATERIALS)));
         LABRADOR_TEA_LEAVES = register("labrador_tea_leaves", new Item(new FabricItemSettings().group(ItemGroup.BREWING)));
+        LABRADOR_TEA = register("labrador_tea", new LabradorTeaItem(new FabricItemSettings().group(ItemGroup.BREWING).food(new FoodComponent.Builder().hunger(3).saturationModifier(5F).snack().build())));
 
         AKUTAQ = register("akutaq", new SuspiciousStewItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
