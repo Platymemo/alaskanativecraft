@@ -47,6 +47,10 @@ public class AlaskaFeatures {
             registerBerryPatch(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
         }
 
+        if (genOptions.genLabradorTea) {
+            registerBerryPatch(AlaskaBlocks.LABRADOR_TEA_BUSH, "labrador_tea_bush");
+        }
+
         if (genOptions.genDriftwood) {
             registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, Biome.Category.BEACH, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
         }

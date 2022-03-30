@@ -39,6 +39,8 @@ public class AlaskaItems {
     public static final Item CLOUDBERRIES;
     public static final Item RASPBERRIES;
     public static final Item SALMONBERRIES;
+    public static final Item LABRADOR_TEA_LEAVES;
+    public static final Item LABRADOR_TEA_SEEDS;
     public static final SuspiciousStewItem AKUTAQ;
     public static final UluItem ULU;
     public static final HarpoonItem WOODEN_HARPOON;
@@ -82,6 +84,9 @@ public class AlaskaItems {
         CLOUDBERRIES = register("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         RASPBERRIES = register("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         SALMONBERRIES = register("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+
+        LABRADOR_TEA_SEEDS = register("labrador_tea_seeds", new AliasedBlockItem(AlaskaBlocks.LABRADOR_TEA_BUSH, new FabricItemSettings().group(ItemGroup.MATERIALS)));
+        LABRADOR_TEA_LEAVES = register("labrador_tea_leaves", new Item(new FabricItemSettings().group(ItemGroup.BREWING)));
 
         AKUTAQ = register("akutaq", new SuspiciousStewItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
