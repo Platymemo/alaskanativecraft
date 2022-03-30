@@ -127,7 +127,7 @@ public class MooseEntity extends AnimalEntity {
             World world = MooseEntity.this.world;
             if (this.logValid) {
                 this.logState = world.getBlockState(this.logPos);
-                if (this.logState.isIn((RegistryEntryList<Block>) CommonBlockTags.LOGS_WITH_BARK)) {
+                if (this.logState.isIn(CommonBlockTags.LOGS_WITH_BARK)) {
                     BlockState blockState = world.getBlockState(this.logPos);
                     Block block = AxeItemAccessor.getStrippedBlocks().get(blockState.getBlock());
                     if (block != null && !world.isClient) {
@@ -164,7 +164,7 @@ public class MooseEntity extends AnimalEntity {
             );
 
             for (BlockPos blockPos : iterable) {
-                if (MooseEntity.this.world.getBlockState(blockPos).isIn((RegistryEntryList<Block>) CommonBlockTags.LOGS_WITH_BARK)) {
+                if (MooseEntity.this.world.getBlockState(blockPos).isIn(CommonBlockTags.LOGS_WITH_BARK)) {
                     return Vec3d.ofBottomCenter(blockPos);
                 }
             }
