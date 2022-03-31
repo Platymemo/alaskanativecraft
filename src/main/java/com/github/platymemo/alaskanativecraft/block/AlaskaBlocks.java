@@ -6,8 +6,10 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.PillarBlock;
 import net.minecraft.block.entity.BlockEntityType;
@@ -24,9 +26,11 @@ public class AlaskaBlocks {
     public static final CloudberryBushBlock CLOUDBERRY_BUSH;
     public static final RaspberryBushBlock RASPBERRY_BUSH;
     public static final SalmonberryBushBlock SALMONBERRY_BUSH;
+    public static final LabradorTeaBushBlock LABRADOR_TEA_BUSH;
     public static final PillarBlock DRIFTWOOD_LOG;
     public static final DryingRackBlock DRYING_RACK;
     public static final BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
+    public static final TeaCauldron TEA_CAULDRON;
 
     static {
         WHALE_MEAT_BLOCK = register("whale_meat_block", new WhaleMeatBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).requiresTool().sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroup.BREWING);
@@ -34,9 +38,11 @@ public class AlaskaBlocks {
         CLOUDBERRY_BUSH = register("cloudberry_bush", new CloudberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
         RASPBERRY_BUSH = register("raspberry_bush", new RaspberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
         SALMONBERRY_BUSH = register("salmonberry_bush", new SalmonberryBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
+        LABRADOR_TEA_BUSH = register("labrador_tea_bush", new LabradorTeaBushBlock(FabricBlockSettings.of(Material.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
         DRIFTWOOD_LOG = register("driftwood_log", new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
         DRYING_RACK = register("drying_rack", new DryingRackBlock(FabricBlockSettings.copyOf(Blocks.OAK_FENCE)), ItemGroup.DECORATIONS);
         DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "drying_rack"), FabricBlockEntityTypeBuilder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
+        TEA_CAULDRON = register("tea_cauldron", new TeaCauldron(AbstractBlock.Settings.copy(Blocks.CAULDRON), LeveledCauldronBlock.RAIN_PREDICATE, TeaCauldron.BEHAVIOUR));
     }
 
     /**
