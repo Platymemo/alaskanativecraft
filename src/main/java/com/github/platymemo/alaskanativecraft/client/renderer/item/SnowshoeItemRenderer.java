@@ -21,7 +21,8 @@ public enum SnowshoeItemRenderer {
     private final SnowshoeModel<LivingEntity> snowshoeModel = new SnowshoeModel<>(SnowshoeModel.getTexturedModelData().createModel());
 
     public boolean render(ItemStack stack, ModelTransformation.Mode renderMode, boolean leftHanded, @NotNull MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, @NotNull BakedModel model) {
-        matrices.push(); {
+        matrices.push();
+        {
             model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
             if (renderMode.isFirstPerson() || renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND) {
@@ -41,7 +42,8 @@ public enum SnowshoeItemRenderer {
                     stack.hasGlint()
             );
             this.snowshoeModel.render(matrices, snowshoe, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        } matrices.pop();
+        }
+        matrices.pop();
         return true;
     }
 }

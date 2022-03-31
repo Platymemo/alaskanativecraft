@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
  * base class for berry bushes,
  * contains common code for berry harvesting and entity collision
  * <br>when creating a new bush, always override {@link #getPickStack(BlockView, BlockPos, BlockState)} to associate the bush to a berry item
+ *
  * @author Platymemo, ix0rai
  */
 public class BushBlock extends SweetBerryBushBlock {

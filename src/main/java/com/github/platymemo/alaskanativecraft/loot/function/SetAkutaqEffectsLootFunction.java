@@ -6,13 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.condition.LootCondition;
@@ -41,6 +35,10 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
         this.amountNumberProvider = amountNumberProvider;
     }
 
+    public static SetAkutaqEffectsLootFunction.Builder builder() {
+        return new SetAkutaqEffectsLootFunction.Builder();
+    }
+
     @Override
     public LootFunctionType getType() {
         return AlaskaLootFunctionTypes.SET_AKUTAQ_EFFECT;
@@ -49,10 +47,10 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
     @Override
     public Set<LootContextParameter<?>> getRequiredParameters() {
         return this.effects
-            .values()
-            .stream()
-            .flatMap(numberProvider -> numberProvider.getRequiredParameters().stream())
-            .collect(ImmutableSet.toImmutableSet());
+                .values()
+                .stream()
+                .flatMap(numberProvider -> numberProvider.getRequiredParameters().stream())
+                .collect(ImmutableSet.toImmutableSet());
     }
 
     @Override
@@ -71,10 +69,6 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
             }
         }
         return stack;
-    }
-
-    public static SetAkutaqEffectsLootFunction.Builder builder() {
-        return new SetAkutaqEffectsLootFunction.Builder();
     }
 
     public static class Builder extends ConditionalLootFunction.Builder<SetAkutaqEffectsLootFunction.Builder> {
@@ -109,7 +103,7 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
             if (!lootFunction.effects.isEmpty()) {
                 JsonArray jsonArray = new JsonArray();
 
-                for(StatusEffect statusEffect : lootFunction.effects.keySet()) {
+                for (StatusEffect statusEffect : lootFunction.effects.keySet()) {
                     JsonObject jsonObject2 = new JsonObject();
                     Identifier identifier = Registry.STATUS_EFFECT.getId(statusEffect);
                     if (identifier == null) {
@@ -130,13 +124,13 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
         public SetAkutaqEffectsLootFunction fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootCondition[] lootConditions) {
             Map<StatusEffect, LootNumberProvider> map = Maps.newHashMap();
             if (jsonObject.has("effects")) {
-                for(JsonElement jsonElement : JsonHelper.getArray(jsonObject, "effects")) {
+                for (JsonElement jsonElement : JsonHelper.getArray(jsonObject, "effects")) {
                     String string = JsonHelper.getString(jsonElement.getAsJsonObject(), "type");
                     StatusEffect statusEffect = Registry.STATUS_EFFECT
-                        .getOrEmpty(new Identifier(string))
-                        .orElseThrow(() -> new JsonSyntaxException("Unknown mob effect '" + string + "'"));
+                            .getOrEmpty(new Identifier(string))
+                            .orElseThrow(() -> new JsonSyntaxException("Unknown mob effect '" + string + "'"));
                     LootNumberProvider lootNumberProvider = JsonHelper.deserialize(
-                        jsonElement.getAsJsonObject(), "duration", jsonDeserializationContext, LootNumberProvider.class
+                            jsonElement.getAsJsonObject(), "duration", jsonDeserializationContext, LootNumberProvider.class
                     );
 
                     map.put(statusEffect, lootNumberProvider);
@@ -146,7 +140,7 @@ public class SetAkutaqEffectsLootFunction extends ConditionalLootFunction {
             LootNumberProvider amountNumberProvider = ConstantLootNumberProvider.create(1.0F);
             if (jsonObject.has("amount")) {
                 amountNumberProvider = JsonHelper.deserialize(
-                    jsonObject, "amount", jsonDeserializationContext, LootNumberProvider.class
+                        jsonObject, "amount", jsonDeserializationContext, LootNumberProvider.class
                 );
             }
 

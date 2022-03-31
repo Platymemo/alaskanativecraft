@@ -40,15 +40,19 @@ public class SnowshoeFeatureRenderer<E extends LivingEntity, M extends BipedEnti
         if (armorItemStack.isOf(AlaskaItems.SNOWSHOES)) {
             VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());
 
-            matrices.push(); {
+            matrices.push();
+            {
                 this.translateToRightLeg(matrices, this.getContextModel(), entity);
                 this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-            } matrices.pop();
+            }
+            matrices.pop();
 
-            matrices.push(); {
+            matrices.push();
+            {
                 this.translateToLeftLeg(matrices, this.getContextModel(), entity);
                 this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-            } matrices.pop();
+            }
+            matrices.pop();
         }
     }
 
