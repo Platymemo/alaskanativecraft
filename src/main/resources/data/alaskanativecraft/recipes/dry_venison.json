@@ -1,0 +1,8 @@
+{
+  "ingredient": {
+    "item": "#c:cooked_venison"
+  },
+  "result": "alaskanativecraft:dry_vension",
+  "cookingtime": 2400,
+  "type": "alaskanativecraft:drying"
+}

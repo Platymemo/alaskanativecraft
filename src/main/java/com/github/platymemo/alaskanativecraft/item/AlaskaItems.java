@@ -65,6 +65,10 @@ public class AlaskaItems {
     public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
     public static final SpawnEggItem MOOSE_SPAWN_EGG;
 
+    public static final Item DRY_VENISON;
+    public static final Item DRY_PTARMIGAN;
+    public static final Item DRY_SEAL;
+
     static {
         MUKTUK = register("muktuk", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
         SEAL = register("seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
@@ -73,6 +77,10 @@ public class AlaskaItems {
         COOKED_PTARMIGAN = register("cooked_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
         VENISON = register("venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = register("cooked_venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
+
+        DRY_VENISON = register("dry_vension", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(10).saturationModifier(1.25F).meat().build())));
+        DRY_PTARMIGAN = register("dry_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(0.8F).meat().build())));
+        DRY_SEAL = register("dry_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.65F).meat().build())));
 
         DRIFTWOOD_CHUNK = register("driftwood_chunk", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
         ANTLER = register("antler", new Item(new FabricItemSettings().group(ItemGroup.MISC)));

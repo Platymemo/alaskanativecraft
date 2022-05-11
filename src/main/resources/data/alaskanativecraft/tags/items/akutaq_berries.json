@@ -4,7 +4,15 @@
     "alaskanativecraft:cloudberries",
     "alaskanativecraft:salmonberries",
     "minecraft:sweet_berries",
+    "minecraft:glow_berries",
+    "minecraft:chorus_fruit",
     "#c:blueberries",
-    "#c:raspberries"
+    "#c:raspberries",
+    "#c:blackberries",
+    "#c:cranberries",
+    "#c:fruits/blueberries",
+    "#c:fruits/raspberries",
+    "#c:fruits/blackberries",
+    "#c:fruits/cranberries"
   ]
 }
