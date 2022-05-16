@@ -2,5 +2,7 @@
   "replace": false,
   "values": [
     "alaskanativecraft:raspberries"
+    "#c:fruits/raspberries",	
+	"#c:raspberries"
   ]
 }

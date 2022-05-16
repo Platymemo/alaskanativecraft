@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "alaskanativecraft:blueberries"
+    "alaskanativecraft:blueberries",
+    "#c:blueberries",
+    "#c:fruits/blueberries"	
   ]
 }
