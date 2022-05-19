@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "alaskanativecraft:fish_camp",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 423681754,
+    "spacing": 16,
+    "separation": 10,
+    "type": "minecraft:random_spread"
+  }
+}

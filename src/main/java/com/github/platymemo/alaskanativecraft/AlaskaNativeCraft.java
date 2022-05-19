@@ -20,7 +20,6 @@ public class AlaskaNativeCraft implements ModInitializer {
         AlaskaLootFunctionTypes.register();
         AlaskaEntities.register();
         AlaskaFeatures.register();
-        AlaskaStructures.register();
         AlaskaTags.register();
         AlaskaSoundEvents.register();
         AlaskaRecipes.register();
