@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "alaskanativecraft:block/labrador_tea_bush/labrador_tea_bush_stage0"
+  }
+}
