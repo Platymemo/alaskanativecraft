@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom' version '0.11-SNAPSHOT'
-	id 'maven-publish'
+    id 'fabric-loom' version '0.11-SNAPSHOT'
+    id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -11,81 +11,81 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		url = "https://maven.fabricmc.net"
-	}
-	maven {
-		url = "https://maven.terraformersmc.com/releases"
-	}
-	maven {
-		url = "https://maven.shedaniel.me"
-	}
+    maven {
+        url = "https://maven.fabricmc.net"
+    }
+    maven {
+        url = "https://maven.terraformersmc.com/releases"
+    }
+    maven {
+        url = "https://maven.shedaniel.me"
+    }
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Mod Menu integration
-	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+    // Mod Menu integration
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-	// REI integration
-	 modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    // REI integration
+    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
-	// ClothConfig
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
-		exclude(group: "net.fabricmc.fabric-api")
-	}
+    // ClothConfig
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 
-	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-	// You may need to force-disable transitiveness on them.
+    // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
+    // You may need to force-disable transitiveness on them.
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/alaskanativecraft.accesswidener")
+    accessWidenerPath = file("src/main/resources/alaskanativecraft.accesswidener")
 }
 
 processResources {
-	inputs.property "version", project.version
+    inputs.property "version", project.version
 
-	filesMatching("fabric.mod.json") {
-		expand "version": project.version
-	}
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
+    it.options.release = 17
 }
 
 java {
-	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-	// if it is present.
-	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+    // if it is present.
+    // If you remove this line, sources will not be generated.
+    withSourcesJar()
 }
 
 jar {
-	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
-	}
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}" }
+    }
 }
 
 // configure the maven publication
 publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 
-	// Select the repositories you want to publish to
-	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
-	repositories {
-		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-	}
+    // Select the repositories you want to publish to
+    // To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
+    repositories {
+        // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    }
 }
