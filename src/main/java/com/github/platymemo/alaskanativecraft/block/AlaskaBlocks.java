@@ -91,6 +91,7 @@ public class AlaskaBlocks {
         flammableRegistry.add(CLOUDBERRY_BUSH, 60, 100);
         flammableRegistry.add(RASPBERRY_BUSH, 60, 100);
         flammableRegistry.add(SALMONBERRY_BUSH, 60, 100);
+        flammableRegistry.add(LABRADOR_TEA_BUSH, 60, 100);
     }
 
 }

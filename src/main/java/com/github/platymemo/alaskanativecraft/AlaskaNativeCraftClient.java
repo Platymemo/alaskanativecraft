@@ -100,6 +100,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.CLOUDBERRY_BUSH, cutout);
         BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.RASPBERRY_BUSH, cutout);
         BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.SALMONBERRY_BUSH, cutout);
+        BlockRenderLayerMap.INSTANCE.putBlock(AlaskaBlocks.LABRADOR_TEA_BUSH, cutout);
     }
 
     @Environment(EnvType.CLIENT)
