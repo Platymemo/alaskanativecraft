@@ -8,7 +8,6 @@ import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import com.github.platymemo.alaskanativecraft.worldgen.feature.AlaskaFeatures;
-import com.github.platymemo.alaskanativecraft.worldgen.structure.AlaskaStructures;
 import net.fabricmc.api.ModInitializer;
 
 public class AlaskaNativeCraft implements ModInitializer {
