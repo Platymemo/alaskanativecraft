@@ -78,7 +78,7 @@ public class AlaskaConfig implements ConfigData {
         @ConfigEntry.Gui.RequiresRestart
         public boolean genSalmonberry = true;
         @ConfigEntry.Gui.RequiresRestart
-        public boolean genLabradorTea;
+        public boolean genLabradorTea = true;
         @ConfigEntry.Gui.RequiresRestart
         public boolean snowyGen = false;
     }
