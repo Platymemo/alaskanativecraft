@@ -150,6 +150,8 @@ public class AlaskaItems {
         compostingChanceRegistry.add(CLOUDBERRIES, 0.3F);
         compostingChanceRegistry.add(RASPBERRIES, 0.3F);
         compostingChanceRegistry.add(SALMONBERRIES, 0.3F);
+        compostingChanceRegistry.add(LABRADOR_TEA_LEAVES, 0.3F);
+        compostingChanceRegistry.add(LABRADOR_TEA_SEEDS, 0.1F);
     }
 
     private static void addItemGroupEntries() {
