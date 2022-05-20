@@ -25,7 +25,6 @@ public class AlaskaBlocks {
     public static final PillarBlock DRIFTWOOD_LOG;
     public static final DryingRackBlock DRYING_RACK;
     public static final BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
-    public static final TeaCauldron TEA_CAULDRON;
 
     static {
         WHALE_MEAT_BLOCK = register("whale_meat_block", new WhaleMeatBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).requiresTool().sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroup.BREWING);
@@ -37,7 +36,6 @@ public class AlaskaBlocks {
         DRIFTWOOD_LOG = register("driftwood_log", new PillarBlock(FabricBlockSettings.copyOf(Blocks.OAK_LOG)), ItemGroup.BUILDING_BLOCKS);
         DRYING_RACK = register("drying_rack", new DryingRackBlock(FabricBlockSettings.copyOf(Blocks.OAK_FENCE)), ItemGroup.DECORATIONS);
         DRYING_RACK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "drying_rack"), FabricBlockEntityTypeBuilder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
-        TEA_CAULDRON = register("tea_cauldron", new TeaCauldron(AbstractBlock.Settings.copy(Blocks.CAULDRON), LeveledCauldronBlock.RAIN_PREDICATE, TeaCauldron.BEHAVIOUR));
     }
 
     /**
