@@ -7,16 +7,16 @@
     },
     {
       "item": "minecraft:water_bucket"
-    },	
-    {
-      "item": "alaskanativecraft:labrador_tea_leaves"
     },
     {
       "item": "alaskanativecraft:labrador_tea_leaves"
     },
     {
       "item": "alaskanativecraft:labrador_tea_leaves"
-    }	
+    },
+    {
+      "item": "alaskanativecraft:labrador_tea_leaves"
+    }
   ],
   "result": {
     "item": "alaskanativecraft:labrador_tea"
