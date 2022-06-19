@@ -3,6 +3,7 @@ package com.github.platymemo.alaskanativecraft.worldgen.feature;
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.mixin.StructureFeatureAccessor;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Block;
@@ -29,6 +30,8 @@ public class AlaskaFeatures {
     private static final int BERRY_RARITY = 64;
 
     public static void register() {
+        StructureFeatureAccessor.callRegister("alaskanativecraft:fish_camp", new FishCampFeature(StructurePoolFeatureConfig.CODEC), GenerationStep.Feature.SURFACE_STRUCTURES);
+
         AlaskaConfig.GenerationOptions genOptions = AlaskaConfig.getConfig().generation;
 
         if (genOptions.genBlueberry) {

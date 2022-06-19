@@ -44,8 +44,6 @@ public class AlaskaConfig implements ConfigData {
         @ConfigEntry.Gui.CollapsibleObject
         public SpawnSettings sealOceanSettings = new SpawnSettings(5, 1, 4);
         @ConfigEntry.Gui.CollapsibleObject
-        public SpawnSettings sealRiverSettings = new SpawnSettings(5, 1, 2);
-        @ConfigEntry.Gui.CollapsibleObject
         public SpawnSettings mooseSettings = new SpawnSettings(2, 1, 3);
         @ConfigEntry.Gui.CollapsibleObject
         public SpawnSettings ptarmiganSettings = new SpawnSettings(5, 2, 5);

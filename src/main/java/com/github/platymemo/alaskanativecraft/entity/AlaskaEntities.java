@@ -63,11 +63,6 @@ public class AlaskaEntities {
                 spawnOptions.sealOceanSettings.weight,
                 spawnOptions.sealOceanSettings.minGroupSize,
                 spawnOptions.sealOceanSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.RIVER),
-                SpawnGroup.WATER_CREATURE, HARP_SEAL,
-                spawnOptions.sealRiverSettings.weight,
-                spawnOptions.sealRiverSettings.minGroupSize,
-                spawnOptions.sealRiverSettings.maxGroupSize);
         BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
                 SpawnGroup.CREATURE, MOOSE,
                 spawnOptions.mooseSettings.weight,

@@ -21,7 +21,8 @@
     "PowderSnowBlockMixin",
     "RepairItemRecipeMixin",
     "ShapedRecipeMixin",
-    "SnowballEntityMixin"
+    "SnowballEntityMixin",
+    "StructureFeatureAccessor"
   ],
   "client": [
     "client.ClientPlayerEntityMixin",
