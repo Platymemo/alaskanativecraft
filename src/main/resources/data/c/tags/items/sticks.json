@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stick",
+    "alaskanativecraft:driftwood_chunk",
+    "alaskanativecraft:antler",
+    "alaskanativecraft:ivory"
+  ]
+}

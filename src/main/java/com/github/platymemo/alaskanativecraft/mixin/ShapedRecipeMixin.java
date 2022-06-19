@@ -21,7 +21,7 @@ public class ShapedRecipeMixin {
     @Final
     ItemStack output;
 
-    @Inject(at = @At("RETURN"), method = "craft", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "craft*", cancellable = true)
     private void addDurability(@NotNull CraftingInventory craftingInventory, CallbackInfoReturnable<ItemStack> cir) {
         if (craftingInventory.containsAny(Set.of(AlaskaItems.DRIFTWOOD_CHUNK, AlaskaItems.ANTLER, AlaskaItems.IVORY)) && this.output.getItem().isDamageable()) {
             ItemStack protectedItem = this.output.copy();

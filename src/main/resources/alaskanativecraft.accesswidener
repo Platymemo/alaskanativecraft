@@ -2,3 +2,5 @@ accessWidener v2 named
 
 accessible class net/minecraft/recipe/CookingRecipeSerializer$RecipeFactory
 accessible class net/minecraft/recipe/Ingredient$Entry
+accessible class net/minecraft/recipe/Ingredient$TagEntry
+accessible method net/minecraft/recipe/Ingredient$TagEntry <init> (Lnet/minecraft/tag/TagKey;)V

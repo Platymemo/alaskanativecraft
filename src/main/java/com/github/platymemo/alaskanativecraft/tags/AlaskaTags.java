@@ -20,6 +20,7 @@ public class AlaskaTags {
     public static final TagKey<Block> SNOWSHOE_SPEED_BLOCKS = TagKey.of(Registry.BLOCK_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "snowshoe_speed_blocks"));
     public static final TagKey<Block> ULU_MINEABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "mineable/ulu"));
 
+    public static final TagKey<Item> STICKS = TagKey.of(Registry.ITEM_KEY, new Identifier("c", "sticks"));
     public static void register() {
         CommonBlockTags.register();
     }
