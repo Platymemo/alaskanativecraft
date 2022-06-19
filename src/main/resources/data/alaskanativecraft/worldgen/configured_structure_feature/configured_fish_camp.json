@@ -1,0 +1,10 @@
+{
+  "config": {
+    "start_pool": "alaskanativecraft:fish_camp/base",
+    "size": 3
+  },
+  "biomes": "#minecraft:is_beach",
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "type": "minecraft:village"
+}

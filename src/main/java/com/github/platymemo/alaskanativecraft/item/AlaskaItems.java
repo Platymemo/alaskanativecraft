@@ -39,7 +39,10 @@ public class AlaskaItems {
     public static final Item CLOUDBERRIES;
     public static final Item RASPBERRIES;
     public static final Item SALMONBERRIES;
+    public static final Item LABRADOR_TEA_LEAVES;
+    public static final Item LABRADOR_TEA_SEEDS;
     public static final SuspiciousStewItem AKUTAQ;
+    public static final LabradorTeaItem LABRADOR_TEA;
     public static final UluItem ULU;
     public static final HarpoonItem WOODEN_HARPOON;
     public static final HarpoonItem STONE_HARPOON;
@@ -62,6 +65,10 @@ public class AlaskaItems {
     public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
     public static final SpawnEggItem MOOSE_SPAWN_EGG;
 
+    public static final Item DRY_VENISON;
+    public static final Item DRY_PTARMIGAN;
+    public static final Item DRY_SEAL;
+
     static {
         MUKTUK = register("muktuk", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
         SEAL = register("seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
@@ -70,6 +77,10 @@ public class AlaskaItems {
         COOKED_PTARMIGAN = register("cooked_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
         VENISON = register("venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = register("cooked_venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
+
+        DRY_VENISON = register("dry_vension", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(10).saturationModifier(1.25F).meat().build())));
+        DRY_PTARMIGAN = register("dry_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(0.8F).meat().build())));
+        DRY_SEAL = register("dry_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.65F).meat().build())));
 
         DRIFTWOOD_CHUNK = register("driftwood_chunk", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
         ANTLER = register("antler", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
@@ -82,6 +93,10 @@ public class AlaskaItems {
         CLOUDBERRIES = register("cloudberries", new AliasedBlockItem(AlaskaBlocks.CLOUDBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         RASPBERRIES = register("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         SALMONBERRIES = register("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
+
+        LABRADOR_TEA_SEEDS = register("labrador_tea_seeds", new AliasedBlockItem(AlaskaBlocks.LABRADOR_TEA_BUSH, new FabricItemSettings().group(ItemGroup.MATERIALS)));
+        LABRADOR_TEA_LEAVES = register("labrador_tea_leaves", new Item(new FabricItemSettings().group(ItemGroup.BREWING)));
+        LABRADOR_TEA = register("labrador_tea", new LabradorTeaItem(new FabricItemSettings().group(ItemGroup.BREWING).food(new FoodComponent.Builder().hunger(3).saturationModifier(5F).snack().build())));
 
         AKUTAQ = register("akutaq", new SuspiciousStewItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
@@ -135,6 +150,8 @@ public class AlaskaItems {
         compostingChanceRegistry.add(CLOUDBERRIES, 0.3F);
         compostingChanceRegistry.add(RASPBERRIES, 0.3F);
         compostingChanceRegistry.add(SALMONBERRIES, 0.3F);
+        compostingChanceRegistry.add(LABRADOR_TEA_LEAVES, 0.3F);
+        compostingChanceRegistry.add(LABRADOR_TEA_SEEDS, 0.1F);
     }
 
     private static void addItemGroupEntries() {

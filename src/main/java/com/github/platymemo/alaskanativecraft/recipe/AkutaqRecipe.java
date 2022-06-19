@@ -21,15 +21,15 @@ import java.util.Random;
 
 public class AkutaqRecipe extends SpecialCraftingRecipe {
     private static final ImmutableList<Pair<StatusEffect, Integer>> POSSIBLE_EFFECTS = ImmutableList.of(
-        new Pair<>(StatusEffects.ABSORPTION, 20),
-        new Pair<>(StatusEffects.REGENERATION, 10),
-        new Pair<>(StatusEffects.RESISTANCE, 10),
-        new Pair<>(StatusEffects.FIRE_RESISTANCE, 10),
-        new Pair<>(StatusEffects.HASTE, 10),
-        new Pair<>(StatusEffects.STRENGTH, 5),
-        new Pair<>(StatusEffects.SPEED, 12),
-        new Pair<>(StatusEffects.JUMP_BOOST, 10),
-        new Pair<>(StatusEffects.SATURATION, 10)
+            new Pair<>(StatusEffects.ABSORPTION, 20),
+            new Pair<>(StatusEffects.REGENERATION, 10),
+            new Pair<>(StatusEffects.RESISTANCE, 10),
+            new Pair<>(StatusEffects.FIRE_RESISTANCE, 10),
+            new Pair<>(StatusEffects.HASTE, 10),
+            new Pair<>(StatusEffects.STRENGTH, 5),
+            new Pair<>(StatusEffects.SPEED, 12),
+            new Pair<>(StatusEffects.JUMP_BOOST, 10),
+            new Pair<>(StatusEffects.SATURATION, 10)
     );
 
     public AkutaqRecipe(Identifier id) {

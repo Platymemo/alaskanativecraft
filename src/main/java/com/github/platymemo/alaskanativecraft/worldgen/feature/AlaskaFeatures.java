@@ -10,15 +10,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.decorator.BiomePlacementModifier;
-import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
-import net.minecraft.world.gen.decorator.SquarePlacementModifier;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,6 +47,10 @@ public class AlaskaFeatures {
             registerBerryPatch(AlaskaBlocks.SALMONBERRY_BUSH, "salmonberry_bush");
         }
 
+        if (genOptions.genLabradorTea) {
+            registerBerryPatch(AlaskaBlocks.LABRADOR_TEA_BUSH, "labrador_tea_bush");
+        }
+
         if (genOptions.genDriftwood) {
             registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, Biome.Category.BEACH, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
         }
@@ -70,35 +74,61 @@ public class AlaskaFeatures {
     }
 
     private static void registerPatch(BlockState blockState, String featureName, int rarity, Biome.Category biomeCategory, Block... whitelist) {
-        ConfiguredFeature<RandomPatchFeatureConfig, ?> patchFeature = Feature.RANDOM_PATCH.configure(ConfiguredFeatures.createRandomPatchFeatureConfig(Feature.SIMPLE_BLOCK.configure(new SimpleBlockFeatureConfig(BlockStateProvider.of(blockState))), List.of(whitelist)));
-
         // Sparse feature
-        PlacedFeature sparsePatch = patchFeature.withPlacement(RarityFilterPlacementModifier.of(rarity), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of());
-        RegistryKey<PlacedFeature> sparsePatchRegistryKey = RegistryKey.of(
+        RegistryKey<PlacedFeature> sparsePatchKey = RegistryKey.of(
                 Registry.PLACED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_sparse")
         );
-        Registry.register(BuiltinRegistries.PLACED_FEATURE, sparsePatchRegistryKey.getValue(), sparsePatch);
+
+        //create and register configured feature
+        RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> patchFeature = ConfiguredFeatures.register(
+                sparsePatchKey.getValue().toString(),
+                Feature.RANDOM_PATCH,
+                ConfiguredFeatures.createRandomPatchFeatureConfig(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(blockState)), List.of(whitelist)));
+
+        //create and register placed feature
+        PlacedFeatures.register(
+                sparsePatchKey.getValue().toString(),
+                patchFeature,
+                List.of(
+                        RarityFilterPlacementModifier.of(rarity),
+                        SquarePlacementModifier.of(),
+                        PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                        BiomePlacementModifier.of()
+                )
+        );
+
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
                         .and(ctx -> !AlaskaConfig.getConfig().generation.snowyGen)
                         .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN),
                 GenerationStep.Feature.VEGETAL_DECORATION,
-                sparsePatchRegistryKey
+                sparsePatchKey
         );
+
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(Biome.Category.ICY),
                 GenerationStep.Feature.VEGETAL_DECORATION,
-                sparsePatchRegistryKey
+                sparsePatchKey
         );
 
         // Decorated (extra sparse) patches
-        PlacedFeature decoratedPatch = patchFeature.withPlacement(RarityFilterPlacementModifier.of(rarity * DECORATED_MULTIPLIER), SquarePlacementModifier.of(), PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of());
         RegistryKey<PlacedFeature> decoratedPatchRegistryKey = RegistryKey.of(
                 Registry.PLACED_FEATURE_KEY,
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_decorated")
         );
-        Registry.register(BuiltinRegistries.PLACED_FEATURE, decoratedPatchRegistryKey.getValue(), decoratedPatch);
+
+        PlacedFeatures.register(
+                decoratedPatchRegistryKey.getValue().toString(),
+                patchFeature,
+                List.of(
+                        RarityFilterPlacementModifier.of(rarity * DECORATED_MULTIPLIER),
+                        SquarePlacementModifier.of(),
+                        PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
+                        BiomePlacementModifier.of()
+                )
+        );
+
         BiomeModifications.addFeature(
                 BiomeSelectors.categories(biomeCategory)
                         .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW),

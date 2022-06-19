@@ -25,7 +25,8 @@ public enum HarpoonItemRenderer {
             return false;
         }
 
-        matrices.push(); {
+        matrices.push();
+        {
             model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
             if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND)) {
@@ -45,7 +46,8 @@ public enum HarpoonItemRenderer {
             );
             this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        } matrices.pop();
+        }
+        matrices.pop();
         return true;
     }
 }

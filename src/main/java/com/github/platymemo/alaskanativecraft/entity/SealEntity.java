@@ -50,16 +50,16 @@ public class SealEntity extends AnimalEntity {
         return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
     }
 
-    @Override
-    public boolean canSpawn(WorldView world) {
-        return world.intersectsEntities(this);
-    }
-
     public static DefaultAttributeContainer.Builder createSealAttributes() {
         return SealEntity.createMobAttributes().
                 add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D).
                 add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.75D).
                 add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.5D);
+    }
+
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return world.doesNotIntersectEntities(this);
     }
 
     @Override

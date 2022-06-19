@@ -16,6 +16,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BiomeTags;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
@@ -51,7 +52,7 @@ public class PtarmiganEntity extends ParrotEntity {
 
     @Override
     public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
-        if (world.getBiome(this.getBlockPos()).getTemperature() <= 0.2F) {
+        if (world.getBiome(getBlockPos()).isIn(BiomeTags.IS_TAIGA)) {
             this.setType(0);
         } else {
             this.setType(this.random.nextInt(2) + 1);

@@ -95,7 +95,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         super(entityType, world);
         this.stepHeight = 1.0F;
         this.inventory = DefaultedList.ofSize(36, ItemStack.EMPTY);
-        this.inanimate = true;
+        this.onGround = true;
     }
 
     public DogsledEntity(World world, double x, double y, double z) {
