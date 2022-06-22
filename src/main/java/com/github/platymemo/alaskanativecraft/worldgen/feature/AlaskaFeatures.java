@@ -4,7 +4,9 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.mixin.StructureFeatureAccessor;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,7 +16,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
@@ -24,6 +25,7 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class AlaskaFeatures {
     private static final int DECORATED_MULTIPLIER = 12;
@@ -51,32 +53,25 @@ public class AlaskaFeatures {
         }
 
         if (genOptions.genLabradorTea) {
-            registerBerryPatch(AlaskaBlocks.LABRADOR_TEA_BUSH, "labrador_tea_bush");
+            registerPatch(AlaskaBlocks.LABRADOR_TEA.getDefaultState(), "labrador_tea_patch", 64, BiomeSelectors.tag(AlaskaTags.HAS_LABRADOR_TEA));
         }
 
         if (genOptions.genDriftwood) {
-            registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, Biome.Category.BEACH, Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
+            registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, BiomeSelectors.tag(AlaskaTags.HAS_DRIFTWOOD), Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
         }
     }
 
     private static void registerBerryPatch(@NotNull Block berryBush, String bushName) {
         registerPatch(
                 berryBush.getDefaultState().with(SweetBerryBushBlock.AGE, 3),
-                bushName + "_taiga",
+                bushName,
                 BERRY_RARITY,
-                Biome.Category.TAIGA,
-                Blocks.GRASS_BLOCK
-        );
-        registerPatch(
-                berryBush.getDefaultState().with(SweetBerryBushBlock.AGE, 3),
-                bushName + "_tundra",
-                BERRY_RARITY * 2,
-                Biome.Category.TAIGA,
+                BiomeSelectors.tag(AlaskaTags.HAS_BUSHES),
                 Blocks.GRASS_BLOCK
         );
     }
 
-    private static void registerPatch(BlockState blockState, String featureName, int rarity, Biome.Category biomeCategory, Block... whitelist) {
+    private static void registerPatch(BlockState blockState, String featureName, int rarity, Predicate<BiomeSelectionContext> selector, Block... whitelist) {
         // Sparse feature
         RegistryKey<PlacedFeature> sparsePatchKey = RegistryKey.of(
                 Registry.PLACED_FEATURE_KEY,
@@ -102,15 +97,7 @@ public class AlaskaFeatures {
         );
 
         BiomeModifications.addFeature(
-                BiomeSelectors.categories(biomeCategory)
-                        .and(ctx -> !AlaskaConfig.getConfig().generation.snowyGen)
-                        .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.RAIN),
-                GenerationStep.Feature.VEGETAL_DECORATION,
-                sparsePatchKey
-        );
-
-        BiomeModifications.addFeature(
-                BiomeSelectors.categories(Biome.Category.ICY),
+                selector,
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 sparsePatchKey
         );
@@ -133,8 +120,7 @@ public class AlaskaFeatures {
         );
 
         BiomeModifications.addFeature(
-                BiomeSelectors.categories(biomeCategory)
-                        .and(ctx -> ctx.getBiome().getPrecipitation() == Biome.Precipitation.SNOW),
+                selector,
                 GenerationStep.Feature.VEGETAL_DECORATION,
                 decoratedPatchRegistryKey
         );

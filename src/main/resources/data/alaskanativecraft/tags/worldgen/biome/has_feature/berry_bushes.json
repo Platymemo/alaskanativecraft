@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "alaskanativecraft:labrador_tea"
+    "#c:taiga",
+    "#c:snowy_plains"
   ]
 }

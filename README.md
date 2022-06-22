@@ -7,8 +7,9 @@ IDE that you are using.
 
 ## License
 
-Creative Commons Zero v1.0 Universal The Creative Commons CC0 Public Domain Dedication. As with the Unlicense and
-typical software licenses, CC0 disclaims warranties.
+Creative Commons Zero v1.0 Universal
+The Creative Commons CC0 Public Domain Dedication.
+As with the Unlicense and typical software licenses, CC0 disclaims warranties.
 
 ## Current Features
 

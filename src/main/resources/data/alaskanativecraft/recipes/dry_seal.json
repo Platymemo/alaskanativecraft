@@ -1,6 +1,6 @@
 {
   "ingredient": {
-    "item": "alaskanativecraft:cooked_seal"
+    "item": "alaskanativecraft:seal"
   },
   "result": "alaskanativecraft:dry_seal",
   "cookingtime": 1600,

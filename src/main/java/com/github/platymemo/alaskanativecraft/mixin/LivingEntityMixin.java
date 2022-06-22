@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
+import com.github.platymemo.alaskanativecraft.entity.effect.AlaskaEffects;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.entity.Entity;
@@ -10,8 +11,12 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -41,6 +47,8 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow
     public abstract Random getRandom();
+
+    @Shadow @Final private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
 
     @Inject(method = "removeSoulSpeedBoost", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     protected void removeSnowshoeSpeedBoost(CallbackInfo ci, EntityAttributeInstance entityAttributeInstance) {
@@ -65,11 +73,26 @@ public abstract class LivingEntityMixin extends Entity {
                 }
             }
         }
-
     }
 
     @Unique
     protected boolean isOnSnowshoeSpeedBlock() {
-        return this.world.getBlockState(this.getVelocityAffectingPos()).isIn(AlaskaTags.SNOWSHOE_SPEED_BLOCKS);
+        BlockPos pos = this.getVelocityAffectingPos();
+        return this.world.getBlockState(pos).isIn(AlaskaTags.SNOWSHOE_SPEED_BLOCKS) || this.world.getBlockState(pos.up()).isIn(AlaskaTags.SNOWSHOE_SPEED_BLOCKS);
+    }
+
+    /*
+     * We have to tick the medicinal effect before all the others because we modify the list of active effects
+     */
+    @Inject(method = "tickStatusEffects", at = @At("HEAD"))
+    private void tickMedicinalEffect(CallbackInfo ci) {
+        if (this.activeStatusEffects.containsKey(AlaskaEffects.MEDICINAL)) {
+            var statusEffect = this.activeStatusEffects.get(AlaskaEffects.MEDICINAL);
+            var duration = statusEffect.getDuration();
+            var amplifier = statusEffect.getAmplifier();
+            if (duration % (80 >> amplifier) == 0) {
+                statusEffect.getEffectType().applyUpdateEffect((LivingEntity) (Object) this, amplifier);
+            }
+        }
     }
 }

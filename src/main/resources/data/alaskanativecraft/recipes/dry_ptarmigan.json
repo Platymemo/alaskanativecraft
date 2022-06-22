@@ -1,8 +1,0 @@
-{
-  "ingredient": {
-    "item": "alaskanativecraft:cooked_ptarmigan"
-  },
-  "result": "alaskanativecraft:dry_ptarmigan",
-  "cookingtime": 1000,
-  "type": "alaskanativecraft:drying"
-}

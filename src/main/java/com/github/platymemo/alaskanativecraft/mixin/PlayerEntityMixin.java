@@ -30,9 +30,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void updateSnowGoggles(CallbackInfo ci) {
         ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
         if (stack.isOf(AlaskaItems.SNOW_GOGGLES)) {
-            if (this.getStatusEffect(StatusEffects.BLINDNESS) != null) {
-                this.removeStatusEffect(StatusEffects.BLINDNESS);
-            }
+            this.removeStatusEffect(StatusEffects.BLINDNESS);
         }
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 
 public class AlaskaTags {
     public static final TagKey<Item> ULUS = TagKey.of(Registry.ITEM_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "ulus"));
@@ -21,6 +22,11 @@ public class AlaskaTags {
     public static final TagKey<Block> ULU_MINEABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "mineable/ulu"));
 
     public static final TagKey<Item> STICKS = TagKey.of(Registry.ITEM_KEY, new Identifier("c", "sticks"));
+
+    public static final TagKey<Biome> HAS_DRIFTWOOD = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/driftwood"));
+    public static final TagKey<Biome> HAS_BUSHES = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/berry_bushes"));
+    public static final TagKey<Biome> HAS_LABRADOR_TEA = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/labrador_tea"));
+
     public static void register() {
         CommonBlockTags.register();
     }

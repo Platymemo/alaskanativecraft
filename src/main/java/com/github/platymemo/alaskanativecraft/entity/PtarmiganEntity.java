@@ -1,5 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
@@ -52,7 +53,7 @@ public class PtarmiganEntity extends ParrotEntity {
 
     @Override
     public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
-        if (world.getBiome(getBlockPos()).isIn(BiomeTags.IS_TAIGA)) {
+        if (world.getBiome(getBlockPos()).isIn(ConventionalBiomeTags.SNOWY) || world.getBiome(getBlockPos()).isIn(ConventionalBiomeTags.CLIMATE_COLD)) {
             this.setType(0);
         } else {
             this.setType(this.random.nextInt(2) + 1);

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "alaskanativecraft:item/dry_vension"
+    "layer0": "alaskanativecraft:item/tundra_tea"
   }
 }

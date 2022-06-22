@@ -1,12 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "group": "purple_dye",
+  "group": "yellow_dye",
   "ingredients": [
     {
       "item": "alaskanativecraft:salmonberries"
     }
   ],
   "result": {
-    "item": "minecraft:purple_dye"
+    "item": "minecraft:yellow_dye"
   }
 }

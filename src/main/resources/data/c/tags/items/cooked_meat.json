@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
+    "minecraft:cooked_beef",
+    "minecraft:cooked_rabbit",
+    "minecraft:cooked_chicken",
+    "minecraft:cooked_porkchop",
+    "minecraft:cooked_mutton",
     "alaskanativecraft:cooked_venison",
     "alaskanativecraft:cooked_ptarmigan",
     "alaskanativecraft:cooked_seal"

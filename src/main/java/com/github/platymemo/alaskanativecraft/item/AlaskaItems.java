@@ -4,7 +4,9 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
+import com.github.platymemo.alaskanativecraft.entity.effect.AlaskaEffects;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
+import com.github.platymemo.alaskanativecraft.mixin.BrewingRecipeRegistryAccessor;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
@@ -18,14 +20,19 @@ import net.minecraft.item.*;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+
+import java.util.List;
 
 public class AlaskaItems {
     public static final Item MUKTUK;
     public static final Item SEAL;
     public static final Item COOKED_SEAL;
+    public static final Item DRY_SEAL;
     public static final Item PTARMIGAN;
     public static final Item COOKED_PTARMIGAN;
     public static final Item VENISON;
@@ -39,10 +46,8 @@ public class AlaskaItems {
     public static final Item CLOUDBERRIES;
     public static final Item RASPBERRIES;
     public static final Item SALMONBERRIES;
-    public static final Item LABRADOR_TEA_LEAVES;
-    public static final Item LABRADOR_TEA_SEEDS;
+    public static final Item LABRADOR_TEA;
     public static final SuspiciousStewItem AKUTAQ;
-    public static final LabradorTeaItem LABRADOR_TEA;
     public static final UluItem ULU;
     public static final HarpoonItem WOODEN_HARPOON;
     public static final HarpoonItem STONE_HARPOON;
@@ -65,22 +70,15 @@ public class AlaskaItems {
     public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
     public static final SpawnEggItem MOOSE_SPAWN_EGG;
 
-    public static final Item DRY_VENISON;
-    public static final Item DRY_PTARMIGAN;
-    public static final Item DRY_SEAL;
-
     static {
         MUKTUK = register("muktuk", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(1.0F).build())));
         SEAL = register("seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_SEAL = register("cooked_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(1.0F).meat().build())));
+        DRY_SEAL = register("dry_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(9).saturationModifier(0.2F).meat().build())));
         PTARMIGAN = register("ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.3F).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 400, 0), 0.5F).meat().build())));
         COOKED_PTARMIGAN = register("cooked_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(5).saturationModifier(0.6F).meat().build())));
         VENISON = register("venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(3).saturationModifier(0.3F).meat().build())));
         COOKED_VENISON = register("cooked_venison", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(8).saturationModifier(0.8F).meat().build())));
-
-        DRY_VENISON = register("dry_vension", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(10).saturationModifier(1.25F).meat().build())));
-        DRY_PTARMIGAN = register("dry_ptarmigan", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(7).saturationModifier(0.8F).meat().build())));
-        DRY_SEAL = register("dry_seal", new Item(new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(6).saturationModifier(0.65F).meat().build())));
 
         DRIFTWOOD_CHUNK = register("driftwood_chunk", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
         ANTLER = register("antler", new Item(new FabricItemSettings().group(ItemGroup.MISC)));
@@ -94,9 +92,7 @@ public class AlaskaItems {
         RASPBERRIES = register("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
         SALMONBERRIES = register("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new FabricItemSettings().group(ItemGroup.FOOD).food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
 
-        LABRADOR_TEA_SEEDS = register("labrador_tea_seeds", new AliasedBlockItem(AlaskaBlocks.LABRADOR_TEA_BUSH, new FabricItemSettings().group(ItemGroup.MATERIALS)));
-        LABRADOR_TEA_LEAVES = register("labrador_tea_leaves", new Item(new FabricItemSettings().group(ItemGroup.BREWING)));
-        LABRADOR_TEA = register("labrador_tea", new LabradorTeaItem(new FabricItemSettings().group(ItemGroup.BREWING).food(new FoodComponent.Builder().hunger(3).saturationModifier(5F).snack().build())));
+        LABRADOR_TEA = register("labrador_tea", new BlockItem(AlaskaBlocks.LABRADOR_TEA, new FabricItemSettings().group(ItemGroup.BREWING)));
 
         AKUTAQ = register("akutaq", new SuspiciousStewItem(new FabricItemSettings().group(ItemGroup.FOOD).maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
@@ -133,10 +129,20 @@ public class AlaskaItems {
     }
 
     public static void register() {
+        addPotionRecipes();
         addFuels();
         addCompostables();
         addItemGroupEntries();
         addSnowGogglesToLootTable();
+    }
+
+    private static void addPotionRecipes() {
+        for (Potion potion: List.of(Potions.WATER, Potions.MUNDANE, Potions.THICK, Potions.AWKWARD)) {
+            BrewingRecipeRegistryAccessor.registerRecipe(potion, AlaskaItems.LABRADOR_TEA, AlaskaPotions.TUNDRA_TEA);
+        }
+        BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, AlaskaItems.LABRADOR_TEA, AlaskaPotions.STRONG_TUNDRA_TEA);
+        BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, Items.GLOWSTONE_DUST, AlaskaPotions.STRONG_TUNDRA_TEA);
+        BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, Items.REDSTONE, AlaskaPotions.LONG_TUNDRA_TEA);
     }
 
     private static void addFuels() {
@@ -150,8 +156,7 @@ public class AlaskaItems {
         compostingChanceRegistry.add(CLOUDBERRIES, 0.3F);
         compostingChanceRegistry.add(RASPBERRIES, 0.3F);
         compostingChanceRegistry.add(SALMONBERRIES, 0.3F);
-        compostingChanceRegistry.add(LABRADOR_TEA_LEAVES, 0.3F);
-        compostingChanceRegistry.add(LABRADOR_TEA_SEEDS, 0.1F);
+        compostingChanceRegistry.add(LABRADOR_TEA, 0.3F);
     }
 
     private static void addItemGroupEntries() {
