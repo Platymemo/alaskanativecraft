@@ -10,7 +10,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.client.BuiltinClientPlugin;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 public class AlaskaPlugin implements REIClientPlugin {
@@ -26,19 +26,19 @@ public class AlaskaPlugin implements REIClientPlugin {
         registry.registerFiller(DryingRecipe.class, DryingDisplay::new);
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(AlaskaItems.AKUTAQ),
-                new TranslatableText("item.alaskanativecraft.akutaq"),
+                Text.translatable("item.alaskanativecraft.akutaq"),
                 (list) -> {
-                    list.add(new TranslatableText("alaskanativecraft.akutaq.line1"));
-                    list.add(new TranslatableText("alaskanativecraft.akutaq.line2"));
-                    list.add(new TranslatableText("alaskanativecraft.akutaq.line3"));
+                    list.add(Text.translatable("alaskanativecraft.akutaq.line1"));
+                    list.add(Text.translatable("alaskanativecraft.akutaq.line2"));
+                    list.add(Text.translatable("alaskanativecraft.akutaq.line3"));
                     return list;
                 });
         BuiltinClientPlugin.getInstance().registerInformation(
                 EntryStacks.of(AlaskaItems.FISH_STRIP),
-                new TranslatableText("item.alaskanativecraft.fish_strip"),
+                Text.translatable("item.alaskanativecraft.fish_strip"),
                 (list) -> {
-                    list.add(new TranslatableText("alaskanativecraft.fish_strip.line1"));
-                    list.add(new TranslatableText("alaskanativecraft.fish_strip.line2"));
+                    list.add(Text.translatable("alaskanativecraft.fish_strip.line1"));
+                    list.add(Text.translatable("alaskanativecraft.fish_strip.line2"));
                     return list;
                 });
     }

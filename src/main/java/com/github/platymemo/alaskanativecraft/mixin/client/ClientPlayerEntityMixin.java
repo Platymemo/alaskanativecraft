@@ -7,8 +7,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,10 +25,11 @@ public abstract class ClientPlayerEntityMixin extends PlayerEntity {
     @Shadow
     private boolean riding;
 
-    protected ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
-        super(world, pos, yaw, profile);
+    ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
+        super(world, pos, yaw, gameProfile, publicKey);
         throw new AssertionError("Mixin constructor called, something is very wrong!");
     }
+
 
     @Inject(at = @At("TAIL"), method = "tickRiding()V")
     private void rideDogsled(CallbackInfo ci) {

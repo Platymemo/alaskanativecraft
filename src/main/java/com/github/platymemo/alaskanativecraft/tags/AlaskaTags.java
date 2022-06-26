@@ -26,6 +26,9 @@ public class AlaskaTags {
     public static final TagKey<Biome> HAS_DRIFTWOOD = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/driftwood"));
     public static final TagKey<Biome> HAS_BUSHES = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/berry_bushes"));
     public static final TagKey<Biome> HAS_LABRADOR_TEA = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/labrador_tea"));
+    public static final TagKey<Biome> HAS_SEAL = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_mob/seal"));
+    public static final TagKey<Biome> HAS_MOOSE = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_mob/moose"));
+    public static final TagKey<Biome> HAS_PTARMIGAN = TagKey.of(Registry.BIOME_KEY, new Identifier(AlaskaNativeCraft.MOD_ID, "has_mob/ptarmigan"));
 
     public static void register() {
         CommonBlockTags.register();

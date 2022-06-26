@@ -4,6 +4,7 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
+import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -14,7 +15,6 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -58,17 +58,17 @@ public class AlaskaEntities {
 
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.OCEAN),
+        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_SEAL),
                 SpawnGroup.WATER_CREATURE, HARP_SEAL,
                 spawnOptions.sealOceanSettings.weight,
                 spawnOptions.sealOceanSettings.minGroupSize,
                 spawnOptions.sealOceanSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
+        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_MOOSE),
                 SpawnGroup.CREATURE, MOOSE,
                 spawnOptions.mooseSettings.weight,
                 spawnOptions.mooseSettings.minGroupSize,
                 spawnOptions.mooseSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.TAIGA, Biome.Category.ICY, Biome.Category.FOREST),
+        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_PTARMIGAN),
                 SpawnGroup.AMBIENT, PTARMIGAN,
                 spawnOptions.ptarmiganSettings.weight,
                 spawnOptions.ptarmiganSettings.minGroupSize,

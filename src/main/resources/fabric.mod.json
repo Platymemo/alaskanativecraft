@@ -26,7 +26,7 @@
     "modmenu": [
       "com.github.platymemo.alaskanativecraft.compat.AlaskaModMenu"
     ],
-    "rei_plugins": [
+    "rei_common": [
       "com.github.platymemo.alaskanativecraft.compat.rei.AlaskaPlugin"
     ]
   },
@@ -37,9 +37,9 @@
   "depends": {
     "fabricloader": ">=0.12.11",
     "fabric": "*",
-    "minecraft": "1.18.2",
+    "minecraft": "1.19",
     "java": ">=17",
-    "cloth-config": ">=6.0.42"
+    "cloth-config": ">=7.0.0"
   },
   "recommends": {
     "modmenu": "*"

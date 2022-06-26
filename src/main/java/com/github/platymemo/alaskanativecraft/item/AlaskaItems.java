@@ -4,19 +4,18 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
-import com.github.platymemo.alaskanativecraft.entity.effect.AlaskaEffects;
 import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMaterials;
 import com.github.platymemo.alaskanativecraft.mixin.BrewingRecipeRegistryAccessor;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
+import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
@@ -168,13 +167,12 @@ public class AlaskaItems {
     }
 
     private static void addSnowGogglesToLootTable() {
-        LootTableLoadingCallback.EVENT.register((resourceManager, lootManager, id, supplier, setter) -> {
+        LootTableEvents.MODIFY.register((resourceManager, lootManager, id, table, source) -> {
             if (LootTables.VILLAGE_SNOWY_HOUSE_CHEST.equals(id) || LootTables.VILLAGE_TAIGA_HOUSE_CHEST.equals(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
-                        .rolls(UniformLootNumberProvider.create(0.0F, 1.0F))
-                        .withEntry(ItemEntry.builder(AlaskaItems.SNOW_GOGGLES).build());
+                LootPool.Builder poolBuilder = new LootPool.Builder().rolls(UniformLootNumberProvider.create(0.0F, 1.0F))
+                        .with(ItemEntry.builder(AlaskaItems.SNOW_GOGGLES).build());
 
-                supplier.pool(poolBuilder);
+                table.pool(poolBuilder);
             }
         });
     }
