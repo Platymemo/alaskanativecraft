@@ -105,7 +105,7 @@ task publishModrinth (type: TaskModrinthUpload) {
     versionNumber = "${project.mod_version}"
     uploadFile = remapJar
     changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
-    addGameVersion('1.18.2')
+    addGameVersion('1.19')
     addLoader('fabric')
 }
 
@@ -118,7 +118,7 @@ curseforge {
             changelogType = 'markdown'
             changelog = file("markdown/versions/${project.mod_version}.md")
             releaseType = 'release'
-            addGameVersion "1.18.2"
+            addGameVersion "1.19"
             addGameVersion "Java 17"
             addGameVersion "Fabric"
             relations {
