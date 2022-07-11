@@ -1,8 +1,6 @@
 package com.github.platymemo.alaskanativecraft.block;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
@@ -19,7 +17,6 @@ public class LabradorTeaBlock extends FlowerBlock implements Fertilizable {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return AlaskaItems.LABRADOR_TEA.getDefaultStack();
     }

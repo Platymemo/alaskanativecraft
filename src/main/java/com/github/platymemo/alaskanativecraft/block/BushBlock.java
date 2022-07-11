@@ -44,7 +44,7 @@ public class BushBlock extends SweetBerryBushBlock {
             world.setBlockState(pos, state.with(AGE, 1), 2);
             return ActionResult.success(world.isClient);
         } else {
-            return super.onUse(state, world, pos, player, hand, hit);
+            return ActionResult.PASS;
         }
     }
 

@@ -1,8 +1,6 @@
 package com.github.platymemo.alaskanativecraft.block;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +12,6 @@ public class RaspberryBushBlock extends BushBlock {
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
     public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return AlaskaItems.RASPBERRIES.getDefaultStack();
     }
