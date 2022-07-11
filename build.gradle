@@ -93,6 +93,7 @@ publishing {
 }
 
 import com.modrinth.minotaur.TaskModrinthUpload
+import com.modrinth.minotaur.request.Dependency
 
 task publishModrinth (type: TaskModrinthUpload) {
     onlyIf {
@@ -106,6 +107,8 @@ task publishModrinth (type: TaskModrinthUpload) {
     uploadFile = remapJar
     changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
     addGameVersion('1.19')
+    addDependency('fabric-api', Dependency.DependencyType.REQUIRED)
+    addDependency('cloth-config', Dependency.DependencyType.REQUIRED)
     addLoader('fabric')
 }
 
