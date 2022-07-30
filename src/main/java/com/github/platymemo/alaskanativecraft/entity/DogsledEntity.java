@@ -177,7 +177,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     }
 
     @Override
-    public boolean collides() {
+    public boolean canHit() {
         return !this.isRemoved();
     }
 
