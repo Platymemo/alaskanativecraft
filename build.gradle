@@ -39,10 +39,6 @@ dependencies {
     // REI integration
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
 
-    modImplementation("dev.architectury:architectury:${rootProject.architectury_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-
     // ClothConfig
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
         exclude(group: "net.fabricmc.fabric-api")
