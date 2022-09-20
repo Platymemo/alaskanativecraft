@@ -104,7 +104,7 @@ public class HarpoonItem extends TridentItem {
                     if (!world.isClient && j == 0) {
                         stack.damage(1, playerEntity, entity -> entity.sendToolBreakStatus(user.getActiveHand()));
                         HarpoonEntity harpoonEntity = new HarpoonEntity(world, playerEntity, this, stack);
-                        harpoonEntity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
+                        harpoonEntity.setVelocity(playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
                         if (playerEntity.getAbilities().creativeMode) {
                             harpoonEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                         }
@@ -129,7 +129,7 @@ public class HarpoonItem extends TridentItem {
                         k *= multiplier / length;
                         l *= multiplier / length;
                         playerEntity.addVelocity(h, k, l);
-                        playerEntity.useRiptide(20);
+                        playerEntity.startRiptideAttack(20);
                         if (playerEntity.isOnGround()) {
                             playerEntity.move(MovementType.SELF, new Vec3d(0.0D, 1.2D, 0.0D));
                         }

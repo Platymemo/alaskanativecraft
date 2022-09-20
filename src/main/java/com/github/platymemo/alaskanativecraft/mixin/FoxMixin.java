@@ -19,10 +19,11 @@ public abstract class FoxMixin extends AnimalEntity {
         throw new AssertionError("AlaskaNativeCraft's FoxMixin constructor called!");
     }
 
-    @Inject(at = @At("HEAD"), method = "method_18262", cancellable = true, remap = false)
-    private static void addPtarmiganTarget(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (entity instanceof PtarmiganEntity) {
-            cir.setReturnValue(true);
-        }
-    }
+    //TODO: locate this method
+//    @Inject(at = @At("HEAD"), method = "method_18262", cancellable = true, remap = false)
+//    private static void addPtarmiganTarget(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
+//        if (entity instanceof PtarmiganEntity) {
+//            cir.setReturnValue(true);
+//        }
+//    }
 }

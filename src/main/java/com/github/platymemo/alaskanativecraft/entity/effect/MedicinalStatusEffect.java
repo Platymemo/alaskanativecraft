@@ -2,11 +2,11 @@ package com.github.platymemo.alaskanativecraft.entity.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class MedicinalStatusEffect extends StatusEffect {
 
-    protected MedicinalStatusEffect(StatusEffectCategory category, int color) {
+    protected MedicinalStatusEffect(StatusEffectType category, int color) {
         super(category, color);
     }
 
@@ -22,7 +22,7 @@ public class MedicinalStatusEffect extends StatusEffect {
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {
         // remove first negative status effect found
         for (StatusEffect type : entity.getActiveStatusEffects().keySet()) {
-            if (type.getCategory() == StatusEffectCategory.HARMFUL) {
+            if (type.getType() == StatusEffectType.HARMFUL) {
                 entity.removeStatusEffect(type);
                 break;
             }

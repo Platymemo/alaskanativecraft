@@ -6,9 +6,11 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class LabradorTeaBlock extends FlowerBlock implements Fertilizable {
     public LabradorTeaBlock(StatusEffect suspiciousStewEffect, int effectDuration, AbstractBlock.Settings settings) {
@@ -26,12 +28,13 @@ public class LabradorTeaBlock extends FlowerBlock implements Fertilizable {
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return true;
+    public boolean canGrow(World world, RandomGenerator random, BlockPos pos, BlockState state) {
+        return false;
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
+    public void grow(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state) {
         dropStack(world, pos, new ItemStack(this));
+
     }
 }

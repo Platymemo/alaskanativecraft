@@ -26,7 +26,7 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 public class SealEntity extends AnimalEntity {
 
@@ -46,8 +47,8 @@ public class SealEntity extends AnimalEntity {
     }
 
     @SuppressWarnings({"deprecation", "unused"})
-    public static <T extends Entity> boolean canSpawn(EntityType<T> type, @NotNull ServerWorldAccess world, SpawnReason spawnReason, @NotNull BlockPos pos, Random random) {
-        return pos.getY() < world.getSeaLevel() + 2 && pos.getY() > world.getSeaLevel() - 10 && world.getBaseLightLevel(pos, 0) > 8;
+    public static <T extends Entity> boolean canSpawn(EntityType<T> entityType, ServerWorldAccess serverWorldAccess, SpawnReason spawnReason, BlockPos blockPos, RandomGenerator randomGenerator) {
+        return blockPos.getY() < serverWorldAccess.getSeaLevel() + 2 && blockPos.getY() > serverWorldAccess.getSeaLevel() - 10 && serverWorldAccess.getBaseLightLevel(blockPos, 0) > 8;
     }
 
     public static DefaultAttributeContainer.Builder createSealAttributes() {
@@ -73,16 +74,16 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(0, new FleeEntityGoal<>(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.fromTag(AlaskaTags.SEAL_FOOD)));
+        this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.ofTag(AlaskaTags.SEAL_FOOD)));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
         this.goalSelector.add(3, new SwimAroundGoal(this, this.isBaby() ? 2.0D : 1.0D, 40));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
         this.goalSelector.add(5, new GroundFoodMateGoal(this));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
-        this.targetSelector.add(0, new ActiveTargetGoal<>(this, SalmonEntity.class, true));
-        this.targetSelector.add(0, new ActiveTargetGoal<>(this, CodEntity.class, true));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, SquidEntity.class, true));
+//        this.targetSelector.add(0, new ActiveTargetGoal<>(this, SalmonEntity.class, true));
+//        this.targetSelector.add(0, new ActiveTargetGoal<>(this, CodEntity.class, true));
+//        this.targetSelector.add(1, new ActiveTargetGoal<>(this, SquidEntity.class, true));
     }
 
     @Override
@@ -328,7 +329,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getMaxHeadRotation() + 20), (float) this.seal.getMaxLookPitchChange());
+            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getHeadYaw() + 20), (float) this.seal.getPitch());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
                 this.seal.getNavigation().stop();
             } else {

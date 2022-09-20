@@ -36,7 +36,7 @@ public class SnowballEntityMixin {
                 NbtCompound entityTag = new NbtCompound();
                 entityTag.putString("id", ptarmigan.toString());
 
-                if (entity.getEntityWorld() instanceof ServerWorld world) {
+                if (entity.getWorld() instanceof ServerWorld world) {
                     Entity newEntity = EntityType.loadEntityWithPassengers(entityTag, world, (entityMaker) -> {
                         entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
                         return entityMaker;
@@ -44,10 +44,8 @@ public class SnowballEntityMixin {
                     if (newEntity != null) {
                         newEntity.setCustomName(entityName);
                     }
-
-                    if (world.spawnNewEntityAndPassengers(newEntity)) {
-                        entity.discard();
-                    }
+                    world.spawnEntityAndPassengers(newEntity);
+                    entity.discard();
                 }
             }
         }

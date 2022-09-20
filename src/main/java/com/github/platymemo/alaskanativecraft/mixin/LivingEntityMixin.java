@@ -15,7 +15,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,7 +46,7 @@ public abstract class LivingEntityMixin extends Entity {
     public abstract ItemStack getEquippedStack(EquipmentSlot feet);
 
     @Shadow
-    public abstract Random getRandom();
+    public abstract RandomGenerator getRandom();
 
     @Shadow @Final private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
 

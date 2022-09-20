@@ -1,10 +1,10 @@
 package com.github.platymemo.alaskanativecraft.client.model.entity;
 
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
