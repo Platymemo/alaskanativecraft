@@ -10,6 +10,8 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -53,17 +55,17 @@ public class AlaskaEntities {
 
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_SEAL),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_SEAL),
                 SpawnGroup.WATER_CREATURE, HARP_SEAL,
                 spawnOptions.sealOceanSettings.weight,
                 spawnOptions.sealOceanSettings.minGroupSize,
                 spawnOptions.sealOceanSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_MOOSE),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_MOOSE),
                 SpawnGroup.CREATURE, MOOSE,
                 spawnOptions.mooseSettings.weight,
                 spawnOptions.mooseSettings.minGroupSize,
                 spawnOptions.mooseSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_PTARMIGAN),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_PTARMIGAN),
                 SpawnGroup.AMBIENT, PTARMIGAN,
                 spawnOptions.ptarmiganSettings.weight,
                 spawnOptions.ptarmiganSettings.minGroupSize,
