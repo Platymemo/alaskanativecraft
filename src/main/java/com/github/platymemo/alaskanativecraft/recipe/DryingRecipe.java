@@ -1,8 +1,6 @@
 package com.github.platymemo.alaskanativecraft.recipe;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.AbstractCookingRecipe;
 import net.minecraft.recipe.Ingredient;

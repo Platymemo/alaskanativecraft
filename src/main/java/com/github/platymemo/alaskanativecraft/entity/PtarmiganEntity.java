@@ -1,6 +1,5 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;

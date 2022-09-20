@@ -5,8 +5,6 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.DogsledEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;

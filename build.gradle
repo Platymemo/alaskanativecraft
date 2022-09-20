@@ -37,16 +37,19 @@ dependencies {
     // Mod Menu integration
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "net.fabricmc")
     }
 
     // REI integration
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}") {
         exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "net.fabricmc")
     }
 
     // ClothConfig
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
         exclude(group: "net.fabricmc.fabric-api")
+        exclude(group: "net.fabricmc")
     }
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.

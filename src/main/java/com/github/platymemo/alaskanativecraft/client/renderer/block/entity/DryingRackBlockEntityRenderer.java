@@ -2,8 +2,6 @@ package com.github.platymemo.alaskanativecraft.client.renderer.block.entity;
 
 import com.github.platymemo.alaskanativecraft.block.DryingRackBlock;
 import com.github.platymemo.alaskanativecraft.block.entity.DryingRackBlockEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;

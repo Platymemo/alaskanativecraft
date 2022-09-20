@@ -5,8 +5,6 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.PtarmiganEntit
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;

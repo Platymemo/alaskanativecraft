@@ -1,8 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.client;
 
 import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookGroup;
 import net.minecraft.recipe.Recipe;

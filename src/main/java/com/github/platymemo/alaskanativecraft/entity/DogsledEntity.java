@@ -2,8 +2,6 @@ package com.github.platymemo.alaskanativecraft.entity;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.google.common.collect.Lists;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

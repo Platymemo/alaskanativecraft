@@ -2,8 +2,6 @@ package com.github.platymemo.alaskanativecraft.mixin.client;
 
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
 import com.mojang.authlib.GameProfile;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.input.Input;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;

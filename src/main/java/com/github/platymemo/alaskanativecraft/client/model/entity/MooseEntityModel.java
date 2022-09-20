@@ -1,7 +1,5 @@
 package com.github.platymemo.alaskanativecraft.client.model.entity;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.QuadrupedEntityModel;

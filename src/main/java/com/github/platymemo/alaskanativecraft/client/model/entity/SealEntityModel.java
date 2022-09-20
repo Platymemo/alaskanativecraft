@@ -3,8 +3,6 @@ package com.github.platymemo.alaskanativecraft.client.model.entity;
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.QuadrupedEntityModel;

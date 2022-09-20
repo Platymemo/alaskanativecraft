@@ -1,8 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.client;
 
 import com.github.platymemo.alaskanativecraft.entity.DogsledEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;

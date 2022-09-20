@@ -10,14 +10,6 @@ import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.Sno
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.ArmorStandEntityRenderer;
