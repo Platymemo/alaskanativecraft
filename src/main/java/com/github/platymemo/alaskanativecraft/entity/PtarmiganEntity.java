@@ -23,10 +23,7 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 public class PtarmiganEntity extends ParrotEntity {
     private static final TrackedData<Integer> TYPE;

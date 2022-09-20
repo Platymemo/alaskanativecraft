@@ -33,6 +33,9 @@ import java.util.UUID;
 public abstract class LivingEntityMixin extends Entity {
     @Unique
     private static final UUID SNOWSHOE_SPEED_BOOST_ID = UUID.fromString("0b824742-8bbc-4043-8caf-f997a543495f");
+    @Shadow
+    @Final
+    private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
 
     protected LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -47,8 +50,6 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow
     public abstract RandomGenerator getRandom();
-
-    @Shadow @Final private Map<StatusEffect, StatusEffectInstance> activeStatusEffects;
 
     @Inject(method = "removeSoulSpeedBoost", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     protected void removeSnowshoeSpeedBoost(CallbackInfo ci, EntityAttributeInstance entityAttributeInstance) {

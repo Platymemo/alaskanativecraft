@@ -1,7 +1,10 @@
 package com.github.platymemo.alaskanativecraft.block;
 
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Fertilizable;
+import net.minecraft.block.FlowerBlock;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -9,8 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class LabradorTeaBlock extends FlowerBlock implements Fertilizable {
     public LabradorTeaBlock(StatusEffect suspiciousStewEffect, int effectDuration, AbstractBlock.Settings settings) {

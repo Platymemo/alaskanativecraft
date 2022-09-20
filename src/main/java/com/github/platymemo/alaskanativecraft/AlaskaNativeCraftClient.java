@@ -28,7 +28,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.util.registry.Registry;
-import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.block.extensions.api.client.BlockRenderLayerMap;
 
 import java.util.UUID;

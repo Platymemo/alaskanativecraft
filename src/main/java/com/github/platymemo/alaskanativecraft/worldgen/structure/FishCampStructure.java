@@ -2,7 +2,6 @@ package com.github.platymemo.alaskanativecraft.worldgen.structure;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.structure.Structure;
 import net.minecraft.structure.StructureType;
 import net.minecraft.structure.pool.StructurePool;
 import net.minecraft.structure.pool.StructurePoolBasedGenerator;
@@ -10,14 +9,11 @@ import net.minecraft.tag.BiomeTags;
 import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.StructureFeature;
 import net.minecraft.world.gen.heightprovider.HeightProvider;
 
 import java.util.Optional;
-import java.util.Set;
 
 public class FishCampStructure extends StructureFeature {
     public static final Codec<FishCampStructure> CODEC = RecordCodecBuilder.<FishCampStructure>mapCodec(instance ->
@@ -43,8 +39,7 @@ public class FishCampStructure extends StructureFeature {
                              int size,
                              HeightProvider startHeight,
                              Optional<Heightmap.Type> projectStartToHeightmap,
-                             int maxDistanceFromCenter)
-    {
+                             int maxDistanceFromCenter) {
         super(config);
         this.startPool = startPool;
         this.startJigsawName = startJigsawName;
@@ -60,7 +55,8 @@ public class FishCampStructure extends StructureFeature {
         int landHeight = context.chunkGenerator().getHeightInGround(spawnXZPosition.getX(), spawnXZPosition.getZ(), Heightmap.Type.WORLD_SURFACE_WG, context.world(), context.randomState());
 
         var biomes = context.chunkGenerator().getBiomeSource().getBiomesInArea(spawnXZPosition.getX(), landHeight, spawnXZPosition.getZ(), 32, context.randomState().getSampler());
-        if (biomes.stream().noneMatch(biome -> biome.hasTag(BiomeTags.IS_RIVER) || biome.hasTag(BiomeTags.IS_OCEAN))) return Optional.empty();
+        if (biomes.stream().noneMatch(biome -> biome.hasTag(BiomeTags.IS_RIVER) || biome.hasTag(BiomeTags.IS_OCEAN)))
+            return Optional.empty();
 
         return StructurePoolBasedGenerator.m_drsiegyr(context, this.startPool, this.startJigsawName, this.size, spawnXZPosition.up(landHeight), false, this.projectStartToHeightmap, this.maxDistanceFromCenter);
     }

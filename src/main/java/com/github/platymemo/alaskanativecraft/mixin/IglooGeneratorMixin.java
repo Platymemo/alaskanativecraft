@@ -26,6 +26,11 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
     private static final Identifier DOGSLED_LOOT_TABLE = LootTables.VILLAGE_SNOWY_HOUSE_CHEST;
     private static BlockPos lastPos;
 
+    protected IglooGeneratorMixin(StructureTemplateManager manager, Identifier identifier, BlockPos pos, BlockRotation rotation, int yOffset) {
+        super(StructurePieceType.IGLOO, 0, manager, identifier, identifier.toString(), createPlacementData(rotation, identifier), getPosOffset(identifier, pos, yOffset));
+        throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
+    }
+
     @Shadow
     private static StructurePlacementData createPlacementData(BlockRotation rotation, Identifier identifier) {
         throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin shadowed method called!");
@@ -34,11 +39,6 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
     @Shadow
     private static BlockPos getPosOffset(Identifier identifier, BlockPos pos, int yOffset) {
         throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin shadowed method called!");
-    }
-
-    protected IglooGeneratorMixin(StructureTemplateManager manager, Identifier identifier, BlockPos pos, BlockRotation rotation, int yOffset) {
-        super(StructurePieceType.IGLOO, 0, manager, identifier, identifier.toString(), createPlacementData(rotation, identifier), getPosOffset(identifier, pos, yOffset));
-        throw new AssertionError("AlaskaNativeCraft's IglooGeneratorMixin constructor called!");
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/structure/piece/SimpleStructurePiece;generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/structure/StructureManager;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/util/random/RandomGenerator;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)V", shift = At.Shift.AFTER),

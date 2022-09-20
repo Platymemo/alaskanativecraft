@@ -12,8 +12,6 @@ import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class FishStripRecipe extends SpecialCraftingRecipe {
 
     public FishStripRecipe(Identifier id) {

@@ -136,7 +136,7 @@ public class AlaskaItems {
     }
 
     private static void addPotionRecipes() {
-        for (Potion potion: List.of(Potions.WATER, Potions.MUNDANE, Potions.THICK, Potions.AWKWARD)) {
+        for (Potion potion : List.of(Potions.WATER, Potions.MUNDANE, Potions.THICK, Potions.AWKWARD)) {
             BrewingRecipeRegistryAccessor.registerRecipe(potion, AlaskaItems.LABRADOR_TEA, AlaskaPotions.TUNDRA_TEA);
         }
         BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, AlaskaItems.LABRADOR_TEA, AlaskaPotions.STRONG_TUNDRA_TEA);

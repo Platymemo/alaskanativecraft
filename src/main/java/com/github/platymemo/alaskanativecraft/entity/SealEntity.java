@@ -14,7 +14,9 @@ import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -35,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class SealEntity extends AnimalEntity {
 
@@ -329,7 +330,7 @@ public class SealEntity extends AnimalEntity {
 
         @Override
         public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getHeadYaw() + 20), (float) this.seal.getPitch());
+            this.seal.getLookControl().lookAt(this.targetPlayer, this.seal.getHeadYaw() + 20, this.seal.getPitch());
             if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
                 this.seal.getNavigation().stop();
             } else {
