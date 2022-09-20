@@ -4,6 +4,8 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.client.model.entity.AlaskaModels;
 import com.github.platymemo.alaskanativecraft.client.model.entity.MooseEntityModel;
 import com.github.platymemo.alaskanativecraft.entity.MooseEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
