@@ -3,6 +3,8 @@ package com.github.platymemo.alaskanativecraft.entity;
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -35,6 +37,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class HarpoonEntity extends PersistentProjectileEntity {
     public static final Identifier SPAWN_PACKET = new Identifier(AlaskaNativeCraft.MOD_ID, "harpoon_entity");

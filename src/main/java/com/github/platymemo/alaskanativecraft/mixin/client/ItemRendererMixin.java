@@ -4,6 +4,8 @@ import com.github.platymemo.alaskanativecraft.client.renderer.item.HarpoonItemRe
 import com.github.platymemo.alaskanativecraft.client.renderer.item.SnowshoeItemRenderer;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
