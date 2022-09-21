@@ -8,6 +8,7 @@ import com.github.platymemo.alaskanativecraft.item.material.AlaskaNativeArmorMat
 import com.github.platymemo.alaskanativecraft.mixin.BrewingRecipeRegistryAccessor;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -150,7 +151,7 @@ public class AlaskaItems {
     }
 
     private static void addCompostables() {
-        ItemContentRegistries compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
+        CompostingChanceRegistry compostingChanceRegistry = CompostingChanceRegistry.INSTANCE;
         compostingChanceRegistry.add(BLUEBERRIES, 0.3F);
         compostingChanceRegistry.add(CLOUDBERRIES, 0.3F);
         compostingChanceRegistry.add(RASPBERRIES, 0.3F);
