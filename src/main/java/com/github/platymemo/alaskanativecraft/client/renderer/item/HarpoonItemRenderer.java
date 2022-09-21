@@ -4,6 +4,8 @@ import com.github.platymemo.alaskanativecraft.client.model.entity.HarpoonEntityM
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEntityRenderer;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;

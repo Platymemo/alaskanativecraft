@@ -21,6 +21,9 @@ import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
 import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectionContext;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -49,11 +52,11 @@ public class AlaskaFeatures {
         }
 
         if (genOptions.genLabradorTea) {
-            registerPatch(AlaskaBlocks.LABRADOR_TEA.getDefaultState(), "labrador_tea_patch", 64, BiomeSelectors.tag(AlaskaTags.HAS_LABRADOR_TEA));
+            registerPatch(AlaskaBlocks.LABRADOR_TEA.getDefaultState(), "labrador_tea_patch", 64, BiomeSelectors.isIn(AlaskaTags.HAS_LABRADOR_TEA));
         }
 
         if (genOptions.genDriftwood) {
-            registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, BiomeSelectors.tag(AlaskaTags.HAS_DRIFTWOOD), Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
+            registerPatch(AlaskaBlocks.DRIFTWOOD_LOG.getDefaultState(), "washed_up_driftwood", BERRY_RARITY / 2, BiomeSelectors.isIn(AlaskaTags.HAS_DRIFTWOOD), Blocks.GRASS_BLOCK, Blocks.GRAVEL, Blocks.CLAY, Blocks.SAND, Blocks.RED_SAND);
         }
     }
 
@@ -62,7 +65,7 @@ public class AlaskaFeatures {
                 berryBush.getDefaultState().with(SweetBerryBushBlock.AGE, 3),
                 bushName,
                 BERRY_RARITY,
-                BiomeSelectors.tag(AlaskaTags.HAS_BUSHES),
+                BiomeSelectors.isIn(AlaskaTags.HAS_BUSHES),
                 Blocks.GRASS_BLOCK
         );
     }
