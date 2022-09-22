@@ -22,7 +22,7 @@
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
       "init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraft",
-      "client": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
+      "client_init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
     },
     "depends": [
       {
@@ -36,6 +36,10 @@
       {
         "id": "minecraft",
         "versions": ">=1.19.2"
+      },
+      {
+        "id": "cloth-config",
+        "versions": ">=7.0.0"
       }
     ]
   },
