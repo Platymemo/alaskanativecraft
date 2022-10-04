@@ -50,7 +50,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
     }
 
     public DryingRackBlock(Settings settings) {
-        super(settings);
+        super(settings.nonOpaque());
         this.setDefaultState(this.getStateManager().getDefaultState()
                 .with(WATERLOGGED, false)
                 .with(CONNECTED_POS, false)
