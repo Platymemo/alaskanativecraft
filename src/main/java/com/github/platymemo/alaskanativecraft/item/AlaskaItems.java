@@ -23,7 +23,6 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
-import org.quiltmc.qsl.item.content.registry.api.ItemContentRegistries;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.List;
