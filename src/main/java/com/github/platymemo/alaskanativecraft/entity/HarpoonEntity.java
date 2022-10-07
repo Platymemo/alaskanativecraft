@@ -5,6 +5,9 @@ import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -35,322 +38,327 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 
 public class HarpoonEntity extends PersistentProjectileEntity {
-    public static final Identifier SPAWN_PACKET = new Identifier(AlaskaNativeCraft.MOD_ID, "harpoon_entity");
-    private static final TrackedData<Byte> LOYALTY;
-    private static final TrackedData<Boolean> ENCHANTED;
+	public static final Identifier SPAWN_PACKET = new Identifier(AlaskaNativeCraft.MOD_ID, "harpoon_entity");
+	private static final TrackedData<Byte> LOYALTY;
+	private static final TrackedData<Boolean> ENCHANTED;
 
-    static {
-        ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-        LOYALTY = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BYTE);
-    }
+	static {
+		ENCHANTED = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+		LOYALTY = DataTracker.registerData(HarpoonEntity.class, TrackedDataHandlerRegistry.BYTE);
+	}
 
-    public int returnTimer;
-    private ItemStack harpoonStack;
-    private HarpoonEntity.State state;
-    private boolean dealtDamage;
+	public int returnTimer;
+	private ItemStack harpoonStack;
+	private HarpoonEntity.State state;
+	private boolean dealtDamage;
 
-    public HarpoonEntity(EntityType<? extends HarpoonEntity> entityType, World world, HarpoonItem item) {
-        super(entityType, world);
-        this.state = HarpoonEntity.State.FLYING;
-        this.harpoonStack = new ItemStack(item);
-    }
+	public HarpoonEntity(EntityType<? extends HarpoonEntity> entityType, World world, HarpoonItem item) {
+		super(entityType, world);
+		this.state = HarpoonEntity.State.FLYING;
+		this.harpoonStack = new ItemStack(item);
+	}
 
-    public HarpoonEntity(World world, LivingEntity owner, @NotNull HarpoonItem item, @NotNull ItemStack stack) {
-        super(item.getType(), owner, world);
-        this.harpoonStack = stack.copy();
-        this.state = HarpoonEntity.State.FLYING;
-        this.dataTracker.set(LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
-        this.dataTracker.set(ENCHANTED, stack.hasGlint());
-    }
+	public HarpoonEntity(World world, LivingEntity owner, @NotNull HarpoonItem item, @NotNull ItemStack stack) {
+		super(item.getType(), owner, world);
+		this.harpoonStack = stack.copy();
+		this.state = HarpoonEntity.State.FLYING;
+		this.dataTracker.set(LOYALTY, (byte) EnchantmentHelper.getLoyalty(stack));
+		this.dataTracker.set(ENCHANTED, stack.hasGlint());
+	}
 
-    public static DamageSource createHarpoonDamageSource(Entity harpoon, Entity owner) {
-        return new ProjectileDamageSource("harpoon", harpoon, owner).setProjectile();
-    }
+	public static DamageSource createHarpoonDamageSource(Entity harpoon, Entity owner) {
+		return new ProjectileDamageSource("harpoon", harpoon, owner).setProjectile();
+	}
 
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(LOYALTY, (byte) 0);
-        this.dataTracker.startTracking(ENCHANTED, false);
-    }
+	@Override
+	protected void initDataTracker() {
+		super.initDataTracker();
+		this.dataTracker.startTracking(LOYALTY, (byte) 0);
+		this.dataTracker.startTracking(ENCHANTED, false);
+	}
 
-    @Override
-    public Packet<?> createSpawnPacket() {
-        PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
+	@Override
+	public Packet<?> createSpawnPacket() {
+		PacketByteBuf packet = new PacketByteBuf(Unpooled.buffer());
 
-        packet.writeVarInt(Registry.ENTITY_TYPE.getRawId(this.getType()));
-        packet.writeUuid(this.getUuid());
-        packet.writeVarInt(this.getId());
-        packet.writeDouble(this.getX());
-        packet.writeDouble(this.getY());
-        packet.writeDouble(this.getZ());
-        packet.writeByte(MathHelper.floor(this.getPitch() * 256.0F / 360.0F));
-        packet.writeByte(MathHelper.floor(this.getYaw() * 256.0F / 360.0F));
+		packet.writeVarInt(Registry.ENTITY_TYPE.getRawId(this.getType()));
+		packet.writeUuid(this.getUuid());
+		packet.writeVarInt(this.getId());
+		packet.writeDouble(this.getX());
+		packet.writeDouble(this.getY());
+		packet.writeDouble(this.getZ());
+		packet.writeByte(MathHelper.floor(this.getPitch() * 256.0F / 360.0F));
+		packet.writeByte(MathHelper.floor(this.getYaw() * 256.0F / 360.0F));
 
-        return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET, packet);
-    }
+		return ServerPlayNetworking.createS2CPacket(SPAWN_PACKET, packet);
+	}
 
-    @Override
-    protected ItemStack asItemStack() {
-        return this.harpoonStack.copy();
-    }
+	@Override
+	protected ItemStack asItemStack() {
+		return this.harpoonStack.copy();
+	}
 
-    @Environment(EnvType.CLIENT)
-    public boolean isEnchanted() {
-        return this.dataTracker.get(ENCHANTED);
-    }
+	@Environment(EnvType.CLIENT)
+	public boolean isEnchanted() {
+		return this.dataTracker.get(ENCHANTED);
+	}
 
-    @Override
-    @Nullable
-    protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
-        return this.dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
-    }
+	@Override
+	@Nullable
+	protected EntityHitResult getEntityCollision(Vec3d currentPosition, Vec3d nextPosition) {
+		return this.dealtDamage ? null : super.getEntityCollision(currentPosition, nextPosition);
+	}
 
-    @Override
-    public void tick() {
-        if (this.state == State.BOBBING) {
-            float fluidHeight = 0.0F;
-            BlockPos blockPos = this.getBlockPos();
-            FluidState fluidState = this.world.getFluidState(blockPos);
-            if (fluidState.isIn(FluidTags.WATER)) {
-                fluidHeight = fluidState.getHeight(this.world, blockPos);
-            }
-            Vec3d vec3d = this.getVelocity();
-            double distanceFromLiquidHeight = this.getY() + vec3d.y - (double) blockPos.getY() - (double) fluidHeight;
+	@Override
+	public void tick() {
+		if (this.state == State.BOBBING) {
+			float fluidHeight = 0.0F;
+			BlockPos blockPos = this.getBlockPos();
+			FluidState fluidState = this.world.getFluidState(blockPos);
+			if (fluidState.isIn(FluidTags.WATER)) {
+				fluidHeight = fluidState.getHeight(this.world, blockPos);
+			}
 
-            // Set pitch, zero it if its minimal.
-            if (vec3d.y > 0.032D) {
-                this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.horizontalLength()) * 57.2957763671875D));
-                this.setPitch(updateRotation(this.prevPitch, this.getPitch()));
-            } else {
-                this.setPitch(updateRotation(this.prevPitch, 0.0F));
-            }
+			Vec3d vec3d = this.getVelocity();
+			double distanceFromLiquidHeight = this.getY() + vec3d.y - (double) blockPos.getY() - (double) fluidHeight;
 
-            // Get bobbing action
-            if (Math.abs(distanceFromLiquidHeight) < 0.01D) {
-                distanceFromLiquidHeight += Math.signum(distanceFromLiquidHeight) * 0.1D;
-            }
-            this.setVelocity(vec3d.x * 0.9D, vec3d.y - distanceFromLiquidHeight * (double) this.random.nextFloat() * 0.2D, vec3d.z * 0.9D);
-            vec3d = this.getVelocity();
-            this.setPosition(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
-            this.checkBlockCollision();
-            return;
-        }
+			// Set pitch, zero it if its minimal.
+			if (vec3d.y > 0.032D) {
+				this.setPitch((float) (MathHelper.atan2(vec3d.y, vec3d.horizontalLength()) * 57.2957763671875D));
+				this.setPitch(updateRotation(this.prevPitch, this.getPitch()));
+			} else {
+				this.setPitch(updateRotation(this.prevPitch, 0.0F));
+			}
 
-        if (this.inGroundTime > 4) {
-            this.dealtDamage = true;
-        }
+			// Get bobbing action
+			if (Math.abs(distanceFromLiquidHeight) < 0.01D) {
+				distanceFromLiquidHeight += Math.signum(distanceFromLiquidHeight) * 0.1D;
+			}
 
-        Entity entity = this.getOwner();
-        if ((this.dealtDamage || this.isNoClip()) && entity != null) {
-            int i = this.dataTracker.get(LOYALTY);
-            if (i > 0 && !entity.isAlive()) {
-                if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
-                    this.dropStack(this.asItemStack(), 0.1F);
-                }
+			this.setVelocity(vec3d.x * 0.9D, vec3d.y - distanceFromLiquidHeight * (double) this.random.nextFloat() * 0.2D, vec3d.z * 0.9D);
+			vec3d = this.getVelocity();
+			this.setPosition(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
+			this.checkBlockCollision();
 
-                this.discard();
-            } else if (i > 0) {
-                this.setNoClip(true);
-                Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
-                this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double) i, this.getZ());
-                if (this.world.isClient) {
-                    this.lastRenderY = this.getY();
-                }
+			return;
+		}
 
-                double d = 0.05D * (double) i;
-                this.setVelocity(this.getVelocity().multiply(0.95D).add(vec3d.normalize().multiply(d)));
-                if (this.returnTimer == 0) {
-                    this.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
-                }
+		if (this.inGroundTime > 4) {
+			this.dealtDamage = true;
+		}
 
-                ++this.returnTimer;
-            }
-        }
+		Entity entity = this.getOwner();
+		if ((this.dealtDamage || this.isNoClip()) && entity != null) {
+			int i = this.dataTracker.get(LOYALTY);
+			if (i > 0 && !entity.isAlive()) {
+				if (!this.world.isClient && this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED) {
+					this.dropStack(this.asItemStack(), 0.1F);
+				}
 
-        super.tick();
-        boolean inWater = this.isTouchingWater();
+				this.discard();
+			} else if (i > 0) {
+				this.setNoClip(true);
+				Vec3d vec3d = new Vec3d(entity.getX() - this.getX(), entity.getEyeY() - this.getY(), entity.getZ() - this.getZ());
+				this.setPos(this.getX(), this.getY() + vec3d.y * 0.015D * (double) i, this.getZ());
+				if (this.world.isClient) {
+					this.lastRenderY = this.getY();
+				}
 
-        // We don't change anything unless the Harpoon is underwater
-        if (this.inGround && this.state != State.LANDED) {
-            this.state = State.LANDED;
-            return;
-        } else if (!inWater || this.state != State.FLYING) {
-            return;
-        }
+				double d = 0.05D * (double) i;
+				this.setVelocity(this.getVelocity().multiply(0.95D).add(vec3d.normalize().multiply(d)));
+				if (this.returnTimer == 0) {
+					this.playSound(SoundEvents.ITEM_TRIDENT_RETURN, 10.0F, 1.0F);
+				}
 
-        // Harpoon must be underwater
+				++this.returnTimer;
+			}
+		}
 
-        // Revert previous fall calculations
-        Vec3d velocity = this.getVelocity();
-        double d = velocity.x;
-        double e = velocity.y + 0.05D;
-        double g = velocity.z;
-        this.setVelocity(d, e, g);
+		super.tick();
+		boolean inWater = this.isTouchingWater();
 
-        double h = this.getX() - d;
-        double j = this.getY() - e;
-        double k = this.getZ() - g;
+		// We don't change anything unless the Harpoon is underwater
+		if (this.inGround && this.state != State.LANDED) {
+			this.state = State.LANDED;
+			return;
+		} else if (!inWater || this.state != State.FLYING) {
+			return;
+		}
 
-        // Now do regular tick stuff
-        float f = 0.0F;
-        BlockPos blockPos = this.getBlockPos();
-        FluidState fluidState = this.world.getFluidState(blockPos);
-        if (fluidState.isIn(FluidTags.WATER)) {
-            f = fluidState.getHeight(this.world, blockPos);
-        }
-        velocity = this.getVelocity();
-        double distanceFromLiquidHeight = this.getY() + velocity.y - (double) blockPos.getY() - (double) f;
+		// Harpoon must be underwater
 
-        // The harpoon is still flying through water, so make it buoyant
-        if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
-            this.state = State.BOBBING;
-        } else {
-            this.setVelocity(velocity.x, velocity.y + 0.025D, velocity.z);
-        }
+		// Revert previous fall calculations
+		Vec3d velocity = this.getVelocity();
+		double d = velocity.x;
+		double e = velocity.y + 0.05D;
+		double g = velocity.z;
+		this.setVelocity(d, e, g);
 
-        velocity = this.getVelocity().multiply(this.getDragInWater());
-        h += velocity.x;
-        j += velocity.y;
-        k += velocity.z;
-        this.setPosition(h, j, k);
-        this.checkBlockCollision();
-    }
+		double h = this.getX() - d;
+		double j = this.getY() - e;
+		double k = this.getZ() - g;
 
-    @Override
-    protected void checkBlockCollision() {
-        super.checkBlockCollision();
-        if (this.inGround) {
-            this.state = State.LANDED;
-        }
-    }
+		// Now do regular tick stuff
+		float f = 0.0F;
+		BlockPos blockPos = this.getBlockPos();
+		FluidState fluidState = this.world.getFluidState(blockPos);
+		if (fluidState.isIn(FluidTags.WATER)) {
+			f = fluidState.getHeight(this.world, blockPos);
+		}
 
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
-        Entity hitEntity = entityHitResult.getEntity();
-        float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
-        if (hitEntity instanceof LivingEntity livingHitEntity) {
-            f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingHitEntity.getGroup());
-        }
+		velocity = this.getVelocity();
+		double distanceFromLiquidHeight = this.getY() + velocity.y - (double) blockPos.getY() - (double) f;
 
-        Entity owner = this.getOwner();
-        DamageSource damageSource = createHarpoonDamageSource(this, (owner == null ? this : owner));
-        this.dealtDamage = true;
-        SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
-        if (hitEntity.damage(damageSource, f)) {
-            if (hitEntity.getType() == EntityType.ENDERMAN) {
-                return;
-            }
+		// The harpoon is still flying through water, so make it buoyant
+		if (distanceFromLiquidHeight > 0.0D && velocity.length() < 1) {
+			this.state = State.BOBBING;
+		} else {
+			this.setVelocity(velocity.x, velocity.y + 0.025D, velocity.z);
+		}
 
-            if (hitEntity instanceof LivingEntity livingHitEntity) {
-                if (owner instanceof LivingEntity) {
-                    EnchantmentHelper.onUserDamaged(livingHitEntity, owner);
-                    EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingHitEntity);
-                }
+		velocity = this.getVelocity().multiply(this.getDragInWater());
+		h += velocity.x;
+		j += velocity.y;
+		k += velocity.z;
+		this.setPosition(h, j, k);
+		this.checkBlockCollision();
+	}
 
-                this.onHit(livingHitEntity);
+	@Override
+	protected void checkBlockCollision() {
+		super.checkBlockCollision();
+		if (this.inGround) {
+			this.state = State.LANDED;
+		}
+	}
 
-                if (hitEntity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) hitEntity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
-                    ((MobEntity) hitEntity).attachLeash(this.getOwner(), true);
-                    // Chance to lose the leash, based on level of Loyalty
-                    // 100% at 0, 50% at 1, 33% at 2, etc.
-                    if (this.random.nextInt(this.dataTracker.get(LOYALTY) + 1) == 0) {
-                        this.harpoonStack.removeSubNbt("leashed");
-                    }
-                    this.setVelocity(Vec3d.ZERO);
-                    this.playSound(soundEvent, 1.0F, 1.0F);
-                    return;
-                }
-            }
-        }
+	@SuppressWarnings("ConstantConditions")
+	@Override
+	protected void onEntityHit(@NotNull EntityHitResult entityHitResult) {
+		Entity hitEntity = entityHitResult.getEntity();
+		float f = ((HarpoonItem) this.harpoonStack.getItem()).getAttackDamage();
+		if (hitEntity instanceof LivingEntity livingHitEntity) {
+			f += EnchantmentHelper.getAttackDamage(this.harpoonStack, livingHitEntity.getGroup());
+		}
 
-        float g = 1.0F;
-        if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.harpoonStack)) {
-            BlockPos blockPos = hitEntity.getBlockPos();
-            if (this.world.isSkyVisible(blockPos)) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
-                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
-                lightningEntity.setChanneler(owner instanceof ServerPlayerEntity ? (ServerPlayerEntity) owner : null);
-                this.world.spawnEntity(lightningEntity);
-                soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
-                g = 5.0F;
-            }
-        }
+		Entity owner = this.getOwner();
+		DamageSource damageSource = createHarpoonDamageSource(this, (owner == null ? this : owner));
+		this.dealtDamage = true;
+		SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_HIT;
+		if (hitEntity.damage(damageSource, f)) {
+			if (hitEntity.getType() == EntityType.ENDERMAN) {
+				return;
+			}
 
-        this.playSound(soundEvent, g, 1.0F);
+			if (hitEntity instanceof LivingEntity livingHitEntity) {
+				if (owner instanceof LivingEntity) {
+					EnchantmentHelper.onUserDamaged(livingHitEntity, owner);
+					EnchantmentHelper.onTargetDamaged((LivingEntity) owner, livingHitEntity);
+				}
 
-        this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
-        this.playSound(soundEvent, 1.0F, 1.0F);
-    }
+				this.onHit(livingHitEntity);
 
-    @Override
-    protected SoundEvent getHitSound() {
-        return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
-    }
+				if (hitEntity instanceof MobEntity && this.getOwner() instanceof PlayerEntity && !((MobEntity) hitEntity).isLeashed() && this.harpoonStack.getOrCreateNbt().contains("leashed") && this.harpoonStack.getOrCreateNbt().getBoolean("leashed")) {
+					((MobEntity) hitEntity).attachLeash(this.getOwner(), true);
+					// Chance to lose the leash, based on level of Loyalty
+					// 100% at 0, 50% at 1, 33% at 2, etc.
+					if (this.random.nextInt(this.dataTracker.get(LOYALTY) + 1) == 0) {
+						this.harpoonStack.removeSubNbt("leashed");
+					}
 
-    @Override
-    public void onPlayerCollision(PlayerEntity player) {
-        Entity entity = this.getOwner();
-        if (entity == null || entity.getUuid() == player.getUuid()) {
-            if (this.state != State.FLYING && !this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
-                boolean bl = this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED || this.pickupType == PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY && player.getAbilities().creativeMode || this.isNoClip() && this.getOwner().getUuid() == player.getUuid();
-                if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED && !player.getInventory().insertStack(this.asItemStack())) {
-                    bl = false;
-                }
+					this.setVelocity(Vec3d.ZERO);
+					this.playSound(soundEvent, 1.0F, 1.0F);
+					return;
+				}
+			}
+		}
 
-                if (bl) {
-                    player.sendPickup(this, 1);
-                    this.discard();
-                }
-            } else
-                super.onPlayerCollision(player);
-        }
-    }
+		float g = 1.0F;
+		if (this.world instanceof ServerWorld && this.world.isThundering() && EnchantmentHelper.hasChanneling(this.harpoonStack)) {
+			BlockPos blockPos = hitEntity.getBlockPos();
+			if (this.world.isSkyVisible(blockPos)) {
+				LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
+				lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
+				lightningEntity.setChanneler(owner instanceof ServerPlayerEntity ? (ServerPlayerEntity) owner : null);
+				this.world.spawnEntity(lightningEntity);
+				soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
+				g = 5.0F;
+			}
+		}
 
-    @Override
-    public void readCustomDataFromNbt(NbtCompound tag) {
-        super.readCustomDataFromNbt(tag);
-        if (tag.contains("Trident", 10)) {
-            this.harpoonStack = ItemStack.fromNbt(tag.getCompound("Harpoon"));
-        }
+		this.playSound(soundEvent, g, 1.0F);
 
-        this.dealtDamage = tag.getBoolean("DealtDamage");
-    }
+		this.setVelocity(this.getVelocity().multiply(-0.01D, -0.1D, -0.01D));
+		this.playSound(soundEvent, 1.0F, 1.0F);
+	}
 
-    @Override
-    public void writeCustomDataToNbt(NbtCompound tag) {
-        super.writeCustomDataToNbt(tag);
-        tag.put("Harpoon", this.harpoonStack.writeNbt(new NbtCompound()));
-        tag.putBoolean("DealtDamage", this.dealtDamage);
-    }
+	@Override
+	protected SoundEvent getHitSound() {
+		return SoundEvents.ITEM_TRIDENT_HIT_GROUND;
+	}
 
-    @Override
-    public void age() {
-        if (this.pickupType != PersistentProjectileEntity.PickupPermission.ALLOWED) {
-            super.age();
-        }
-    }
+	@Override
+	public void onPlayerCollision(PlayerEntity player) {
+		Entity entity = this.getOwner();
+		if (entity == null || entity.getUuid() == player.getUuid()) {
+			if (this.state != State.FLYING && !this.world.isClient && (this.state == State.BOBBING || this.isNoClip()) && this.shake <= 0) {
+				boolean bl = this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED || this.pickupType == PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY && player.getAbilities().creativeMode || this.isNoClip() && this.getOwner().getUuid() == player.getUuid();
+				if (this.pickupType == PersistentProjectileEntity.PickupPermission.ALLOWED && !player.getInventory().insertStack(this.asItemStack())) {
+					bl = false;
+				}
 
-    @Override
-    protected float getDragInWater() {
-        return 0.9F;
-    }
+				if (bl) {
+					player.sendPickup(this, 1);
+					this.discard();
+				}
+			} else {
+				super.onPlayerCollision(player);
+			}
+		}
+	}
 
-    @Override
-    public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
-        return true;
-    }
+	@Override
+	public void readCustomDataFromNbt(NbtCompound tag) {
+		super.readCustomDataFromNbt(tag);
+		if (tag.contains("Trident", 10)) {
+			this.harpoonStack = ItemStack.fromNbt(tag.getCompound("Harpoon"));
+		}
 
-    enum State {
-        FLYING,
-        HOOKED_IN_ENTITY,
-        BOBBING,
-        LANDED
-    }
+		this.dealtDamage = tag.getBoolean("DealtDamage");
+	}
+
+	@Override
+	public void writeCustomDataToNbt(NbtCompound tag) {
+		super.writeCustomDataToNbt(tag);
+		tag.put("Harpoon", this.harpoonStack.writeNbt(new NbtCompound()));
+		tag.putBoolean("DealtDamage", this.dealtDamage);
+	}
+
+	@Override
+	public void age() {
+		if (this.pickupType != PersistentProjectileEntity.PickupPermission.ALLOWED) {
+			super.age();
+		}
+	}
+
+	@Override
+	protected float getDragInWater() {
+		return 0.9F;
+	}
+
+	@Override
+	public boolean shouldRender(double cameraX, double cameraY, double cameraZ) {
+		return true;
+	}
+
+	enum State {
+		FLYING,
+		HOOKED_IN_ENTITY,
+		BOBBING,
+		LANDED
+	}
 }

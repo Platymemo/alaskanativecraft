@@ -41,6 +41,12 @@
         <property name="message" value="missing blank line after block at same indentation level"/>
     </module>
 
+    <!-- disallow blank line before <p> tag -->
+    <module name="RegexpMultiline">
+        <property name="format" value="(?&lt;=\n)([\t ]+\*)\r?\n\1 &lt;p&gt;"/>
+        <property name="message" value="blank line before &lt;p&gt;"/>
+    </module>
+
     <module name="TreeWalker">
         <!-- Allow "//CHECKSTYLE.OFF: <InspectionName>" and "//CHECKSTYLE.ON: <InspectionName>" pairs to toggle some inspections -->
         <module name="SuppressionCommentFilter">
@@ -137,7 +143,7 @@
         <module name="AnnotationLocation"/>
         <module name="MissingOverride"/>
 
-        <!-- By default this allows catch blocks with only comments -->
+        <!-- By default, this allows catch blocks with only comments -->
         <module name="EmptyCatchBlock"/>
 
         <!-- Require the use of the "this" keyword -->
@@ -151,13 +157,16 @@
             <property name="message" value="non-tab indentation"/>
         </module>
 
+        <!-- Enforce <p> tag on its own line -->
+        <module name="RegexpSinglelineJava">
+            <property name="format" value="&lt;p&gt;[^\r\n]+"/>
+            <property name="message" value="&lt;p&gt; not on its own line"/>
+        </module>
+
         <module name="OuterTypeFilename"/>
         <module name="PackageDeclaration"/>
 
         <module name="InvalidJavadocPosition"/>
-        <module name="JavadocParagraph">
-            <property name="allowNewlineParagraph" value="false"/>
-        </module>
         <module name="JavadocBlockTagLocation"/>
         <module name="JavadocContentLocation"/>
         <module name="JavadocStyle"/>

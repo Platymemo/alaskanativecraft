@@ -8,7 +8,7 @@ Currently included features are described below.
 ## Features
 
 1. Mobs
-    * Harp Seals
+    * Seals
         * These fellas spawn in ocean and river biomes and spend their time hunting fish
     * Ptarmigans
         * These guys can be tamed with seeds and rides your shoulder much like a parrot!
