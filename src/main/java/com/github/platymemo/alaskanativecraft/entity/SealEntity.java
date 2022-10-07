@@ -6,15 +6,36 @@ import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityGroup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MovementType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.*;
+import net.minecraft.entity.ai.goal.AnimalMateGoal;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.TargetGoal;
+import net.minecraft.entity.ai.goal.TemptGoal;
+import net.minecraft.entity.ai.goal.WanderAroundGoal;
+import net.minecraft.entity.ai.pathing.AmphibiousPathNodeMaker;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.PathNodeNavigator;
+import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.CodEntity;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.PolarBearEntity;
+import net.minecraft.entity.passive.SalmonEntity;
+import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -33,9 +54,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.EnumSet;
-import java.util.Random;
 
 public class SealEntity extends AnimalEntity {
 
@@ -74,16 +92,16 @@ public class SealEntity extends AnimalEntity {
         this.goalSelector.add(0, new FleeEntityGoal<>(this, PolarBearEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(0, new SealEntity.SealEscapeDangerGoal(this, 1.5D));
         this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
-        this.goalSelector.add(2, new SealEntity.ApproachFoodHoldingPlayerGoal(this, 1.1D, Ingredient.ofTag(AlaskaTags.SEAL_FOOD)));
+        this.goalSelector.add(2, new TemptGoal(this, 1.1D, Ingredient.ofTag(AlaskaTags.SEAL_FOOD), true));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 16.0F, 1.0D, 1.5D));
         this.goalSelector.add(3, new SwimAroundGoal(this, this.isBaby() ? 2.0D : 1.0D, 40));
         this.goalSelector.add(5, new SealEntity.WanderOnLandGoal(this, 1.0D, 100));
         this.goalSelector.add(5, new GroundFoodMateGoal(this));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(7, new SealEntity.HuntFishGoal(this, 1.2D, true));
-//        this.targetSelector.add(0, new ActiveTargetGoal<>(this, SalmonEntity.class, true));
-//        this.targetSelector.add(0, new ActiveTargetGoal<>(this, CodEntity.class, true));
-//        this.targetSelector.add(1, new ActiveTargetGoal<>(this, SquidEntity.class, true));
+        this.targetSelector.add(0, new TargetGoal<>(this, SalmonEntity.class, true));
+        this.targetSelector.add(0, new TargetGoal<>(this, CodEntity.class, true));
+        this.targetSelector.add(1, new TargetGoal<>(this, SquidEntity.class, true));
     }
 
     @Override
@@ -278,64 +296,6 @@ public class SealEntity extends AnimalEntity {
         @Override
         public boolean canStart() {
             return !this.mob.isTouchingWater() && super.canStart();
-        }
-    }
-
-    static class ApproachFoodHoldingPlayerGoal extends Goal {
-        private static final TargetPredicate CLOSE_ENTITY_PREDICATE = TargetPredicate.DEFAULT.setBaseMaxDistance(10.0D);
-        private final SealEntity seal;
-        private final double speed;
-        private final Ingredient food;
-        private PlayerEntity targetPlayer;
-        private int cooldown;
-
-        ApproachFoodHoldingPlayerGoal(SealEntity seal, double speed, Ingredient food) {
-            this.seal = seal;
-            this.speed = speed;
-            this.food = food;
-            this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
-        }
-
-        @Override
-        public boolean canStart() {
-            if (this.cooldown > 0) {
-                --this.cooldown;
-                return false;
-            } else {
-                this.targetPlayer = this.seal.world.getClosestPlayer(CLOSE_ENTITY_PREDICATE, this.seal);
-                if (this.targetPlayer == null) {
-                    return false;
-                } else {
-                    return this.isAttractive(this.targetPlayer.getMainHandStack()) || this.isAttractive(this.targetPlayer.getOffHandStack());
-                }
-            }
-        }
-
-        private boolean isAttractive(ItemStack stack) {
-            return this.food.test(stack);
-        }
-
-        @Override
-        public boolean shouldContinue() {
-            return this.canStart();
-        }
-
-        @Override
-        public void stop() {
-            this.targetPlayer = null;
-            this.seal.getNavigation().stop();
-            this.cooldown = 100;
-        }
-
-        @Override
-        public void tick() {
-            this.seal.getLookControl().lookAt(this.targetPlayer, (float) (this.seal.getHeadYaw() + 20), (float) this.seal.getPitch());
-            if (this.seal.squaredDistanceTo(this.targetPlayer) < 6.25D) {
-                this.seal.getNavigation().stop();
-            } else {
-                this.seal.getNavigation().startMovingTo(this.targetPlayer, this.speed);
-            }
-
         }
     }
 

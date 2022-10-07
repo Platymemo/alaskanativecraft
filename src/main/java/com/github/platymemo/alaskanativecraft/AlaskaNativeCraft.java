@@ -16,7 +16,6 @@ public class AlaskaNativeCraft implements ModInitializer {
 
     @Override
     public void onInitialize(ModContainer container) {
-
         AlaskaBlocks.register();
         AlaskaItems.register();
         AlaskaLootFunctionTypes.register();

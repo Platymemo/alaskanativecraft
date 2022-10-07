@@ -104,7 +104,7 @@ public class HarpoonItem extends TridentItem {
                     if (!world.isClient && j == 0) {
                         stack.damage(1, playerEntity, entity -> entity.sendToolBreakStatus(user.getActiveHand()));
                         HarpoonEntity harpoonEntity = new HarpoonEntity(world, playerEntity, this, stack);
-                        harpoonEntity.setVelocity(playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
+                        harpoonEntity.setProperties(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 2.5F, 1.0F);
                         if (playerEntity.getAbilities().creativeMode) {
                             harpoonEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
                         }

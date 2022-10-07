@@ -43,13 +43,9 @@ public abstract class IglooGeneratorMixin extends SimpleStructurePiece {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/structure/piece/SimpleStructurePiece;generate(Lnet/minecraft/world/StructureWorldAccess;Lnet/minecraft/structure/StructureManager;Lnet/minecraft/world/gen/chunk/ChunkGenerator;Lnet/minecraft/util/random/RandomGenerator;Lnet/minecraft/util/math/BlockBox;Lnet/minecraft/util/math/ChunkPos;Lnet/minecraft/util/math/BlockPos;)V", shift = At.Shift.AFTER),
             method = "generate",
-            locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void addDogsleds(StructureWorldAccess world, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomGenerator random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos pos, CallbackInfo ci) {
-        // DanikingRD:
-        // Not sure what's the context of this
-        // For now i just added a new StructurePlacementData() to make it compile
-        // TODO: get placement data at runtime
-        BlockPos chestLocation = this.pos.add(Structure.transform(new StructurePlacementData(), new BlockPos(0, 1, 0)));
+            locals = LocalCapture.CAPTURE_FAILHARD)
+    private void addDogsleds(StructureWorldAccess world, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomGenerator random, BlockBox boundingBox, ChunkPos chunkPos, BlockPos pos, CallbackInfo ci, Identifier id, StructurePlacementData structurePlacementData) {
+        BlockPos chestLocation = this.pos.add(Structure.transform(structurePlacementData, new BlockPos(0, 1, 0)));
         if (lastPos == null || !lastPos.equals(chestLocation)) {
             DogsledEntity dogsled = new DogsledEntity(world.toServerWorld(), (double) chestLocation.getX() + 0.5D, (double) chestLocation.getY() + 0.5D, (double) chestLocation.getZ() + 0.5D);
             dogsled.setDogsledType(DogsledEntity.Type.SPRUCE);

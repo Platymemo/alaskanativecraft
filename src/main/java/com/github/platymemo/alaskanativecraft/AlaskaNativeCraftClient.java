@@ -10,10 +10,8 @@ import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.Sno
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.entity.HarpoonEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -29,7 +27,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeableItem;
 import net.minecraft.util.registry.Registry;
 import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.block.extensions.api.client.BlockRenderLayerMap;
+import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 import java.util.UUID;
 
@@ -79,7 +79,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
             client.execute(() -> {
                 if (entity != null) {
                     entity.updateTrackedPositionAndAngles(x, y, z, yaw, pitch, 0, false);
-                    entity.updatePosition(x, y, z); // The above does not do the same thing, for some weird reason
+                    entity.syncPacketPositionCodec(x, y, z);
                     entity.setId(entityID);
                     entity.setUuid(entityUUID);
                     assert world != null;
@@ -110,7 +110,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
     }
 
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(ModContainer mod) {
         registerBlockEntityRenderers();
         registerBlockRenderLayers();
         registerItemColors();

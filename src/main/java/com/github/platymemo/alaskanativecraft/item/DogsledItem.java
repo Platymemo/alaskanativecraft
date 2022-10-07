@@ -23,8 +23,7 @@ public class DogsledItem extends Item {
     private static final Predicate<Entity> RIDERS;
 
     static {
-        //TODO: add Entity::canHit
-        RIDERS = EntityPredicates.EXCEPT_SPECTATOR;
+        RIDERS = EntityPredicates.EXCEPT_SPECTATOR.and(Entity::collides);
     }
 
     private final DogsledEntity.Type type;

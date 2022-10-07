@@ -41,9 +41,11 @@ public class SnowballEntityMixin {
                         entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
                         return entityMaker;
                     });
+
                     if (newEntity != null) {
                         newEntity.setCustomName(entityName);
                     }
+
                     world.spawnEntityAndPassengers(newEntity);
                     entity.discard();
                 }

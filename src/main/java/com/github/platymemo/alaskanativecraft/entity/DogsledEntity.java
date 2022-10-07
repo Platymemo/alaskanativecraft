@@ -101,15 +101,10 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     public DogsledEntity(World world, double x, double y, double z) {
         this(AlaskaEntities.DOGSLED, world);
         this.setPosition(x, y, z);
-        this.updatePosition(x, y, z);
         this.setVelocity(Vec3d.ZERO);
         this.prevX = x;
         this.prevY = y;
         this.prevZ = z;
-    }
-
-    public static boolean method_30959(Entity entity, @NotNull Entity entity2) {
-        return (entity2.isCollidable() || entity2.isPushable()) && !entity.isConnectedThroughVehicle(entity2);
     }
 
     @Override
@@ -127,7 +122,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     @Override
     public boolean collidesWith(Entity other) {
-        return method_30959(this, other);
+        return BoatEntity.canCollide(this, other);
     }
 
     @Override
@@ -176,11 +171,10 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
         this.setDamageWobbleStrength(this.getDamageWobbleStrength() * 11.0F);
     }
 
-//    @Override
-//    public boolean canHit() {
-//        return !this.isRemoved();
-//    }
-//
+    @Override
+    public boolean collides() {
+        return !this.isRemoved();
+    }
 
     @Override
     @Environment(EnvType.CLIENT)
@@ -261,7 +255,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     private void clientInterpolation() {
         if (this.isLogicalSideForUpdatingMovement()) {
             this.clientInterpolationSteps = 0;
-            this.updatePosition(this.getX(), this.getY(), this.getZ());
+            this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
         }
 
         if (this.clientInterpolationSteps > 0) {
