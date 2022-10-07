@@ -2,9 +2,9 @@ package com.github.platymemo.alaskanativecraft.client.renderer.item;
 
 import com.github.platymemo.alaskanativecraft.client.model.entity.feature.SnowshoeModel;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;

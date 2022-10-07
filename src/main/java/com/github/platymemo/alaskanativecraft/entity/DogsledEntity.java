@@ -101,15 +101,10 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     public DogsledEntity(World world, double x, double y, double z) {
         this(AlaskaEntities.DOGSLED, world);
         this.setPosition(x, y, z);
-        this.updateTrackedPosition(x, y, z);
         this.setVelocity(Vec3d.ZERO);
         this.prevX = x;
         this.prevY = y;
         this.prevZ = z;
-    }
-
-    public static boolean method_30959(Entity entity, @NotNull Entity entity2) {
-        return (entity2.isCollidable() || entity2.isPushable()) && !entity.isConnectedThroughVehicle(entity2);
     }
 
     @Override
@@ -127,7 +122,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
     @Override
     public boolean collidesWith(Entity other) {
-        return method_30959(this, other);
+        return BoatEntity.canCollide(this, other);
     }
 
     @Override
@@ -260,7 +255,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
     private void clientInterpolation() {
         if (this.isLogicalSideForUpdatingMovement()) {
             this.clientInterpolationSteps = 0;
-            this.updateTrackedPosition(this.getX(), this.getY(), this.getZ());
+            this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
         }
 
         if (this.clientInterpolationSteps > 0) {
@@ -353,7 +348,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
                         this.waterLevel = Math.max(f, this.waterLevel);
                         bl |= box.minY < (double) f;
                         if (d < (double) ((float) mutable.getY() + fluidState.getHeight(this.world, mutable))) {
-                            if (!fluidState.isStill()) {
+                            if (!fluidState.isSource()) {
                                 return Location.UNDER_FLOWING_WATER;
                             }
 

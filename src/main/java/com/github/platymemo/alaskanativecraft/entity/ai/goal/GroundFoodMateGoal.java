@@ -30,7 +30,7 @@ public class GroundFoodMateGoal extends Goal {
             return false;
         }
 
-        if (this.animal.getEntityWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
+        if (this.animal.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
             this.foodEntity = this.findFood();
         }
 
@@ -54,7 +54,7 @@ public class GroundFoodMateGoal extends Goal {
     @Override
     public void tick() {
         if (this.foodEntity != null) {
-            this.animal.getLookControl().lookAt(this.foodEntity, 10.0F, (float) this.animal.getMaxLookPitchChange());
+            this.animal.getLookControl().lookAt(this.foodEntity, 10.0F, this.animal.getLookPitchSpeed());
             this.animal.getNavigation().startMovingTo(this.foodEntity, 1.0f);
             if (this.animal.squaredDistanceTo(this.foodEntity) < 4.0D) {
                 this.feed();

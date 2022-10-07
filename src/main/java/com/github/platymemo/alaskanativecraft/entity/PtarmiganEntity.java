@@ -19,11 +19,10 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.NotNull;
 
 public class PtarmiganEntity extends ParrotEntity {
@@ -37,9 +36,9 @@ public class PtarmiganEntity extends ParrotEntity {
         super(entityType, world);
     }
 
-    public static boolean isValidSpawn(EntityType<PtarmiganEntity> type, @NotNull WorldAccess world, SpawnReason spawnReason, @NotNull BlockPos pos, Random random) {
-        BlockState blockState = world.getBlockState(pos.down());
-        return (blockState.isIn(BlockTags.LEAVES) || blockState.isOf(Blocks.GRASS_BLOCK) || blockState.isIn(BlockTags.LOGS) || blockState.isOf(Blocks.AIR)) && world.getBaseLightLevel(pos, 0) > 8;
+    public static boolean isValidSpawn(EntityType<PtarmiganEntity> entityType, ServerWorldAccess serverWorldAccess, SpawnReason spawnReason, BlockPos blockPos, RandomGenerator randomGenerator) {
+        BlockState blockState = serverWorldAccess.getBlockState(blockPos.down());
+        return (blockState.isIn(BlockTags.LEAVES) || blockState.isOf(Blocks.GRASS_BLOCK) || blockState.isIn(BlockTags.LOGS) || blockState.isOf(Blocks.AIR)) && serverWorldAccess.getBaseLightLevel(blockPos, 0) > 8;
     }
 
     public static DefaultAttributeContainer.Builder createPtarmiganAttributes() {
@@ -51,7 +50,7 @@ public class PtarmiganEntity extends ParrotEntity {
 
     @Override
     public EntityData initialize(@NotNull ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityTag) {
-        if (world.getBiome(getBlockPos()).isIn(ConventionalBiomeTags.SNOWY) || world.getBiome(getBlockPos()).isIn(ConventionalBiomeTags.CLIMATE_COLD)) {
+        if (world.getBiome(getBlockPos()).hasTag(ConventionalBiomeTags.SNOWY) || world.getBiome(getBlockPos()).hasTag(ConventionalBiomeTags.CLIMATE_COLD)) {
             this.setType(0);
         } else {
             this.setType(this.random.nextInt(2) + 1);

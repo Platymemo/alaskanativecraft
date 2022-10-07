@@ -19,7 +19,9 @@ public abstract class FoxMixin extends AnimalEntity {
         throw new AssertionError("AlaskaNativeCraft's FoxMixin constructor called!");
     }
 
-    @Inject(at = @At("HEAD"), method = "method_18262", cancellable = true, remap = false)
+    // Mixin to the lambdas for chicken and rabbit predicate
+    // There is some very weird stuff happening, but it works:tm:
+    @Inject(at = @At("HEAD"), method = {"m_hklcoapa", "m_clkjuklc", "method_18262", "method_18261"}, cancellable = true, require = 1, remap = false)
     private static void addPtarmiganTarget(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof PtarmiganEntity) {
             cir.setReturnValue(true);

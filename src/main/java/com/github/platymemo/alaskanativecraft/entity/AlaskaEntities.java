@@ -5,16 +5,19 @@ import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.Heightmap;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeModifications;
+import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -45,11 +48,13 @@ public class AlaskaEntities {
     }
 
     private static void initSpawnRestrictions() {
-        SpawnRestrictionAccessor.callRegister(HARP_SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
-        SpawnRestrictionAccessor.callRegister(MOOSE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::isValidNaturalSpawn);
-        SpawnRestrictionAccessor.callRegister(PTARMIGAN, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, PtarmiganEntity::isValidSpawn);
+        SpawnRestriction.register(HARP_SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
+        SpawnRestriction.register(MOOSE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::isValidNaturalSpawn);
+        SpawnRestriction.register(PTARMIGAN, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, PtarmiganEntity::isValidSpawn);
     }
 
+    // IntelliJ wrongly infers that the register call fails due to calling an accessor that throws an AssertionError
+    @SuppressWarnings("ConstantConditions")
     private static void initAttributes() {
         FabricDefaultAttributeRegistry.register(HARP_SEAL, SealEntity.createSealAttributes());
         FabricDefaultAttributeRegistry.register(PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
@@ -58,17 +63,17 @@ public class AlaskaEntities {
 
     private static void initSpawns() {
         AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_SEAL),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_SEAL),
                 SpawnGroup.WATER_CREATURE, HARP_SEAL,
                 spawnOptions.sealOceanSettings.weight,
                 spawnOptions.sealOceanSettings.minGroupSize,
                 spawnOptions.sealOceanSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_MOOSE),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_MOOSE),
                 SpawnGroup.CREATURE, MOOSE,
                 spawnOptions.mooseSettings.weight,
                 spawnOptions.mooseSettings.minGroupSize,
                 spawnOptions.mooseSettings.maxGroupSize);
-        BiomeModifications.addSpawn(BiomeSelectors.tag(AlaskaTags.HAS_PTARMIGAN),
+        BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_PTARMIGAN),
                 SpawnGroup.AMBIENT, PTARMIGAN,
                 spawnOptions.ptarmiganSettings.weight,
                 spawnOptions.ptarmiganSettings.minGroupSize,

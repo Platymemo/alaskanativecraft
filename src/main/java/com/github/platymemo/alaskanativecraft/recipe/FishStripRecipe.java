@@ -8,7 +8,7 @@ import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -63,7 +63,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
         for (int i = 0; i < defaultedList.size(); ++i) {
             ItemStack stack = inventory.getStack(i);
             if (stack.isIn(AlaskaTags.ULUS)) {
-                if (!stack.damage(5, Random.create(), null)) {
+                if (!stack.damage(5, RandomGenerator.createLegacy(), null)) {
                     defaultedList.set(i, stack.copy());
                 }
             }

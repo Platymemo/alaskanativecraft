@@ -4,6 +4,7 @@ import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
+import dev.architectury.event.events.common.BlockEvent;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -11,15 +12,19 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SweetBerryBushBlock;
+import net.minecraft.util.Holder;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.decorator.BiomePlacementModifier;
+import net.minecraft.world.gen.decorator.InSquarePlacementModifier;
+import net.minecraft.world.gen.decorator.RarityFilterPlacementModifier;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import net.minecraft.world.gen.feature.util.ConfiguredFeatureUtil;
+import net.minecraft.world.gen.feature.util.PlacedFeatureUtil;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,24 +80,21 @@ public class AlaskaFeatures {
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_sparse")
         );
 
-        //create and register configured feature
-        RegistryEntry<ConfiguredFeature<RandomPatchFeatureConfig, ?>> patchFeature = ConfiguredFeatures.register(
+
+        Holder<ConfiguredFeature<RandomPatchFeatureConfig, ?>> patchFeature = ConfiguredFeatureUtil.register(
                 sparsePatchKey.getValue().toString(),
                 Feature.RANDOM_PATCH,
-                ConfiguredFeatures.createRandomPatchFeatureConfig(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(blockState)), List.of(whitelist)));
+                ConfiguredFeatureUtil.createRandomPatchFeatureConfig(Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(blockState)), List.of(whitelist)));
 
         //create and register placed feature
-        PlacedFeatures.register(
+        PlacedFeatureUtil.register(
                 sparsePatchKey.getValue().toString(),
                 patchFeature,
-                List.of(
-                        RarityFilterPlacementModifier.of(rarity),
-                        SquarePlacementModifier.of(),
-                        PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
-                        BiomePlacementModifier.of()
-                )
+                RarityFilterPlacementModifier.create(rarity),
+                InSquarePlacementModifier.getInstance(),
+                PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
+                BiomePlacementModifier.getInstance()
         );
-
         BiomeModifications.addFeature(
                 selector,
                 GenerationStep.Feature.VEGETAL_DECORATION,
@@ -105,14 +107,14 @@ public class AlaskaFeatures {
                 new Identifier(AlaskaNativeCraft.MOD_ID, "patch_" + featureName + "_decorated")
         );
 
-        PlacedFeatures.register(
+        PlacedFeatureUtil.register(
                 decoratedPatchRegistryKey.getValue().toString(),
                 patchFeature,
                 List.of(
-                        RarityFilterPlacementModifier.of(rarity * DECORATED_MULTIPLIER),
-                        SquarePlacementModifier.of(),
-                        PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
-                        BiomePlacementModifier.of()
+                        RarityFilterPlacementModifier.create(rarity * DECORATED_MULTIPLIER),
+                        InSquarePlacementModifier.getInstance(),
+                        PlacedFeatureUtil.WORLD_SURFACE_WG_HEIGHTMAP,
+                        BiomePlacementModifier.getInstance()
                 )
         );
 

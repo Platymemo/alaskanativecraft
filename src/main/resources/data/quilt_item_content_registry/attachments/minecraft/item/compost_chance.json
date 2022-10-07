@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": {
+    "alaskanativecraft:blueberries": 0.3,
+    "alaskanativecraft:cloudberries": 0.3,
+    "alaskanativecraft:raspberries": 0.3,
+    "alaskanativecraft:salmonberries": 0.3,
+    "alaskanativecraft:labrador_tea": 0.3
+  }
+}

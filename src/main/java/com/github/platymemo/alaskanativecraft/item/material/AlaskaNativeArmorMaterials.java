@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 
 public enum AlaskaNativeArmorMaterials implements ArmorMaterial {
 
-    KUSPUK("kuspuk", 5, new int[]{1, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.WOOL)),
+    KUSPUK("kuspuk", 5, new int[]{1, 0, 3, 1}, 15, SoundEvents.BLOCK_WOOL_STEP, 0.0F, 0.0F, Ingredient.ofTag(ItemTags.WOOL)),
 
-    SNOW_GEAR("snow_goggles", 5, new int[]{1, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, Ingredient.fromTag(ItemTags.PLANKS));
+    SNOW_GEAR("snow_goggles", 5, new int[]{1, 0, 0, 1}, 25, SoundEvents.BLOCK_WOOD_STEP, 0.0F, 0.0F, Ingredient.ofTag(ItemTags.PLANKS));
 
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     private final String name;

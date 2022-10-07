@@ -8,13 +8,14 @@ import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import com.github.platymemo.alaskanativecraft.worldgen.feature.AlaskaFeatures;
-import net.fabricmc.api.ModInitializer;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 public class AlaskaNativeCraft implements ModInitializer {
     public static final String MOD_ID = "alaskanativecraft";
 
     @Override
-    public void onInitialize() {
+    public void onInitialize(ModContainer container) {
         AlaskaBlocks.register();
         AlaskaItems.register();
         AlaskaLootFunctionTypes.register();
