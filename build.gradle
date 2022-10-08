@@ -2,11 +2,8 @@ plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.modrinth.minotaur" version "1.2.1"
     id 'maven-publish'
-    alias(libs.plugins.quilt.loom)
+    alias libs.plugins.quilt.loom
 }
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -35,23 +32,19 @@ dependencies {
     modImplementation libs.quilted.fabric.api
 
     // Mod Menu integration
-    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-        exclude(group: "net.fabricmc")
-    }
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     // REI integration
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-        exclude(group: "net.fabricmc")
-    }
+    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+
+    // We have to manually override the version of Architectury used by REI to run on Quilt
+    modLocalRuntime "dev.architectury:architectury-fabric:${project.architectury_override_version}"
 
     // ClothConfig
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
         exclude(group: "net.fabricmc.fabric-api")
-        exclude(group: "net.fabricmc")
     }
-
+ 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
 }
@@ -61,12 +54,13 @@ loom {
 }
 
 processResources {
-    inputs.property "version", version
+    inputs.property "version", project.mod_version
 
     filesMatching('quilt.mod.json') {
-        expand "version": version
+        expand "version": project.mod_version
     }
 }
+
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
     // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
@@ -101,7 +95,7 @@ publishing {
     }
 }
 
-/*import com.modrinth.minotaur.TaskModrinthUpload
+import com.modrinth.minotaur.TaskModrinthUpload
 import com.modrinth.minotaur.request.Dependency
 
 task publishModrinth (type: TaskModrinthUpload) {
@@ -115,11 +109,11 @@ task publishModrinth (type: TaskModrinthUpload) {
     versionNumber = "${project.mod_version}"
     uploadFile = remapJar
     changelog = new File("markdown/versions/${project.mod_version}.md").getText('UTF-8')
-    addGameVersion('1.19')
-    addDependency('fabric-api', Dependency.DependencyType.REQUIRED)
+    addGameVersion('1.19.2')
+    addDependency('qsl', Dependency.DependencyType.REQUIRED)
     addDependency('cloth-config', Dependency.DependencyType.REQUIRED)
-    addLoader('fabric')
-}*/
+    addLoader('quilt')
+}
 
 curseforge {
     if (project.hasProperty("curse_api_key") || System.getenv("curse_api_key") != null) {
@@ -130,12 +124,12 @@ curseforge {
             changelogType = 'markdown'
             changelog = file("markdown/versions/${project.mod_version}.md")
             releaseType = 'release'
-            addGameVersion "1.19"
+            addGameVersion "1.19.2"
             addGameVersion "Java 17"
-            addGameVersion "Fabric"
+            addGameVersion "Quilt"
             relations {
                 requiredDependency 'cloth-config'
-                requiredDependency 'fabric-api'
+                requiredDependency 'qsl'
                 optionalDependency 'modmenu'
             }
 

@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": {
+    "alaskanativecraft:whale_meat_block": {
+      "burn": 60,
+      "spread": 100
+    },
+    "alaskanativecraft:driftwood_log": {
+      "burn": 5,
+      "spread": 5
+    },
+    "alaskanativecraft:drying_rack": {
+      "burn": 5,
+      "spread": 5
+    },
+    "#alaskanativecraft:bushes": {
+      "burn": 60,
+      "spread": 100
+    },
+    "alaskanativecraft:labrador_tea": {
+      "burn": 60,
+      "spread": 100
+    }
+  }
+}

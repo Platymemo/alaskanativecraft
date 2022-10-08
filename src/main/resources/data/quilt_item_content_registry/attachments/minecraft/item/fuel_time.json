@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": {
+    "alaskanativecraft:whale_meat_block": 800,
+    "alaskanativecraft:drying_rack": 300,
+    "alaskanativecraft:wooden_harpoon": 200
+  }
+}

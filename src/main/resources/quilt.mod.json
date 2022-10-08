@@ -8,21 +8,21 @@
       "name": "Alaska Native Craft",
       "description": "This mod aims to add various parts of Alaska Native cultures to Minecraft!",
       "contributors": {
-        "Owner": "whangd00dle/Platymemo",
-        "Maintainer 1": "Sunconure11",
-        "Maintainer 2": "Daniking"
+        "Platymemo": "Owner"
       },
       "contact": {
-        "homepage": "https://www.curseforge.com/minecraft/mc-mods/alaska-native-craft-unofficial-port",
-        "issues": "https://github.com/Sunconure11/alaskanativecraft/issues",
-        "sources": "https://github.com/Sunconure11/alaskanativecraft"
+        "homepage": "https://github.com/Platymemo/alaskanativecraft/",
+        "issues": "https://github.com/Platymemo/alaskanativecraft/issues",
+        "sources": "https://github.com/Platymemo/alaskanativecraft/"
       },
-      "icon": "assets/example_mod/icon.png"
+      "icon": "assets/alaskanativecraft/icon.png"
     },
     "intermediate_mappings": "net.fabricmc:intermediary",
     "entrypoints": {
       "init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraft",
-      "client_init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient"
+      "client_init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient",
+      "modmenu": [ "com.github.platymemo.alaskanativecraft.compat.AlaskaModMenu" ],
+      "rei_client": [ "com.github.platymemo.alaskanativecraft.compat.rei.AlaskaPlugin" ]
     },
     "depends": [
       {
@@ -36,12 +36,9 @@
       {
         "id": "minecraft",
         "versions": ">=1.19.2"
-      },
-      {
-        "id": "cloth-config",
-        "versions": ">=7.0.0"
       }
     ]
   },
-  "mixin": "alaskanativecraft.mixins.json"
+  "mixin": "alaskanativecraft.mixins.json",
+  "access_widener": "alaskanativecraft.accesswidener"
 }
