@@ -39,6 +39,9 @@
       }
     ]
   },
-  "mixin": "alaskanativecraft.mixins.json",
+  "mixin": [
+    "alaskanativecraft.mixins.json",
+    "alaskanativecraft.snow.mixins.json"
+  ],
   "access_widener": "alaskanativecraft.accesswidener"
 }

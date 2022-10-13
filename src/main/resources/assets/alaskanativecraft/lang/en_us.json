@@ -77,6 +77,8 @@
   "text.autoconfig.alaskanativecraft.title": "Alaska Native Craft",
   "text.autoconfig.alaskanativecraft.category.default": "General",
   "text.autoconfig.alaskanativecraft.option.snowballConversion": "Snowballs Convert Birds",
+  "text.autoconfig.alaskanativecraft.option.snowOverhaul": "Enable Snow Overhaul",
+  "text.autoconfig.alaskanativecraft.option.snowSlow": "How Much Snow Slows Entities",
   "text.autoconfig.alaskanativecraft.option.mooseEatBark": "Moose Strip Logs",
   "text.autoconfig.alaskanativecraft.option.sealFishing": "Seal Fish Hunting Mechanics",
   "text.autoconfig.alaskanativecraft.option.sealFishing.sealsHuntFish": "Seals Hunt Fish",

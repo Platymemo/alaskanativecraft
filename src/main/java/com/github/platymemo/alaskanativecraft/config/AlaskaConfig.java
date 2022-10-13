@@ -22,6 +22,10 @@ public class AlaskaConfig implements ConfigData {
 	public boolean mooseEatBark = true;
 	@ConfigEntry.Gui.CollapsibleObject
 	public SealFishing sealFishing = new SealFishing();
+	@ConfigEntry.Gui.RequiresRestart
+	public boolean snowOverhaul = true;
+	@ConfigEntry.Gui.RequiresRestart
+	public float snowSlow = 0.1f;
 
 	public static synchronized AlaskaConfig getConfig() {
 		if (!registered) {
