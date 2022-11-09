@@ -10,7 +10,6 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MovementType;
@@ -41,7 +40,6 @@ import net.minecraft.entity.passive.SalmonEntity;
 import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -51,7 +49,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.random.RandomGenerator;
-import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
@@ -79,12 +76,6 @@ public class SealEntity extends AnimalEntity {
 	@Override
 	public boolean canSpawn(WorldView world) {
 		return world.doesNotIntersectEntities(this);
-	}
-
-	@Override
-	@Nullable
-	public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityTag) {
-		return super.initialize(world, difficulty, spawnReason, entityData, entityTag);
 	}
 
 	@Override
@@ -180,7 +171,7 @@ public class SealEntity extends AnimalEntity {
 	@Override
 	@Nullable
 	public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-		return AlaskaEntities.HARP_SEAL.create(world);
+		return AlaskaEntities.SEAL.create(world);
 	}
 
 	@Override

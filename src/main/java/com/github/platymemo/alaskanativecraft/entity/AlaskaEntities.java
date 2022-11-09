@@ -27,7 +27,7 @@ import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 public class AlaskaEntities {
 	private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
 
-	public static final EntityType<SealEntity> HARP_SEAL = add("harp_seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, true, 1.0F, 0.6F));
+	public static final EntityType<SealEntity> SEAL = add("seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, true, 1.0F, 0.6F));
 	public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
 	public static final EntityType<MooseEntity> MOOSE = add("moose", createEntity(SpawnGroup.CREATURE, MooseEntity::new, true, 3F, 2.6F));
 	public static final EntityType<DogsledEntity> DOGSLED = add("dogsled", createEntity(SpawnGroup.MISC, DogsledEntity::new, false, 1.5F, 1.0F));
@@ -50,7 +50,7 @@ public class AlaskaEntities {
 	}
 
 	private static void initSpawnRestrictions() {
-		SpawnRestriction.register(HARP_SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
+		SpawnRestriction.register(SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
 		SpawnRestriction.register(MOOSE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::isValidNaturalSpawn);
 		SpawnRestriction.register(PTARMIGAN, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, PtarmiganEntity::isValidSpawn);
 	}
@@ -58,7 +58,7 @@ public class AlaskaEntities {
 	// IntelliJ wrongly infers that the register call fails due to calling an accessor that throws an AssertionError
 	@SuppressWarnings("ConstantConditions")
 	private static void initAttributes() {
-		FabricDefaultAttributeRegistry.register(HARP_SEAL, SealEntity.createSealAttributes());
+		FabricDefaultAttributeRegistry.register(SEAL, SealEntity.createSealAttributes());
 		FabricDefaultAttributeRegistry.register(PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
 		FabricDefaultAttributeRegistry.register(MOOSE, MooseEntity.createMooseAttributes());
 	}
@@ -66,7 +66,7 @@ public class AlaskaEntities {
 	private static void initSpawns() {
 		AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
 		BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_SEAL),
-				SpawnGroup.WATER_CREATURE, HARP_SEAL,
+				SpawnGroup.WATER_CREATURE, SEAL,
 				spawnOptions.sealOceanSettings.weight,
 				spawnOptions.sealOceanSettings.minGroupSize,
 				spawnOptions.sealOceanSettings.maxGroupSize);
