@@ -10,6 +10,7 @@ import com.github.platymemo.alaskanativecraft.client.renderer.entity.HarpoonEnti
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.MooseEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.PtarmiganEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.SealEntityRenderer;
+import com.github.platymemo.alaskanativecraft.client.renderer.entity.WhaleEntityRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.KuspukSkirtFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.ShoulderPtarmiganFeatureRenderer;
 import com.github.platymemo.alaskanativecraft.client.renderer.entity.feature.SnowshoeFeatureRenderer;
@@ -52,6 +53,7 @@ public class AlaskaNativeCraftClient implements ClientModInitializer {
 		EntityRendererRegistry.register(AlaskaEntities.NETHERITE_HARPOON, HarpoonEntityRenderer::new);
 
 		EntityRendererRegistry.register(AlaskaEntities.SEAL, SealEntityRenderer::new);
+		EntityRendererRegistry.register(AlaskaEntities.WHALE, WhaleEntityRenderer::new);
 		EntityRendererRegistry.register(AlaskaEntities.PTARMIGAN, PtarmiganEntityRenderer::new);
 		EntityRendererRegistry.register(AlaskaEntities.MOOSE, MooseEntityRenderer::new);
 		EntityRendererRegistry.register(AlaskaEntities.DOGSLED, DogsledEntityRenderer::new);

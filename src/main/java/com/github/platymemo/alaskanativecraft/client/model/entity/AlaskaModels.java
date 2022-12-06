@@ -19,6 +19,7 @@ public class AlaskaModels {
 	public static final EntityModelLayer HARPOON = registerMain("harpoon");
 	public static final EntityModelLayer MOOSE = registerMain("moose");
 	public static final EntityModelLayer SEAL = registerMain("seal");
+	public static final EntityModelLayer WHALE = registerMain("whale");
 	public static final EntityModelLayer KUSPUK_SKIRT = registerMain("kuspuk_skirt");
 	public static final EntityModelLayer SNOWSHOES = registerMain("snowshoes");
 
@@ -34,6 +35,7 @@ public class AlaskaModels {
 		EntityModelLayerRegistry.registerModelLayer(HARPOON, HarpoonEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(MOOSE, MooseEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SEAL, SealEntityModel::getTexturedModelData);
+		EntityModelLayerRegistry.registerModelLayer(WHALE, WhaleEntityModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(KUSPUK_SKIRT, KuspukSkirtModel::getTexturedModelData);
 		EntityModelLayerRegistry.registerModelLayer(SNOWSHOES, SnowshoeModel::getTexturedModelData);
 	}

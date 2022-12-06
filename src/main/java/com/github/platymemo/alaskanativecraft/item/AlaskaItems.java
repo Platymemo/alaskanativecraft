@@ -77,6 +77,7 @@ public class AlaskaItems {
 	public static final DogsledItem ACACIA_DOGSLED;
 	public static final DogsledItem DARK_OAK_DOGSLED;
 	public static final SpawnEggItem SEAL_SPAWN_EGG;
+	public static final SpawnEggItem WHALE_SPAWN_EGG;
 	public static final SpawnEggItem PTARMIGAN_SPAWN_EGG;
 	public static final SpawnEggItem MOOSE_SPAWN_EGG;
 
@@ -130,6 +131,7 @@ public class AlaskaItems {
 		DARK_OAK_DOGSLED = register("dark_oak_dogsled", new DogsledItem(DogsledEntity.Type.DARK_OAK, new QuiltItemSettings().maxCount(1).group(ItemGroup.TRANSPORTATION)));
 
 		SEAL_SPAWN_EGG = register("seal_spawn_egg", new SpawnEggItem(AlaskaEntities.SEAL, 8355711, 3355443, new QuiltItemSettings().group(ItemGroup.MISC)));
+		WHALE_SPAWN_EGG = register("whale_spawn_egg", new SpawnEggItem(AlaskaEntities.WHALE, 0x17478C, 0xBFC2C7, new QuiltItemSettings().group(ItemGroup.MISC)));
 		PTARMIGAN_SPAWN_EGG = register("ptarmigan_spawn_egg", new SpawnEggItem(AlaskaEntities.PTARMIGAN, 13750737, 12763849, new QuiltItemSettings().group(ItemGroup.MISC)));
 		MOOSE_SPAWN_EGG = register("moose_spawn_egg", new SpawnEggItem(AlaskaEntities.MOOSE, 3811094, 14075317, new QuiltItemSettings().group(ItemGroup.MISC)));
 	}

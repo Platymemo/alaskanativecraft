@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.entity.boss.whale.WhaleEntity;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
@@ -28,6 +29,7 @@ public class AlaskaEntities {
 	private static final Map<Identifier, EntityType<?>> ENTITY_TYPES = new LinkedHashMap<>();
 
 	public static final EntityType<SealEntity> SEAL = add("seal", createEntity(SpawnGroup.WATER_CREATURE, SealEntity::new, true, 1.0F, 0.6F));
+	public static final EntityType<WhaleEntity> WHALE = add("whale", createEntity(SpawnGroup.WATER_CREATURE, WhaleEntity::new, false, 16.0F, 6.0F));
 	public static final EntityType<PtarmiganEntity> PTARMIGAN = add("ptarmigan", createEntity(SpawnGroup.AMBIENT, PtarmiganEntity::new, false, 0.5F, 0.5F));
 	public static final EntityType<MooseEntity> MOOSE = add("moose", createEntity(SpawnGroup.CREATURE, MooseEntity::new, true, 3F, 2.6F));
 	public static final EntityType<DogsledEntity> DOGSLED = add("dogsled", createEntity(SpawnGroup.MISC, DogsledEntity::new, false, 1.5F, 1.0F));
@@ -51,6 +53,7 @@ public class AlaskaEntities {
 
 	private static void initSpawnRestrictions() {
 		SpawnRestriction.register(SEAL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SealEntity::canSpawn);
+		SpawnRestriction.register(WHALE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WhaleEntity::canSpawn);
 		SpawnRestriction.register(MOOSE, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::isValidNaturalSpawn);
 		SpawnRestriction.register(PTARMIGAN, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, PtarmiganEntity::isValidSpawn);
 	}
@@ -59,6 +62,7 @@ public class AlaskaEntities {
 	@SuppressWarnings("ConstantConditions")
 	private static void initAttributes() {
 		FabricDefaultAttributeRegistry.register(SEAL, SealEntity.createSealAttributes());
+		FabricDefaultAttributeRegistry.register(WHALE, WhaleEntity.createWhaleAttributes());
 		FabricDefaultAttributeRegistry.register(PTARMIGAN, PtarmiganEntity.createPtarmiganAttributes());
 		FabricDefaultAttributeRegistry.register(MOOSE, MooseEntity.createMooseAttributes());
 	}
@@ -70,6 +74,7 @@ public class AlaskaEntities {
 				spawnOptions.sealOceanSettings.weight,
 				spawnOptions.sealOceanSettings.minGroupSize,
 				spawnOptions.sealOceanSettings.maxGroupSize);
+		// TODO whale settings
 		BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_MOOSE),
 				SpawnGroup.CREATURE, MOOSE,
 				spawnOptions.mooseSettings.weight,
