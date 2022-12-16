@@ -61,8 +61,8 @@ public class WhaleEntityModel extends SinglePartEntityModel<WhaleEntity> {
 
 	@Override
 	public void setAngles(WhaleEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		this.torso.pitch = headPitch * (float) (Math.PI / 180.0);
-		this.torso.yaw = headYaw * (float) (Math.PI / 180.0);
+		this.torso.pitch = headPitch * MathHelper.RADIANS_PER_DEGREE;
+		this.torso.yaw = headYaw * MathHelper.RADIANS_PER_DEGREE;
 		if (entity.getVelocity().horizontalLengthSquared() > 1.0E-7) {
 			this.torso.pitch += -0.05F - 0.05F * MathHelper.cos(animationProgress * 0.3F);
 			this.tail.pitch = -0.1F * MathHelper.cos(animationProgress * 0.3F);

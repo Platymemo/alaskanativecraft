@@ -19,6 +19,8 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.NoPenaltyTargeting;
+import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.control.AquaticLookControl;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.goal.BreatheAirGoal;
@@ -30,6 +32,7 @@ import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -41,13 +44,13 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -70,6 +73,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	public static final TrackedData<Integer> PHASE_TYPE = DataTracker.registerData(WhaleEntity.class, TrackedDataHandlerRegistry.INTEGER);
 	public static final int TOTAL_AIR_SUPPLY = 4800;
 	private static final int MAX_MOISTNESS = 4800;
+	public static final float DAMAGE_THRESHOLD = 0.25F;
 	private final ServerBossBar bossBar = new ServerBossBar(this.getDisplayName(), BossBar.Color.BLUE, BossBar.Style.PROGRESS);
 	private final PhaseManager phaseManager;
 	private float damageTakenWhileAttacking;
@@ -91,9 +95,6 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 		// The whale is so big it should always render, so it doesn't get culled while still in view.
 		this.ignoreCameraFrustum = true;
 
-		// The whale is so large that no clip helps it maneuver reasonably.
-		this.noClip = true;
-
 		this.parts = new WhaleEntityPart[] {
 				this.head = new WhaleHeadEntityPart(this, 5.0f, 5.0f),
 				this.chest = new WhaleEntityPart(this, 7.5f, 5.5f),
@@ -111,9 +112,9 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	private void setPartPositions() {
 		this.head.setRelativePosition(new Vec3d(0.0, 0.0, 9.0));
 		this.chest.setRelativePosition(new Vec3d(0.0, 0.0, 2.5));
+		this.torso.setRelativePosition(new Vec3d(0.0, 0.0, -6.0));
 		this.rightFlipper.setRelativePosition(new Vec3d(-4.5, -0.5, 5.0));
 		this.leftFlipper.setRelativePosition(new Vec3d(4.5, -0.5, 5.0));
-		this.torso.setRelativePosition(new Vec3d(0.0, 0.0, -6.0));
 		this.tail.setRelativePosition(new Vec3d(0.0, 3.5, -11.5));
 	}
 
@@ -134,7 +135,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	 * We do not want to collide as other entities should collide with the {@link WhaleEntityPart}s.
 	 */
 	@Override
-	public boolean collides() {
+	public boolean isCollidable() {
 		return false;
 	}
 
@@ -191,13 +192,13 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 
 				if (this.phaseManager.getCurrent().isAttacking()) {
 					this.damageTakenWhileAttacking = this.damageTakenWhileAttacking + f - this.getHealth();
-					if (this.damageTakenWhileAttacking > 0.25F * this.getMaxHealth()) {
+					if (this.damageTakenWhileAttacking > DAMAGE_THRESHOLD * this.getMaxHealth()) {
 						this.damageTakenWhileAttacking = 0.0F;
 						this.phaseManager.setPhase(PhaseType.RUN_AWAY);
 					}
 				}
 
-				if (this.getHealth() < 0.25f * this.getMaxHealth()) {
+				if (this.getHealth() < DAMAGE_THRESHOLD * this.getMaxHealth()) {
 					this.phaseManager.setPhase(PhaseType.LIMP_AWAY);
 				}
 			}
@@ -358,7 +359,8 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	protected void initGoals() {
 		this.goalSelector.add(0, new BreatheAirGoal(this));
 		this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-		this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+		this.goalSelector.add(4, new WhaleSwimAroundDeeperGoal(this, 1.0, 10));
+		this.goalSelector.add(4, new WhaleSwimAroundGoal(this, 1.0, 10));
 		this.goalSelector.add(4, new LookAroundGoal(this));
 		this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
 		this.goalSelector.add(5, new BreachGoal(this, 10));
@@ -409,7 +411,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	}
 
 	/**
-	 * @return How high up an entity's eyes are on the bounding box.
+	 * @return How high up an entity's eyes are on the {@link WhaleEntity#getBoundingBox(EntityPose)}  bounding box}.
 	 */
 	@Override
 	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
@@ -417,7 +419,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	}
 
 	/**
-	 * How many degrees an entity can turn per tick.
+	 * How many degrees an entity can turn up or down per tick.
 	 */
 	@Override
 	public int getLookPitchSpeed() {
@@ -425,7 +427,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 	}
 
 	/**
-	 * How many degrees an entity can turn per tick.
+	 * How many degrees an entity can turn left or right per tick.
 	 */
 	@Override
 	public int getBodyYawSpeed() {
@@ -489,34 +491,6 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 					this.setYaw(this.random.nextFloat() * 360.0F);
 					this.onGround = false;
 					this.velocityDirty = true;
-				}
-			}
-
-			if (this.world.isClient && this.isTouchingWater() && this.getVelocity().lengthSquared() > 0.03) {
-				Vec3d rotationVec = this.getRotationVec(0.0F);
-				float f = MathHelper.cos(this.getYaw() * MathHelper.RADIANS_PER_DEGREE) * 0.3F;
-				float g = MathHelper.sin(this.getYaw() * MathHelper.RADIANS_PER_DEGREE) * 0.3F;
-				float h = 6F - this.random.nextFloat() * 0.7F;
-
-				for (int i = 0; i < 2; ++i) {
-					this.world.addParticle(
-							ParticleTypes.DOLPHIN,
-							this.getX() - rotationVec.x * (double) h + (double) f,
-							this.getY() - rotationVec.y,
-							this.getZ() - rotationVec.z * (double) h + (double) g,
-							0.0,
-							0.0,
-							0.0
-					);
-					this.world.addParticle(
-							ParticleTypes.DOLPHIN,
-							this.getX() - rotationVec.x * (double) h - (double) f,
-							this.getY() - rotationVec.y,
-							this.getZ() - rotationVec.z * (double) h - (double) g,
-							0.0,
-							0.0,
-							0.0
-					);
 				}
 			}
 		}
@@ -604,7 +578,6 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 
 		for (int i = 0; i < parts.length; ++i) {
 			parts[i].setId(i + packet.getId());
-			parts[i].setRelativePosition(Vec3d.ZERO);
 		}
 
 		this.setPartPositions();
@@ -707,6 +680,45 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 				float pitch = (float) Math.atan2(-velocity.y, horizontalLength) * MathHelper.DEGREES_PER_RADIAN;
 				this.whale.setPitch(pitch);
 			}
+		}
+	}
+
+	public static class WhaleSwimAroundGoal extends SwimAroundGoal {
+		protected static final int HORIZONTAL_RANGE = 50;
+		protected static final int VERTICAL_RANGE = 20;
+
+		public WhaleSwimAroundGoal(PathAwareEntity pathAwareEntity, double speed, int chance) {
+			super(pathAwareEntity, speed, chance);
+		}
+
+		@Nullable
+		@Override
+		protected Vec3d getWanderTarget() {
+			return LookTargetUtil.find(this.mob, HORIZONTAL_RANGE, VERTICAL_RANGE);
+		}
+	}
+
+	public static class WhaleSwimAroundDeeperGoal extends WhaleSwimAroundGoal {
+		protected static final Vec3d OFFSET = new Vec3d(0.0, -20.0, 0.0);
+
+		public WhaleSwimAroundDeeperGoal(WhaleEntity whale, double speed, int chance) {
+			super(whale, speed, chance);
+		}
+
+		@Nullable
+		@Override
+		protected Vec3d getWanderTarget() {
+			Vec3d vec3d = NoPenaltyTargeting.find(this.mob, HORIZONTAL_RANGE, VERTICAL_RANGE, OFFSET);
+
+			for (int i = 0; i < 10; i++) {
+				if (vec3d == null || !this.mob.world.getBlockState(new BlockPos(vec3d)).canPathfindThrough(this.mob.world, new BlockPos(vec3d), NavigationType.WATER)) {
+					vec3d = NoPenaltyTargeting.find(this.mob, HORIZONTAL_RANGE, VERTICAL_RANGE, OFFSET);
+				} else {
+					break;
+				}
+			}
+
+			return vec3d;
 		}
 	}
 }
