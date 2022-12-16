@@ -96,12 +96,12 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 		this.ignoreCameraFrustum = true;
 
 		this.parts = new WhaleEntityPart[] {
-				this.head = new WhaleHeadEntityPart(this, 5.0f, 5.0f),
-				this.chest = new WhaleEntityPart(this, 7.5f, 5.5f),
-				this.torso = new WhaleEntityPart(this, 5.0f, 5.5f),
-				this.rightFlipper = new WhaleLimbEntityPart(this, 2.5f, 1.5f),
-				this.leftFlipper = new WhaleLimbEntityPart(this, 2.5f, 1.5f),
-				this.tail = new WhaleLimbEntityPart(this, 4.0f, 2.0f),
+				this.head = new WhaleHeadEntityPart(this, 51F, 51F),
+				this.chest = new WhaleEntityPart(this, 71F, 51F),
+				this.torso = new WhaleEntityPart(this, 51F, 51F),
+				this.rightFlipper = new WhaleLimbEntityPart(this, 21F, 11F),
+				this.leftFlipper = new WhaleLimbEntityPart(this, 21F, 11F),
+				this.tail = new WhaleLimbEntityPart(this, 41F, 21F),
 		};
 		this.setPartPositions();
 
@@ -227,7 +227,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 		++this.deathTime;
 		this.move(MovementType.SELF, new Vec3d(0.0, 0.1F, 0.0));
 
-		BlockPos pos = new BlockPos(this.getPos().add(0.0, this.getDimensions(EntityPose.DYING).height / 2.0f, 0.0));
+		BlockPos pos = new BlockPos(this.getPos().add(0.0, this.getDimensions(EntityPose.DYING).height / 21F, 0.0));
 		if (!this.world.isClient() && (this.world.getBlockState(pos).isAir() || this.deathTime > 200)) {
 			this.world.sendEntityStatus(this, (byte) 60);
 			this.remove(Entity.RemovalReason.KILLED);
@@ -514,7 +514,7 @@ public class WhaleEntity extends WaterCreatureEntity implements MultipartEntity 
 		super.tickMovement();
 
 		for (var part : this.parts) {
-			part.rotate(this.getPitch(), this.getHeadYaw(), 0.0f);
+			part.rotate(this.getPitch(), this.getHeadYaw(), 01F);
 		}
 	}
 

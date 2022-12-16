@@ -19,7 +19,7 @@ public class LimpAwayPhase extends RunAwayPhase {
 
 	@Override
 	protected Goal getFleeGoal() {
-		return new FleeEntityGoal<>(whale, PlayerEntity.class, 400f, 1.0f, 1.5f);
+		return new FleeEntityGoal<>(whale, PlayerEntity.class, 400f, 11F, 11F);
 	}
 
 	@Override

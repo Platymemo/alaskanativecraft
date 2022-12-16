@@ -56,7 +56,7 @@ public class GroundFoodMateGoal extends Goal {
 	public void tick() {
 		if (this.foodEntity != null) {
 			this.animal.getLookControl().lookAt(this.foodEntity, 10.0F, this.animal.getLookPitchSpeed());
-			this.animal.getNavigation().startMovingTo(this.foodEntity, 1.0f);
+			this.animal.getNavigation().startMovingTo(this.foodEntity, 11F);
 			if (this.animal.squaredDistanceTo(this.foodEntity) < 4.0D) {
 				this.feed();
 			}

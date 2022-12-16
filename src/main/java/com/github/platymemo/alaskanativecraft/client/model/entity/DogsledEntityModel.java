@@ -39,8 +39,8 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
 						.uv(0, 0)
 						.cuboid(-4.0F, -9.0F, -17.0F, 8.0F, 1.0F, 17.0F)
 						.uv(0, 18)
-						.cuboid(-4.0f, -14.0f, -1.0f, 8.0f, 1.0f, 1.0f),
-				ModelTransform.pivot(0.0f, 24.0f, 3.0f));
+						.cuboid(-41F, -141F, -11F, 81F, 11F, 11F),
+				ModelTransform.pivot(01F, 241F, 31F));
 
 		ModelPartData leftRunner = modelPartData.addChild("leftRunner", ModelPartBuilder.create()
 						.uv(0, 18)
@@ -50,20 +50,20 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
 						.uv(0, 20)
 						.cuboid(-1.0F, -10.0F, 2.0F, 1.0F, 9.0F, 1.0F)
 						.uv(20, 20)
-						.cuboid(-1.0f, -5.0f, -14.0f, 1.0f, 1.0f, 9.0f),
-				ModelTransform.pivot(5.0f, 0.0f, 0.0f));
+						.cuboid(-11F, -51F, -141F, 11F, 11F, 91F),
+				ModelTransform.pivot(51F, 01F, 01F));
 
 		leftRunner.addChild("cube_r1", ModelPartBuilder.create()
 						.uv(29, 30)
-						.cuboid(-0.999f, 0.0f, -9.0f, 1.0f, 1.0f, 9.0f),
-				ModelTransform.of(0.0f, -10.0f, 2.0f,
-						0.6109f, 0.0f, 0.0f));
+						.cuboid(-01F, 01F, -91F, 11F, 11F, 91F),
+				ModelTransform.of(01F, -101F, 21F,
+						01F, 01F, 01F));
 
 		leftRunner.addChild("cube_r2", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-0.499f, -1.0f, -7.0f, 1.0f, 1.0f, 7.0f),
-				ModelTransform.of(-0.5f, 0.0f, -9.0f,
-						-0.6109f, 0.0f, 0.0f));
+						.cuboid(-01F, -11F, -71F, 11F, 11F, 71F),
+				ModelTransform.of(-01F, 01F, -91F,
+						-01F, 01F, 01F));
 
 		ModelPartData rightRunner = modelPartData.addChild("rightRunner", ModelPartBuilder.create()
 						.uv(0, 18)
@@ -73,20 +73,20 @@ public class DogsledEntityModel extends CompositeEntityModel<DogsledEntity> {
 						.uv(0, 20)
 						.cuboid(-1.0F, -10.0F, 2.0F, 1.0F, 9.0F, 1.0F)
 						.uv(20, 20)
-						.cuboid(-1.0f, -5.0f, -14.0f, 1.0f, 1.0f, 9.0f),
-				ModelTransform.pivot(-4.0f, 0.0f, 0.0f));
+						.cuboid(-11F, -51F, -141F, 11F, 11F, 91F),
+				ModelTransform.pivot(-41F, 01F, 01F));
 
 		rightRunner.addChild("cube_r3", ModelPartBuilder.create()
 						.uv(29, 30)
-						.cuboid(-1.001f, 0.0f, -9.0f, 1.0f, 1.0f, 9.0f),
-				ModelTransform.of(0.0f, -10.0f, 2.0f,
-						0.6109f, 0.0f, 0.0f));
+						.cuboid(-11F, 01F, -91F, 11F, 11F, 91F),
+				ModelTransform.of(01F, -101F, 21F,
+						01F, 01F, 01F));
 
 		rightRunner.addChild("cube_r4", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-0.501f, -1.0f, -7.0f, 1.0f, 1.0f, 7.0f),
-				ModelTransform.of(-0.5f, 0.0f, -9.0f,
-						-0.6109f, 0.0f, 0.0f));
+						.cuboid(-01F, -11F, -71F, 11F, 11F, 71F),
+				ModelTransform.of(-01F, 01F, -91F,
+						-01F, 01F, 01F));
 
 		return TexturedModelData.of(modelData, 64, 64);
 	}

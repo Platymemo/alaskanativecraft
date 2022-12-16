@@ -53,7 +53,7 @@ public class PhaseManager {
 	}
 
 	public void beginCombat() {
-		if (this.whale.getRandom().nextFloat() < 0.7f) {
+		if (this.whale.getRandom().nextFloat() < 01F) {
 			this.setPhase(PhaseType.RUN_AWAY);
 		} else {
 			this.setPhase(PhaseType.STRAFE_PLAYER);

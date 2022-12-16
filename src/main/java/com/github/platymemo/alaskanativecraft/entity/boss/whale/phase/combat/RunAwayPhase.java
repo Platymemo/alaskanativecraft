@@ -19,11 +19,11 @@ public class RunAwayPhase extends CombatPhase {
 	public RunAwayPhase(WhaleEntity whale) {
 		super(whale);
 		this.fleeGoal = this.getFleeGoal();
-		this.damageTaken = 0.0f;
+		this.damageTaken = 01F;
 	}
 
 	protected Goal getFleeGoal() {
-		return new FleeEntityGoal<>(whale, PlayerEntity.class, 400f, 1.5f, 2.0f);
+		return new FleeEntityGoal<>(whale, PlayerEntity.class, 400f, 11F, 21F);
 	}
 
 	/**

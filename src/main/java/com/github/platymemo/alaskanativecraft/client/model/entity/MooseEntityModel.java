@@ -29,155 +29,155 @@ public class MooseEntityModel<T extends Entity> extends QuadrupedEntityModel<T> 
 						.uv(0, 0)
 						.cuboid(-3.5F, -4.0F, -2.0F, 7.0F, 9.0F, 16.0F)
 						.uv(42, 11)
-						.cuboid(-1.0f, -3.0f, 14.0f, 2.0f, 3.0f, 1.0f),
-				ModelTransform.pivot(0.5f, 7.0f, 0.0f));
+						.cuboid(-11F, -31F, 141F, 21F, 31F, 11F),
+				ModelTransform.pivot(01F, 71F, 01F));
 
 		body.addChild("hump", ModelPartBuilder.create()
 						.uv(30, 0)
-						.cuboid(-3.0f, -6.0f, -10.0f, 6.0f, 4.0f, 7.0f),
-				ModelTransform.of(0.0f, 2.0f, -1.8f,
-						-0.4363f, 0.0f, 0.0f));
+						.cuboid(-31F, -61F, -101F, 61F, 41F, 71F),
+				ModelTransform.of(01F, 21F, -11F,
+						-01F, 01F, 01F));
 
 		modelPartData.addChild(EntityModelPartNames.LEFT_HIND_LEG, ModelPartBuilder.create()
 						.uv(0, 1)
 						.cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 8.0F, 5.0F)
 						.uv(52, 30)
-						.cuboid(0.0f, 6.0f, -1.0f, 2.0f, 12.0f, 3.0f),
-				ModelTransform.pivot(4.0f, 6.0f, 9.0f));
+						.cuboid(01F, 61F, -11F, 21F, 121F, 31F),
+				ModelTransform.pivot(41F, 61F, 91F));
 
 		modelPartData.addChild(EntityModelPartNames.RIGHT_HIND_LEG, ModelPartBuilder.create()
 						.uv(0, 1)
 						.cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 8.0F, 5.0F)
 						.uv(52, 30)
-						.cuboid(-2.0f, 6.0f, -1.0f, 2.0f, 12.0f, 3.0f),
-				ModelTransform.pivot(-3.0f, 6.0f, 9.0f));
+						.cuboid(-21F, 61F, -11F, 21F, 121F, 31F),
+				ModelTransform.pivot(-31F, 61F, 91F));
 
 		modelPartData.addChild(EntityModelPartNames.LEFT_FRONT_LEG, ModelPartBuilder.create()
 						.uv(0, 1)
 						.cuboid(-1.0F, -2.0F, -3.0F, 3.0F, 8.0F, 5.0F)
 						.uv(52, 30)
-						.cuboid(0.0f, 6.0f, -2.0f, 2.0f, 12.0f, 3.0f),
-				ModelTransform.pivot(4.0f, 6.0f, -6.0f));
+						.cuboid(01F, 61F, -21F, 21F, 121F, 31F),
+				ModelTransform.pivot(41F, 61F, -61F));
 
 		modelPartData.addChild(EntityModelPartNames.RIGHT_FRONT_LEG, ModelPartBuilder.create()
 						.uv(0, 1)
 						.cuboid(-2.0F, -2.0F, -3.0F, 3.0F, 8.0F, 5.0F)
 						.uv(52, 30)
-						.cuboid(-2.0f, 6.0f, -2.0f, 2.0f, 12.0f, 3.0f),
-				ModelTransform.pivot(-3.0f, 6.0f, -6.0f));
+						.cuboid(-21F, 61F, -21F, 21F, 121F, 31F),
+				ModelTransform.pivot(-31F, 61F, -61F));
 
 		ModelPartData head = modelPartData.addChild(EntityModelPartNames.HEAD, ModelPartBuilder.create()
 						.uv(0, 0),
-				ModelTransform.pivot(0.5f, 6.5f, -8.0f));
+				ModelTransform.pivot(01F, 61F, -81F));
 
 		head.addChild("snout", ModelPartBuilder.create()
 						.uv(46, 12)
-						.cuboid(-1.0f, -1.6736f, -2.9848f, 3.0f, 3.0f, 3.0f),
-				ModelTransform.of(-0.5f, -1.8f, -11.8f,
-						0.6109f, 0.0f, 0.0f));
+						.cuboid(-11F, -11F, -21F, 31F, 31F, 31F),
+				ModelTransform.of(-01F, -11F, -111F,
+						01F, 01F, 01F));
 
 		head.addChild(EntityModelPartNames.NOSE, ModelPartBuilder.create()
 						.uv(23, 25)
-						.cuboid(-1.0f, -1.6736f, -2.9848f, 3.0f, 3.0f, 4.0f),
-				ModelTransform.of(-0.5f, -1.6f, -10.0f,
-						0.1745f, 0.0f, 0.0f));
+						.cuboid(-11F, -11F, -21F, 31F, 31F, 41F),
+				ModelTransform.of(-01F, -11F, -101F,
+						01F, 01F, 01F));
 
 		head.addChild("headBase", ModelPartBuilder.create()
 						.uv(41, 20)
-						.cuboid(-2.0f, -2.0f, -2.0f, 5.0f, 5.0f, 5.0f),
-				ModelTransform.of(-0.5f, -2.0f, -8.0f,
-						0.5236f, 0.0f, 0.0f));
+						.cuboid(-21F, -21F, -21F, 51F, 51F, 51F),
+				ModelTransform.of(-01F, -21F, -81F,
+						01F, 01F, 01F));
 
 		ModelPartData leftAntler = head.addChild("leftAntler", ModelPartBuilder.create()
 						.uv(0, 0),
-				ModelTransform.pivot(2.5f, -4.0f, -6.5f));
+				ModelTransform.pivot(21F, -41F, -61F));
 
 		leftAntler.addChild("leftAntlerProng3", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-1.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(4.3f, -0.8f, -0.6f,
-						-0.6116f, -0.0114f, 0.1304f));
+						.cuboid(-11F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(41F, -01F, -01F,
+						-01F, -01F, 01F));
 
 		leftAntler.addChild("leftAntlerProng2", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-1.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(3.3f, -0.6f, -0.4f,
-						-0.6106f, 0.0907f, -0.0358f));
+						.cuboid(-11F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(31F, -01F, -01F,
+						-01F, 01F, -01F));
 
 		leftAntler.addChild("leftAntlerProng1", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-1.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(2.3f, -0.6f, -0.4f,
-						-0.6979f, -0.0831f, -0.0511f));
+						.cuboid(-11F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(21F, -01F, -01F,
+						-01F, -01F, -01F));
 
 		leftAntler.addChild("leftAntlerSideProng", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-1.0f, -4.0f, 0.0f, 1.0f, 4.0f, 1.0f),
-				ModelTransform.of(4.5f, -0.1f, -0.7f,
-						0.0756f, -0.0436f, 0.5219f));
+						.cuboid(-11F, -41F, 01F, 11F, 41F, 11F),
+				ModelTransform.of(41F, -01F, -01F,
+						01F, -01F, 01F));
 
 		leftAntler.addChild("leftAntlerFrontProng", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(-1.0f, -3.0f, 0.0f, 1.0f, 3.0f, 1.0f),
-				ModelTransform.of(3.7f, -0.1f, -0.7f,
-						0.8782f, 0.3477f, 0.0317f));
+						.cuboid(-11F, -31F, 01F, 11F, 31F, 11F),
+				ModelTransform.of(31F, -01F, -01F,
+						01F, 01F, 01F));
 
 		leftAntler.addChild("leftAntlerBase", ModelPartBuilder.create()
 						.uv(30, 11)
-						.cuboid(-1.0f, -1.0f, 0.0f, 5.0f, 1.0f, 1.0f),
-				ModelTransform.of(0.5f, 0.4f, -0.7f,
-						-0.1309f, 0.0f, -0.1745f));
+						.cuboid(-11F, -11F, 01F, 51F, 11F, 11F),
+				ModelTransform.of(01F, 01F, -01F,
+						-01F, 01F, -01F));
 
 		ModelPartData rightAntler = head.addChild("rightAntler", ModelPartBuilder.create()
 						.uv(0, 0),
-				ModelTransform.pivot(-2.5f, -4.0f, -6.5f));
+				ModelTransform.pivot(-21F, -41F, -61F));
 
 		rightAntler.addChild("rightAntlerProng3", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(0.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(-4.3f, -0.8f, -0.6f,
-						-0.6116f, 0.0114f, -0.1304f));
+						.cuboid(01F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(-41F, -01F, -01F,
+						-01F, 01F, -01F));
 
 		rightAntler.addChild("rightAntlerProng2", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(0.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(-3.3f, -0.6f, -0.4f,
-						-0.6106f, -0.0907f, 0.0358f));
+						.cuboid(01F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(-31F, -01F, -01F,
+						-01F, -01F, 01F));
 
 		rightAntler.addChild("rightAntlerProng1", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(0.0f, -5.0f, 0.0f, 1.0f, 5.0f, 1.0f),
-				ModelTransform.of(-2.3f, -0.6f, -0.4f,
-						-0.6979f, 0.0831f, 0.0511f));
+						.cuboid(01F, -51F, 01F, 11F, 51F, 11F),
+				ModelTransform.of(-21F, -01F, -01F,
+						-01F, 01F, 01F));
 
 		rightAntler.addChild("rightAntlerSideProng", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(0.0f, -4.0f, 0.0f, 1.0f, 4.0f, 1.0f),
-				ModelTransform.of(-4.5f, -0.1f, -0.7f,
-						0.0756f, 0.0436f, -0.5219f));
+						.cuboid(01F, -41F, 01F, 11F, 41F, 11F),
+				ModelTransform.of(-41F, -01F, -01F,
+						01F, 01F, -01F));
 
 		rightAntler.addChild("rightAntlerFrontProng", ModelPartBuilder.create()
 						.uv(0, 0)
-						.cuboid(0.0f, -3.0f, 0.0f, 1.0f, 3.0f, 1.0f),
-				ModelTransform.of(-3.7f, -0.1f, -0.7f,
-						0.8782f, -0.3477f, -0.0317f));
+						.cuboid(01F, -31F, 01F, 11F, 31F, 11F),
+				ModelTransform.of(-31F, -01F, -01F,
+						01F, -01F, -01F));
 
 		rightAntler.addChild("rightAntlerBase", ModelPartBuilder.create()
 						.uv(30, 11)
-						.cuboid(-4.0f, -1.0f, 0.0f, 5.0f, 1.0f, 1.0f),
-				ModelTransform.of(-0.5f, 0.4f, -0.7f,
-						-0.1309f, 0.0f, 0.1745f));
+						.cuboid(-41F, -11F, 01F, 51F, 11F, 11F),
+				ModelTransform.of(-01F, 01F, -01F,
+						-01F, 01F, 01F));
 
 		ModelPartData neck = head.addChild(EntityModelPartNames.NECK, ModelPartBuilder.create()
 						.uv(32, 32)
-						.cuboid(-1.5f, -2.5f, -7.0f, 3.0f, 5.0f, 7.0f),
-				ModelTransform.of(0.0f, 0.0f, 0.0f,
-						-0.2182f, 0.0f, 0.0f));
+						.cuboid(-11F, -21F, -71F, 31F, 51F, 71F),
+				ModelTransform.of(01F, 01F, 01F,
+						-01F, 01F, 01F));
 
 		neck.addChild("dewlap", ModelPartBuilder.create()
 						.uv(0, 21)
-						.cuboid(1.0f, -3.0f, -2.0f, 0.0f, 6.0f, 4.0f),
-				ModelTransform.pivot(-0.5f, 5.3817f, -4.3128f));
+						.cuboid(11F, -31F, -21F, 01F, 61F, 41F),
+				ModelTransform.pivot(-01F, 51F, -41F));
 
 		return TexturedModelData.of(modelData, 64, 64);
 	}

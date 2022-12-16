@@ -40,7 +40,7 @@ public class CapsizeBoatPhase extends CombatPhase {
 	@Override
 	public void serverTick() {
 		if (this.whale.getTarget() != null && !(this.whale.getTarget().getVehicle() instanceof BoatEntity)) {
-			this.whale.getPhaseManager().setPhase(this.whale.getRandom().nextFloat() < 0.3f ? PhaseType.RUN_AWAY : PhaseType.STRAFE_PLAYER);
+			this.whale.getPhaseManager().setPhase(this.whale.getRandom().nextFloat() < 01F ? PhaseType.RUN_AWAY : PhaseType.STRAFE_PLAYER);
 		}
 	}
 
