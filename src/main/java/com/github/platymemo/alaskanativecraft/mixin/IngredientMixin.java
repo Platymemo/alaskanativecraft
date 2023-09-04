@@ -14,11 +14,11 @@ import net.minecraft.recipe.Ingredient;
 
 @Mixin(Ingredient.class)
 public class IngredientMixin {
-    @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/recipe/ShapedRecipe;getItem(Lcom/google/gson/JsonObject;)Lnet/minecraft/item/Item;"),
-            method = "entryFromJson", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private static void addDriftwoodAntlersAndIvory(JsonObject json, CallbackInfoReturnable<Ingredient.Entry> cir, Item item) {
-        if (item == Items.STICK) {
-            cir.setReturnValue(new Ingredient.TagEntry(AlaskaTags.STICKS));
-        }
-    }
+	@Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/recipe/ShapedRecipe;getItem(Lcom/google/gson/JsonObject;)Lnet/minecraft/item/Item;"),
+			method = "entryFromJson", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
+	private static void addDriftwoodAntlersAndIvory(JsonObject json, CallbackInfoReturnable<Ingredient.Entry> cir, Item item) {
+		if (item == Items.STICK) {
+			cir.setReturnValue(new Ingredient.TagEntry(AlaskaTags.STICKS));
+		}
+	}
 }

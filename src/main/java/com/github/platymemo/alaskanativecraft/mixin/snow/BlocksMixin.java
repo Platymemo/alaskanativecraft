@@ -14,18 +14,18 @@ import net.minecraft.block.Blocks;
  */
 @Mixin(Blocks.class)
 public class BlocksMixin {
-    @Unique
-    private static final float anc$SNOW_SLOW = 1.0f - AlaskaConfig.getConfig().snowSlow;
+	@Unique
+	private static final float anc$SNOW_SLOW = 1.0f - AlaskaConfig.getConfig().snowSlow;
 
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/SnowBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
-    private static AbstractBlock.Settings anc$addSlowToSnowSettings(AbstractBlock.Settings oldSettings) {
-        return oldSettings.velocityMultiplier(anc$SNOW_SLOW);
-    }
+	@ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/SnowBlock;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V"))
+	private static AbstractBlock.Settings anc$addSlowToSnowSettings(AbstractBlock.Settings oldSettings) {
+		return oldSettings.velocityMultiplier(anc$SNOW_SLOW);
+	}
 
-    // TODO very brittle selection, can easily break
-    // We may want to use a slice
-    @ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V", ordinal = 48))
-    private static AbstractBlock.Settings anc$addSlowToSnowBlockSettings(AbstractBlock.Settings oldSettings) {
-        return oldSettings.velocityMultiplier(anc$SNOW_SLOW);
-    }
+	// TODO very brittle selection, can easily break
+	// We may want to use a slice
+	@ModifyArg(method = "<clinit>", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;<init>(Lnet/minecraft/block/AbstractBlock$Settings;)V", ordinal = 48))
+	private static AbstractBlock.Settings anc$addSlowToSnowBlockSettings(AbstractBlock.Settings oldSettings) {
+		return oldSettings.velocityMultiplier(anc$SNOW_SLOW);
+	}
 }

@@ -14,17 +14,17 @@ import net.minecraft.world.World;
 
 @Mixin(FoxEntity.class)
 public abstract class FoxMixin extends AnimalEntity {
-    protected FoxMixin(EntityType<? extends AnimalEntity> type, World world) {
-        super(type, world);
-        throw new AssertionError("AlaskaNativeCraft's FoxMixin constructor called!");
-    }
+	protected FoxMixin(EntityType<? extends AnimalEntity> type, World world) {
+		super(type, world);
+		throw new AssertionError("AlaskaNativeCraft's FoxMixin constructor called!");
+	}
 
-    // Mixin to the lambdas for chicken and rabbit predicate
-    // There is some very weird stuff happening, but it works:tm:
-    @Inject(at = @At("HEAD"), method = {"m_hklcoapa", "m_clkjuklc", "method_18262", "method_18261"}, cancellable = true, require = 1, remap = false)
-    private static void addPtarmiganTarget(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
-        if (entity instanceof PtarmiganEntity) {
-            cir.setReturnValue(true);
-        }
-    }
+	// Mixin to the lambdas for chicken and rabbit predicate
+	// There is some very weird stuff happening, but it works:tm:
+	@Inject(at = @At("HEAD"), method = {"m_hklcoapa", "m_clkjuklc", "method_18262", "method_18261"}, cancellable = true, require = 1, remap = false)
+	private static void addPtarmiganTarget(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
+		if (entity instanceof PtarmiganEntity) {
+			cir.setReturnValue(true);
+		}
+	}
 }

@@ -21,21 +21,21 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends PlayerEntity {
-    @Shadow
-    public Input input;
-    @Shadow
-    private boolean riding;
+	@Shadow
+	public Input input;
+	@Shadow
+	private boolean riding;
 
-    ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
-        super(world, pos, yaw, gameProfile);
-        throw new AssertionError("Mixin constructor called, something is very wrong!");
-    }
+	ClientPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, @Nullable PlayerPublicKey publicKey) {
+		super(world, pos, yaw, gameProfile);
+		throw new AssertionError("Mixin constructor called, something is very wrong!");
+	}
 
-    @Inject(at = @At("TAIL"), method = "tickRiding()V")
-    private void rideDogsled(CallbackInfo ci) {
-        if (this.getVehicle() instanceof DogsledEntity dogsledEntity) {
-            dogsledEntity.setInputs(this.input.pressingLeft, this.input.pressingRight, this.input.pressingForward, this.input.pressingBack);
-            this.riding |= this.input.pressingLeft || this.input.pressingRight || this.input.pressingForward || this.input.pressingBack;
-        }
-    }
+	@Inject(at = @At("TAIL"), method = "tickRiding()V")
+	private void rideDogsled(CallbackInfo ci) {
+		if (this.getVehicle() instanceof DogsledEntity dogsledEntity) {
+			dogsledEntity.setInputs(this.input.pressingLeft, this.input.pressingRight, this.input.pressingForward, this.input.pressingBack);
+			this.riding |= this.input.pressingLeft || this.input.pressingRight || this.input.pressingForward || this.input.pressingBack;
+		}
+	}
 }

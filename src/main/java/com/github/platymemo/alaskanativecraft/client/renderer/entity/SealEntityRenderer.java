@@ -13,14 +13,14 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class SealEntityRenderer extends MobEntityRenderer<SealEntity, SealEntityModel<SealEntity>> {
-    private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/seal.png");
+	private static final Identifier TEXTURE = new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/seal/seal.png");
 
-    public SealEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaModels.SEAL)), 0.7F);
-    }
+	public SealEntityRenderer(EntityRendererFactory.Context ctx) {
+		super(ctx, new SealEntityModel<>(ctx.getPart(AlaskaModels.SEAL)), 0.7F);
+	}
 
-    @Override
-    public Identifier getTexture(SealEntity sealEntity) {
-        return TEXTURE;
-    }
+	@Override
+	public Identifier getTexture(SealEntity sealEntity) {
+		return TEXTURE;
+	}
 }

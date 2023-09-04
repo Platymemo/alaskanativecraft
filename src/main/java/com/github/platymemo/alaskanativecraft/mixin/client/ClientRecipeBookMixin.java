@@ -16,10 +16,10 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 @Mixin(ClientRecipeBook.class)
 public class ClientRecipeBookMixin {
-    @Inject(method = "getGroupForRecipe", at = @At("HEAD"), cancellable = true)
-    private static void removeDryingRecipe(@NotNull Recipe<?> recipe, CallbackInfoReturnable<RecipeBookGroup> cir) {
-        if (recipe.getType() == AlaskaRecipes.DRYING) {
-            cir.setReturnValue(RecipeBookGroup.UNKNOWN);
-        }
-    }
+	@Inject(method = "getGroupForRecipe", at = @At("HEAD"), cancellable = true)
+	private static void removeDryingRecipe(@NotNull Recipe<?> recipe, CallbackInfoReturnable<RecipeBookGroup> cir) {
+		if (recipe.getType() == AlaskaRecipes.DRYING) {
+			cir.setReturnValue(RecipeBookGroup.UNKNOWN);
+		}
+	}
 }

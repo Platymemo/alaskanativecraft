@@ -9,8 +9,8 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class AlaskaModMenu implements ModMenuApi {
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return parent -> AutoConfig.getConfigScreen(AlaskaConfig.class, parent).get();
-    }
+	@Override
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		return parent -> AutoConfig.getConfigScreen(AlaskaConfig.class, parent).get();
+	}
 }

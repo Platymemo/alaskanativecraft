@@ -19,33 +19,33 @@ import net.minecraft.world.World;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-    @Unique
-    private static final float anc$SNOW_SLOW = 1.0f - AlaskaConfig.getConfig().snowSlow;
+	@Unique
+	private static final float anc$SNOW_SLOW = 1.0f - AlaskaConfig.getConfig().snowSlow;
 
-    @Shadow
-    private World world;
+	@Shadow
+	private World world;
 
-    @Shadow
-    public abstract BlockPos getBlockPos();
+	@Shadow
+	public abstract BlockPos getBlockPos();
 
-    @Shadow
-    protected abstract BlockPos getVelocityAffectingPos();
+	@Shadow
+	protected abstract BlockPos getVelocityAffectingPos();
 
-    @ModifyVariable(method = "getVelocityMultiplier", at = @At(value = "STORE", ordinal = 0))
-    private float anc$ignoreSmallSnowLayers(float oldFloat) {
-        BlockState blockState = this.world.getBlockState(this.getBlockPos());
-        if (blockState.isOf(Blocks.SNOW) && blockState.get(SnowBlock.LAYERS) < 5) {
-            return MathHelper.lerp((blockState.get(SnowBlock.LAYERS) - 1.0f) / 3.0f, 1.0f, anc$SNOW_SLOW);
-        }
+	@ModifyVariable(method = "getVelocityMultiplier", at = @At(value = "STORE", ordinal = 0))
+	private float anc$ignoreSmallSnowLayers(float oldFloat) {
+		BlockState blockState = this.world.getBlockState(this.getBlockPos());
+		if (blockState.isOf(Blocks.SNOW) && blockState.get(SnowBlock.LAYERS) < 5) {
+			return MathHelper.lerp((blockState.get(SnowBlock.LAYERS) - 1.0f) / 3.0f, 1.0f, anc$SNOW_SLOW);
+		}
 
-        return oldFloat;
-    }
+		return oldFloat;
+	}
 
-    @Inject(method = "getVelocityMultiplier", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
-    private void anc$ignoreSmallSnowLayers2ElectricBoogaloo(CallbackInfoReturnable<Float> cir) {
-        BlockState blockState = this.world.getBlockState(this.getVelocityAffectingPos());
-        if (blockState.isOf(Blocks.SNOW) && blockState.get(SnowBlock.LAYERS) < 5) {
-            cir.setReturnValue(MathHelper.lerp((blockState.get(SnowBlock.LAYERS) - 1.0f) / 3.0f, 1.0f, anc$SNOW_SLOW));
-        }
-    }
+	@Inject(method = "getVelocityMultiplier", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
+	private void anc$ignoreSmallSnowLayers2ElectricBoogaloo(CallbackInfoReturnable<Float> cir) {
+		BlockState blockState = this.world.getBlockState(this.getVelocityAffectingPos());
+		if (blockState.isOf(Blocks.SNOW) && blockState.get(SnowBlock.LAYERS) < 5) {
+			cir.setReturnValue(MathHelper.lerp((blockState.get(SnowBlock.LAYERS) - 1.0f) / 3.0f, 1.0f, anc$SNOW_SLOW));
+		}
+	}
 }

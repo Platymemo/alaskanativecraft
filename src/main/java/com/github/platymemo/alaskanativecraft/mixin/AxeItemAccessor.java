@@ -10,8 +10,8 @@ import net.minecraft.item.AxeItem;
 
 @Mixin(AxeItem.class)
 public interface AxeItemAccessor {
-    @Accessor("STRIPPED_BLOCKS")
-    static Map<Block, Block> getStrippedBlocks() {
-        throw new AssertionError("Accessor dummy method called somehow!");
-    }
+	@Accessor("STRIPPED_BLOCKS")
+	static Map<Block, Block> getStrippedBlocks() {
+		throw new AssertionError("Accessor dummy method called somehow!");
+	}
 }

@@ -16,27 +16,27 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class LabradorTeaBlock extends FlowerBlock implements Fertilizable {
-    public LabradorTeaBlock(StatusEffect suspiciousStewEffect, int effectDuration, AbstractBlock.Settings settings) {
-        super(suspiciousStewEffect, effectDuration, settings);
-    }
+	public LabradorTeaBlock(StatusEffect suspiciousStewEffect, int effectDuration, AbstractBlock.Settings settings) {
+		super(suspiciousStewEffect, effectDuration, settings);
+	}
 
-    @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return AlaskaItems.LABRADOR_TEA.getDefaultStack();
-    }
+	@Override
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return AlaskaItems.LABRADOR_TEA.getDefaultStack();
+	}
 
-    @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
-        return true;
-    }
+	@Override
+	public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
+		return true;
+	}
 
-    @Override
-    public boolean canFertilize(World world, RandomGenerator random, BlockPos pos, BlockState state) {
-        return true;
-    }
+	@Override
+	public boolean canFertilize(World world, RandomGenerator random, BlockPos pos, BlockState state) {
+		return true;
+	}
 
-    @Override
-    public void fertilize(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state) {
-        dropStack(world, pos, new ItemStack(this));
-    }
+	@Override
+	public void fertilize(ServerWorld world, RandomGenerator random, BlockPos pos, BlockState state) {
+		dropStack(world, pos, new ItemStack(this));
+	}
 }

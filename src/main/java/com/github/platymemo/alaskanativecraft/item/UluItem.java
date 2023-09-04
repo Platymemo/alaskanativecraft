@@ -12,18 +12,18 @@ import net.minecraft.item.ToolMaterials;
 import net.minecraft.registry.tag.BlockTags;
 
 public class UluItem extends MiningToolItem {
-    public UluItem(Settings settings) {
-        super(1.0F, -2.8F, ToolMaterials.IRON, AlaskaTags.ULU_MINEABLE, settings);
-    }
+	public UluItem(Settings settings) {
+		super(1.0F, -2.8F, ToolMaterials.IRON, AlaskaTags.ULU_MINEABLE, settings);
+	}
 
-    @Override
-    public float getMiningSpeedMultiplier(ItemStack stack, @NotNull BlockState state) {
-        if (!state.isOf(Blocks.COBWEB) && !state.isIn(BlockTags.LEAVES)) {
-            return state.isIn(BlockTags.WOOL) ? 5.0F : super.getMiningSpeedMultiplier(stack, state);
-        } else if (state.isOf(AlaskaBlocks.WHALE_MEAT_BLOCK)) {
-            return 1.5F;
-        } else {
-            return 15.0F;
-        }
-    }
+	@Override
+	public float getMiningSpeedMultiplier(ItemStack stack, @NotNull BlockState state) {
+		if (!state.isOf(Blocks.COBWEB) && !state.isIn(BlockTags.LEAVES)) {
+			return state.isIn(BlockTags.WOOL) ? 5.0F : super.getMiningSpeedMultiplier(stack, state);
+		} else if (state.isOf(AlaskaBlocks.WHALE_MEAT_BLOCK)) {
+			return 1.5F;
+		} else {
+			return 15.0F;
+		}
+	}
 }

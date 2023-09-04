@@ -19,37 +19,37 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public enum HarpoonItemRenderer {
-    INSTANCE;
-    private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());
+	INSTANCE;
+	private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());
 
-    public boolean render(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
-        if (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED) {
-            return false;
-        }
+	public boolean render(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
+		if (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED) {
+			return false;
+		}
 
-        matrices.push();
-        {
-            model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
+		matrices.push();
+		{
+			model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
 
-            if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.THIRD_PERSON_RIGHT_HAND)) {
-                matrices.multiply(Axis.X_POSITIVE.rotationDegrees(180));
-                matrices.translate(0, 2, 0);
-            } else {
-                matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(90));
-                matrices.translate(0, 0.85, 0);
-            }
+			if (entity != null && entity.isUsingItem() && entity.getActiveItem() == stack && (renderMode == ModelTransformationMode.THIRD_PERSON_LEFT_HAND || renderMode == ModelTransformationMode.THIRD_PERSON_RIGHT_HAND)) {
+				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(180));
+				matrices.translate(0, 2, 0);
+			} else {
+				matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(90));
+				matrices.translate(0, 0.85, 0);
+			}
 
-            matrices.scale(2.0F, -2.0F, -2.0F);
-            VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
-                    vertexConsumers,
-                    this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
-                    false,
-                    stack.hasGlint()
-            );
-            this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
-        }
+			matrices.scale(2.0F, -2.0F, -2.0F);
+			VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
+					vertexConsumers,
+					this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
+					false,
+					stack.hasGlint()
+			);
+			this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+		}
 
-        matrices.pop();
-        return true;
-    }
+		matrices.pop();
+		return true;
+	}
 }

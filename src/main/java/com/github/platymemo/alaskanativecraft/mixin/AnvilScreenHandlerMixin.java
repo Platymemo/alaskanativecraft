@@ -21,30 +21,30 @@ import net.minecraft.screen.ScreenHandlerType;
 
 @Mixin(AnvilScreenHandler.class)
 public abstract class AnvilScreenHandlerMixin extends ForgingScreenHandler {
-    @Shadow
-    @Final
-    private final Property levelCost;
+	@Shadow
+	@Final
+	private final Property levelCost;
 
-    @Shadow
-    private int repairItemUsage;
+	@Shadow
+	private int repairItemUsage;
 
-    protected AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
-        super(type, syncId, playerInventory, context);
-        throw new AssertionError("AlaskaNativeCraft's AnvilScreenHandlerMixin constructor called!");
-    }
+	protected AnvilScreenHandlerMixin(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
+		super(type, syncId, playerInventory, context);
+		throw new AssertionError("AlaskaNativeCraft's AnvilScreenHandlerMixin constructor called!");
+	}
 
-    @Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0), method = "updateResult", cancellable = true)
-    private void addLeashedHarpoon(CallbackInfo ci) {
-        ItemStack base = this.ingredientInventory.getStack(0);
-        ItemStack addition = this.ingredientInventory.getStack(1);
-        if (base.isIn(AlaskaTags.HARPOONS) && !base.getOrCreateNbt().getBoolean("leashed") && addition.isOf(Items.LEAD)) {
-            ItemStack result = base.copy();
-            result.getOrCreateNbt().putInt("leashed", addition.getCount());
-            this.result.setStack(0, result);
-            this.levelCost.set(1);
-            this.repairItemUsage = 1;
-            sendContentUpdates();
-            ci.cancel();
-        }
-    }
+	@Inject(at = @At(value = "JUMP", opcode = Opcodes.IFNE, ordinal = 0), method = "updateResult", cancellable = true)
+	private void addLeashedHarpoon(CallbackInfo ci) {
+		ItemStack base = this.ingredientInventory.getStack(0);
+		ItemStack addition = this.ingredientInventory.getStack(1);
+		if (base.isIn(AlaskaTags.HARPOONS) && !base.getOrCreateNbt().getBoolean("leashed") && addition.isOf(Items.LEAD)) {
+			ItemStack result = base.copy();
+			result.getOrCreateNbt().putInt("leashed", addition.getCount());
+			this.result.setStack(0, result);
+			this.levelCost.set(1);
+			this.repairItemUsage = 1;
+			sendContentUpdates();
+			ci.cancel();
+		}
+	}
 }

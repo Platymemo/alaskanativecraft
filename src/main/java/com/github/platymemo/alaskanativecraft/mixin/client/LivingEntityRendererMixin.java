@@ -21,33 +21,33 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 @ClientOnly
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extends EntityModel<T>> extends EntityRenderer<T> implements FeatureRendererContext<T, M> {
-    protected LivingEntityRendererMixin(EntityRendererFactory.Context context) {
-        super(context);
-    }
+	protected LivingEntityRendererMixin(EntityRendererFactory.Context context) {
+		super(context);
+	}
 
-    @ModifyVariable(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V"),
-            method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-            ordinal = 7)
-    private float changeLimbDistance(float limbDistance, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
-            limbDistance = MathHelper.lerp(g, livingEntity.limbData.getLimbAngle(g), livingEntity.limbData.getLimbDistance(g));
+	@ModifyVariable(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V"),
+			method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+			ordinal = 7)
+	private float changeLimbDistance(float limbDistance, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+		if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
+			limbDistance = MathHelper.lerp(g, livingEntity.limbData.getLimbAngle(g), livingEntity.limbData.getLimbDistance(g));
 
-            if (limbDistance > 1.0F) {
-                limbDistance = 1.0F;
-            }
-        }
+			if (limbDistance > 1.0F) {
+				limbDistance = 1.0F;
+			}
+		}
 
-        return limbDistance;
-    }
+		return limbDistance;
+	}
 
-    @ModifyVariable(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V"),
-            method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-            ordinal = 8)
-    private float changeLimbAngle(float limbAngle, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
-            limbAngle = livingEntity.limbData.getLimbAngle(g) - livingEntity.limbData.getLimbDistance(g) * (1.0F - g);
-        }
+	@ModifyVariable(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/model/EntityModel;animateModel(Lnet/minecraft/entity/Entity;FFF)V"),
+			method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+			ordinal = 8)
+	private float changeLimbAngle(float limbAngle, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+		if (livingEntity instanceof WolfEntity && livingEntity.hasVehicle() && livingEntity.getVehicle() instanceof DogsledEntity) {
+			limbAngle = livingEntity.limbData.getLimbAngle(g) - livingEntity.limbData.getLimbDistance(g) * (1.0F - g);
+		}
 
-        return limbAngle;
-    }
+		return limbAngle;
+	}
 }

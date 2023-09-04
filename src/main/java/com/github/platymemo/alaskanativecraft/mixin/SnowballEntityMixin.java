@@ -21,35 +21,35 @@ import net.minecraft.util.hit.EntityHitResult;
 
 @Mixin(SnowballEntity.class)
 public class SnowballEntityMixin {
-    @Inject(at = @At("TAIL"), method = "onEntityHit")
-    private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {
-        if (AlaskaConfig.getConfig().snowballConversion) {
-            Entity entity = entityHitResult.getEntity();
-            if ((entity instanceof ParrotEntity && !(entity instanceof PtarmiganEntity)) || entity instanceof ChickenEntity) {
-                Identifier ptarmigan = new Identifier(AlaskaNativeCraft.MOD_ID, "ptarmigan");
+	@Inject(at = @At("TAIL"), method = "onEntityHit")
+	private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {
+		if (AlaskaConfig.getConfig().snowballConversion) {
+			Entity entity = entityHitResult.getEntity();
+			if ((entity instanceof ParrotEntity && !(entity instanceof PtarmiganEntity)) || entity instanceof ChickenEntity) {
+				Identifier ptarmigan = new Identifier(AlaskaNativeCraft.MOD_ID, "ptarmigan");
 
-                Text entityName = null;
-                if (entity.hasCustomName()) {
-                    entityName = entity.getCustomName();
-                }
+				Text entityName = null;
+				if (entity.hasCustomName()) {
+					entityName = entity.getCustomName();
+				}
 
-                NbtCompound entityTag = new NbtCompound();
-                entityTag.putString("id", ptarmigan.toString());
+				NbtCompound entityTag = new NbtCompound();
+				entityTag.putString("id", ptarmigan.toString());
 
-                if (entity.getWorld() instanceof ServerWorld world) {
-                    Entity newEntity = EntityType.loadEntityWithPassengers(entityTag, world, (entityMaker) -> {
-                        entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
-                        return entityMaker;
-                    });
+				if (entity.getWorld() instanceof ServerWorld world) {
+					Entity newEntity = EntityType.loadEntityWithPassengers(entityTag, world, (entityMaker) -> {
+						entityMaker.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityMaker.getYaw(), entityMaker.getPitch());
+						return entityMaker;
+					});
 
-                    if (newEntity != null) {
-                        newEntity.setCustomName(entityName);
-                    }
+					if (newEntity != null) {
+						newEntity.setCustomName(entityName);
+					}
 
-                    world.spawnEntityAndPassengers(newEntity);
-                    entity.discard();
-                }
-            }
-        }
-    }
+					world.spawnEntityAndPassengers(newEntity);
+					entity.discard();
+				}
+			}
+		}
+	}
 }

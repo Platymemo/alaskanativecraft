@@ -8,12 +8,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 
 public class SalmonberryBushBlock extends BushBlock {
-    public SalmonberryBushBlock(Settings settings) {
-        super(settings);
-    }
+	public SalmonberryBushBlock(Settings settings) {
+		super(settings);
+	}
 
-    @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-        return AlaskaItems.SALMONBERRIES.getDefaultStack();
-    }
+	@Override
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return AlaskaItems.SALMONBERRIES.getDefaultStack();
+	}
 }

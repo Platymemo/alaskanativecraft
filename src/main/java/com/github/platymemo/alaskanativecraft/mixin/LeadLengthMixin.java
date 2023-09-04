@@ -11,12 +11,12 @@ import net.minecraft.world.World;
 
 @Mixin(PathAwareEntity.class)
 public abstract class LeadLengthMixin extends MobEntity {
-    protected LeadLengthMixin(EntityType<? extends MobEntity> entityType, World world) {
-        super(entityType, world);
-    }
+	protected LeadLengthMixin(EntityType<? extends MobEntity> entityType, World world) {
+		super(entityType, world);
+	}
 
-    @ModifyConstant(method = "updateLeash", constant = @Constant(floatValue = 10.0F))
-    private float maxLeadLength(float maxLength) {
-        return 48.0F;
-    }
+	@ModifyConstant(method = "updateLeash", constant = @Constant(floatValue = 10.0F))
+	private float maxLeadLength(float maxLength) {
+		return 48.0F;
+	}
 }

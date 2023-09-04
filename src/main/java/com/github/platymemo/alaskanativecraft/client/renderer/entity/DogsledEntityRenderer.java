@@ -24,60 +24,60 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class DogsledEntityRenderer extends EntityRenderer<DogsledEntity> {
-    private static final Identifier[] TEXTURES = new Identifier[] {new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/oak.png"),
-            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/spruce.png"),
-            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/birch.png"),
-            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/jungle.png"),
-            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/acacia.png"),
-            new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
-    protected final DogsledEntityModel model;
+	private static final Identifier[] TEXTURES = new Identifier[] {new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/oak.png"),
+			new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/spruce.png"),
+			new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/birch.png"),
+			new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/jungle.png"),
+			new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/acacia.png"),
+			new Identifier(AlaskaNativeCraft.MOD_ID, "textures/entity/dogsled/dark_oak.png")};
+	protected final DogsledEntityModel model;
 
-    public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
-        super(ctx);
-        this.model = new DogsledEntityModel(ctx.getPart(AlaskaModels.DOGSLED));
-        this.shadowRadius = 0.5F;
-    }
+	public DogsledEntityRenderer(EntityRendererFactory.Context ctx) {
+		super(ctx);
+		this.model = new DogsledEntityModel(ctx.getPart(AlaskaModels.DOGSLED));
+		this.shadowRadius = 0.5F;
+	}
 
-    @Override
-    public void render(@NotNull DogsledEntity dogsledEntity, float yaw, float tickDelta, @NotNull MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
-        matrixStack.push();
-        matrixStack.scale(1.5F, 1.5F, 1.5F);
-        matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(270 - yaw));
-        float h = (float) dogsledEntity.getDamageWobbleTicks() - tickDelta;
-        float j = dogsledEntity.getDamageWobbleStrength() - tickDelta;
-        if (j < 0.0F) {
-            j = 0.0F;
-        }
+	@Override
+	public void render(@NotNull DogsledEntity dogsledEntity, float yaw, float tickDelta, @NotNull MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light) {
+		matrixStack.push();
+		matrixStack.scale(1.5F, 1.5F, 1.5F);
+		matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(270 - yaw));
+		float h = (float) dogsledEntity.getDamageWobbleTicks() - tickDelta;
+		float j = dogsledEntity.getDamageWobbleStrength() - tickDelta;
+		if (j < 0.0F) {
+			j = 0.0F;
+		}
 
-        if (h > 0.0F) {
-            matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(MathHelper.sin(h) * h * j / 10.0F * (float) dogsledEntity.getDamageWobbleSide()));
-        }
+		if (h > 0.0F) {
+			matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(MathHelper.sin(h) * h * j / 10.0F * (float) dogsledEntity.getDamageWobbleSide()));
+		}
 
-        // Chest Rendering
-        matrixStack.push();
-        float s = 0.5F;
-        matrixStack.scale(s, s, s);
-        matrixStack.translate(-0.3D, 0.6D, 0.5D);
-        matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(90.0F));
-        this.renderBlock(Blocks.CHEST.getDefaultState(), matrixStack, vertexConsumerProvider, light);
-        matrixStack.pop();
+		// Chest Rendering
+		matrixStack.push();
+		float s = 0.5F;
+		matrixStack.scale(s, s, s);
+		matrixStack.translate(-0.3D, 0.6D, 0.5D);
+		matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(90.0F));
+		this.renderBlock(Blocks.CHEST.getDefaultState(), matrixStack, vertexConsumerProvider, light);
+		matrixStack.pop();
 
-        matrixStack.scale(-1.0F, -1.0F, 1.0F);
-        matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(90.0F));
-        this.model.setAngles(dogsledEntity, tickDelta, 0.0F, -0.1F, 0.0F, 0.0F);
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(this.getTexture(dogsledEntity)));
-        this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+		matrixStack.scale(-1.0F, -1.0F, 1.0F);
+		matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(90.0F));
+		this.model.setAngles(dogsledEntity, tickDelta, 0.0F, -0.1F, 0.0F, 0.0F);
+		VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(this.model.getLayer(this.getTexture(dogsledEntity)));
+		this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 
-        matrixStack.pop();
-        super.render(dogsledEntity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
-    }
+		matrixStack.pop();
+		super.render(dogsledEntity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
+	}
 
-    @Override
-    public Identifier getTexture(@NotNull DogsledEntity dogsledEntity) {
-        return TEXTURES[dogsledEntity.getDogsledType().ordinal()];
-    }
+	@Override
+	public Identifier getTexture(@NotNull DogsledEntity dogsledEntity) {
+		return TEXTURES[dogsledEntity.getDogsledType().ordinal()];
+	}
 
-    protected void renderBlock(BlockState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-        MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(state, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV);
-    }
+	protected void renderBlock(BlockState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+		MinecraftClient.getInstance().getBlockRenderManager().renderBlockAsEntity(state, matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV);
+	}
 }

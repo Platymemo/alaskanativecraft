@@ -11,21 +11,21 @@ import net.minecraft.item.ItemStack;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
-    @Shadow
-    @Final
-    private int maxDamage;
+	@Shadow
+	@Final
+	private int maxDamage;
 
-    @Shadow
-    public abstract boolean isDamageable();
+	@Shadow
+	public abstract boolean isDamageable();
 
-    @SuppressWarnings("ConstantConditions")
-    @Redirect(method = {"getItemBarStep", "getItemBarColor"}, at = @At(value = "FIELD", target = "Lnet/minecraft/item/Item;maxDamage:I"))
-    private int redirectForDurabilityMultiplier(Item item, ItemStack stack) {
-        int newMaxDamage = this.maxDamage;
-        if (this.isDamageable() && stack.hasNbt() && stack.getNbt().contains("DurabilityMultiplier")) {
-            newMaxDamage *= stack.getNbt().getFloat("DurabilityMultiplier");
-        }
+	@SuppressWarnings("ConstantConditions")
+	@Redirect(method = {"getItemBarStep", "getItemBarColor"}, at = @At(value = "FIELD", target = "Lnet/minecraft/item/Item;maxDamage:I"))
+	private int redirectForDurabilityMultiplier(Item item, ItemStack stack) {
+		int newMaxDamage = this.maxDamage;
+		if (this.isDamageable() && stack.hasNbt() && stack.getNbt().contains("DurabilityMultiplier")) {
+			newMaxDamage *= stack.getNbt().getFloat("DurabilityMultiplier");
+		}
 
-        return newMaxDamage;
-    }
+		return newMaxDamage;
+	}
 }

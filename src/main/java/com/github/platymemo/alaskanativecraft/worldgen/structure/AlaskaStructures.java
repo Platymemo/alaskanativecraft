@@ -8,5 +8,5 @@ import net.minecraft.structure.StructureType;
 import net.minecraft.util.Identifier;
 
 public class AlaskaStructures {
-    public static StructureType<FishCampStructure> FISH_CAMP = Registry.register(Registries.STRUCTURE_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "fish_camp"), () -> FishCampStructure.CODEC);
+	public static StructureType<FishCampStructure> FISH_CAMP = Registry.register(Registries.STRUCTURE_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "fish_camp"), () -> FishCampStructure.CODEC);
 }

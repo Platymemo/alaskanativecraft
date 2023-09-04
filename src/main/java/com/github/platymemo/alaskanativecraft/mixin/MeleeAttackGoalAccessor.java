@@ -7,6 +7,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 
 @Mixin(MeleeAttackGoal.class)
 public interface MeleeAttackGoalAccessor {
-    @Accessor("cooldown")
-    void setCooldown(int cooldown);
+	@Accessor("cooldown")
+	void setCooldown(int cooldown);
 }

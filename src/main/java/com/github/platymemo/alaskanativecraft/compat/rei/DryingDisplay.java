@@ -20,43 +20,43 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class DryingDisplay implements Display {
-    private final List<EntryIngredient> inputs;
-    private final List<EntryIngredient> output;
-    private final int dryTime;
-    private DryingRecipe display;
+	private final List<EntryIngredient> inputs;
+	private final List<EntryIngredient> output;
+	private final int dryTime;
+	private DryingRecipe display;
 
-    public DryingDisplay(@NotNull DryingRecipe recipe) {
-        this(recipe.getIngredients(), recipe.getResult(null), recipe.getCookTime());
-        this.display = recipe;
-    }
+	public DryingDisplay(@NotNull DryingRecipe recipe) {
+		this(recipe.getIngredients(), recipe.getResult(null), recipe.getCookTime());
+		this.display = recipe;
+	}
 
-    public DryingDisplay(DefaultedList<Ingredient> ingredients, ItemStack output, int dryTime) {
-        this.inputs = EntryIngredients.ofIngredients(ingredients);
-        this.output = Collections.singletonList(EntryIngredients.of(output));
-        this.dryTime = dryTime;
-    }
+	public DryingDisplay(DefaultedList<Ingredient> ingredients, ItemStack output, int dryTime) {
+		this.inputs = EntryIngredients.ofIngredients(ingredients);
+		this.output = Collections.singletonList(EntryIngredients.of(output));
+		this.dryTime = dryTime;
+	}
 
-    public double getDryTime() {
-        return this.dryTime;
-    }
+	public double getDryTime() {
+		return this.dryTime;
+	}
 
-    @Override
-    public @NotNull Optional<Identifier> getDisplayLocation() {
-        return Optional.ofNullable(this.display).map(DryingRecipe::getId);
-    }
+	@Override
+	public @NotNull Optional<Identifier> getDisplayLocation() {
+		return Optional.ofNullable(this.display).map(DryingRecipe::getId);
+	}
 
-    @Override
-    public @NotNull List<EntryIngredient> getInputEntries() {
-        return this.inputs;
-    }
+	@Override
+	public @NotNull List<EntryIngredient> getInputEntries() {
+		return this.inputs;
+	}
 
-    @Override
-    public @NotNull List<EntryIngredient> getOutputEntries() {
-        return this.output;
-    }
+	@Override
+	public @NotNull List<EntryIngredient> getOutputEntries() {
+		return this.output;
+	}
 
-    @Override
-    public CategoryIdentifier<?> getCategoryIdentifier() {
-        return AlaskaPlugin.DRYING_ID;
-    }
+	@Override
+	public CategoryIdentifier<?> getCategoryIdentifier() {
+		return AlaskaPlugin.DRYING_ID;
+	}
 }

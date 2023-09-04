@@ -23,27 +23,27 @@ import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
 public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends FeatureRenderer<T, PlayerEntityModel<T>> {
-    private final PtarmiganEntityModel model;
+	private final PtarmiganEntityModel model;
 
-    public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, @NotNull EntityModelLoader loader) {
-        super(context);
-        this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaModels.PTARMIGAN));
-    }
+	public ShoulderPtarmiganFeatureRenderer(FeatureRendererContext<T, PlayerEntityModel<T>> context, @NotNull EntityModelLoader loader) {
+		super(context);
+		this.model = new PtarmiganEntityModel(loader.getModelPart(AlaskaModels.PTARMIGAN));
+	}
 
-    @Override
-    public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {
-        this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, true);
-        this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, false);
-    }
+	@Override
+	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {
+		this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, true);
+		this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, false);
+	}
 
-    private void renderShoulderPtarmigan(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T player, float limbAngle, float limbDistance, float headYaw, float headPitch, boolean leftShoulder) {
-        NbtCompound compoundTag = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
-        EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaEntities.PTARMIGAN).ifPresent((entityType) -> {
-            matrices.push();
-            matrices.translate(leftShoulder ? 0.4D : -0.4D, player.isInSneakingPose() ? -1.3D : -1.5D, 0.0D);
-            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(PtarmiganEntityRenderer.TEXTURES[compoundTag.getInt("Type")]));
-            this.model.poseOnShoulder(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, limbAngle, limbDistance, headYaw, headPitch, player.age);
-            matrices.pop();
-        });
-    }
+	private void renderShoulderPtarmigan(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T player, float limbAngle, float limbDistance, float headYaw, float headPitch, boolean leftShoulder) {
+		NbtCompound compoundTag = leftShoulder ? player.getShoulderEntityLeft() : player.getShoulderEntityRight();
+		EntityType.get(compoundTag.getString("id")).filter((entityType) -> entityType == AlaskaEntities.PTARMIGAN).ifPresent((entityType) -> {
+			matrices.push();
+			matrices.translate(leftShoulder ? 0.4D : -0.4D, player.isInSneakingPose() ? -1.3D : -1.5D, 0.0D);
+			VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(PtarmiganEntityRenderer.TEXTURES[compoundTag.getInt("Type")]));
+			this.model.poseOnShoulder(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, limbAngle, limbDistance, headYaw, headPitch, player.age);
+			matrices.pop();
+		});
+	}
 }

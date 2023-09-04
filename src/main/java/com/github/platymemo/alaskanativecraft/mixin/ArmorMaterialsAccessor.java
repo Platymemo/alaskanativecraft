@@ -10,8 +10,8 @@ import net.minecraft.item.ArmorMaterials;
 
 @Mixin(ArmorMaterials.class)
 public interface ArmorMaterialsAccessor {
-    @Accessor("BASE_DURABILITY_VALUES")
-    static EnumMap<ArmorItem.ArmorSlot, Integer> getBaseDurabilityValues() {
-        throw new AssertionError("Accessor dummy method called somehow!");
-    }
+	@Accessor("BASE_DURABILITY_VALUES")
+	static EnumMap<ArmorItem.ArmorSlot, Integer> getBaseDurabilityValues() {
+		throw new AssertionError("Accessor dummy method called somehow!");
+	}
 }
