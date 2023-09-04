@@ -15,12 +15,12 @@ import net.minecraft.world.World;
 
 @Mixin(PolarBearEntity.class)
 public abstract class PolarBearMixin extends AnimalEntity implements Angerable {
-	protected PolarBearMixin(EntityType<? extends AnimalEntity> type, World world) {
-		super(type, world);
-	}
+    protected PolarBearMixin(EntityType<? extends AnimalEntity> type, World world) {
+        super(type, world);
+    }
 
-	@Inject(at = @At("TAIL"), method = "initGoals()V")
-	private void addSealTarget(CallbackInfo ci) {
-		targetSelector.add(3, new TargetGoal<>(this, SealEntity.class, true));
-	}
+    @Inject(at = @At("TAIL"), method = "initGoals()V")
+    private void addSealTarget(CallbackInfo ci) {
+        targetSelector.add(3, new TargetGoal<>(this, SealEntity.class, true));
+    }
 }

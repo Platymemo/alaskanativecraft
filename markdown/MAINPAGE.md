@@ -30,7 +30,7 @@ Currently included features are described below.
     * These guys are great for everything shears are good for, but they don't fill your inventory with leaf blocks.
     * More importantly, they're great for cutting fish into little strips for drying on the drying rack!
 6. Berries!
-    * Enjoy the taste of blueberries, cloudberries, raspberries, and salmonberries! These berry bushes can only spawn in
+    * Enjoy the taste of blueberries, raspberries, and salmonberries! These berry bushes can only spawn in
       snowy and taiga biomes.
 7. Akutaq
     * If berries aren't enough to sate your sweet tooth, how about delicious akutaq? Mix some raw venison or fish with
@@ -62,7 +62,7 @@ Currently included features are described below.
 Huge thanks to these artists for the textures they've provided!
 
 - Daimons for the moose
-- Kazoo for the cloudberries, raspberries, and salmonberries
+- Kazoo for the raspberries and salmonberries
 - Guaire for the seal
 - Shard for the fish strips and dry fish textures
 

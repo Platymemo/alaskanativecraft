@@ -17,20 +17,20 @@ import net.minecraft.world.World;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
-	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
-		super(entityType, world);
-		throw new AssertionError("wut");
-	}
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
+        super(entityType, world);
+        throw new AssertionError("wut");
+    }
 
-	@Override
-	@Shadow
-	public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+    @Override
+    @Shadow
+    public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
-	@Inject(at = @At("HEAD"), method = "updateTurtleHelmet")
-	private void updateSnowGoggles(CallbackInfo ci) {
-		ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
-		if (stack.isOf(AlaskaItems.SNOW_GOGGLES)) {
-			this.removeStatusEffect(StatusEffects.BLINDNESS);
-		}
-	}
+    @Inject(at = @At("HEAD"), method = "updateTurtleHelmet")
+    private void updateSnowGoggles(CallbackInfo ci) {
+        ItemStack stack = this.getEquippedStack(EquipmentSlot.HEAD);
+        if (stack.isOf(AlaskaItems.SNOW_GOGGLES)) {
+            this.removeStatusEffect(StatusEffects.BLINDNESS);
+        }
+    }
 }

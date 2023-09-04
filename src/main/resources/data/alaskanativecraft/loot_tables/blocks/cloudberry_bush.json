@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "alaskanativecraft:cloudberries"
+          "name": "alaskanativecraft:salmonberries"
         }
       ],
       "conditions": [
@@ -42,7 +42,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "alaskanativecraft:cloudberries"
+          "name": "alaskanativecraft:salmonberries"
         }
       ],
       "conditions": [

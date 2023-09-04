@@ -9,9 +9,9 @@ import net.minecraft.util.shape.VoxelShape;
 
 @Mixin(SnowBlock.class)
 public interface SnowBlockAccessor {
-	@Accessor("LAYERS_TO_SHAPE")
-	@Final
-	static VoxelShape[] getLayers() {
-		throw new AssertionError("Mixin injection failed!");
-	}
+    @Accessor("LAYERS_TO_SHAPE")
+    @Final
+    static VoxelShape[] getLayers() {
+        throw new AssertionError("Mixin injection failed!");
+    }
 }

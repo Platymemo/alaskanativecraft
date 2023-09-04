@@ -13,17 +13,17 @@ import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 public class AlaskaNativeCraft implements ModInitializer {
-	public static final String MOD_ID = "alaskanativecraft";
+    public static final String MOD_ID = "alaskanativecraft";
 
-	@Override
-	public void onInitialize(ModContainer container) {
-		AlaskaBlocks.register();
-		AlaskaItems.register();
-		AlaskaLootFunctionTypes.register();
-		AlaskaEntities.register();
-		AlaskaTags.register();
-		AlaskaFeatures.register();
-		AlaskaSoundEvents.register();
-		AlaskaRecipes.register();
-	}
+    @Override
+    public void onInitialize(ModContainer container) {
+        AlaskaBlocks.register();
+        AlaskaItems.register();
+        AlaskaLootFunctionTypes.register();
+        AlaskaEntities.register();
+        AlaskaTags.register();
+        AlaskaFeatures.register();
+        AlaskaSoundEvents.register();
+        AlaskaRecipes.register();
+    }
 }
