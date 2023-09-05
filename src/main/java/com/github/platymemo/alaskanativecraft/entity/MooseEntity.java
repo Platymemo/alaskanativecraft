@@ -7,7 +7,7 @@ import com.github.platymemo.alaskanativecraft.entity.ai.goal.AdultMeleeAttackGoa
 import com.github.platymemo.alaskanativecraft.entity.ai.goal.ChildEscapeDangerGoal;
 import com.github.platymemo.alaskanativecraft.mixin.AxeItemAccessor;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
-import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
+import com.github.platymemo.alaskanativecraft.tags.CommonTags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -134,7 +134,7 @@ public class MooseEntity extends AnimalEntity {
 			World world = MooseEntity.this.getWorld();
 			if (this.logValid) {
 				this.logState = world.getBlockState(this.logPos);
-				if (this.logState.isIn(CommonBlockTags.LOGS_WITH_BARK)) {
+				if (this.logState.isIn(CommonTags.LOGS_WITH_BARK)) {
 					BlockState blockState = world.getBlockState(this.logPos);
 					Block block = AxeItemAccessor.getStrippedBlocks().get(blockState.getBlock());
 					if (block != null && !world.isClient) {
@@ -171,7 +171,7 @@ public class MooseEntity extends AnimalEntity {
 			);
 
 			for (BlockPos blockPos : iterable) {
-				if (MooseEntity.this.getWorld().getBlockState(blockPos).isIn(CommonBlockTags.LOGS_WITH_BARK)) {
+				if (MooseEntity.this.getWorld().getBlockState(blockPos).isIn(CommonTags.LOGS_WITH_BARK)) {
 					return Vec3d.ofBottomCenter(blockPos);
 				}
 			}

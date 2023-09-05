@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
-import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
+import com.github.platymemo.alaskanativecraft.tags.CommonTags;
 import com.google.gson.JsonObject;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +18,7 @@ public class IngredientMixin {
 			method = "entryFromJson", locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
 	private static void addDriftwoodAntlersAndIvory(JsonObject json, CallbackInfoReturnable<Ingredient.Entry> cir, Item item) {
 		if (item == Items.STICK) {
-			cir.setReturnValue(new Ingredient.TagEntry(AlaskaTags.STICKS));
+			cir.setReturnValue(new Ingredient.TagEntry(CommonTags.STICKS));
 		}
 	}
 }

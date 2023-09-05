@@ -1,7 +1,6 @@
 package com.github.platymemo.alaskanativecraft.tags;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.tags.common.CommonBlockTags;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -22,8 +21,6 @@ public class AlaskaTags {
 	public static final TagKey<Block> SNOWSHOE_SPEED_BLOCKS = TagKey.of(RegistryKeys.BLOCK, new Identifier(AlaskaNativeCraft.MOD_ID, "snowshoe_speed_blocks"));
 	public static final TagKey<Block> ULU_MINEABLE = TagKey.of(RegistryKeys.BLOCK, new Identifier(AlaskaNativeCraft.MOD_ID, "mineable/ulu"));
 
-	public static final TagKey<Item> STICKS = TagKey.of(RegistryKeys.ITEM, new Identifier("c", "sticks"));
-
 	public static final TagKey<Biome> HAS_DRIFTWOOD = TagKey.of(RegistryKeys.BIOME, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/driftwood"));
 	public static final TagKey<Biome> HAS_BUSHES = TagKey.of(RegistryKeys.BIOME, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/berry_bushes"));
 	public static final TagKey<Biome> HAS_LABRADOR_TEA = TagKey.of(RegistryKeys.BIOME, new Identifier(AlaskaNativeCraft.MOD_ID, "has_feature/labrador_tea"));
@@ -32,6 +29,6 @@ public class AlaskaTags {
 	public static final TagKey<Biome> HAS_PTARMIGAN = TagKey.of(RegistryKeys.BIOME, new Identifier(AlaskaNativeCraft.MOD_ID, "has_mob/ptarmigan"));
 
 	public static void register() {
-		CommonBlockTags.register();
+		CommonTags.register();
 	}
 }
