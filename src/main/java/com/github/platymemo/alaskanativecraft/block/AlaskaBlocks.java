@@ -26,10 +26,10 @@ import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 public class AlaskaBlocks {
 	public static final WhaleMeatBlock WHALE_MEAT_BLOCK;
-	public static final BlueberryBushBlock BLUEBERRY_BUSH;
-	public static final CloudberryBushBlock CLOUDBERRY_BUSH;
-	public static final RaspberryBushBlock RASPBERRY_BUSH;
-	public static final SalmonberryBushBlock SALMONBERRY_BUSH;
+	public static final BushBlock BLUEBERRY_BUSH;
+	public static final BushBlock CLOUDBERRY_BUSH;
+	public static final BushBlock RASPBERRY_BUSH;
+	public static final BushBlock SALMONBERRY_BUSH;
 	public static final FlowerBlock LABRADOR_TEA;
 	public static final PillarBlock DRIFTWOOD_LOG;
 	public static final DryingRackBlock DRYING_RACK;
@@ -37,13 +37,14 @@ public class AlaskaBlocks {
 
 	static {
 		WHALE_MEAT_BLOCK = register("whale_meat_block", new WhaleMeatBlock(QuiltBlockSettings.create().mapColor(MapColor.SNOW).requiresTool().sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroups.BUILDING_BLOCKS);
-		BLUEBERRY_BUSH = register("blueberry_bush", new BlueberryBushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
+		BLUEBERRY_BUSH = register("blueberry_bush", new BushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
 		CLOUDBERRY_BUSH = register("cloudberry_bush", new CloudberryBushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
-		RASPBERRY_BUSH = register("raspberry_bush", new RaspberryBushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
-		SALMONBERRY_BUSH = register("salmonberry_bush", new SalmonberryBushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
+		RASPBERRY_BUSH = register("raspberry_bush", new BushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
+		SALMONBERRY_BUSH = register("salmonberry_bush", new BushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
 		LABRADOR_TEA = register("labrador_tea", new LabradorTeaBlock(StatusEffects.REGENERATION, 12, QuiltBlockSettings.create().mapColor(MapColor.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS)));
 		DRIFTWOOD_LOG = register("driftwood_log", new PillarBlock(QuiltBlockSettings.copyOf(Blocks.OAK_LOG)), ItemGroups.BUILDING_BLOCKS);
 		DRYING_RACK = register("drying_rack", new DryingRackBlock(QuiltBlockSettings.copyOf(Blocks.OAK_FENCE)), ItemGroups.FUNCTIONAL_BLOCKS);
+
 		DRYING_RACK_BLOCK_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(AlaskaNativeCraft.MOD_ID, "drying_rack"), QuiltBlockEntityTypeBuilder.create(DryingRackBlockEntity::new, DRYING_RACK).build(null));
 	}
 

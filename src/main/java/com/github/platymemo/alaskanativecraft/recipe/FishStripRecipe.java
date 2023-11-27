@@ -25,7 +25,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
 		boolean hasUlu = false;
 		boolean hasFish = false;
 
-		for (int i = 0; i < inv.size(); ++i) {
+		for (int i = 0; i < inv.size(); i++) {
 			ItemStack itemStack = inv.getStack(i);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.isIn(AlaskaTags.SLICEABLE_FISH)) { // Need at least 1 fish but can have more
@@ -45,7 +45,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
 	public ItemStack craft(@NotNull RecipeInputInventory inv, DynamicRegistryManager manager) {
 		int numOfFish = 0;
 		ItemStack stack;
-		for (int i = 0; i < inv.size(); ++i) {
+		for (int i = 0; i < inv.size(); i++) {
 			stack = inv.getStack(i);
 			if (stack.isIn(AlaskaTags.SLICEABLE_FISH)) {
 				numOfFish++;
@@ -59,7 +59,7 @@ public class FishStripRecipe extends SpecialCraftingRecipe {
 	public DefaultedList<ItemStack> getRemainder(@NotNull RecipeInputInventory inventory) {
 		DefaultedList<ItemStack> defaultedList = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
 
-		for (int i = 0; i < defaultedList.size(); ++i) {
+		for (int i = 0; i < defaultedList.size(); i++) {
 			ItemStack stack = inventory.getStack(i);
 			if (stack.isIn(AlaskaTags.ULUS)) {
 				if (!stack.damage(5, RandomGenerator.createLegacy(), null)) {

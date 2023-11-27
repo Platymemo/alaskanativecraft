@@ -31,9 +31,9 @@ public class ShoulderPtarmiganFeatureRenderer<T extends PlayerEntity> extends Fe
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T playerEntity, float f, float g, float h, float j, float k, float l) {
-		this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, true);
-		this.renderShoulderPtarmigan(matrixStack, vertexConsumerProvider, i, playerEntity, f, g, k, l, false);
+	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, T player, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+		this.renderShoulderPtarmigan(matrices, vertexConsumers, i, player, limbAngle, limbDistance, headYaw, headPitch, true);
+		this.renderShoulderPtarmigan(matrices, vertexConsumers, i, player, limbAngle, limbDistance, headYaw, headPitch, false);
 	}
 
 	private void renderShoulderPtarmigan(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T player, float limbAngle, float limbDistance, float headYaw, float headPitch, boolean leftShoulder) {

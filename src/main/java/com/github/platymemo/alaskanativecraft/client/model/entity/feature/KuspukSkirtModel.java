@@ -24,8 +24,8 @@ public class KuspukSkirtModel<E extends LivingEntity> extends AnimalModel<E> {
 
 	public static @NotNull TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
-		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData skirt = modelPartData.addChild("skirt", ModelPartBuilder.create(),
+		ModelPartData root = modelData.getRoot();
+		ModelPartData skirt = root.addChild("skirt", ModelPartBuilder.create(),
 				ModelTransform.pivot(0.0f, 18.0f, 2.0f));
 
 		skirt.addChild("strip_1", ModelPartBuilder.create()

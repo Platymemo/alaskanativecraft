@@ -29,9 +29,9 @@ public class PtarmiganEntityRenderer extends MobEntityRenderer<PtarmiganEntity, 
 	}
 
 	@Override
-	public float getAnimationProgress(@NotNull PtarmiganEntity ptarmiganEntity, float f) {
-		float g = MathHelper.lerp(f, ptarmiganEntity.prevFlapProgress, ptarmiganEntity.flapProgress);
-		float h = MathHelper.lerp(f, ptarmiganEntity.prevMaxWingDeviation, ptarmiganEntity.maxWingDeviation);
-		return (MathHelper.sin(g) + 1.0F) * h;
+	public float getAnimationProgress(@NotNull PtarmiganEntity ptarmiganEntity, float tickDelta) {
+		float flapProgress = MathHelper.lerp(tickDelta, ptarmiganEntity.prevFlapProgress, ptarmiganEntity.flapProgress);
+		float wingDeviation = MathHelper.lerp(tickDelta, ptarmiganEntity.prevMaxWingDeviation, ptarmiganEntity.maxWingDeviation);
+		return (MathHelper.sin(flapProgress) + 1.0F) * wingDeviation;
 	}
 }

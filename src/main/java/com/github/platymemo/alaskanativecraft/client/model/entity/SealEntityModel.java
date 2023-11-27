@@ -79,8 +79,8 @@ public class SealEntityModel<T extends SealEntity> extends QuadrupedEntityModel<
 
 	@Override
 	public void setAngles(@NotNull T sealEntity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-		this.head.pitch = headPitch * 0.017453292F;
-		this.head.yaw = headYaw * 0.017453292F;
+		this.head.pitch = headPitch * MathHelper.RADIANS_PER_DEGREE;
+		this.head.yaw = headYaw * MathHelper.RADIANS_PER_DEGREE;
 		this.body.pitch = 0.0F;
 		float flipperAnim = MathHelper.cos(limbAngle * 0.4F) * 0.5F * limbDistance;
 		if (!sealEntity.isTouchingWater() && sealEntity.isOnGround()) {

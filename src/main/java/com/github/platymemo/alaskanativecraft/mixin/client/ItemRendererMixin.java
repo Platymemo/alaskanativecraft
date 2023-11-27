@@ -30,7 +30,7 @@ public class ItemRendererMixin {
 			cancellable = true)
 	public void renderHarpoons(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, World world, int light, int overlay, int k, CallbackInfo ci) {
 		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getHeldItemModel(stack, world, entity, k);
-		if (stack.isIn(AlaskaTags.HARPOONS) && HarpoonItemRenderer.INSTANCE.render(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
+		if (stack.isIn(AlaskaTags.HARPOONS) && HarpoonItemRenderer.render(entity, stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
 			ci.cancel();
 		}
 	}
@@ -39,7 +39,7 @@ public class ItemRendererMixin {
 			method = "renderItem(Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/render/model/json/ModelTransformationMode;ZLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;IILnet/minecraft/client/render/model/BakedModel;)V",
 			cancellable = true)
 	public void renderSnowshoes(@NotNull ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model, CallbackInfo ci) {
-		if (stack.isOf(AlaskaItems.SNOWSHOES) && SnowshoeItemRenderer.INSTANCE.render(stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
+		if (stack.isOf(AlaskaItems.SNOWSHOES) && SnowshoeItemRenderer.render(stack, renderMode, leftHanded, matrices, vertexConsumers, light, overlay, model)) {
 			ci.cancel();
 		}
 	}

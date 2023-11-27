@@ -1,20 +1,24 @@
 package com.github.platymemo.alaskanativecraft.block.entity;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.block.DryingRackBlock;
 import com.github.platymemo.alaskanativecraft.recipe.AlaskaRecipes;
 import com.github.platymemo.alaskanativecraft.recipe.DryingRecipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
@@ -22,12 +26,13 @@ import net.minecraft.util.Clearable;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 	private final DefaultedList<ItemStack> itemsBeingDried;
+	// Contains the current time an item is being dried
 	private final int[] dryingTimes;
+	// Contains the max time each item can be dried
 	private final int[] dryingTotalTimes;
 
 	public DryingRackBlockEntity(BlockPos pos, BlockState state) {
@@ -37,32 +42,37 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 		this.dryingTotalTimes = new int[4];
 	}
 
-	public static void possiblyWetTick(@NotNull World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRackBlockEntity) {
-		if (world.isSkyVisible(pos)) {
-			for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
-				if (dryingRackBlockEntity.dryingTimes[i] > 0) {
-					dryingRackBlockEntity.dryingTimes[i] = MathHelper.clamp(dryingRackBlockEntity.dryingTimes[i] - 2, 0, dryingRackBlockEntity.dryingTotalTimes[i]);
-				}
-			}
+	/**
+	 * Check for wet conditions, and reset drying times in the provided {@link DryingRackBlockEntity rack} if so.
+	 * Otherwise, dry the {@link ItemStack item}s.
+	 */
+	public static void updateItemsBeingDried(@NotNull World world, BlockPos pos, BlockState state, DryingRackBlockEntity dryingRack) {
+		if (state.get(DryingRackBlock.WATERLOGGED) || (world.isRaining() && world.isSkyVisible(pos))) {
+			Arrays.fill(dryingRack.dryingTimes, 0);
 		} else {
-			updateItemsBeingDried(world, pos, state, dryingRackBlockEntity);
+			dry(world, pos, dryingRack);
 		}
 	}
 
-	@SuppressWarnings("unused")
-	public static void updateItemsBeingDried(World world, BlockPos pos, BlockState state, @NotNull DryingRackBlockEntity dryingRackBlockEntity) {
-		for (int i = 0; i < dryingRackBlockEntity.itemsBeingDried.size(); ++i) {
-			ItemStack itemStack = dryingRackBlockEntity.itemsBeingDried.get(i);
+	/**
+	 * Increase the dry time in all items in the provided {@link DryingRackBlockEntity rack}.
+	 */
+	public static void dry(World world, BlockPos pos, @NotNull DryingRackBlockEntity dryingRack) {
+		boolean smoked = CampfireBlock.isLitCampfireInRange(world, pos);
+
+		for (int slot = 0; slot < dryingRack.itemsBeingDried.size(); slot++) {
+			ItemStack itemStack = dryingRack.itemsBeingDried.get(slot);
 			if (!itemStack.isEmpty()) {
-				dryingRackBlockEntity.dryingTimes[i]++;
-				if (dryingRackBlockEntity.dryingTimes[i] >= dryingRackBlockEntity.dryingTotalTimes[i]) {
+				// Smoking halves time to dry
+				dryingRack.dryingTimes[slot] += smoked ? 2 : 1;
+				if (dryingRack.dryingTimes[slot] >= dryingRack.dryingTotalTimes[slot]) {
 					// Don't want it to keep counting up unnecessarily high
-					dryingRackBlockEntity.dryingTimes[i] = dryingRackBlockEntity.dryingTotalTimes[i];
+					dryingRack.dryingTimes[slot] = dryingRack.dryingTotalTimes[slot];
 
 					Inventory inventory = new SimpleInventory(itemStack);
-					ItemStack itemStack2 = world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, inventory, world).map((dryingRecipe) -> dryingRecipe.craft(inventory, world.getRegistryManager())).orElse(itemStack);
-					dryingRackBlockEntity.itemsBeingDried.set(i, itemStack2);
-					dryingRackBlockEntity.updateListeners();
+					ItemStack result = world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, inventory, world).map((dryingRecipe) -> dryingRecipe.craft(inventory, world.getRegistryManager())).orElse(itemStack);
+					dryingRack.itemsBeingDried.set(slot, result);
+					dryingRack.updateListeners();
 				}
 			}
 		}
@@ -78,25 +88,30 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 		return this.itemsBeingDried;
 	}
 
-	public ItemStack getDriedItem() {
-		ItemStack stack;
-		for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
-			if (this.dryingTimes[i] >= this.dryingTotalTimes[i]) {
-				stack = this.itemsBeingDried.get(i);
-				if (!stack.isEmpty()) {
-					this.itemsBeingDried.set(i, ItemStack.EMPTY);
+	/**
+	 * Removes an {@link ItemStack item} in the {@link DryingRackBlockEntity rack}, prioritizing dried items.
+	 * @return The removed {@link ItemStack item}.
+	 */
+	public ItemStack takeItem() {
+		ItemStack itemStack;
+		// Prioritize getting fully dried items first.
+		for (int slot = 0; slot < this.itemsBeingDried.size(); slot++) {
+			if (this.dryingTimes[slot] >= this.dryingTotalTimes[slot]) {
+				itemStack = this.itemsBeingDried.get(slot);
+				if (!itemStack.isEmpty()) {
+					this.itemsBeingDried.set(slot, ItemStack.EMPTY);
 					this.updateListeners();
-					return stack;
+					return itemStack;
 				}
 			}
 		}
 
-		for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
-			stack = this.itemsBeingDried.get(i);
-			if (!stack.isEmpty()) {
-				this.itemsBeingDried.set(i, ItemStack.EMPTY);
+		for (int slot = 0; slot < this.itemsBeingDried.size(); slot++) {
+			itemStack = this.itemsBeingDried.get(slot);
+			if (!itemStack.isEmpty()) {
+				this.itemsBeingDried.set(slot, ItemStack.EMPTY);
 				this.updateListeners();
-				return stack;
+				return itemStack;
 			}
 		}
 
@@ -107,10 +122,10 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 	public void readNbt(NbtCompound nbt) {
 		this.itemsBeingDried.clear();
 		Inventories.readNbt(nbt, this.itemsBeingDried);
-		int[] js;
-		if (nbt.contains("DryingTimes", 11)) {
-			js = nbt.getIntArray("DryingTimes");
-			System.arraycopy(js, 0, this.dryingTimes, 0, Math.min(this.dryingTotalTimes.length, js.length));
+		int[] dryingTimes;
+		if (nbt.contains("DryingTimes", NbtElement.INT_ARRAY_TYPE)) {
+			dryingTimes = nbt.getIntArray("DryingTimes");
+			System.arraycopy(dryingTimes, 0, this.dryingTimes, 0, Math.min(this.dryingTotalTimes.length, dryingTimes.length));
 		}
 	}
 
@@ -129,17 +144,34 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	public Optional<DryingRecipe> getRecipeFor(ItemStack item) {
-		return this.itemsBeingDried.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, new SimpleInventory(item), this.world);
+	public Optional<DryingRecipe> getRecipeFor(ItemStack itemStack) {
+		return this.itemsBeingDried.stream().noneMatch(ItemStack::isEmpty) ? Optional.empty() : this.world.getRecipeManager().getFirstMatch(AlaskaRecipes.DRYING, new SimpleInventory(itemStack), this.world);
 	}
 
-	public boolean addItem(ItemStack item, int integer) {
-		for (int i = 0; i < this.itemsBeingDried.size(); ++i) {
-			ItemStack itemStack = this.itemsBeingDried.get(i);
-			if (itemStack.isEmpty()) {
-				this.dryingTotalTimes[i] = integer;
-				this.dryingTimes[i] = 0;
-				this.itemsBeingDried.set(i, item.split(1));
+	/**
+	 * Places a single count of the {@link ItemStack item} into the {@link DryingRackBlockEntity drying rack}.
+	 * @param itemStack the {@link ItemStack stack} to take from
+	 * @param totalDryingTime the max drying time
+	 * @return {@code true} if an {@link ItemStack item} was added to the {@link DryingRackBlockEntity rack}, or {@code false}.
+	 */
+	public boolean addItem(ItemStack itemStack, int totalDryingTime) {
+		return this.addItem(itemStack, totalDryingTime, 1);
+	}
+
+	/**
+	 * Places the provided count of the {@link ItemStack item} into the {@link DryingRackBlockEntity drying rack}.
+	 * @param itemStack the {@link ItemStack stack} to take from
+	 * @param totalDryingTime the max drying time
+	 * @param count how much from the stack to take
+	 * @return {@code true} if an {@link ItemStack item} was added to the {@link DryingRackBlockEntity rack}, or {@code false}.
+	 */
+	public boolean addItem(ItemStack itemStack, int totalDryingTime, int count) {
+		for (int slot = 0; slot < this.itemsBeingDried.size(); slot++) {
+			ItemStack dryingItemStack = this.itemsBeingDried.get(slot);
+			if (dryingItemStack.isEmpty()) {
+				this.dryingTotalTimes[slot] = totalDryingTime;
+				this.dryingTimes[slot] = 0;
+				this.itemsBeingDried.set(slot, itemStack.split(count));
 				this.updateListeners();
 				return true;
 			}
@@ -157,6 +189,8 @@ public class DryingRackBlockEntity extends BlockEntity implements Clearable {
 	@Override
 	public void clear() {
 		this.itemsBeingDried.clear();
+		Arrays.fill(this.dryingTimes, 0);
+		Arrays.fill(this.dryingTotalTimes, 0);
 	}
 
 	public void spawnItemsBeingDried() {

@@ -87,8 +87,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 	private double x;
 	private double y;
 	private double z;
-	private double dogsledYaw;
-	private double dogsledPitch;
+	private double predictedYaw;
+	private double predictedPitch;
 	private boolean pressingLeft;
 	private boolean pressingRight;
 	private boolean pressingForward;
@@ -190,8 +190,8 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.dogsledYaw = yaw;
-		this.dogsledPitch = pitch;
+		this.predictedYaw = yaw;
+		this.predictedPitch = pitch;
 		this.clientInterpolationSteps = 10;
 	}
 
@@ -206,7 +206,7 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		if (this.location != Location.UNDER_WATER && this.location != Location.UNDER_FLOWING_WATER) {
 			this.ticksUnderwater = 0.0F;
 		} else {
-			++this.ticksUnderwater;
+			this.ticksUnderwater++;
 		}
 
 		if (!this.getWorld().isClient && this.ticksUnderwater >= 60.0F) {
@@ -245,13 +245,11 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		}
 
 		this.checkBlockCollision();
-		List<Entity> list = this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(0.20000000298023224D, -0.009999999776482582D, 0.20000000298023224D), EntityPredicates.canBePushedBy(this));
+		List<Entity> list = this.getWorld().getOtherEntities(this, this.getBoundingBox().expand(0.2D, -0.01D, 0.2D), EntityPredicates.canBePushedBy(this));
 		if (!list.isEmpty()) {
-			boolean bl = !this.getWorld().isClient;
-
 			for (Entity entity : list) {
-				if (!entity.hasPassenger(this)) {
-					if (bl && this.getPassengerList().size() < 2 && !entity.hasVehicle() && entity instanceof WolfEntity && ((WolfEntity) entity).getOwner() != null && !((WolfEntity) entity).isBaby()) {
+				if (!entity.hasVehicle()) {
+					if (!this.getWorld().isClient && this.getPassengerList().size() < 2 && !entity.hasVehicle() && entity instanceof WolfEntity wolf && wolf.getOwner() != null && !wolf.isBaby()) {
 						entity.startRiding(this);
 					} else {
 						this.pushAwayFrom(entity);
@@ -261,6 +259,9 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		}
 	}
 
+	/**
+	 * Handles the logic of client predictive movement.
+	 */
 	private void clientInterpolation() {
 		if (this.isLogicalSideForUpdatingMovement()) {
 			this.clientInterpolationSteps = 0;
@@ -268,15 +269,14 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		}
 
 		if (this.clientInterpolationSteps > 0) {
-			double d = this.getX() + (this.x - this.getX()) / (double) this.clientInterpolationSteps;
-			double e = this.getY() + (this.y - this.getY()) / (double) this.clientInterpolationSteps;
-			double f = this.getZ() + (this.z - this.getZ()) / (double) this.clientInterpolationSteps;
-			double g = MathHelper.wrapDegrees(this.dogsledYaw - (double) this.getYaw());
-			float yaw = (float) ((double) this.getYaw() + g / (double) this.clientInterpolationSteps);
-			float pitch = (float) ((double) this.getPitch() + (this.dogsledPitch - (double) this.getPitch()) / (double) this.clientInterpolationSteps);
+			double interpolatedX = this.getX() + (this.x - this.getX()) / (double) this.clientInterpolationSteps;
+			double interpolatedY = this.getY() + (this.y - this.getY()) / (double) this.clientInterpolationSteps;
+			double interpolatedZ = this.getZ() + (this.z - this.getZ()) / (double) this.clientInterpolationSteps;
+			float interpolatedYaw = (float) ((double) this.getYaw() + MathHelper.wrapDegrees(this.predictedYaw - (double) this.getYaw()) / (double) this.clientInterpolationSteps);
+			float interpolatedPitch = (float) ((double) this.getPitch() + (this.predictedPitch - (double) this.getPitch()) / (double) this.clientInterpolationSteps);
 			--this.clientInterpolationSteps;
-			this.setPosition(d, e, f);
-			this.setRotation(yaw, pitch);
+			this.setPosition(interpolatedX, interpolatedY, interpolatedZ);
+			this.setRotation(interpolatedYaw, interpolatedPitch);
 		}
 	}
 
@@ -395,20 +395,20 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 				f -= 0.005F;
 			}
 
-			this.setVelocity(this.getVelocity().add((MathHelper.sin(-this.getYaw() * 0.017453292F) * f), 0.0D, (MathHelper.cos(this.getYaw() * 0.017453292F) * f)));
+			this.setVelocity(this.getVelocity().add((MathHelper.sin(-this.getYaw() * MathHelper.RADIANS_PER_DEGREE) * f), 0.0D, (MathHelper.cos(this.getYaw() * MathHelper.RADIANS_PER_DEGREE) * f)));
 		}
 	}
 
 	private void updateVelocity() {
-		double e = this.hasNoGravity() ? 0.0D : -0.03999999910593033D;
-		double f = 0.0D;
+		double gravity = this.hasNoGravity() ? 0.0D : -0.04D;
+		boolean verticalDrag = false;
 		if (this.location == Location.ON_LAND) {
 			this.velocityDecay = this.getBlockSlipperiness();
 		} else {
 			if (this.location == Location.UNDER_FLOWING_WATER) {
-				e = -7.0E-4D;
+				gravity = -7.0E-4D;
 			} else if (this.location == Location.UNDER_WATER) {
-				f = 0.009999999776482582D;
+				verticalDrag = true;
 			}
 
 			this.velocityDecay *= 0.95F;
@@ -418,39 +418,39 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 			this.velocityDecay /= 1.15F;
 		}
 
-		Vec3d vec3d = this.getVelocity();
-		this.setVelocity(vec3d.x * (double) this.velocityDecay, vec3d.y + e, vec3d.z * (double) this.velocityDecay);
+		Vec3d velocity = this.getVelocity();
+		this.setVelocity(velocity.x * (double) this.velocityDecay, velocity.y + gravity, velocity.z * (double) this.velocityDecay);
 		this.yawVelocity *= this.velocityDecay / 1.5F;
-		if (f > 0.0D) {
-			Vec3d vec3d2 = this.getVelocity();
-			this.setVelocity(vec3d2.x, (vec3d2.y + f * 0.06153846016296973D) * 0.75D, vec3d2.z);
+		if (verticalDrag) {
+			Vec3d newVelocity = this.getVelocity();
+			this.setVelocity(newVelocity.x, (newVelocity.y + 0.00615D) * 0.75D, newVelocity.z);
 		}
 	}
 
 	@Override
 	public Vec3d updatePassengerForDismount(@NotNull LivingEntity passenger) {
-		Vec3d vec3d = getPassengerDismountOffset((this.getWidth() * MathHelper.SQUARE_ROOT_OF_TWO), passenger.getWidth(), passenger.getYaw());
-		double d = this.getX() + vec3d.x;
-		double e = this.getZ() + vec3d.z;
-		BlockPos blockPos = BlockPos.create(d, this.getBoundingBox().maxY, e);
-		BlockPos blockPos2 = blockPos.down();
-		if (!this.getWorld().isWater(blockPos2)) {
-			List<Vec3d> list = Lists.newArrayList();
-			double f = this.getWorld().getDismountHeight(blockPos);
-			if (Dismounting.canDismountInBlock(f)) {
-				list.add(new Vec3d(d, (double) blockPos.getY() + f, e));
+		Vec3d dismountOffset = getPassengerDismountOffset((this.getWidth() * MathHelper.SQUARE_ROOT_OF_TWO), passenger.getWidth(), passenger.getYaw());
+		double dismountX = this.getX() + dismountOffset.x;
+		double dismountZ = this.getZ() + dismountOffset.z;
+		BlockPos dismountPos = BlockPos.create(dismountX, this.getBoundingBox().maxY, dismountZ);
+		BlockPos altDismountPos = dismountPos.down();
+		if (!this.getWorld().isWater(altDismountPos)) {
+			List<Vec3d> possibleDismountPositions = Lists.newArrayList();
+			double dismountHeight = this.getWorld().getDismountHeight(dismountPos);
+			if (Dismounting.canDismountInBlock(dismountHeight)) {
+				possibleDismountPositions.add(new Vec3d(dismountX, (double) dismountPos.getY() + dismountHeight, dismountZ));
 			}
 
-			double g = this.getWorld().getDismountHeight(blockPos2);
-			if (Dismounting.canDismountInBlock(g)) {
-				list.add(new Vec3d(d, (double) blockPos2.getY() + g, e));
+			double altDismountHeight = this.getWorld().getDismountHeight(altDismountPos);
+			if (Dismounting.canDismountInBlock(altDismountHeight)) {
+				possibleDismountPositions.add(new Vec3d(dismountX, (double) altDismountPos.getY() + altDismountHeight, dismountZ));
 			}
 
-			for (EntityPose entityPose : passenger.getPoses()) {
-				for (Vec3d vec3d2 : list) {
-					if (Dismounting.canPlaceEntityAt(this.getWorld(), vec3d2, passenger, entityPose)) {
-						passenger.setPose(entityPose);
-						return vec3d2;
+			for (EntityPose pose : passenger.getPoses()) {
+				for (Vec3d dismountPosition : possibleDismountPositions) {
+					if (Dismounting.canPlaceEntityAt(this.getWorld(), dismountPosition, passenger, pose)) {
+						passenger.setPose(pose);
+						return dismountPosition;
 					}
 				}
 			}
@@ -459,19 +459,22 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 		return super.updatePassengerForDismount(passenger);
 	}
 
-	protected void copyEntityData(@NotNull Entity entity) {
+	/**
+	 * Limits the difference in yaw between this dogsled and the provided {@link Entity}.
+	 */
+	protected void limitYaw(@NotNull Entity entity) {
 		entity.setBodyYaw(this.getYaw());
-		float f = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
-		float g = MathHelper.clamp(f, -105.0F, 105.0F);
-		entity.prevYaw += (g - f);
-		entity.setYaw(entity.getYaw() + g - f);
+		float yaw = MathHelper.wrapDegrees(entity.getYaw() - this.getYaw());
+		float clampedYaw = MathHelper.clamp(yaw, -105.0F, 105.0F);
+		entity.prevYaw += (clampedYaw - yaw);
+		entity.setYaw(entity.getYaw() + clampedYaw - yaw);
 		entity.setHeadYaw(entity.getYaw());
 	}
 
 	@Override
 	@ClientOnly
 	public void onPassengerLookAround(Entity passenger) {
-		this.copyEntityData(passenger);
+		this.limitYaw(passenger);
 	}
 
 	@Override
@@ -543,14 +546,14 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 
 	@Override
 	protected boolean canAddPassenger(Entity passenger) {
-		int i = this.getPassengerList().size();
+		int size = this.getPassengerList().size();
 		if (this.isSubmergedIn(FluidTags.WATER)) {
 			return false;
 		}
 
-		if (i == 0) {
+		if (size == 0) {
 			return passenger instanceof PlayerEntity || passenger instanceof WolfEntity;
-		} else if (i == 1) {
+		} else if (size == 1) {
 			return passenger instanceof PlayerEntity;
 		}
 
@@ -652,17 +655,17 @@ public class DogsledEntity extends Entity implements Inventory, NamedScreenHandl
 	protected void updatePassengerPosition(Entity passenger, Entity.PositionUpdater positionUpdater) {
 		if (this.hasPassenger(passenger)) {
 			if (passenger instanceof PlayerEntity) {
-				float g = (float) ((this.isRemoved() ? 0.009999999776482582D : this.getMountedHeightOffset()) + passenger.getHeightOffset());
-				double x = MathHelper.cos((this.getYaw() + 90.0F) * 0.0174533F);
-				double z = MathHelper.sin((this.getYaw() + 90.0F) * 0.0174533F);
+				float g = (float) ((this.isRemoved() ? 0.01D : this.getMountedHeightOffset()) + passenger.getHeightOffset());
+				double x = MathHelper.cos((this.getYaw() + 90.0F) * MathHelper.RADIANS_PER_DEGREE);
+				double z = MathHelper.sin((this.getYaw() + 90.0F) * MathHelper.RADIANS_PER_DEGREE);
 				positionUpdater.accept(passenger, this.getX() - x, this.getY() + (double) g, this.getZ() - z);
 			} else if (passenger instanceof WolfEntity) {
 				passenger.noClip = true;
-				Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.getYaw() * 0.017453292F - 1.5707964F);
+				Vec3d vec3d = (new Vec3d(1.5D, 0.0D, 0.0D)).rotateY(-this.getYaw() * MathHelper.RADIANS_PER_DEGREE - MathHelper.HALF_PI);
 				positionUpdater.accept(passenger, this.getX() + vec3d.x, this.getY(), this.getZ() + vec3d.z);
 				passenger.setYaw(passenger.getYaw() + this.yawVelocity);
 				passenger.setHeadYaw(passenger.getHeadYaw() + this.yawVelocity);
-				this.copyEntityData(passenger);
+				this.limitYaw(passenger);
 			}
 		}
 	}

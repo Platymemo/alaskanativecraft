@@ -18,11 +18,10 @@ import net.minecraft.util.math.Axis;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
-public enum HarpoonItemRenderer {
-	INSTANCE;
-	private final HarpoonEntityModel harpoonEntityModel = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());
+public class HarpoonItemRenderer {
+	private static final HarpoonEntityModel HARPOON_ENTITY_MODEL = new HarpoonEntityModel(HarpoonEntityModel.getTexturedModelData().createModel());
 
-	public boolean render(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
+	public static boolean render(LivingEntity entity, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {
 		if (renderMode == ModelTransformationMode.GUI || renderMode == ModelTransformationMode.GROUND || renderMode == ModelTransformationMode.FIXED) {
 			return false;
 		}
@@ -42,11 +41,11 @@ public enum HarpoonItemRenderer {
 			matrices.scale(2.0F, -2.0F, -2.0F);
 			VertexConsumer harpoon = ItemRenderer.getArmorGlintConsumer(
 					vertexConsumers,
-					this.harpoonEntityModel.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
+					HARPOON_ENTITY_MODEL.getLayer(HarpoonEntityRenderer.getTexture(((HarpoonItem) stack.getItem()).getType())),
 					false,
 					stack.hasGlint()
 			);
-			this.harpoonEntityModel.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+			HARPOON_ENTITY_MODEL.render(matrices, harpoon, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 
 		matrices.pop();

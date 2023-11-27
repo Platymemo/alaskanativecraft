@@ -28,7 +28,7 @@ public class ShapedRecipeMixin {
 			ItemStack protectedItem = this.result.copy();
 			NbtCompound tag = protectedItem.getOrCreateNbt();
 			float durabilityMultiplier = 1;
-			for (int i = 0; i < recipeInputInventory.size(); ++i) {
+			for (int i = 0; i < recipeInputInventory.size(); i++) {
 				ItemStack stack = recipeInputInventory.getStack(i);
 				if (stack.isOf(AlaskaItems.DRIFTWOOD_CHUNK)) {
 					durabilityMultiplier *= 1.05f;

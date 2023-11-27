@@ -35,25 +35,29 @@ public class KuspukSkirtFeatureRenderer<E extends LivingEntity, M extends Entity
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, @NotNull E livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-		ItemStack armorItemStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
-		if (armorItemStack.isOf(AlaskaItems.KUSPUK_BODY)) {
-			int color = AlaskaItems.KUSPUK_BODY.getColor(armorItemStack);
+	public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, int light, @NotNull E livingEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+		ItemStack kuspukStack = livingEntity.getEquippedStack(EquipmentSlot.CHEST);
+		if (kuspukStack.isOf(AlaskaItems.KUSPUK_BODY)) {
+			int color = AlaskaItems.KUSPUK_BODY.getColor(kuspukStack);
+			// Unpack hex into 0.0-1.0 floats
 			float r = (float) (color >> 16 & 255) / 255.0F;
 			float g = (float) (color >> 8 & 255) / 255.0F;
 			float b = (float) (color & 255) / 255.0F;
-			matrixStack.push();
+
+			matrices.push();
+
 			if (livingEntity.isInSneakingPose()) {
-				matrixStack.translate(0.0D, -2.55D, 0.3D);
+				matrices.translate(0.0D, -2.55D, 0.3D);
 			} else {
-				matrixStack.translate(0.0D, -2.7D, 0.0D);
+				matrices.translate(0.0D, -2.7D, 0.0D);
 			}
 
-			matrixStack.scale(2.5F, 2.5F, 2.5F);
-			VertexConsumer vertexConsumer = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, armorItemStack.hasGlint());
+			matrices.scale(2.5F, 2.5F, 2.5F);
+
+			VertexConsumer armorGlint = ItemRenderer.getArmorGlintConsumer(vertexConsumerProvider, RenderLayer.getArmorCutoutNoCull(TEXTURE), false, kuspukStack.hasGlint());
 			this.model.setAngles(livingEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
-			this.model.render(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
-			matrixStack.pop();
+			this.model.render(matrices, armorGlint, light, OverlayTexture.DEFAULT_UV, r, g, b, 1.0F);
+			matrices.pop();
 		}
 	}
 }

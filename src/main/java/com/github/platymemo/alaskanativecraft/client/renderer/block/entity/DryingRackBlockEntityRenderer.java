@@ -23,27 +23,27 @@ public class DryingRackBlockEntityRenderer implements BlockEntityRenderer<Drying
 	}
 
 	@Override
-	public void render(@NotNull DryingRackBlockEntity dryingRackBlockEntity, float f, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, int j) {
-		Direction.Axis axis = dryingRackBlockEntity.getCachedState().get(DryingRackBlock.AXIS);
-		DefaultedList<ItemStack> defaultedList = dryingRackBlockEntity.getItemsBeingDried();
+	public void render(@NotNull DryingRackBlockEntity dryingRack, float f, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int i, int j) {
+		Direction.Axis axis = dryingRack.getCachedState().get(DryingRackBlock.AXIS);
+		DefaultedList<ItemStack> itemsBeingDried = dryingRack.getItemsBeingDried();
 		// Returns 0 if axis=X, 1 if axis=Z
-		int XOrZ = axis.choose(0, 0, 1);
-		int k = (int) dryingRackBlockEntity.getPos().asLong();
+		int axisOrdinal = axis.choose(0, 0, 1);
+		int baseSeed = (int) dryingRack.getPos().asLong();
 
-		for (int l = 0; l < defaultedList.size(); ++l) {
-			ItemStack itemStack = defaultedList.get(l);
+		// Render drying items
+		for (int slot = 0; slot < itemsBeingDried.size(); slot++) {
+			ItemStack itemStack = itemsBeingDried.get(slot);
 			if (itemStack != ItemStack.EMPTY) {
-				matrixStack.push();
-				matrixStack.translate(0.5D, 0.45D, 0.5D);
-				Direction direction2 = Direction.fromHorizontal((l % 2) * 2 + XOrZ);
-				float g = -direction2.asRotation();
-				matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(g));
-				matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
-				matrixStack.multiply(Axis.X_POSITIVE.rotationDegrees(90.0F));
-				matrixStack.translate(-0.25D, 0.1D, 0.075D * (l < 1 || l > 2 ? 1 : -1));
-				matrixStack.scale(0.375F, 0.375F, 0.375F);
-				MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformationMode.FIXED, i, j, matrixStack, vertexConsumerProvider, dryingRackBlockEntity.getWorld(), k + l);
-				matrixStack.pop();
+				matrices.push();
+				matrices.translate(0.5D, 0.45D, 0.5D);
+				Direction itemDirection = Direction.fromHorizontal((slot % 2) * 2 + axisOrdinal);
+				float rotation = -itemDirection.asRotation();
+				matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(rotation));
+				matrices.multiply(Axis.X_POSITIVE.rotationDegrees(180.0F));
+				matrices.translate(-0.25D, 0.1D, 0.075D * (slot < 1 || slot > 2 ? 1 : -1));
+				matrices.scale(0.375F, 0.375F, 0.375F);
+				MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformationMode.FIXED, i, j, matrices, vertexConsumers, dryingRack.getWorld(), baseSeed + slot);
+				matrices.pop();
 			}
 		}
 	}

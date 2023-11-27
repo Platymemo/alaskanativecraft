@@ -23,6 +23,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
@@ -67,18 +68,18 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 	@Override
 	public ActionResult onUse(BlockState state, @NotNull World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (!world.isClient && blockEntity instanceof DryingRackBlockEntity dryingRackBlockEntity) {
+		if (!world.isClient && blockEntity instanceof DryingRackBlockEntity dryingRack) {
 			ItemStack itemStack = player.getStackInHand(hand);
-			Optional<DryingRecipe> optional = dryingRackBlockEntity.getRecipeFor(itemStack);
-			if (optional.isPresent()) {
-				if (dryingRackBlockEntity.addItem(player.getAbilities().creativeMode ? itemStack.copy() : itemStack, (optional.get()).getCookTime())) {
-					// TODO Drying rack interaction stats
+			Optional<DryingRecipe> maybeRecipe = dryingRack.getRecipeFor(itemStack);
+			if (maybeRecipe.isPresent()) {
+				if (dryingRack.addItem(player.getAbilities().creativeMode ? itemStack.copy() : itemStack, (maybeRecipe.get()).getCookTime())) {
+					player.incrementStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
 					return ActionResult.SUCCESS;
 				}
 
 				return ActionResult.CONSUME;
 			} else {
-				ItemStack dryingRackItem = dryingRackBlockEntity.getDriedItem();
+				ItemStack dryingRackItem = dryingRack.takeItem();
 				ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), dryingRackItem);
 				return ActionResult.SUCCESS;
 			}
@@ -91,8 +92,8 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 	public void onStateReplaced(@NotNull BlockState state, World world, BlockPos pos, @NotNull BlockState newState, boolean moved) {
 		if (!state.isOf(newState.getBlock())) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof DryingRackBlockEntity) {
-				ItemScatterer.spawn(world, pos, ((DryingRackBlockEntity) blockEntity).getItemsBeingDried());
+			if (blockEntity instanceof DryingRackBlockEntity dryingRack) {
+				ItemScatterer.spawn(world, pos, dryingRack.getItemsBeingDried());
 			}
 
 			super.onStateReplaced(state, world, pos, newState, moved);
@@ -195,11 +196,7 @@ public class DryingRackBlock extends BlockWithEntity implements Waterloggable {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull World world, BlockState state, BlockEntityType<T> type) {
 		if (!world.isClient) {
-			if (state.get(WATERLOGGED) || world.isRaining()) {
-				return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::possiblyWetTick);
-			} else {
-				return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::updateItemsBeingDried);
-			}
+			return checkType(type, AlaskaBlocks.DRYING_RACK_BLOCK_ENTITY, DryingRackBlockEntity::updateItemsBeingDried);
 		}
 
 		return null;

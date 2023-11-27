@@ -46,10 +46,11 @@ public class AlaskaEntities {
 			Registry.register(Registries.ENTITY_TYPE, id, ENTITY_TYPES.get(id));
 		}
 
+		AlaskaDamageTypes.register();
+
 		initAttributes();
 		initSpawns();
 		initSpawnRestrictions();
-		AlaskaDamageTypes.init();
 	}
 
 	private static void initSpawnRestrictions() {

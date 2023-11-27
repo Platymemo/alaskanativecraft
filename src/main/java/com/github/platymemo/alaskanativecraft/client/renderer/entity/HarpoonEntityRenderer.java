@@ -41,18 +41,18 @@ public class HarpoonEntityRenderer extends EntityRenderer<HarpoonEntity> {
 	}
 
 	@Override
-	public void render(@NotNull HarpoonEntity harpoon, float f, float g, @NotNull MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-		matrixStack.push();
+	public void render(@NotNull HarpoonEntity harpoon, float yaw, float tickDelta, @NotNull MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+		matrices.push();
 		{
-			matrixStack.multiply(Axis.Y_POSITIVE.rotationDegrees(MathHelper.lerp(g, harpoon.prevYaw, harpoon.getYaw()) - 90.0F));
-			matrixStack.multiply(Axis.Z_POSITIVE.rotationDegrees(MathHelper.lerp(g, harpoon.prevPitch, harpoon.getPitch()) + 90.0F));
-			VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(vertexConsumerProvider, this.model.getLayer(this.getTexture(harpoon)), false, harpoon.isEnchanted());
-			this.model.render(matrixStack, vertexConsumer, i, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
-			matrixStack.scale(2.0F, -2.0F, -2.0F);
+			matrices.multiply(Axis.Y_POSITIVE.rotationDegrees(MathHelper.lerp(tickDelta, harpoon.prevYaw, harpoon.getYaw()) - 90.0F));
+			matrices.multiply(Axis.Z_POSITIVE.rotationDegrees(MathHelper.lerp(tickDelta, harpoon.prevPitch, harpoon.getPitch()) + 90.0F));
+			VertexConsumer itemGlint = ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, this.model.getLayer(this.getTexture(harpoon)), false, harpoon.isEnchanted());
+			this.model.render(matrices, itemGlint, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
+			matrices.scale(2.0F, -2.0F, -2.0F);
 		}
 
-		matrixStack.pop();
-		super.render(harpoon, f, g, matrixStack, vertexConsumerProvider, i);
+		matrices.pop();
+		super.render(harpoon, yaw, tickDelta, matrices, vertexConsumers, light);
 	}
 
 	@Override

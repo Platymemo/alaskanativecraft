@@ -48,7 +48,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 
 		byte effectId = (byte) StatusEffect.getRawId(effect);
 		int actualDuration = duration;
-		for (int i = 0; i < listTag.size(); ++i) {
+		for (int i = 0; i < listTag.size(); i++) {
 			NbtCompound previousEffect = listTag.getCompound(i);
 			if (previousEffect.contains("EffectDuration", 3) && effectId == previousEffect.getByte("EffectId")) {
 				actualDuration += previousEffect.getInt("EffectDuration");
@@ -73,7 +73,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 		boolean hasBerries = false;
 		boolean hasBowl = false;
 
-		for (int i = 0; i < inv.size(); ++i) {
+		for (int i = 0; i < inv.size(); i++) {
 			ItemStack itemStack = inv.getStack(i);
 			if (!itemStack.isEmpty()) {
 				if (itemStack.isIn(AlaskaTags.AKUTAQ_BERRIES)) { // Need at least 1 berry but can have more
@@ -105,7 +105,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 		Random random = new Random();
 
 		ItemStack currentItemstack;
-		for (int i = 0; i < inv.size(); ++i) {
+		for (int i = 0; i < inv.size(); i++) {
 			currentItemstack = inv.getStack(i);
 			if (!currentItemstack.isEmpty() && currentItemstack.isIn(AlaskaTags.AKUTAQ_BERRIES)) {
 				Pair<StatusEffect, Integer> pair = POSSIBLE_EFFECTS.get(random.nextInt(POSSIBLE_EFFECTS.size()));

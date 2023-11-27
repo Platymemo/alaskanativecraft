@@ -18,11 +18,10 @@ import net.minecraft.util.math.Axis;
 import org.quiltmc.loader.api.minecraft.ClientOnly;
 
 @ClientOnly
-public enum SnowshoeItemRenderer {
-	INSTANCE;
-	private final SnowshoeModel<LivingEntity> snowshoeModel = new SnowshoeModel<>(SnowshoeModel.getTexturedModelData().createModel());
+public class SnowshoeItemRenderer {
+	private static final SnowshoeModel<LivingEntity> SNOWSHOE_MODEL = new SnowshoeModel<>(SnowshoeModel.getTexturedModelData().createModel());
 
-	public boolean render(ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, @NotNull MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, @NotNull BakedModel model) {
+	public static boolean render(ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, @NotNull MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, @NotNull BakedModel model) {
 		matrices.push();
 		{
 			model.getTransformation().getTransformation(renderMode).apply(leftHanded, matrices);
@@ -37,13 +36,13 @@ public enum SnowshoeItemRenderer {
 				matrices.scale(1.5F, 1.5F, 1.5F);
 			}
 
-			VertexConsumer snowshoe = ItemRenderer.getArmorGlintConsumer(
+			VertexConsumer armorGlint = ItemRenderer.getArmorGlintConsumer(
 					vertexConsumers,
-					this.snowshoeModel.getLayer(SnowshoeFeatureRenderer.TEXTURE),
+					SNOWSHOE_MODEL.getLayer(SnowshoeFeatureRenderer.TEXTURE),
 					false,
 					stack.hasGlint()
 			);
-			this.snowshoeModel.render(matrices, snowshoe, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+			SNOWSHOE_MODEL.render(matrices, armorGlint, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 
 		matrices.pop();

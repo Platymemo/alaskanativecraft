@@ -119,8 +119,8 @@ public class PtarmiganEntityModel extends SinglePartEntityModel<PtarmiganEntity>
 	}
 
 	private void setAngles(@NotNull PtarmiganEntityModel.Pose pose, int danceAngle, float limbAngle, float limbDistance, float age, float headYaw, float headPitch) {
-		this.head.pitch = headPitch * 0.017453292F;
-		this.head.yaw = headYaw * 0.017453292F;
+		this.head.pitch = headPitch * MathHelper.RADIANS_PER_DEGREE;
+		this.head.yaw = headYaw * MathHelper.RADIANS_PER_DEGREE;
 		this.head.roll = 0.0F;
 		this.head.pivotX = 0.0F;
 		this.body.pivotX = 0.0F;

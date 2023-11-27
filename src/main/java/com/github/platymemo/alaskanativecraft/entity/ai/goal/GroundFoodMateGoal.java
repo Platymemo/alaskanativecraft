@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -31,12 +32,12 @@ public class GroundFoodMateGoal extends Goal {
 			return false;
 		}
 
-		if (this.animal.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
-			this.foodEntity = this.findFood();
-		}
-
 		if (this.animal.getRandom().nextInt(100) != 0) {
 			return false;
+		}
+
+		if (this.animal.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING) && this.animal.canEat() && this.animal.getBreedingAge() == 0) {
+			this.foodEntity = this.findFood();
 		}
 
 		return this.foodEntity != null;
@@ -63,15 +64,15 @@ public class GroundFoodMateGoal extends Goal {
 		}
 	}
 
-	private ItemEntity findFood() {
+	private @Nullable ItemEntity findFood() {
 		List<ItemEntity> list = this.animal.getWorld().getEntitiesByClass(ItemEntity.class, this.animal.getBoundingBox().expand(8.0D), (entity) -> true);
-		double d = Double.MAX_VALUE;
+		double distance = Double.MAX_VALUE;
 
 		ItemEntity result = null;
 		for (ItemEntity itemEntity : list) {
-			if (this.animal.isBreedingItem(itemEntity.getStack()) && this.animal.squaredDistanceTo(itemEntity) < d) {
+			if (this.animal.isBreedingItem(itemEntity.getStack()) && this.animal.squaredDistanceTo(itemEntity) < distance) {
 				result = itemEntity;
-				d = this.animal.squaredDistanceTo(itemEntity);
+				distance = this.animal.squaredDistanceTo(itemEntity);
 			}
 		}
 

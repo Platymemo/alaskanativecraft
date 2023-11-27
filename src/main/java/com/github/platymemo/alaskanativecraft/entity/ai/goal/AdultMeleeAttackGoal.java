@@ -29,8 +29,8 @@ public class AdultMeleeAttackGoal extends MeleeAttackGoal {
 
 	@Override
 	protected double getSquaredMaxAttackDistance(@NotNull LivingEntity entity) {
-		float f = mob.getWidth() - 1.0F;
-		return (f * 2.0F * f * 2.0F + entity.getWidth());
+		float f = (mob.getWidth() - 1.0F) * 2.0F;
+		return (f * f + entity.getWidth());
 	}
 
 	@Override

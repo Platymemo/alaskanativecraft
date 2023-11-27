@@ -101,9 +101,9 @@ public class HarpoonItem extends TridentItem {
 					if (j > 0) {
 						float yaw = playerEntity.getYaw();
 						float pitch = playerEntity.getPitch();
-						float h = -MathHelper.sin(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
-						float k = -MathHelper.sin(pitch * 0.017453292F);
-						float l = MathHelper.cos(yaw * 0.017453292F) * MathHelper.cos(pitch * 0.017453292F);
+						float h = -MathHelper.sin(yaw * MathHelper.RADIANS_PER_DEGREE) * MathHelper.cos(pitch * MathHelper.RADIANS_PER_DEGREE);
+						float k = -MathHelper.sin(pitch * MathHelper.RADIANS_PER_DEGREE);
+						float l = MathHelper.cos(yaw * MathHelper.RADIANS_PER_DEGREE) * MathHelper.cos(pitch * MathHelper.RADIANS_PER_DEGREE);
 						float length = MathHelper.sqrt(h * h + k * k + l * l);
 						float multiplier = 3.0F * ((1.0F + (float) j) / 5.5F);
 						h *= multiplier / length;

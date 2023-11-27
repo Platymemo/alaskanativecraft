@@ -1,5 +1,7 @@
 package com.github.platymemo.alaskanativecraft.block;
 
+import java.util.function.Supplier;
+
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.block.BlockState;
@@ -23,14 +25,17 @@ import net.minecraft.world.World;
 /**
  * Base class for berry bushes.
  * Contains common code for berry harvesting and entity collision.
- * <p>
- * When creating a new bush, always override {@link #getPickStack(BlockView, BlockPos, BlockState)} to associate the bush to a berry item
  *
  * @author Platymemo, ix0rai
  */
 public class BushBlock extends SweetBerryBushBlock {
 	public BushBlock(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+		return new ItemStack(this);
 	}
 
 	@Override
