@@ -1,0 +1,38 @@
+{
+  "display": {
+    "icon": {
+      "item": "alaskanativecraft:ulu"
+    },
+    "title": {
+      "translate": "advancements.alaskanativecraft.root.title"
+    },
+    "description": {
+      "translate": "advancements.alaskanativecraft.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "held_ulu": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "alaskanativecraft:ulu"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "held_ulu"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

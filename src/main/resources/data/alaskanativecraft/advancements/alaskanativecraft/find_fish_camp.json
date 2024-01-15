@@ -1,0 +1,42 @@
+{
+  "parent": "alaskanativecraft:alaskanativecraft/root",
+  "criteria": {
+    "fish_camp": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "alaskanativecraft:fish_camp"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.alaskanativecraft.find_fish_camp.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "alaskanativecraft:kuspuk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.alaskanativecraft.find_fish_camp.title"
+    }
+  },
+  "requirements": [
+    [
+      "fish_camp"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
