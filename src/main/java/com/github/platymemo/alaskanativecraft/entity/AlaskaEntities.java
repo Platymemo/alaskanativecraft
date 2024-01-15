@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig.SpawnOptions.SpawnSettings;
 import com.github.platymemo.alaskanativecraft.entity.damage.AlaskaDamageTypes;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.item.HarpoonItem;
@@ -68,22 +68,29 @@ public class AlaskaEntities {
 	}
 
 	private static void initSpawns() {
-		AlaskaConfig.SpawnOptions spawnOptions = AlaskaConfig.getConfig().spawning;
+		SpawnSettings sealSettings = AlaskaNativeCraft.CONFIG.spawning.sealSettings;
 		BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_SEAL),
 				SpawnGroup.WATER_CREATURE, SEAL,
-				spawnOptions.sealOceanSettings.weight,
-				spawnOptions.sealOceanSettings.minGroupSize,
-				spawnOptions.sealOceanSettings.maxGroupSize);
+				sealSettings.weight.value(),
+				sealSettings.minGroupSize.value(),
+				sealSettings.maxGroupSize.value()
+		);
+
+		SpawnSettings mooseSettings = AlaskaNativeCraft.CONFIG.spawning.mooseSettings;
 		BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_MOOSE),
 				SpawnGroup.CREATURE, MOOSE,
-				spawnOptions.mooseSettings.weight,
-				spawnOptions.mooseSettings.minGroupSize,
-				spawnOptions.mooseSettings.maxGroupSize);
+				mooseSettings.weight.value(),
+				mooseSettings.minGroupSize.value(),
+				mooseSettings.maxGroupSize.value()
+		);
+
+		SpawnSettings ptarmiganSettings = AlaskaNativeCraft.CONFIG.spawning.ptarmiganSettings;
 		BiomeModifications.addSpawn(BiomeSelectors.isIn(AlaskaTags.HAS_PTARMIGAN),
 				SpawnGroup.AMBIENT, PTARMIGAN,
-				spawnOptions.ptarmiganSettings.weight,
-				spawnOptions.ptarmiganSettings.minGroupSize,
-				spawnOptions.ptarmiganSettings.maxGroupSize);
+				ptarmiganSettings.weight.value(),
+				ptarmiganSettings.minGroupSize.value(),
+				ptarmiganSettings.maxGroupSize.value()
+		);
 	}
 
 	private static <E extends EntityType<?>> E add(String name, E type) {

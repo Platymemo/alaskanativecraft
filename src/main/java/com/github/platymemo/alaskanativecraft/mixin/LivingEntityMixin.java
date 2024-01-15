@@ -3,7 +3,7 @@ package com.github.platymemo.alaskanativecraft.mixin;
 import java.util.Map;
 import java.util.UUID;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.effect.AlaskaEffects;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
@@ -91,7 +91,7 @@ public abstract class LivingEntityMixin extends Entity {
 	private void anc$getVelocityWithSnowBoost(CallbackInfoReturnable<Float> cir) {
 		if (this.anc$isOnSnowshoeSpeedBlock()
 				&& (this.getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.SNOWSHOES)
-				|| (AlaskaConfig.getConfig().snowOverhaul
+				|| (AlaskaNativeCraft.CONFIG.snowOverhaul.value()
 				&& this.getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.MUKLUKS)))) {
 			cir.setReturnValue(1.0f);
 		}

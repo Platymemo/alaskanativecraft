@@ -1,6 +1,7 @@
 package com.github.platymemo.alaskanativecraft;
 
 import com.github.platymemo.alaskanativecraft.block.AlaskaBlocks;
+import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.entity.AlaskaEntities;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import com.github.platymemo.alaskanativecraft.loot.function.AlaskaLootFunctionTypes;
@@ -10,10 +11,12 @@ import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
 import com.github.platymemo.alaskanativecraft.worldgen.feature.AlaskaFeatures;
 
 import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.config.v2.QuiltConfig;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 
 public class AlaskaNativeCraft implements ModInitializer {
 	public static final String MOD_ID = "alaskanativecraft";
+	public static final AlaskaConfig CONFIG = QuiltConfig.create(MOD_ID, "config", AlaskaConfig.class);
 
 	@Override
 	public void onInitialize(ModContainer container) {

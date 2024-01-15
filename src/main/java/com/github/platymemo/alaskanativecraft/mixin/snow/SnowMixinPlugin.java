@@ -3,7 +3,7 @@ package com.github.platymemo.alaskanativecraft.mixin.snow;
 import java.util.List;
 import java.util.Set;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -20,7 +20,7 @@ public class SnowMixinPlugin implements IMixinConfigPlugin {
 
 	@Override
 	public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-		return AlaskaConfig.getConfig().snowOverhaul;
+		return AlaskaNativeCraft.CONFIG.snowOverhaul.value();
 	}
 
 	@Override

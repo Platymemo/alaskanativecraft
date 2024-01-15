@@ -1,7 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
 import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
 import com.github.platymemo.alaskanativecraft.entity.PtarmiganEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +22,7 @@ import net.minecraft.util.hit.EntityHitResult;
 public class SnowballEntityMixin {
 	@Inject(at = @At("TAIL"), method = "onEntityHit")
 	private void makeThatBirbAPtarmigan(EntityHitResult entityHitResult, CallbackInfo ci) {
-		if (AlaskaConfig.getConfig().snowballConversion) {
+		if (AlaskaNativeCraft.CONFIG.snowballConversion.value()) {
 			Entity entity = entityHitResult.getEntity();
 			if ((entity instanceof ParrotEntity && !(entity instanceof PtarmiganEntity)) || entity instanceof ChickenEntity) {
 				Identifier ptarmigan = new Identifier(AlaskaNativeCraft.MOD_ID, "ptarmigan");

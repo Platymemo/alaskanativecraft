@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin.snow;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 	@Unique
-	private static final float anc$SNOW_SLOW = 1.0f - AlaskaConfig.getConfig().snowSlow;
+	private static final float anc$SNOW_SLOW = 1.0f - AlaskaNativeCraft.CONFIG.snowSlow.value();
 
 	@Shadow
 	private World world;

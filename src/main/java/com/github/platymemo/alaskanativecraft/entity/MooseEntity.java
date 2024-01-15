@@ -2,7 +2,7 @@ package com.github.platymemo.alaskanativecraft.entity;
 
 import java.util.EnumSet;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.ai.goal.AdultMeleeAttackGoal;
 import com.github.platymemo.alaskanativecraft.entity.ai.goal.ChildEscapeDangerGoal;
 import com.github.platymemo.alaskanativecraft.mixin.AxeItemAccessor;
@@ -181,7 +181,7 @@ public class MooseEntity extends AnimalEntity {
 
 		@Override
 		public boolean canStart() {
-			if (!AlaskaConfig.getConfig().mooseEatBark) {
+			if (!AlaskaNativeCraft.CONFIG.mooseEatBark.value()) {
 				return false;
 			}
 

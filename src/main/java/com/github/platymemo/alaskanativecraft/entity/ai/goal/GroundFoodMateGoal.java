@@ -8,7 +8,7 @@ package com.github.platymemo.alaskanativecraft.entity.ai.goal;
 import java.util.EnumSet;
 import java.util.List;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.SealEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,7 +28,7 @@ public class GroundFoodMateGoal extends Goal {
 
 	@Override
 	public boolean canStart() {
-		if (this.animal instanceof SealEntity && !AlaskaConfig.getConfig().sealFishing.sealsEatHuntedFish) {
+		if (this.animal instanceof SealEntity && !AlaskaNativeCraft.CONFIG.sealFishing.sealsEatHuntedFish.value()) {
 			return false;
 		}
 
@@ -82,7 +82,7 @@ public class GroundFoodMateGoal extends Goal {
 	private void feed() {
 		if (this.foodEntity.getStack().getCount() > 0) {
 			this.foodEntity.getStack().decrement(1);
-			if (!(this.animal instanceof SealEntity) || AlaskaConfig.getConfig().sealFishing.sealsBreedFromHuntedFish) {
+			if (AlaskaNativeCraft.CONFIG.sealFishing.sealsBreedFromHuntedFish.value() && this.animal.getRandom().nextFloat() < AlaskaNativeCraft.CONFIG.sealFishing.sealsBreedChance.value()) {
 				this.animal.lovePlayer(null);
 			}
 		}

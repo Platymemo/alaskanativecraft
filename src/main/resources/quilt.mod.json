@@ -21,7 +21,6 @@
     "entrypoints": {
       "init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraft",
       "client_init": "com.github.platymemo.alaskanativecraft.AlaskaNativeCraftClient",
-      "modmenu": [ "com.github.platymemo.alaskanativecraft.compat.AlaskaModMenu" ],
       "rei_client": [ "com.github.platymemo.alaskanativecraft.compat.rei.AlaskaPlugin" ]
     },
     "depends": [

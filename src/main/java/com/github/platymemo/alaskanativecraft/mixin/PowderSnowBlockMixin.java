@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.mixin;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.item.AlaskaItems;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +25,7 @@ public class PowderSnowBlockMixin {
 
 	@Redirect(method = "onEntityCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;setMovementMultiplier(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Vec3d;)V"))
 	private void anc$dontSlowWithMukluks(Entity entity, BlockState state, Vec3d vec3d) {
-		if (!(entity instanceof LivingEntity) || (AlaskaConfig.getConfig().snowOverhaul && ((LivingEntity) entity).getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.MUKLUKS))) {
+		if (!(entity instanceof LivingEntity) || (AlaskaNativeCraft.CONFIG.snowOverhaul.value() && ((LivingEntity) entity).getEquippedStack(EquipmentSlot.FEET).isOf(AlaskaItems.MUKLUKS))) {
 			return;
 		}
 

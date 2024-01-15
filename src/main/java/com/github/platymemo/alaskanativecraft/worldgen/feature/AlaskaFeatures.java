@@ -18,29 +18,29 @@ import org.quiltmc.qsl.worldgen.biome.api.BiomeSelectors;
 
 public class AlaskaFeatures {
 	public static void register() {
-		AlaskaConfig.GenerationOptions genOptions = AlaskaConfig.getConfig().generation;
+		AlaskaConfig.GenerationOptions genOptions = AlaskaNativeCraft.CONFIG.generation;
 
-		if (genOptions.genBlueberry) {
+		if (genOptions.genBlueberry.value()) {
 			registerBerryPatch("blueberry");
 		}
 
-		if (genOptions.genCloudberry) {
+		if (genOptions.genCloudberry.value()) {
 			registerBerryPatch("cloudberry");
 		}
 
-		if (genOptions.genRaspberry) {
+		if (genOptions.genRaspberry.value()) {
 			registerBerryPatch("raspberry");
 		}
 
-		if (genOptions.genSalmonberry) {
+		if (genOptions.genSalmonberry.value()) {
 			registerBerryPatch("salmonberry");
 		}
 
-		if (genOptions.genLabradorTea) {
+		if (genOptions.genLabradorTea.value()) {
 			registerPatch("labrador_tea", BiomeSelectors.isIn(AlaskaTags.HAS_LABRADOR_TEA));
 		}
 
-		if (genOptions.genDriftwood) {
+		if (genOptions.genDriftwood.value()) {
 			registerPatch("washed_up_driftwood", BiomeSelectors.isIn(AlaskaTags.HAS_DRIFTWOOD));
 		}
 	}

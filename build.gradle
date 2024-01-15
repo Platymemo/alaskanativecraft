@@ -34,17 +34,6 @@ dependencies {
 
     // REI integration
     modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
-
-    // We have to manually override the version of Architectury used by REI to run on Quilt
-    // modLocalRuntime "dev.architectury:architectury-fabric:${project.architectury_override_version}"
-
-    // ClothConfig
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.clothconfig_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
- 
-    // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
-    // You may need to force-disable transitiveness on them.
 }
 
 loom {

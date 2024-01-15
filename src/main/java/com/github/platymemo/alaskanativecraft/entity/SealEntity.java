@@ -1,6 +1,6 @@
 package com.github.platymemo.alaskanativecraft.entity;
 
-import com.github.platymemo.alaskanativecraft.config.AlaskaConfig;
+import com.github.platymemo.alaskanativecraft.AlaskaNativeCraft;
 import com.github.platymemo.alaskanativecraft.entity.ai.goal.GroundFoodMateGoal;
 import com.github.platymemo.alaskanativecraft.sound.AlaskaSoundEvents;
 import com.github.platymemo.alaskanativecraft.tags.AlaskaTags;
@@ -298,7 +298,7 @@ public class SealEntity extends AnimalEntity {
 
 		@Override
 		public boolean canStart() {
-			if (!AlaskaConfig.getConfig().sealFishing.sealsHuntFish) {
+			if (!AlaskaNativeCraft.CONFIG.sealFishing.sealsHuntFish.value()) {
 				return false;
 			}
 
