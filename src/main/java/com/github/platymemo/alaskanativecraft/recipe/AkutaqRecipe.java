@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SuspiciousStewItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.recipe.CraftingCategory;
@@ -116,7 +117,7 @@ public class AkutaqRecipe extends SpecialCraftingRecipe {
 				}
 
 				// Add effect
-				addEffectToAkutaq(akutaq, statusEffect, duration);
+				SuspiciousStewItem.addEffectToStew(akutaq, statusEffect, duration);
 			}
 		}
 

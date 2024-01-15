@@ -21,6 +21,7 @@ import net.minecraft.item.DyeableArmorItem;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.SuspiciousStewItem;
@@ -30,6 +31,7 @@ import net.minecraft.loot.LootTables;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -204,15 +206,21 @@ public class AlaskaItems {
 		BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, AlaskaItems.LABRADOR_TEA, AlaskaPotions.STRONG_TUNDRA_TEA);
 		BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, Items.GLOWSTONE_DUST, AlaskaPotions.STRONG_TUNDRA_TEA);
 		BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, Items.REDSTONE, AlaskaPotions.LONG_TUNDRA_TEA);
+		BrewingRecipeRegistryAccessor.registerRecipe(AlaskaPotions.TUNDRA_TEA, Items.ICE, AlaskaPotions.LONG_TUNDRA_TEA);
 	}
 
 	private static void addItemGroupEntries() {
 		var group = FabricItemGroup.builder().icon(() -> MUKTUK.asItem().getDefaultStack())
 				.name(Text.translatable(AlaskaNativeCraft.MOD_ID + ".items"))
 				.entries(
-						(context, entries) -> Registries.ITEM.stream()
-								.filter((item) -> Registries.ITEM.getId(item).getNamespace().equals(AlaskaNativeCraft.MOD_ID))
-								.forEach(entries::addItem))
+						(context, entries) -> {
+							Registries.ITEM.stream()
+									.filter((item) -> Registries.ITEM.getId(item).getNamespace().equals(AlaskaNativeCraft.MOD_ID))
+									.forEach(entries::addItem);
+							entries.addStack(PotionUtil.setPotion(new ItemStack(Items.POTION), AlaskaPotions.TUNDRA_TEA));
+							entries.addStack(PotionUtil.setPotion(new ItemStack(Items.POTION), AlaskaPotions.STRONG_TUNDRA_TEA));
+							entries.addStack(PotionUtil.setPotion(new ItemStack(Items.POTION), AlaskaPotions.LONG_TUNDRA_TEA));
+						})
 				.build();
 		Registry.register(Registries.ITEM_GROUP, new Identifier(AlaskaNativeCraft.MOD_ID, "items"), group);
 	}

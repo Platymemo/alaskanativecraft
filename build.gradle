@@ -21,6 +21,11 @@ repositories {
     }
 }
 
+project.configurations.configureEach {
+    exclude(group: "net.fabricmc", module: "fabric-loader")
+    exclude(group: "net.fabricmc.fabric-api")
+}
+
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft libs.minecraft
@@ -37,6 +42,9 @@ dependencies {
 }
 
 loom {
+    mods {
+        "alaskanativecraft"
+    }
     accessWidenerPath = file("src/main/resources/alaskanativecraft.accesswidener")
 }
 
@@ -50,7 +58,6 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
-    // Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
     it.options.release = 17
 }
 
