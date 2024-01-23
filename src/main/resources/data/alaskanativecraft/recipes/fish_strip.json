@@ -1,3 +1,15 @@
 {
-  "type": "alaskanativecraft:crafting_special_fish_strip"
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "alaskanativecraft:ulu"
+    },
+    {
+      "tag": "alaskanativecraft:sliceable_fish"
+    }
+  ],
+  "result": {
+    "item": "alaskanativecraft:dry_fish",
+    "count": 3
+  }
 }

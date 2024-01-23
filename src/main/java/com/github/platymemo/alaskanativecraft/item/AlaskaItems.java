@@ -54,6 +54,8 @@ public class AlaskaItems {
 	public static final Item IVORY;
 	public static final Item FISH_STRIP;
 	public static final Item DRY_FISH;
+	public static final Item FRYBREAD;
+	public static final Item FRYBREAD_SUGAR;
 	public static final Item BLUEBERRIES;
 	public static final Item RASPBERRIES;
 	public static final Item SALMONBERRIES;
@@ -98,6 +100,9 @@ public class AlaskaItems {
 		FISH_STRIP = register("fish_strip", new Item(new QuiltItemSettings().food(new FoodComponent.Builder().hunger(1).saturationModifier(0.1F).snack().build())));
 		DRY_FISH = register("dry_fish", new Item(new QuiltItemSettings().food(new FoodComponent.Builder().hunger(1).saturationModifier(1F).snack().build())));
 
+		FRYBREAD = register("frybread", new Item(new QuiltItemSettings().food(new FoodComponent.Builder().hunger(3).saturationModifier(0.8F).build())));
+		FRYBREAD_SUGAR = register("frybread_sugar", new Item(new QuiltItemSettings().food(new FoodComponent.Builder().hunger(5).saturationModifier(0.8F).build())));
+
 		BLUEBERRIES = register("blueberries", new AliasedBlockItem(AlaskaBlocks.BLUEBERRY_BUSH, new QuiltItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
 		RASPBERRIES = register("raspberries", new AliasedBlockItem(AlaskaBlocks.RASPBERRY_BUSH, new QuiltItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
 		SALMONBERRIES = register("salmonberries", new AliasedBlockItem(AlaskaBlocks.SALMONBERRY_BUSH, new QuiltItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).snack().build())));
@@ -106,7 +111,7 @@ public class AlaskaItems {
 
 		AKUTAQ = register("akutaq", new SuspiciousStewItem(new QuiltItemSettings().maxCount(1).food(new FoodComponent.Builder().hunger(4).saturationModifier(0.8F).build())));
 
-		ULU = register("ulu", new UluItem(new QuiltItemSettings().maxDamage(472)));
+		ULU = register("ulu", new UluItem(new QuiltItemSettings().maxDamage(472).recipeDamageRemainder()));
 
 		WOODEN_HARPOON = register("wooden_harpoon", new HarpoonItem(ToolMaterials.WOOD, 4.0F, -2.2F, () -> AlaskaEntities.WOODEN_HARPOON, new QuiltItemSettings()));
 		STONE_HARPOON = register("stone_harpoon", new HarpoonItem(ToolMaterials.STONE, 4.0F, -2.3F, () -> AlaskaEntities.STONE_HARPOON, new QuiltItemSettings()));

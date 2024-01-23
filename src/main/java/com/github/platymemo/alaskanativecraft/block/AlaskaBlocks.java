@@ -36,7 +36,7 @@ public class AlaskaBlocks {
 	public static final BlockEntityType<DryingRackBlockEntity> DRYING_RACK_BLOCK_ENTITY;
 
 	static {
-		WHALE_MEAT_BLOCK = register("whale_meat_block", new WhaleMeatBlock(QuiltBlockSettings.create().mapColor(MapColor.SNOW).requiresTool().sounds(BlockSoundGroup.HONEY).strength(1.0F, 1.0F)), ItemGroups.BUILDING_BLOCKS);
+		WHALE_MEAT_BLOCK = register("whale_meat_block", new WhaleMeatBlock(QuiltBlockSettings.create().mapColor(MapColor.SNOW).sounds(BlockSoundGroup.HONEY).strength(0.8F)), ItemGroups.BUILDING_BLOCKS);
 		BLUEBERRY_BUSH = register("blueberry_bush", new BushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
 		CLOUDBERRY_BUSH = register("cloudberry_bush", new CloudberryBushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));
 		RASPBERRY_BUSH = register("raspberry_bush", new BushBlock(QuiltBlockSettings.create().mapColor(MapColor.PLANT).ticksRandomly().noCollision().sounds(BlockSoundGroup.SWEET_BERRY_BUSH)));

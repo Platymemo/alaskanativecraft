@@ -1,0 +1,14 @@
+{
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "alaskanativecraft:frybread"
+  },
+  "type": "minecraft:crafting_shaped"
+}

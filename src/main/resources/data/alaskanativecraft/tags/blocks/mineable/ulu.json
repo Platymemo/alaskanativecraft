@@ -6,6 +6,7 @@
     "minecraft:redstone_wire",
     "minecraft:tripwire",
     "#minecraft:leaves",
-    "#minecraft:wool"
+    "#minecraft:wool",
+    "#minecraft:wool_carpets"
   ]
 }
